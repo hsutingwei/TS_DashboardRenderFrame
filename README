@@ -1,0 +1,34 @@
+目前工作開發Dashboard的圖表系統
+分析各專案的功能，以模組化設計出較容易擴充、維護的渲染框架
+
+PageInit.ts
+整個框架的起始點，此檔案內的函式是基礎的渲染邏輯，套用至新系統時不需重新設定，除非有新需求擴寫
+紀錄頁面資訊的物件內容請見此檔的FormInf及PageInf兩個class
+頁面操作行為定義於SearchOperation、TableAndSearchOperation、PageOperation三個class
+這三個class的(Interface or Abstract)接口宣告於tpye.d.ts，以日後繼承擴寫
+
+set.ts
+整個框架的設定檔，此檔案會依照不同專案設定參數。若有新需求則擴寫
+
+PPI.ts
+不同於PageInit.ts的葉面操作模式。使用此檔的專案含有單一頁面多種的同時搜尋功能，此需求於此檔案定義為區塊搜尋
+操作class從type.d.ts繼承(同PageInit.ts)
+
+data.ts
+通用小工具，直接以function定義
+
+ChineseSegment.ts
+非常少數的專案才需要。功能為對詞句斷詞，將單詞存入物件(純前端)，以此計算兩詞句的相似度
+用於名稱的相似度
+
+HTML
+頁面有幾個DOM為必須
+因系統使用ASP.NET MVC開發
+下列DOM的InnerHtml會從Controller端return View()，以Razor預先存入DOM
+<span style="display:none" id="PageName">{頁面名稱}</span>
+<span style="display:none" id="DefaultPage">{頁面預設顯是第幾頁}</span>
+<span style="display:none" id="BuName">{BU名稱}</span>
+<span style="display:none" id="FieldName">{頁面欄位名稱}</span>
+<span style="display:none" id="Necessary">{頁面欄位是否必填}</span>
+<span style="display:none" id="ColorRule">{顏色Highlight規則}</span>
+<div style="display:none" id="MenuValueArea">{下拉選單Key/Value物件}</div>
