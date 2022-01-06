@@ -1,17 +1,5 @@
 import { NeedAjaxArr, gPageObj, PageMake } from './PageInit.js';
 import { PageSet, TableSetObj, UrlQuery, ColorRuleClass } from './set.js';
-export class PPMake extends PageMake {
-    InitSearchArea(tPageName) {
-        if (gPageObj.PageNameObj[tPageName] == null) {
-            return;
-        }
-        let ps = new PageSet();
-        let tmpObj = ps.InitSearchObj(tPageName);
-        let DisplayArr = tmpObj.DisplayArr; //要查詢的欄位
-        let DefaultKey = tmpObj.DefaultKey; //各欄位的預設查詢值
-        let DefaultValue = tmpObj.DefaultValue; //各欄位的預設值
-    }
-}
 //此class用於定義Part Page Search的搜尋流程
 //每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
 export class PPSearch {
@@ -48,16 +36,162 @@ export class PPSearch {
         });
     }
     SubBlockRouter(tPageName, data) {
-        let bro = new BlockReportOperation();
+        let ppm = new PPMake();
         if (gPageObj.PageNameObj[tPageName]) {
-            bro.TableReport(tPageName, gPageObj.PageNameObj[tPageName].BlockId, data);
+            let TableHtmlStr = ppm.TableReport(tPageName, gPageObj.PageNameObj[tPageName].BlockId, data);
         }
     }
 }
 //此class用於定義個專案的Part Page Search的區塊搜尋後的表單圖表渲染邏輯
 //以及定義Part Page Search需要額外的邏輯功能
-export class BlockReportOperation {
+export class PPMake {
     TableReport(tPageName, IdName, data) {
+        let ps = new PageSet();
+        let HeadArr = ps.MakeTableTitle(new Array(), tPageName);
+        let tAttitute = 'table-layout:fixed;height:100%;width:100%;';
+        let tAttitute2 = 'table-layout:fixed;height:100%;width:100%;';
+        let TableObj = {};
+        if (tPageName == 'SEMI_PART_DETAIL' || tPageName == 'SEMI_PART_INFO') {
+            tAttitute = 'max-height:45vh;width:100%;';
+            TableObj = {
+                scrollY: '40vh',
+                scrollX: false,
+                scrollCollapse: true,
+                autoWidth: false,
+                searching: false,
+                paging: false,
+                bInfo: false,
+                ordering: false
+            };
+        }
+        else if (tPageName == 'SEMI_PROJECT') {
+            tAttitute = 'overflow-y:auto;height:27vh;width:100%;display:block;';
+            tAttitute2 = 'overflow-y:auto;height:27vh;width:100%;display:none;';
+        }
+        else {
+            tAttitute = 'height:100%;width:100%;';
+        }
+        let htmlStr = this.CreatReadWriteTable(tPageName, data, tAttitute, HeadArr);
+        let tmphtmlStr = this.CreatReadWriteTable(tPageName, data, tAttitute2, HeadArr);
+        let tDom = document.getElementById(IdName);
+        if (tPageName == 'SEMI_PROJECT' && tDom) {
+            tDom.innerHTML = htmlStr + tmphtmlStr;
+        }
+        else if (tDom) {
+            tDom.innerHTML = htmlStr;
+        }
+        if (tPageName == 'SEMI_PART_DETAIL' || tPageName == 'SEMI_PART_INFO') {
+            tDom = document.getElementById(IdName + '_Hidden');
+            if (tDom) {
+                tDom.innerHTML = htmlStr.replace('id="' + IdName + '"', 'id="' + IdName + '_Hidden"');
+            }
+            let t = $('#' + IdName).DataTable(TableObj);
+        }
+        ps.MergeTableValue(IdName);
+        this.ColorMergeCell(tPageName);
+        $('#' + IdName).hover(function () {
+            tDom = document.getElementById(IdName + '_EnlargeBtn');
+            if (tDom) {
+                tDom.style.visibility = 'visible';
+                tDom.style.opacity = '1';
+                tDom.style.transition = '';
+            }
+        }, function () {
+            tDom = document.getElementById(IdName + '_EnlargeBtn');
+            if (tDom) {
+                tDom.style.visibility = 'hidden';
+                tDom.style.opacity = '0';
+                tDom.style.transition = 'visibility 0s, opacity 0.5s linear';
+            }
+        });
+        $('#' + IdName + '_EnlargeBtn').hover(function () {
+            tDom = document.getElementById(IdName + '_EnlargeBtn');
+            if (tDom) {
+                tDom.style.visibility = 'visible';
+                tDom.style.opacity = '1';
+                tDom.style.transition = '';
+            }
+        }, function () {
+            tDom = document.getElementById(IdName + '_EnlargeBtn');
+            if (tDom) {
+                tDom.style.visibility = 'hidden';
+                tDom.style.opacity = '0';
+                tDom.style.transition = 'visibility 0s, opacity 0.5s linear';
+            }
+        });
+    }
+    ChartReport(tPageName, IdName, data) {
+    }
+    CreatTableTitle(tPageName, DomName, ExtraFieldArr, TitleArr, BkColorArr) {
+        let tmpTitleArr = new Array();
+        for (let i = 0; i < TitleArr.length; i++) {
+            let tttArr = new Array();
+            for (let j = 0; j < TitleArr[i].length; j++) {
+                tttArr.push(TitleArr[i][j]);
+            }
+            tmpTitleArr.push(tttArr);
+        }
+        let LineNode = '';
+        if (DomName == 'thead') {
+            LineNode = 'th';
+        }
+        let TitleHtml = '<' + DomName + ' class="AutoNewline">';
+        let SameIdxArr = [];
+        for (let i = 0, j = 0; i < tmpTitleArr[0].length; i = j) {
+            for (j = i + 1; j < tmpTitleArr[0].length && tmpTitleArr[0][i] == tmpTitleArr[0][j]; j++) { }
+            SameIdxArr.push(j);
+        }
+        if (tmpTitleArr.length > 0) {
+            for (let i = 0; i < tmpTitleArr.length; i++) {
+                TitleHtml += '<tr>';
+                for (let j = 0, col = 0, row = 0, c = 0, r = 0, sIdx = 0; j < tmpTitleArr[i].length; j++) {
+                    if (tmpTitleArr[i][j] == '#') {
+                        if (j + 1 == SameIdxArr[sIdx]) {
+                            sIdx++;
+                        }
+                        continue;
+                    }
+                    for (c = j + 1; c < tmpTitleArr[i].length && c < SameIdxArr[sIdx] && tmpTitleArr[i][j] == tmpTitleArr[i][c]; col++, c++) {
+                        tmpTitleArr[i][c] = '#';
+                    }
+                    if (c == SameIdxArr[sIdx]) {
+                        sIdx++;
+                    }
+                    for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; row++, r++) {
+                        for (let k = j + 1; j < tmpTitleArr[r].length && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) {
+                            tmpTitleArr[r][k] = '#';
+                        }
+                        tmpTitleArr[r][j] = '#';
+                    }
+                    let StyleStr = '';
+                    if (BkColorArr && BkColorArr[i][j] != '') {
+                        StyleStr = 'background-color:' + BkColorArr[i][j] + ';color:black';
+                    }
+                    TitleHtml += '<' + LineNode + (col > 0 ? ' colspan="' + (col + 1).toString() + '"' : '') + (row > 0 ? ' rowspan="' + (row + 1).toString() + '"' : '') + (StyleStr != '' ? ' style="' + StyleStr + '"' : '') + '>';
+                    TitleHtml += tmpTitleArr[i][j] + '</' + LineNode + '>';
+                    col = 0, row = 0;
+                }
+                for (let k = 0; i == 0 && k < ExtraFieldArr.length; k++) {
+                    TitleHtml += '<' + LineNode + ' rowspan="' + tmpTitleArr.length + '">' + ExtraFieldArr[k] + '</' + LineNode + '>';
+                }
+                TitleHtml += '</tr>';
+            }
+        }
+        else {
+            let pm = new PageMake();
+            let ps = new PageSet();
+            let ShieldIdxArr = ps.NeedShieldField(tPageName);
+            for (let i = 0; i < gPageObj.PageNameObj[tPageName].TitleStrArr.length; i++) {
+                TitleHtml += '<' + LineNode + ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : '')) + '>' + gPageObj.PageNameObj[tPageName].TitleStrArr[i] + '</' + LineNode + '>';
+            }
+            for (let j = 0; j < ExtraFieldArr.length; j++) {
+                TitleHtml += '<' + LineNode + '>' + ExtraFieldArr[j] + '</' + LineNode + '>';
+            }
+        }
+        TitleHtml += '</' + DomName + '>';
+        return TitleHtml;
+    }
+    CreatReadWriteTable(tPageName, data, AttributeStr, TitleArr) {
         let ps = new PageSet();
         let HeadArr = ps.MakeTableTitle(new Array(), tPageName);
         let tFieldArr = [];
@@ -89,12 +223,9 @@ export class BlockReportOperation {
             tAttitute = 'height:100%;width:100%;';
         }
         htmlStr += '<table id="' + TableId + '" class="table table-bordered ' + TableId + '" style="' + tAttitute + '">';
-        tmphtmlStr += '<table id="tmp' + TableId + '" class="table table-bordered ' + TableId + '" style="' + tAttitute2 + '">';
-        htmlStr += this.IndexCreatTableTitle(tPageName, 'thead', [], HeadArr);
-        tmphtmlStr += this.IndexCreatTableTitle(tPageName, 'thead', [], HeadArr);
+        htmlStr += this.CreatTableTitle(tPageName, 'thead', [], HeadArr);
         tAttitute = '';
         htmlStr += '<tbody style="' + tAttitute + '">';
-        tmphtmlStr += '<tbody style="' + tAttitute + '">';
         for (let i = 0; i < HeadArr.length; i++) {
             for (let j = 0; j < HeadArr[i].length; j++) {
                 if (tFieldArr.length <= j) {
@@ -164,141 +295,33 @@ export class BlockReportOperation {
                         tttStr = tmpArr[j].substring(0, StrLimit) + '...';
                     }
                     htmlStr += '<td style="text-align:right;' + ColorHtml + '">' + tttStr + '</td>';
-                    tmphtmlStr += '<td style="text-align:right;' + ColorHtml + '">' + tmpArr[j] + '</td>';
                 }
                 else {
                     if (tmpStr != '' && !isNaN(Number(tmpStr))) {
                         htmlStr += '<td style="text-align:right;' + ColorHtml + '">' + InnStr + '</td>';
-                        tmphtmlStr += '<td style="text-align:right;' + ColorHtml + '">' + InnStr + '</td>';
                     }
                     else {
                         htmlStr += '<td style="text-align:left;' + ColorHtml + '">' + InnStr + '</td>';
-                        tmphtmlStr += '<td style="text-align:left;' + ColorHtml + '">' + InnStr + '</td>';
                     }
                 }
             }
             htmlStr += '</tr>';
-            tmphtmlStr += '</tr>';
         }
         htmlStr += '</tbody></table>';
-        tmphtmlStr += '</tbody></table>';
-        let tDom = document.getElementById(IdName);
-        if (tPageName == 'SEMI_PROJECT' && tDom) {
-            tDom.innerHTML = htmlStr + tmphtmlStr;
-        }
-        else if (tDom) {
-            tDom.innerHTML = htmlStr;
-        }
-        if (tPageName == 'SEMI_PART_DETAIL' || tPageName == 'SEMI_PART_INFO') {
-            tDom = document.getElementById(IdName + '_Hidden');
-            if (tDom) {
-                tDom.innerHTML = htmlStr.replace('id="' + TableId + '"', 'id="' + TableId + '_Hidden"');
-            }
-            let t = $('#' + TableId).DataTable(TableObj);
-        }
-        ps.MergeTableValue(TableId);
-        this.ColorMergeCell(tPageName);
-        $('#' + IdName).hover(function () {
-            tDom = document.getElementById(IdName + '_EnlargeBtn');
-            if (tDom) {
-                tDom.style.visibility = 'visible';
-                tDom.style.opacity = '1';
-                tDom.style.transition = '';
-            }
-        }, function () {
-            tDom = document.getElementById(IdName + '_EnlargeBtn');
-            if (tDom) {
-                tDom.style.visibility = 'hidden';
-                tDom.style.opacity = '0';
-                tDom.style.transition = 'visibility 0s, opacity 0.5s linear';
-            }
-        });
-        $('#' + IdName + '_EnlargeBtn').hover(function () {
-            tDom = document.getElementById(IdName + '_EnlargeBtn');
-            if (tDom) {
-                tDom.style.visibility = 'visible';
-                tDom.style.opacity = '1';
-                tDom.style.transition = '';
-            }
-        }, function () {
-            tDom = document.getElementById(IdName + '_EnlargeBtn');
-            if (tDom) {
-                tDom.style.visibility = 'hidden';
-                tDom.style.opacity = '0';
-                tDom.style.transition = 'visibility 0s, opacity 0.5s linear';
-            }
-        });
+        return htmlStr;
     }
-    ChartReport(tPageName, IdName, data) {
+    MakeWidthAttributeStr(tPageName, InputFieldName, StyleAttr) {
+        return '';
     }
-    IndexCreatTableTitle(tPageName, DomName, ExtraFieldArr, TitleArr, BkColorArr) {
-        let tmpTitleArr = new Array();
-        for (let i = 0; i < TitleArr.length; i++) {
-            let tttArr = new Array();
-            for (let j = 0; j < TitleArr[i].length; j++) {
-                tttArr.push(TitleArr[i][j]);
-            }
-            tmpTitleArr.push(tttArr);
-        }
-        let LineNode = '';
-        if (DomName == 'thead') {
-            LineNode = 'th';
-        }
-        let TitleHtml = '<' + DomName + ' class="AutoNewline">';
-        let SameIdxArr = [];
-        for (let i = 0, j = 0; i < tmpTitleArr[0].length; i = j) {
-            for (j = i + 1; j < tmpTitleArr[0].length && tmpTitleArr[0][i] == tmpTitleArr[0][j]; j++) { }
-            SameIdxArr.push(j);
-        }
-        if (tmpTitleArr.length > 0) {
-            for (let i = 0; i < tmpTitleArr.length; i++) {
-                TitleHtml += '<tr>';
-                for (let j = 0, col = 0, row = 0, c = 0, r = 0, sIdx = 0; j < tmpTitleArr[i].length; j++) {
-                    if (tmpTitleArr[i][j] == '#') {
-                        if (j + 1 == SameIdxArr[sIdx]) {
-                            sIdx++;
-                        }
-                        continue;
-                    }
-                    for (c = j + 1; c < tmpTitleArr[i].length && c < SameIdxArr[sIdx] && tmpTitleArr[i][j] == tmpTitleArr[i][c]; col++, c++) {
-                        tmpTitleArr[i][c] = '#';
-                    }
-                    if (c == SameIdxArr[sIdx]) {
-                        sIdx++;
-                    }
-                    for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; row++, r++) {
-                        for (let k = j + 1; j < tmpTitleArr[r].length && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) {
-                            tmpTitleArr[r][k] = '#';
-                        }
-                        tmpTitleArr[r][j] = '#';
-                    }
-                    let StyleStr = '';
-                    if (BkColorArr && BkColorArr[i][j] != '') {
-                        StyleStr = 'background-color:' + BkColorArr[i][j] + ';color:black';
-                    }
-                    TitleHtml += '<' + LineNode + (col > 0 ? ' colspan="' + (col + 1).toString() + '"' : '') + (row > 0 ? ' rowspan="' + (row + 1).toString() + '"' : '') + (StyleStr != '' ? ' style="' + StyleStr + '"' : '') + '>';
-                    TitleHtml += tmpTitleArr[i][j] + '</' + LineNode + '>';
-                    col = 0, row = 0;
-                }
-                for (let k = 0; i == 0 && k < ExtraFieldArr.length; k++) {
-                    TitleHtml += '<' + LineNode + ' rowspan="' + tmpTitleArr.length + '">' + ExtraFieldArr[k] + '</' + LineNode + '>';
-                }
-                TitleHtml += '</tr>';
-            }
-        }
-        else {
-            let pm = new PageMake();
-            let ps = new PageSet();
-            let ShieldIdxArr = ps.NeedShieldField(tPageName);
-            for (let i = 0; i < gPageObj.PageNameObj[tPageName].TitleStrArr.length; i++) {
-                TitleHtml += '<' + LineNode + ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : '')) + '>' + gPageObj.PageNameObj[tPageName].TitleStrArr[i] + '</' + LineNode + '>';
-            }
-            for (let j = 0; j < ExtraFieldArr.length; j++) {
-                TitleHtml += '<' + LineNode + '>' + ExtraFieldArr[j] + '</' + LineNode + '>';
-            }
-        }
-        TitleHtml += '</' + DomName + '>';
-        return TitleHtml;
+    MakeListHtml(Dom, AttributeStr, ValueArr, SelectValue) {
+        return '';
+    }
+    MakeOptionHtml(ValueArr, SelectValue) {
+        return '';
+    }
+    MakeChart(tPageName, data, IdName) {
+    }
+    InitSearchArea(tPageName, IdName) {
     }
     //給合併儲存格後的表格上色(只針對有合併的範圍)
     ColorMergeCell(tPageName) {
@@ -381,4 +404,4 @@ export class BlockReportOperation {
         }
     }
 }
-window.BlockReportOperation = BlockReportOperation;
+window.PPMake = PPMake;

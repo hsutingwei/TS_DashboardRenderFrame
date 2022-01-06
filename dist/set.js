@@ -168,6 +168,30 @@ export var MenuList = {
     'RCT_PRODUCTTYPE': {
         MenuArr: [],
         DataFromDB: true
+    },
+    'RentCostCust': {
+        MenuArr: [],
+        DataFromDB: true
+    },
+    'Runcard_W_Cust': {
+        MenuArr: [],
+        DataFromDB: true
+    },
+    'Runcard_C_Cust': {
+        MenuArr: [],
+        DataFromDB: true
+    },
+    'RC_Cust': {
+        MenuArr: [],
+        DataFromDB: true
+    },
+    'RCT_Cust': {
+        MenuArr: [],
+        DataFromDB: true
+    },
+    TEST_ALL_CUST: {
+        MenuArr: [],
+        DataFromDB: true
     }
 };
 export var NeedClickObj = {
@@ -208,8 +232,8 @@ export var lang = {
 export var DCMenuIdNameList = []; //紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID
 export let ColorRuleArr = {};
 export var TableSetObj = {
-    MoneyFieldArr: ['成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-    NeedModifyDisplayArr: ['成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'Taeget GP %', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+    MoneyFieldArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+    NeedModifyDisplayArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'Taeget GP %', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
     MillionFieldArr: [],
     IgnoreZero: [],
     SetRight: [],
@@ -218,19 +242,20 @@ export var TableSetObj = {
     CheckboxArr: ['成本為0或空值'],
 };
 export var PageSetObj = {
-    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'RentCost', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
     noSortPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
     noInSearchingPage: ['APMaintain', 'FCSTMaintain', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
     noPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB'],
     ChartPage: ['BillingFCSTChart', 'CompRevenueChart', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'APFCSTChart'],
     NoChangePage: [],
     NeedYScroll: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct'],
-    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct'],
+    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct', 'FTRUNCARDCOST', 'CPRUNCARDCOST'],
     NeedResetFieldArr: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'Top10ProdCustGPM', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
     NeedCheckDecimalPoint: [],
     noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
     NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],
-    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'], //需要匯出的頁面
+    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
+    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'], //頁面載入時不預設搜尋
 };
 //月份對應的字串
 export var MonthFormat;
@@ -456,8 +481,10 @@ export class PageSet {
             Top10ProdCustGPM: { AllFalse: true },
             ProdCustGPM: { AllFalse: true },
             COST_CP: { AllFalse: true },
-            COST_SUMMARY: { SomeFalse: ['年度', '月份', 'BU', '客戶群組', '客戶代碼', '毛利率'] },
-            TESTERCOST_SUMMARY: { SomeFalse: ['年度', '月份', 'BU', '客戶群組', '客戶代碼', '毛利率'] }
+            CPRUNCARDCOST: { SomeFalse: ['客戶代碼', '客戶名稱', 'PRODUCT_TYPE', 'RCNO', 'RCARD', '型號', 'DEVICE_S', 'BELONG', 'SEQUENCE'] },
+            FTRUNCARDCOST: { SomeFalse: ['BU', '客戶代碼', 'CUST_NAME', 'PRODUCT_TYPE', '型號', 'DEVICE_S', 'RCARD', 'DPKTYPE', 'STEP', 'SEQUENCE', 'RCNO'] },
+            COST_SUMMARY: { SomeFalse: ['年度', '月份', 'BU', '客戶群組', '客戶代碼', '客戶名稱', '產品線', '流程卡', '型號', '出貨數', '營收', '毛利率'] },
+            TESTERCOST_SUMMARY: { SomeFalse: ['年度', '月份', 'BU', '客戶群組', '客戶代碼', '客戶名稱', '產品線', '流程卡', '型號', '測試機', '站點', 'DUT', '溫度', '配件', '機台類別', '出貨數', '營收', '包機機台', '毛利率'] }
         };
         for (let i = 0; i < tFieldArr.length; i++) {
             if (i == 0) {
@@ -566,7 +593,7 @@ export class PageSet {
                     }
                 }
                 else if (FieldModifiableInf[FieldName].ValueThenNoEdit && ValueArr[tIdx] != '') {
-                    if ((((_b = FieldModifiableInf[FieldName].ValueThenNoEdit) === null || _b === void 0 ? void 0 : _b.Value.indexOf(ValueArr[tIdx])) || -1) > -1) {
+                    if ((((_b = FieldModifiableInf[FieldName].ValueThenNoEdit) === null || _b === void 0 ? void 0 : _b.Value) || []).indexOf(ValueArr[tIdx]) > -1) {
                         for (let i = 0; i < (((_d = (_c = FieldModifiableInf[FieldName].ValueThenNoEdit) === null || _c === void 0 ? void 0 : _c.ThenNoEdit) === null || _d === void 0 ? void 0 : _d.length) || 0); i++) {
                             let aIdx = FieldArr.indexOf((_e = FieldModifiableInf[FieldName].ValueThenNoEdit) === null || _e === void 0 ? void 0 : _e.ThenNoEdit[i]) || -1;
                             if (aIdx > -1) {
@@ -614,8 +641,11 @@ export class PageSet {
         let reArr = new Array();
         let tListName = fFieldName;
         //下拉式,input的篩選器
-        if (tPageName == 'RentCost' && fFieldName == '客戶編號') {
-            tListName = 'CustCombine2';
+        if (isSearch && tPageName == 'RentCost' && fFieldName == '客戶編號') {
+            tListName = 'RentCostCust';
+        }
+        else if (!isSearch && tPageName == 'RentCost' && fFieldName == '客戶編號') {
+            tListName = 'TEST_ALL_CUST';
         }
         else if (tPageName == 'RentCost' && fFieldName == '測試平台') {
             tListName = 'Tester';
@@ -660,9 +690,17 @@ export class PageSet {
         else if (tPageName == 'CustomerRevenueQuery' && fFieldName == '十大客戶') {
             tListName = 'Top10CustDisplay2';
         }
-        else if ((tPageName == 'CPRUNCARDCOST' || tPageName == 'FTRUNCARDCOST' || tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY')
-            && fFieldName == '客戶代碼') {
-            tListName = 'CustCode2';
+        else if (tPageName == 'CPRUNCARDCOST' && fFieldName == '客戶代碼') {
+            tListName = 'Runcard_W_Cust';
+        }
+        else if (tPageName == 'FTRUNCARDCOST' && fFieldName == '客戶代碼') {
+            tListName = 'Runcard_C_Cust';
+        }
+        else if (tPageName == 'COST_SUMMARY' && fFieldName == '客戶代碼') {
+            tListName = 'RC_Cust';
+        }
+        else if (tPageName == 'TESTERCOST_SUMMARY' && fFieldName == '客戶代碼') {
+            tListName = 'RCT_Cust';
         }
         else if (tPageName == 'COST_SUMMARY' && fFieldName == '產品線') {
             tListName = 'RC_PRODUCTTYPE';
@@ -702,7 +740,8 @@ export class PageSet {
                 reArr[i] = reArr[i] + ',' + reArr[i];
             }
             if (tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart'
-                || (tPageName == 'RentCost' && fFieldName == '機台類別')) {
+                || (tPageName == 'RentCost' && fFieldName == '機台類別')
+                || ((tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') && fFieldName == '產品線')) {
                 let tt = reArr[i].split(',');
                 let tmpIdx = tt[1].indexOf('-');
                 reArr[i] = tt[0] + ',' + tt[1].substring(tmpIdx + 1);
@@ -742,6 +781,10 @@ export class PageSet {
         else if (fListName == '包機客戶') {
             reArr.push(',');
             reArr.push('是,是');
+        }
+        else if (tPageName == 'CPRUNCARDCOST' && fListName == 'BU') {
+            reArr.push('CP,CP');
+            reArr.push('LCD,LCD');
         }
         else if (fListName == 'BU' || fListName == 'Process') {
             reArr.push('CP,CP');
@@ -812,14 +855,21 @@ export class PageSet {
             || (tPageName == 'APvsFCSTvsAct' && (fFieldName == 'FCST 維護名稱' || fFieldName == '加總條件' || fFieldName == 'BU'))
             || (tPageName == 'BillingFCSTChart' && (fFieldName == '客戶' || fFieldName == 'BU'))
             || (tPageName == 'APFCSTChart' && (fFieldName == '客戶' || fFieldName == 'BU'))
-            || (tPageName == 'NewProductCustomerNSB' && (fFieldName == 'BU'))
+            || ((tPageName == 'NewProductCustomerNSB' || tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') && (fFieldName == 'BU'))
             || (tPageName == 'RentCost' && (fFieldName == 'BU' || fFieldName == '客戶編號'))
-            || fFieldName == '產品類別' || fFieldName == '產品線')) {
+            || fFieldName == '產品類別' || fFieldName == '產品線')
+            || ((tPageName == 'FTRUNCARDCOST' || tPageName == 'CPRUNCARDCOST' || tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') && (fFieldName == '客戶代碼'))) {
             if (reArr.length == 1 && reArr[0] == ',') {
                 reArr[0] = ',All';
             }
             else if (reArr.length == 0 || reArr[0] != ',All') {
                 let tmpArr = [',All'];
+                reArr = tmpArr.concat(reArr);
+            }
+        }
+        else if (!isSearch && ((tPageName == 'RentCost' && (fFieldName == '產品類別' || fFieldName == '測試平台' || fFieldName == '機台類別')))) {
+            if (reArr.length > 1) {
+                let tmpArr = [','];
                 reArr = tmpArr.concat(reArr);
             }
         }
@@ -926,7 +976,7 @@ export class PageSet {
         else if (tPageName == 'APvsFCSTvsAct') {
             obj.DisplayArr = ['BU', '年度', '報表類型', 'FCST 維護單位', 'FCST 維護名稱', '加總條件', '計算單位', '營收日期'];
             obj.DefaultKey = ['BU', '年度', '報表類型', 'FCST 維護單位', 'FCST 維護名稱', '加總條件', '計算單位', '營收日期'];
-            obj.DefaultValue = ['', Today.getFullYear().toString(), 'seni', 'SA', '', '金額', '', '出貨日期'];
+            obj.DefaultValue = ['', Today.getFullYear().toString(), '月', 'SA', '', '金額', '', '出貨日期'];
         }
         else if (tPageName == 'BillingFCSTChart') {
             obj.DisplayArr = ['年度', '月份', 'BU', 'FCST維護單位', '客戶', '產品類別', '計算單位', '營收日期'];
@@ -974,7 +1024,7 @@ export class PageSet {
             obj.DefaultValue = ['', '', '', ''];
         }
         else if (tPageName == 'FTRUNCARDCOST') {
-            obj.DisplayArr = ['BU', '客戶代碼', '型號', 'RCNO'];
+            obj.DisplayArr = ['客戶代碼', '型號', 'RCNO'];
             obj.DefaultKey = ['BU', '客戶代碼', '型號', 'RCNO'];
             obj.DefaultValue = ['FT', '', '', ''];
         }
@@ -1242,6 +1292,7 @@ export class PageSet {
                     let nsb = Number(tmpArr[10]);
                     let cost = Number(tmpArr[11]);
                     tmpArr[12] = nsb == 0 ? '0' : formatFloat((nsb - cost) / nsb * 100, 1).toString();
+                    reArr[i] = tmpArr.join(',');
                 }
             }
         }
@@ -1252,6 +1303,7 @@ export class PageSet {
                     let nsb = Number(tmpArr[16]);
                     let cost = Number(tmpArr[17]);
                     tmpArr[18] = nsb == 0 ? '0' : formatFloat((nsb - cost) / nsb * 100, 1).toString();
+                    reArr[i] = tmpArr.join(',');
                 }
             }
         }
@@ -1464,7 +1516,7 @@ export class PageSet {
         }
         InputFieldName = InputFieldName.replace(/&amp;/g, '&');
         if (InputFieldName == '客戶區域定義' || InputFieldName == '包機客戶' || InputFieldName == '維護單位' || InputFieldName == 'Tester' || InputFieldName == 'Ver' || InputFieldName == '報表類型' || InputFieldName == '月份' || InputFieldName == '月' || InputFieldName == '查詢方式' || InputFieldName == '工時Flag'
-            || InputFieldName == '是否有效' || InputFieldName == '包機費用編號') {
+            || InputFieldName == '是否有效' || InputFieldName == '包機費用編號' || InputFieldName == 'EQ') {
             WidthStr = '60px';
         }
         else if (InputFieldName == '年度' || InputFieldName == 'BU' || InputFieldName == '產品線' || InputFieldName == '機台類別'
@@ -1472,15 +1524,17 @@ export class PageSet {
             || InputFieldName == '1月單價' || InputFieldName == '2月單價' || InputFieldName == '3月單價' || InputFieldName == '4月單價' || InputFieldName == '5月單價' || InputFieldName == '6月單價' || InputFieldName == '7月單價' || InputFieldName == '8月單價' || InputFieldName == '9月單價' || InputFieldName == '10月單價' || InputFieldName == '11月單價' || InputFieldName == '12月單價'
             || InputFieldName == '1月GP' || InputFieldName == '2月GP' || InputFieldName == '3月GP' || InputFieldName == '4月GP' || InputFieldName == '5月GP' || InputFieldName == '6月GP' || InputFieldName == '7月GP' || InputFieldName == '8月GP' || InputFieldName == '9月GP' || InputFieldName == '10月GP' || InputFieldName == '11月GP' || InputFieldName == '12月GP'
             || InputFieldName == '1月營收' || InputFieldName == '2月營收' || InputFieldName == '3月營收' || InputFieldName == '4月營收' || InputFieldName == '5月營收' || InputFieldName == '6月營收' || InputFieldName == '7月營收' || InputFieldName == '8月營收' || InputFieldName == '9月營收' || InputFieldName == '10月營收' || InputFieldName == '11月營收' || InputFieldName == '12月營收'
-            || InputFieldName == '計算單位' || InputFieldName == 'FCST 維護單位' || InputFieldName == 'FCST維護單位' || InputFieldName == 'Process') {
+            || InputFieldName == '計算單位' || InputFieldName == 'FCST 維護單位' || InputFieldName == 'FCST維護單位' || InputFieldName == 'Process'
+            || InputFieldName == 'M_TYPE') {
             WidthStr = '80px';
         }
         else if (InputFieldName == '新/舊客戶' || InputFieldName == 'Prober/Handler' || InputFieldName == 'Product Type' || InputFieldName == '加總條件' || InputFieldName == 'SA/PC' || InputFieldName == '產品類別' || InputFieldName == 'Type'
-            || InputFieldName == '營收日期' || InputFieldName == '測試平台') {
+            || InputFieldName == '營收日期' || InputFieldName == '測試平台' || InputFieldName == '流程卡' || InputFieldName == '出貨數'
+            || InputFieldName == 'RCNO' || InputFieldName == 'RCARD') {
             WidthStr = '90px';
         }
         else if (InputFieldName == '型號') {
-            WidthStr = '120px';
+            WidthStr = '140px';
         }
         else if ((tPageName == 'CPRUNCARDCOST' && (InputFieldName == '客戶代碼')) || InputFieldName == 'SA' || InputFieldName == '業務名稱' || InputFieldName == '營收日期'
             || InputFieldName == '機台類別' || InputFieldName == '客戶名稱') {
@@ -2228,6 +2282,12 @@ export class PageSet {
         else if (tPageName == 'APMaintain') {
             reObj.leftColumns = 8;
         }
+        else if (tPageName == 'CPRUNCARDCOST') {
+            reObj.leftColumns = 10;
+        }
+        else if (tPageName == 'FTRUNCARDCOST') {
+            reObj.leftColumns = 11;
+        }
         return reObj;
     }
     //設定凍結欄位(不使用DataTable渲染)
@@ -2237,6 +2297,12 @@ export class PageSet {
         var ShieldIdx = this.NeedShieldField(tPageName);
         if (tPageName == 'APMaintain' || tPageName == 'FCSTMaintain') {
             LeftCount = 8;
+        }
+        else if (tPageName == 'CPRUNCARDCOST') {
+            LeftCount = 10;
+        }
+        else if (tPageName == 'FCSTMaintain') {
+            LeftCount = 11;
         }
         if (LeftCount > 0) {
             var tableDom = $('#' + tPageName + 'Table tbody tr');
@@ -2409,7 +2475,8 @@ export class PageSet {
         if (tFieldName == '%' || tRowTitleName == '成長率') {
             ReStr = CheckDecimalPointFn((formatFloat(parseFloat(valueStr), 1)).toString() + '%', 1);
         }
-        else if (tFieldName.indexOf('數量') > -1 || tFieldName.indexOf('營收') > -1 || tFieldName == 'AP' || tFieldName == 'FCST' || tFieldName == 'Actual') {
+        else if (tFieldName[tFieldName.length - 1] == '數' || tFieldName.indexOf('數量') > -1 || tFieldName.indexOf('營收') > -1 || tFieldName == 'AP' || tFieldName == 'FCST' || tFieldName == 'Actual'
+            || (tPageName == 'RentCost')) {
             ReStr = formatFloat(parseFloat(valueStr), 0).toString().replace('.', '');
         }
         else if (tFieldName.indexOf('單價') > -1) {
@@ -2678,10 +2745,29 @@ export class DynamicClass {
                 InfluenceByThisFieldName: '年度',
             },
             APFCSTChart: {
+                InfluenceByThisFieldName: '年度',
                 InfluenceToFieldNames: {
                     BU: {
                         field_3: {
                             MenuName: 'BUProdList'
+                        },
+                    },
+                }
+            },
+            TESTERCOST_SUMMARY: {
+                InfluenceToFieldNames: {
+                    BU: {
+                        field_7: {
+                            MenuName: 'RCT_PRODUCTTYPE'
+                        },
+                    },
+                }
+            },
+            COST_SUMMARY: {
+                InfluenceToFieldNames: {
+                    BU: {
+                        field_7: {
+                            MenuName: 'RC_PRODUCTTYPE'
                         },
                     },
                 }
@@ -2721,7 +2807,7 @@ export class DynamicClass {
                             || (!isSearchArea && (!((_g = (_f = this.DynamicInfObj[tPageName]) === null || _f === void 0 ? void 0 : _f.InfluenceToFieldNames[tFiledName][key]) === null || _g === void 0 ? void 0 : _g.EffectiveInTable)))) {
                             continue;
                         }
-                        reStr += this.FunctionName + '(\'' + tPageName + '\', \'' + key + '\', \'' + tFiledName + '\'';
+                        reStr += this.FunctionName + '(\'' + tPageName + '\', \'' + key + '\', \'' + tFiledName + '\', ' + isSearchArea;
                         if (TriggerFromId) {
                             reStr += ', \'' + TriggerFromId + '\'';
                         }
@@ -2729,7 +2815,7 @@ export class DynamicClass {
                     }
                 }
                 else {
-                    reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'' + tFiledName + '\'';
+                    reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'' + tFiledName + '\', ' + isSearchArea;
                     if (TriggerFromId) {
                         reStr += ', \'' + TriggerFromId + '\'';
                         reStr += ');';
@@ -3093,32 +3179,32 @@ export class DynamicFunction {
     FrontDynamicInBackCall(tPageName) {
     }
     //此函式用於定義需要通過後端取值時，DynamicRequest最後結束前需要執行的動作
-    DynamicInBackCallAtEnd(tPageName) {
+    DynamicInBackCallAtEnd(tPageName, isSearch) {
         if (tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS') {
             SelectRefresh('field_2');
-            DynamicFunction.DynamicRequest(tPageName, 'field_7', 'BU');
+            DynamicFunction.DynamicRequest(tPageName, 'field_7', 'BU', isSearch);
         }
         else if (tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS') {
             SelectRefresh('field_2');
-            DynamicFunction.DynamicRequest(tPageName, 'field_7', 'BU');
-            DynamicFunction.DynamicRequest(tPageName, 'field_8', 'BU');
-            DynamicFunction.DynamicRequest(tPageName, 'field_9', 'BU');
+            DynamicFunction.DynamicRequest(tPageName, 'field_7', 'BU', isSearch);
+            DynamicFunction.DynamicRequest(tPageName, 'field_8', 'BU', isSearch);
+            DynamicFunction.DynamicRequest(tPageName, 'field_9', 'BU', isSearch);
         }
         else if (tPageName == 'Prober_Handler_DS' || tPageName == 'SEMI_TESTER_M') {
             SelectRefresh('field_2');
-            DynamicFunction.DynamicRequest(tPageName, 'field_3', 'BU');
+            DynamicFunction.DynamicRequest(tPageName, 'field_3', 'BU', isSearch);
         }
         else if (tPageName == 'Tester_Activation') {
             SelectRefresh('field_5');
-            DynamicFunction.DynamicRequest(tPageName, 'field_6', 'BU');
+            DynamicFunction.DynamicRequest(tPageName, 'field_6', 'BU', isSearch);
         }
         else if (tPageName == 'Prober_Handler_FT') {
             SelectRefresh('field_5');
-            DynamicFunction.DynamicRequest(tPageName, 'field_6', 'EQ Type');
+            DynamicFunction.DynamicRequest(tPageName, 'field_6', 'EQ Type', isSearch);
         }
         else if (tPageName == 'Prober_Handler_DS_Y' || tPageName == 'SEMI_TESTER_Y') {
             SelectRefresh('field_1');
-            DynamicFunction.DynamicRequest(tPageName, 'field_2', 'BU');
+            DynamicFunction.DynamicRequest(tPageName, 'field_2', 'BU', isSearch);
         }
     }
     //重新定義動態欄位的Query值
@@ -3138,12 +3224,15 @@ export class DynamicFunction {
     //idName: html物件ID名稱(搜尋bar、可以是table某欄位的ID)(受到影響的)
     //tFieldName: 欄位名稱(因此欄位影響別的欄位的)
     //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
-    static DynamicRequest(tPageName, idName, tFieldName, TriggerFromId) {
+    static DynamicRequest(tPageName, idName, tFieldName, isSearch, TriggerFromId) {
         var _a;
         let Today = new Date();
         let year = GetSelectValue('年度');
         if (tPageName == 'Actual') {
             year = GetSelectValue('年');
+        }
+        if (!tPageName) {
+            tPageName = gPageObj.PageNameArr[0];
         }
         let bu = '';
         let Query = {
@@ -3174,12 +3263,12 @@ export class DynamicFunction {
                         }
                         let df = new DynamicFunction();
                         tValue = df.ResetDynamicQuery(tPageName, tFieldName, idName, tValue);
-                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, tValue);
+                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch, tValue);
                         document.getElementById(TargetID).innerHTML = pm.MakeOptionHtml(valueArr || [], '');
                         $('#' + TargetID).selectpicker('refresh');
                     }
                     else {
-                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName);
+                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch);
                         document.getElementById(idName).innerHTML = pm.MakeOptionHtml(valueArr || [], '');
                         $('#' + idName).selectpicker('refresh');
                     }
@@ -3191,9 +3280,9 @@ export class DynamicFunction {
         }
         if (NeedRequest) {
             let pt = new PageTool();
-            for (let i = 0; i < DCMenuIdNameList.length; i++) {
+            /*for (let i = 0; i < DCMenuIdNameList.length; i++) {
                 pt.SelectDisableChange([DCMenuIdNameList[i]], false);
-            }
+            }*/
             doAjax('GetMenuByYear', true, Query, function (data) {
                 if (data != null && data.length > 0) {
                     let tmpArr = data.split('@');
@@ -3213,12 +3302,12 @@ export class DynamicFunction {
                         let df = new DynamicFunction();
                         df.FrontDynamicInBackCall(tPageName);
                         po.InitListArr(tPageName);
-                        for (let i = 0; i < DCMenuIdNameList.length; i++) {
+                        /*for (let i = 0; i < DCMenuIdNameList.length; i++) {
                             pt.SelectDisableChange([DCMenuIdNameList[i]], true);
-                        }
+                        }*/
                         pt.ReloadSelectOption(DCMenuIdNameList);
                         $('.selectpicker').selectpicker('refresh');
-                        df.DynamicInBackCallAtEnd(tPageName);
+                        df.DynamicInBackCallAtEnd(tPageName, isSearch);
                     }
                 }
             });

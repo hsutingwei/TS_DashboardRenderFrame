@@ -43,6 +43,8 @@ $(function () {
         for (let i = 0; i < gPageObj.PageNameObj[tPageName].ChildName.length; i++) {
             cr.SetColorRuleFromFront(gPageObj.PageNameObj[tPageName].ChildName[i]);
         }
+        
+        po.InitListArr(tPageName);
 
         if (ps.isMainIndex(tPageName)) {
             (async function (tPageName: string) {
@@ -55,7 +57,6 @@ $(function () {
             })(tPageName);
         }
         else {
-            po.InitListArr(tPageName);
             pm.InitSearchArea(tPageName);
             if (set.PageSetObj.NoDefaultSearch.indexOf(tPageName) < 0) {
                 PageOperation.Search(tPageName);

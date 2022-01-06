@@ -240,8 +240,7 @@ function CheckDecimalPointFn(Num, nCount) {
         }
     }
     else {
-        var tmpStr = NumStr.substring(NumStr.indexOf('.') + 1);
-        for (let i = NumStr.length; i < nCount; i++) {
+        for (let i = NumStr.split('.')[1].length; i < nCount; i++) {
             NumStr += '0';
         }
     }
