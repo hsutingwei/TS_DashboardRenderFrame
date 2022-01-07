@@ -2329,7 +2329,7 @@ export class PageTool {
         let tmpObj = ps.InitSearchObj(tmpPageName);
         let DefaultValue = tmpObj.DefaultValue;//各欄位的預設值
         let DefaultKey = tmpObj.DefaultKey;
-        let tmpFieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
+        let tmpFieldArr = gPageObj.PageNameObj[tmpPageName].FieldArr;
         for (let i = 0; document.getElementById('field_' + i); i++) {
             if (ExceptforIdArr.indexOf('field_' + i) < 0 && document.getElementById('field_' + i)!.innerHTML.indexOf('<option') > -1) {
                 let DefaultIdx = DefaultKey.indexOf(tmpFieldArr[i]);
