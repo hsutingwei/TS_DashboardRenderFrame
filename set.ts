@@ -490,6 +490,8 @@ export class PageSet {
             if (ChildPageName[ChildPageNameArr[i]]?.SubBlockId != null) {
                 gPageObj.PageNameObj[ChildPageNameArr[i]].SubBlockId = ChildPageName[ChildPageNameArr[i]].SubBlockId;
             }
+
+            this.SetChildPageName(ChildPageNameArr[i]);
         }
     }
 
