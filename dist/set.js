@@ -445,6 +445,7 @@ export class PageSet {
             if (((_b = ChildPageName[ChildPageNameArr[i]]) === null || _b === void 0 ? void 0 : _b.SubBlockId) != null) {
                 gPageObj.PageNameObj[ChildPageNameArr[i]].SubBlockId = ChildPageName[ChildPageNameArr[i]].SubBlockId;
             }
+            this.SetChildPageName(ChildPageNameArr[i]);
         }
     }
     //定義查詢的查詢頁數、查詢的一頁幾筆
@@ -2798,7 +2799,7 @@ export class DynamicClass {
         let reStr = '';
         if (this.NeedDynamicGetList(tPageName, tFiledName, isSearchArea)) {
             if (this.DynamicInfObj[tPageName].InfluenceByThisFieldName == tFiledName) {
-                reStr += this.FunctionName + '();';
+                reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'\', ' + isSearchArea + ');';
             }
             if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames[tFiledName]) != null) {
                 if (Object.keys((_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[tFiledName]).length > 0) {
