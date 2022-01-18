@@ -1951,7 +1951,7 @@ export class PageMake {
                 else {
                     if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch)) {
                         if (dc.DynamicInfObj[tPageName].InfluenceByThisFieldName == gPageObj.PageNameObj[tPageName].FieldArr[i]) {
-                            AttrStr += ' onchange="' + dc.FunctionName + '()" ';
+                            AttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch) + '" ';
                         }
                         else if (Object.keys(((_a = dc.DynamicInfObj[tPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tPageName].FieldArr[i]]) || []).length > 0) {
                             let tDCHtml = '';
@@ -2256,7 +2256,7 @@ export class PageTool {
         let tmpObj = ps.InitSearchObj(tmpPageName);
         let DefaultValue = tmpObj.DefaultValue; //各欄位的預設值
         let DefaultKey = tmpObj.DefaultKey;
-        let tmpFieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
+        let tmpFieldArr = gPageObj.PageNameObj[tmpPageName].FieldArr;
         for (let i = 0; document.getElementById('field_' + i); i++) {
             if (ExceptforIdArr.indexOf('field_' + i) < 0 && document.getElementById('field_' + i).innerHTML.indexOf('<option') > -1) {
                 let DefaultIdx = DefaultKey.indexOf(tmpFieldArr[i]);

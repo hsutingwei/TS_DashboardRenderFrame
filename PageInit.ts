@@ -2016,7 +2016,7 @@ export class PageMake implements PageRender {
                 else {
                     if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch)) {
                         if (dc.DynamicInfObj[tPageName].InfluenceByThisFieldName == gPageObj.PageNameObj[tPageName].FieldArr[i]) {
-                            AttrStr += ' onchange="' + dc.FunctionName + '()" ';
+                            AttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch) + '" ';
                         }
                         else if (Object.keys(dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].FieldArr[i]] || []).length > 0) {
                             let tDCHtml = '';
