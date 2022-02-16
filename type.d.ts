@@ -65,7 +65,7 @@ abstract class ClickSearch {
 //Dashboard頁面中，區塊搜尋
 abstract class PartPageSearch {
     //整個頁面的搜尋，用於依序呼叫每個Block的搜尋
-    PageSearch: () => void;
+    static PageSearch: () => void;
 
     //單一區塊的搜尋
     //tPageName: 頁面名稱(區塊名稱)

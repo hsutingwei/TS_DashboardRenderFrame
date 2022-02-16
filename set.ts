@@ -3150,7 +3150,7 @@ export class ColorRuleClass {
         if (document.getElementById('ColorRule')?.innerHTML != null) {
             //let tmpColorStr = document.getElementById('ColorRule').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
             let tmpColorStr = document.getElementById('ColorRule')?.innerText || document.getElementById('ColorRule')?.textContent;
-            let tColorRuleArr: string[] = tmpColorStr?.split(';') || [];
+            let tColorRuleArr: string[] = tmpColorStr != null && tmpColorStr != '' ? tmpColorStr?.split(';') : [];
 
             for (let i = 0; i < tColorRuleArr.length; i++) {
                 let tArr = tColorRuleArr[i].split(',');

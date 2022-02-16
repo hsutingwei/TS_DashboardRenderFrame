@@ -2938,7 +2938,7 @@ export class ColorRuleClass {
         if (((_a = document.getElementById('ColorRule')) === null || _a === void 0 ? void 0 : _a.innerHTML) != null) {
             //let tmpColorStr = document.getElementById('ColorRule').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
             let tmpColorStr = ((_b = document.getElementById('ColorRule')) === null || _b === void 0 ? void 0 : _b.innerText) || ((_c = document.getElementById('ColorRule')) === null || _c === void 0 ? void 0 : _c.textContent);
-            let tColorRuleArr = (tmpColorStr === null || tmpColorStr === void 0 ? void 0 : tmpColorStr.split(';')) || [];
+            let tColorRuleArr = tmpColorStr != null && tmpColorStr != '' ? tmpColorStr === null || tmpColorStr === void 0 ? void 0 : tmpColorStr.split(';') : [];
             for (let i = 0; i < tColorRuleArr.length; i++) {
                 let tArr = tColorRuleArr[i].split(',');
                 let tKey = tArr[0] + tArr[2];

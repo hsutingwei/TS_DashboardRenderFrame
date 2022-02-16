@@ -51,8 +51,7 @@ $(function () {
                 const { PPSearch, PPMake } = await import("./PPI.js");
                 NeedAjaxArr = gPageObj.PageNameObj[tPageName].ChildName
                 if (set.PageSetObj.NoDefaultSearch.indexOf(tPageName) < 0) {
-                    let pps = new PPSearch();
-                    pps.PageSearch();
+                    PPSearch.PageSearch();
                 }
             })(tPageName);
         }

@@ -4,9 +4,10 @@ import { PageSet, TableSetObj, UrlQuery, ColorRuleClass } from './set.js';
 //此class用於定義Part Page Search的搜尋流程
 //每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
 export class PPSearch implements PartPageSearch {
-    PageSearch(): void {
+    static PageSearch(): void {
+        let pps = new PPSearch();
         for (let i = 0; i < NeedAjaxArr.length; i++) {
-            this.BlockSearch(NeedAjaxArr[i]);
+            pps.BlockSearch(NeedAjaxArr[i]);
         }
     }
 
