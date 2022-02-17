@@ -2322,7 +2322,7 @@ export class PageSet {
                     tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
                     tableDom.eq(i).find('td').eq(j).css('z-index', '1');
                     tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
-                    if (i == 0) { //Title只需要設定一次
+                    if (titleDom.eq(i).find('th').eq(j).html() != null) {
                         titleDom.eq(i).find('th').eq(j).css('left', widthCss);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
