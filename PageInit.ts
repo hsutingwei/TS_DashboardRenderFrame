@@ -1732,6 +1732,10 @@ export class PageMake implements PageRender {
                     }
                     aPart += tStr;
                 }
+                else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])){
+                    let tStr = '<span class="ring ' + tmpReadHtml + '" style="--tw-ring-color:' + tmpArr[j] + '">' + tmpArr[j] + '</span>';
+                    aPart += tStr;
+                }
                 else if (tmpReadHtml.length > 0) {
                     let tStr = '<span class=" ' + tmpReadHtml + '">' + tmpArr[j] + '</span>';
                     aPart += tStr;
