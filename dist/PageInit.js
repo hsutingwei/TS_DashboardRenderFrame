@@ -211,7 +211,7 @@ class SearchOperation {
         document.getElementById('RowDataAreaTitle').innerHTML = tTitleStr;
         if (tPageNumber > -1) {
             let TableIdName = Query.PageName + 'Table';
-            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped" style="width:100%"';
+            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%"';
             let tTableHtml = '<table ' + AttributeStr + '></table>';
             let ColumnObj = [];
             gPageObj.PageNameObj[tPageName].SetTableTitle(Query.QueryArr);
@@ -293,7 +293,7 @@ class SearchOperation {
                 //ps.FieldColor(data, tPageName);
                 let pm = new PageMake();
                 let TableIdName = Query.PageName + 'Table';
-                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped" style="width:100%"';
+                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%"';
                 let tableHtml = pm.CreatReadWriteTable(tPageName, data, AttributeStr, []);
                 document.getElementById('RowDataAreaText').innerHTML = tableHtml;
                 let TableObj = {
@@ -442,7 +442,7 @@ class SearchOperation {
         if (PageNumber >= 1) {
             let ColumnObj = new Array();
             let TableIdName = tmpPageName + 'Table';
-            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped" style="width:100%;white-space:nowrap;"';
+            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
             gPageObj.PageNameObj[tmpPageName].SetTableTitle();
             let tmpTitle = new Array();
             let titleInfArr = new Array();
@@ -708,7 +708,7 @@ class SearchOperation {
                     pm.MakeChart(tmpPageName, data);
                 }
                 let TableIdName = tmpPageName + 'Table';
-                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped" style="width:100%;white-space:nowrap;"';
+                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
                 let tmpTitle = new Array();
                 //gPageObj.PageNameObj[tmpPageName].SetTableTitle(data.length > 0 ? data[0].split(',') : undefined);
                 tmpTitle = ps.MakeTableTitle(data, tmpPageName);
