@@ -2180,12 +2180,25 @@ export class PageMake implements PageRender {
 export class PageTool {
     //有下拉選單的欄位值，將Key值替換成Value值
     public GetListValue(tMenuArr: string[], keyValue: string): string {
+        if (keyValue == ''){
+            return keyValue;
+        }
+        let HaveDash = true;//Menu會有Dash來做前端動態改變Menu的功能
+        for (let i = tMenuArr.length > 0 && (tMenuArr[0] == ',' || tMenuArr[0] == ',All') ? 1 : 0; i < tMenuArr.length; i++) {
+            if (tMenuArr[i].split(',')[1].indexOf('-') < 0) {
+                HaveDash = false;
+                break;
+            }
+        }
+
         if (keyValue.toString().indexOf('/') > -1) {//含有複選分隔符號
             let tValueArr = keyValue.toString().split('/');
             let reArr = new Array();
             for (let i = 0; i < tMenuArr.length; i++) {
                 let tmp = tMenuArr[i].split(',');
-                if (tValueArr.indexOf(tmp[0]) > -1) { reArr.push(tmp[1]); }
+                if (tValueArr.indexOf(tmp[0]) > -1) {
+                    reArr.push(HaveDash ? tmp[1].split('-')[1] : tmp[1]);
+                }
             }
             return reArr.join('/');
         }
@@ -2193,7 +2206,7 @@ export class PageTool {
             for (let i = 0; i < tMenuArr.length; i++) {
                 let tmp = tMenuArr[i].split(',');
                 if (tmp[0] == keyValue) {
-                    return tmp[1];
+                    return HaveDash ? tmp[1].split('-')[1] : tmp[1];
                 }
             }
         }
