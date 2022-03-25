@@ -1560,6 +1560,7 @@ export class PageSet {
         let tmpTitle = new Array();
         let tHavePersent = []; //紀錄每一行是否含有%，且為數值
         let haveTitleAtFirst = true;
+        let AllEmpty = true; //第一列是否全空值
         for (let i = 0; i < data.length; i++) {
             let tmpArr = data[i].split(',');
             if (tmpArr[0] == '' || tmpArr[0] == '-') {
@@ -1569,6 +1570,10 @@ export class PageSet {
                 haveTitleAtFirst = false;
                 break;
             }
+        }
+        //若第一列全空值，則視為沒有RowTitle
+        if (AllEmpty) {
+            haveTitleAtFirst = false;
         }
         for (let i = 0; i < data.length; i++) {
             tHavePersent.push(false);
