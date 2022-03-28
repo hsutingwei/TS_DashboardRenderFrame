@@ -250,11 +250,17 @@ export var DCMenuIdNameList: Array<string> = [];//紀錄會動態影響其他搜
 export let ColorRuleArr: {//存放顏色Highlight規則
     [PageName: string]: {//頁面名稱
         [CellOrRowIdx: number | string]: {//行座標or縱坐標or行標題
-            Rule: string[],//顏色規則
-            Color: string[],//顏色
-            BackgroundColor: string[],//背景顏色
-            isLateral: boolean,//此座標是否為橫坐標
-        }//Rule.length = Color.length = BackgroundColor.length
+            [isLateral: number]: {//是否橫坐標判定(1:true; 0:false)
+                [Rule: string]: {//顏色規則
+                    Color: string,//顏色
+                    BackgroundColor: string,//背景顏色
+                    Others: {//特殊規則
+                        'Score': number,//權重，用於規則有重疊時來決定規則優先順序
+                        [TitleOrFieldName: string]: string | number,//Row Title or Field Name，指對應到這些特殊條件才符合此規則
+                    }
+                }
+            }
+        }
     }
 } = {};
 
@@ -3069,6 +3075,7 @@ export class ColorRuleClass {
             [CellIdx: number]: {//行座標
                 Color: string,//顏色
                 BackgroundColor: string,//背景顏色
+                Score: number,//目前Highlight的權重，用於決定複數規則下是否覆寫
             }
         }
     } = {};
@@ -3149,6 +3156,41 @@ export class ColorRuleClass {
         }
     }
 
+    //判斷是否為特殊規則時，是否不看搜尋Bar。
+    //一般先判斷RowTitle，判斷欄位名稱，再判斷搜尋Bar
+    NotSearchBar(tPageName: string): boolean {
+        let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
+
+        if (tPageName == 'YIELD_RATE') {
+            if (LastQuery.QueryArr[0] != '總表') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //定義特殊規則
+    SetOtherRules(Query: string[]): { 'Score': number, [TitleOrFieldName: string]: string | number } {
+        let tNode: { 'Score': number, [TitleOrFieldName: string]: string | number } = { 'Score': Number(Query[5]) };
+        if (Query.length > 6) {
+            if (Query[6] && Query[6] != '') {
+                tNode['BU'] = Query[6];
+                //tNode['Score'] += 1;
+            }
+            if (Query[7] && Query[7] != '') {
+                tNode['客戶'] = Query[7];
+                //tNode['Score'] += 2;
+            }
+            //x: 權重順序: BU/客戶 > 客戶 > BU > 無
+            //v: 現改為由資料庫決定權種大小
+
+            return tNode;
+        }
+
+        return tNode;
+    }
+
     //根據後端傳至前端的顏色規則，初始化顏色規則物件
     InitColorRule() {
         if (document.getElementById('ColorRule')?.innerHTML != null) {
@@ -3158,57 +3200,127 @@ export class ColorRuleClass {
 
             for (let i = 0; i < tColorRuleArr.length; i++) {
                 let tArr = tColorRuleArr[i].split(',');
-                let tKey = tArr[0] + tArr[2];
                 tArr[1] = tArr[1].trim();
                 tArr[3] = tArr[3].trim();
-                type Node = {
-                    Rule: string[];
-                    Color: string[];
-                    BackgroundColor: string[];
-                    isLateral: boolean;
+
+                type Node1 = {
+                    Color: string,//顏色
+                    BackgroundColor: string,//背景顏色
+                    Others: {
+                        'Score': number,
+                        [TitleOrFieldName: string]: string | number,
+                    }
                 }
-                let tNode: {
-                    [CellIdx: number | string]: Node;
-                } = {};
-                let tcNode: Node = { Rule: [tArr[1]], Color: [tArr[3]], BackgroundColor: [''], isLateral: tArr[4] == '1' ? true : false };
-                let tcIdx: number | string = !isNaN(Number(tArr[2])) ? +tArr[2] : tArr[2];
-                tNode[tcIdx] = tcNode;
+                type Node2 = {
+                    [Rule: string]: Node1
+                }
+                type Node3 = {
+                    [isLateral: number]: Node2
+                }
+                type Node4 = {
+                    [CellOrRowIdx: number | string]: Node3
+                }
+                let tNode1: Node1 = {
+                    Color: tArr[3],
+                    BackgroundColor: '',
+                    Others: this.SetOtherRules(tArr)
+                };
+                let tNode2: Node2 = {
+                    [tArr[1]]: tNode1
+                }
+                let tNode3: Node3 = {
+                    [+tArr[4]]: tNode2
+                }
+                let tcIdx = !isNaN(Number(tArr[2])) ? +tArr[2] : tArr[2];
+                let tNode4: Node4 = {
+                    [tcIdx]: tNode3
+                }
 
                 if (ColorRuleArr[tArr[0]] == null) {
-                    ColorRuleArr[tArr[0]] = tNode;
+                    ColorRuleArr[tArr[0]] = tNode4;
                 }
                 else if (ColorRuleArr[tArr[0]][tcIdx] == null) {
-                    ColorRuleArr[tArr[0]][tcIdx] = tcNode;
+                    ColorRuleArr[tArr[0]][tcIdx] = tNode3;
                 }
-                else {
-                    ColorRuleArr[tArr[0]][tcIdx].Rule.push(tArr[1]);
-                    ColorRuleArr[tArr[0]][tcIdx].Color.push(tArr[3]);
-                    ColorRuleArr[tArr[0]][tcIdx].BackgroundColor.push('');
+                else if (ColorRuleArr[tArr[0]][tcIdx][+tArr[4]] == null) {
+                    ColorRuleArr[tArr[0]][tcIdx][+tArr[4]] = tNode2;
+                }
+                else if (ColorRuleArr[tArr[0]][tcIdx][+tArr[4]][tArr[1]] == null) {
+                    ColorRuleArr[tArr[0]][tcIdx][+tArr[4]][tArr[1]] = tNode1;
                 }
             }
         }
     }
 
+    //判斷此欄位值是否符合特殊規則。若沒定義特殊規則則回傳true
+    //tPageName: 頁面名稱
+    //Others: 判定規則
+    //CellIdx: 行座標
+    //RowTitle: 左邊第一值
+    isConformRule(tPageName: string, Others: { 'Score': number, [TitleOrFieldName: string]: string | number }, CellIdx: number, RowTitle: string): boolean {
+        let tmpBool: boolean[] = [];
+        let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
+        let TitleArr = gPageObj.PageNameObj[tPageName].TitleStrArr;
+        let ps = new PageSet();
+        let pt = new PageTool();
+        let haveOtherRules: boolean = false;
+
+        for (let x in Others) {
+            if (x != 'Score') {
+                haveOtherRules = true;
+                let tFIdx = gPageObj.PageNameObj[tPageName].FieldArr.indexOf(x);
+                let GetValue: string[] | string = LastQuery.QueryArr.length > 0 ? (LastQuery.QueryArr[tFIdx].indexOf('@') > -1 ? LastQuery.QueryArr[tFIdx].split('@') : LastQuery.QueryArr[tFIdx]) : '';
+                let tmpMenuArr: string[] = ps.GetListArr(tPageName, x, true);
+                let tmpValue: string = pt.GetListValue(tmpMenuArr, Others[x].toString());
+                let tmpValueArr: string[] = tmpValue.indexOf('/') > -1 ? tmpValue.split('/') : [];
+                let tRowTitleArr: string[] = RowTitle.indexOf('/') > -1 ? RowTitle.split('/') : [];
+                let tmpCellValue: string = CellIdx > -1 && CellIdx < TitleArr.length ? TitleArr[CellIdx] : '';
+                let tCellTitleArr: string[] = tmpCellValue.indexOf('/') > -1 ? tmpCellValue.split('/') : [];
+
+                //先判斷RowTitle
+                if (RowTitle == tmpValue || RowTitle == Others[x]
+                    || tRowTitleArr.indexOf(tmpValue) > -1 || tRowTitleArr.indexOf(Others[x].toString()) > -1
+                    || tmpValueArr.indexOf(RowTitle) > -1) {
+                    return true;
+                }
+                //再判斷欄位名稱
+                if (tmpCellValue == tmpValue || tmpCellValue == Others[x]
+                    || tCellTitleArr.indexOf(tmpValue) > -1 || tCellTitleArr.indexOf(Others[x].toString()) > -1
+                    || tmpValueArr.indexOf(tmpCellValue) > -1) {
+                    return true;
+                }
+                //最後判斷搜尋Bar
+                if (!this.NotSearchBar(tPageName)) {
+                    if ((typeof GetValue == 'object' && GetValue.indexOf(Others[x].toString()) > -1)
+                        || (typeof GetValue == 'string' && GetValue == Others[x])) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return !haveOtherRules ? true : false;
+    }
+
     //將搜尋結果與顏色規則初始化Hightlight座標資訊物件
     InitColorObj(tPageName: string, data: string[][] | string[]) {
-        let regexp = /\[[^\[ & ^\]]+\]/g;
+        let regexp = /\[[^\[&^\]]+\]/g;
         this.HighlightObj = {};
-        let RowTitle: string[] = [];
+        let RowTitle: string[] = [];//左邊第一個值的Title
+        let TitleArr: string[] = gPageObj.PageNameObj[tPageName].TitleStrArr;//欄位名稱陣列
         let tData: string[][] = [];
         Object.assign(tData, data);
 
         for (let i = 0; i < data.length; i++) {
             if (typeof data[i] == 'string') {
-                RowTitle.push((data[i] as string).split(',')[0]);
                 tData[i] = (data[i] as string).split(',');
             }
-            else {
-                RowTitle.push(data[i][0]);
-            }
+            RowTitle.push(tData[i][0]);
 
             for (let j = 0; j < tData[i].length; j++) {
                 tData[i][j] = tData[i][j].replace('%', '');
                 //if (tData[i][j] == '' || tData[i][j] == '-') { tData[i][j] = '0'; }
+                //不能轉0，否則可能會合法運算Higglight顏色
                 let tArr = tData[i][j].split(';');
                 if (tArr.length > 1) { tData[i][j] = tArr[0]; }
             }
@@ -3216,147 +3328,172 @@ export class ColorRuleClass {
 
         for (let i = 0; i < tData.length; i++) {
             let tLineData: string[] = tData[i];
-            if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][i] && !ColorRuleArr[tPageName][i].isLateral) {
-                for (let j = 0; j < ColorRuleArr[tPageName][i].Rule.length; j++) {
-                    let tIdxArr: string[] = ColorRuleArr[tPageName][i].Rule[j].match(regexp) || [];
-
+            //縱坐標判定
+            if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][i] && ColorRuleArr[tPageName][i][0]) {
+                for (let tRule in ColorRuleArr[tPageName][i][0]) {
+                    let tIdxArr: string[] = tRule.match(regexp) || [];
                     for (let m = 1; m < tLineData.length; m++) {
-                        let tValue = tLineData[m].replace('%', '');
-                        let tmRule = ColorRuleArr[tPageName][i].Rule[j];
-                        let HaveDash = false;
-                        if (!isNaN(Number(tValue))) {
-                            for (let k = 0; k < tIdxArr.length; k++) {
-                                let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
-                                let tIdx: number = -1;
-                                if (!isNaN(Number(tStr))) {
-                                    tIdx = Number(tStr);
-                                }
-                                else {
-                                    tIdx = RowTitle.indexOf(tStr);
-                                }
-
-                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
-                                        HaveDash = true;
-                                        break;
+                        let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][i][0][tRule].Others, m, RowTitle[i]);
+                        if (isConform) {
+                            let tValue = tLineData[m].replace('%', '');
+                            let tmRule = tRule;
+                            let HaveDash = false;
+                            if (!isNaN(Number(tValue))) {
+                                for (let k = 0; k < tIdxArr.length; k++) {
+                                    let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
+                                    let tIdx: number = -1;
+                                    if (!isNaN(Number(tStr))) {
+                                        tIdx = Number(tStr);
                                     }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                    else {
+                                        tIdx = RowTitle.indexOf(tStr);
+                                    }
+
+                                    while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                        if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                            HaveDash = true;
+                                            break;
+                                        }
+                                        tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                    }
+
+                                    if (HaveDash) { break; }
                                 }
 
-                                if (HaveDash) { break; }
-                            }
+                                if (HaveDash) { continue; }
+                                if (eval(tmRule)) {
+                                    let tNode = {
+                                        Color: ColorRuleArr[tPageName][i][0][tRule].Color,//顏色
+                                        BackgroundColor: ColorRuleArr[tPageName][i][0][tRule].BackgroundColor,//背景顏色
+                                        Score: ColorRuleArr[tPageName][i][0][tRule].Others.Score
+                                    }
 
-                            if (HaveDash) { continue; }
-                            if (eval(tmRule)) {
-                                let tNode = {
-                                    Color: ColorRuleArr[tPageName][i].Color[j],//顏色
-                                    BackgroundColor: ColorRuleArr[tPageName][i].BackgroundColor[j],//背景顏色
-                                }
-
-                                if (!this.HighlightObj[i]) {
-                                    let tpNode = { [m]: tNode };
-                                    this.HighlightObj[i] = tpNode;
-                                }
-                                else if (!this.HighlightObj[i][m]) {
-                                    this.HighlightObj[i][m] = tNode;
+                                    if (!this.HighlightObj[i]) {
+                                        let tpNode = { [m]: tNode };
+                                        this.HighlightObj[i] = tpNode;
+                                    }
+                                    else if (!this.HighlightObj[i][m]) {
+                                        this.HighlightObj[i][m] = tNode;
+                                    }
+                                    //如果目前Highlight權重高於目前的，則覆蓋
+                                    else if (tNode.Score > this.HighlightObj[i][m].Score) {
+                                        this.HighlightObj[i][m] = tNode;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][RowTitle[i]] && !ColorRuleArr[tPageName][RowTitle[i]].isLateral) {
-                for (let j = 0; j < ColorRuleArr[tPageName][RowTitle[i]].Rule.length; j++) {
-                    let tIdxArr: string[] = ColorRuleArr[tPageName][RowTitle[i]].Rule[j].match(regexp) || [];
-
+            //縱Title判定。縱坐標、縱Title，兩個判定不寫成一個的原因:讓權重去決定要不要覆寫
+            if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][RowTitle[i]] && ColorRuleArr[tPageName][RowTitle[i]][0]) {
+                for (let tRule in ColorRuleArr[tPageName][RowTitle[i]][0]) {
+                    let tIdxArr: string[] = tRule.match(regexp) || [];
                     for (let m = 1; m < tLineData.length; m++) {
-                        let tmRule = ColorRuleArr[tPageName][RowTitle[i]].Rule[j];
-                        let tValue = tLineData[m].replace('%', '');
-                        let HaveDash = false;
-                        if (!isNaN(Number(tValue))) {
-                            for (let k = 0; k < tIdxArr.length; k++) {
-                                let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
-                                let tIdx: number = -1;
-                                if (!isNaN(Number(tStr))) {
-                                    tIdx = Number(tStr);
-                                }
-                                else {
-                                    tIdx = RowTitle.indexOf(tStr);
-                                }
-
-                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
-                                        HaveDash = true;
-                                        break;
+                        let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Others, m, RowTitle[i]);
+                        if (isConform) {
+                            let tmRule = tRule;
+                            let tValue = tLineData[m].replace('%', '');
+                            let HaveDash = false;
+                            if (!isNaN(Number(tValue))) {
+                                for (let k = 0; k < tIdxArr.length; k++) {
+                                    let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
+                                    let tIdx: number = -1;
+                                    if (!isNaN(Number(tStr))) {
+                                        tIdx = Number(tStr);
                                     }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
-                                }
-                                if (HaveDash) { break; }
-                            }
+                                    else {
+                                        tIdx = RowTitle.indexOf(tStr);
+                                    }
 
-                            if (HaveDash) { continue; }
-                            if (eval(tmRule)) {
-                                let tNode = {
-                                    Color: ColorRuleArr[tPageName][RowTitle[i]].Color[j],//顏色
-                                    BackgroundColor: ColorRuleArr[tPageName][RowTitle[i]].BackgroundColor[j],//背景顏色
+                                    while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                        if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                            HaveDash = true;
+                                            break;
+                                        }
+                                        tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                    }
+                                    if (HaveDash) { break; }
                                 }
 
-                                if (!this.HighlightObj[i]) {
-                                    let tpNode = { [m]: tNode };
-                                    this.HighlightObj[i] = tpNode;
-                                }
-                                else if (!this.HighlightObj[i][m]) {
-                                    this.HighlightObj[i][m] = tNode;
+                                if (HaveDash) { continue; }
+                                if (eval(tmRule)) {
+                                    let tNode = {
+                                        Color: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Color,//顏色
+                                        BackgroundColor: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].BackgroundColor,//背景顏色
+                                        Score: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Others.Score
+                                    }
+
+                                    if (!this.HighlightObj[i]) {
+                                        let tpNode = { [m]: tNode };
+                                        this.HighlightObj[i] = tpNode;
+                                    }
+                                    else if (!this.HighlightObj[i][m]) {
+                                        this.HighlightObj[i][m] = tNode;
+                                    }
+                                    //如果目前Highlight權重高於目前的，則覆蓋
+                                    else if (tNode.Score > this.HighlightObj[i][m].Score) {
+                                        this.HighlightObj[i][m] = tNode;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
+            //橫坐標判定
             for (let CellIdx in ColorRuleArr[tPageName]) {
+                //索引為欄位名稱的狀況
                 let tCellIdx: number = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(CellIdx);
-                if (ColorRuleArr[tPageName][CellIdx].isLateral && (!isNaN(Number(CellIdx)) || tCellIdx > -1)) {
-                    if (tCellIdx < 0 && !isNaN(Number(CellIdx))) { tCellIdx = Number(CellIdx); }
+                if (ColorRuleArr[tPageName][CellIdx][1] && (!isNaN(Number(CellIdx)) || tCellIdx > -1)) {
+                    //只要是數字一律視為座標，Title不會考慮有數字名稱的可能
+                    if (!isNaN(Number(CellIdx))) { tCellIdx = Number(CellIdx); }
+                    for (let tRule in ColorRuleArr[tPageName][CellIdx][1]) {
+                        let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][CellIdx][1][tRule].Others, tCellIdx, RowTitle[i]);
+                        if (isConform) {
+                            let tIdxArr: string[] = tRule.match(regexp) || [];
+                            let tmRule = tRule;
+                            let HaveDash = false;
 
-                    for (let j = 0; j < ColorRuleArr[tPageName][CellIdx].Rule.length; j++) {
-                        let tIdxArr: string[] = ColorRuleArr[tPageName][CellIdx].Rule[j].match(regexp) || [];
-                        let tmRule = ColorRuleArr[tPageName][CellIdx].Rule[j];
-                        let HaveDash = false;
-
-                        for (let k = 0; k < tIdxArr.length; k++) {
-                            let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
-                            let tIdx: number = -1;
-                            if (!isNaN(Number(tStr))) {
-                                tIdx = Number(tStr);
-                            }
-                            else {
-                                tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(tStr);
-                            }
-
-                            while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                if (tData[i][tIdx] == '-' || tData[i][tIdx] == '') {
-                                    HaveDash = true;
-                                    break;
+                            for (let k = 0; k < tIdxArr.length; k++) {
+                                let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
+                                let tIdx: number = -1;
+                                if (!isNaN(Number(tStr))) {
+                                    tIdx = Number(tStr);
                                 }
-                                tmRule = tmRule.replace(tIdxArr[k], tData[i][tIdx]);
-                            }
-                            if (HaveDash) { break; }
-                        }
+                                else {
+                                    tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(tStr);
+                                }
 
-                        if (HaveDash) { continue; }
-                        if (eval(tmRule)) {
-                            let tNode = {
-                                Color: ColorRuleArr[tPageName][CellIdx].Color[j],//顏色
-                                BackgroundColor: ColorRuleArr[tPageName][CellIdx].BackgroundColor[j],//背景顏色
+                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                    if (tData[i][tIdx] == '-' || tData[i][tIdx] == '') {
+                                        HaveDash = true;
+                                        break;
+                                    }
+                                    tmRule = tmRule.replace(tIdxArr[k], tData[i][tIdx]);
+                                }
+                                if (HaveDash) { break; }
                             }
 
-                            if (!this.HighlightObj[i]) {
-                                let tpNode = { [tCellIdx]: tNode };
-                                this.HighlightObj[i] = tpNode;
-                            }
-                            else if (!this.HighlightObj[i][tCellIdx]) {
-                                this.HighlightObj[i][tCellIdx] = tNode;
+                            if (HaveDash) { continue; }
+                            if (eval(tmRule)) {
+                                let tNode = {
+                                    Color: ColorRuleArr[tPageName][CellIdx][1][tRule].Color,//顏色
+                                    BackgroundColor: ColorRuleArr[tPageName][CellIdx][1][tRule].BackgroundColor,//背景顏色
+                                    Score: ColorRuleArr[tPageName][CellIdx][1][tRule].Others.Score,
+                                }
+
+                                if (!this.HighlightObj[i]) {
+                                    let tpNode = { [tCellIdx]: tNode };
+                                    this.HighlightObj[i] = tpNode;
+                                }
+                                else if (!this.HighlightObj[i][tCellIdx]) {
+                                    this.HighlightObj[i][tCellIdx] = tNode;
+                                }
+                                //如果目前Highlight權重高於目前的，則覆蓋
+                                else if (tNode.Score > this.HighlightObj[i][tCellIdx].Score) {
+                                    this.HighlightObj[i][tCellIdx] = tNode;
+                                }
                             }
                         }
                     }
