@@ -395,7 +395,10 @@ class SearchOperation {
                 ordering: false,
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel'
+                    //'excel'
+                    {
+                        extend: 'excel',
+                    },
                 ]
             };
         }
@@ -438,6 +441,14 @@ class SearchOperation {
         }
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
+        if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1) {
+            let tmpTitle = ps.SetFormTitleFromQuery(tmpPageName, Query.QueryArr);
+            if (tmpTitle != '') {
+                HiddenTableObj.buttons.forEach(function (object) {
+                    object['title'] = tmpTitle;
+                });
+            }
+        }
         cr.SetColorRuleFromFront(tmpPageName);
         if (PageNumber >= 1) {
             let ColumnObj = new Array();

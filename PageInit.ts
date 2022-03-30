@@ -411,7 +411,10 @@ class SearchOperation implements Search, ClickSearch {
                 ordering: false,
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel'
+                    //'excel'
+                    {
+                        extend: 'excel',
+                    },
                 ]
             }
         }
@@ -459,6 +462,14 @@ class SearchOperation implements Search, ClickSearch {
 
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
+        if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1) {
+            let tmpTitle: string = ps.SetFormTitleFromQuery(tmpPageName, Query.QueryArr);
+            if (tmpTitle != '') {
+                HiddenTableObj.buttons.forEach(function (object: any) {
+                    object['title'] = tmpTitle;
+                });
+            }
+        }
         cr.SetColorRuleFromFront(tmpPageName);
         if (PageNumber >= 1) {
             let ColumnObj = new Array();
