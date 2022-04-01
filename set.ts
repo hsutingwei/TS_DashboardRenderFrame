@@ -3044,6 +3044,7 @@ export class OnclickPage {
     //dataArr: 一行的data陣列
     //p1: 需額外加入的參數
     GetOnclickHtml(tPageName: string, tTablePageName: string, FieldName: string, RowTitle: string, dataArr: Array<string>, p1?: string) {
+        let regexp = /\[[^\[&^\]]+\]/g;
         if (this.FieldIsOnclick(tPageName, FieldName, RowTitle)) {
             let HtmlStr: string = NeedClickObj[tPageName][FieldName].Function;
             HtmlStr += '(\'' + tTablePageName + '\', [\'';
@@ -3051,8 +3052,13 @@ export class OnclickPage {
                 if (i > 0) {
                     HtmlStr += '\', \'';
                 }
+                let tArr: string[] | null;
                 if (typeof NeedClickObj[tPageName][FieldName].ValueQuery[i] == 'number') {
                     HtmlStr += dataArr[+NeedClickObj[tPageName][FieldName].ValueQuery[i]].replace(/"/g, '”');
+                }
+                else if ((tArr = NeedClickObj[tPageName][FieldName].ValueQuery[i].toString().match(regexp)) != null) {
+                    let tNumber: string = tArr[0].replace('[', '').replace(']', '');
+                    if (!isNaN(Number(tNumber))) { HtmlStr += tNumber; }
                 }
                 else {
                     HtmlStr += NeedClickObj[tPageName][FieldName].ValueQuery[i].toString().replace(/"/g, '”');
