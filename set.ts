@@ -1428,6 +1428,29 @@ export class PageSet {
         return reArr;
     }
 
+    //根據URL參數重新設定搜尋欄位的顯示狀態
+    //DefaultObj: 原來的搜尋參數物件
+    //UrlObj: URL參數物件(已解碼)
+    public ResetSearchDisplayFromURL(DefaultObj: { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] }, UrlObj: { [key: string]: string }) {
+        if (UrlObj['報表類型']) {
+            let tIdx: number = 0;
+            if (UrlObj['報表類型'] == '年' && (tIdx = DefaultObj.DisplayArr.indexOf('月份')) > -1) {
+                DefaultObj.DisplayArr.splice(tIdx, 1);
+            }
+            else if (UrlObj['報表類型'] == '週' && (tIdx = DefaultObj.DisplayArr.indexOf('月份')) > -1) {
+                DefaultObj.DisplayArr.splice(tIdx, 1);
+                tIdx = DefaultObj.DisplayArr.indexOf('年度');
+                DefaultObj.DisplayArr.splice(tIdx, 1);
+            }
+        }
+        if (UrlObj['BU'] && UrlObj['BU'] == 'FT') {
+            let tIdx: number = DefaultObj.DisplayArr.indexOf('機型');
+            DefaultObj.DisplayArr.splice(tIdx + 1, 0, '機種');
+        }
+
+        return DefaultObj;
+    }
+
     //重新定義物件屬性⬆
 
     //Table、Chart相關定義⬇

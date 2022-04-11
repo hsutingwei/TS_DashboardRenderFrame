@@ -2383,7 +2383,8 @@ export class PageTool {
             }
         }
 
-        return DefaultObj;
+        let ps = new set.PageSet();
+        return ps.ResetSearchDisplayFromURL(DefaultObj, UrlObj);
     }
 }
 

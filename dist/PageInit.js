@@ -2302,7 +2302,8 @@ export class PageTool {
                 DefaultObj.DefaultValue[idx] = UrlObj[UrlKeys[i]];
             }
         }
-        return DefaultObj;
+        let ps = new set.PageSet();
+        return ps.ResetSearchDisplayFromURL(DefaultObj, UrlObj);
     }
 }
 window.PageOperation = PageOperation;
