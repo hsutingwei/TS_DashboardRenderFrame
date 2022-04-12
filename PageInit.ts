@@ -1611,15 +1611,23 @@ export class PageOperation extends TableAndSearchOperation {//PageName底下操�
         let Query = gPageObj.PageNameObj[tmpPageName].LastQuery;
         let sbtn: any = $('#ExportBtn');
         //sbtn.button('loading');
+        $("#ExportBtn").prop('disabled', true);
         SetButtonDisable('SearchBtn', true, 'loading...');
         if (Query.PageNumber != -1) { Query.PageNumber = -1; }
 
         doAjax('ExportExcel', true, Query, function (data: string) {
-            let tDom: any = document.getElementById('HiddenClickBtn');
-            tDom.href = data;
-            ButtonClickSimulation('#HiddenClickBtn');
+            let tIdx = -1;
+            if ((tIdx = data.indexOf('失敗')) == 0) {
+                alert(data.substring(tIdx + 3));
+            }
+            else {
+                let tDom: any = document.getElementById('HiddenClickBtn');
+                tDom.href = data;
+                ButtonClickSimulation('#HiddenClickBtn');
+            }
             //sbtn.button('reset');
             SetButtonDisable('SearchBtn', false, '搜尋');
+            $("#ExportBtn").prop('disabled', false);
         });
     }
 
