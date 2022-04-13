@@ -415,7 +415,12 @@ function AlertClick(TitleStr: string, MsgStr: string) {
     if (tDom != null) { tDom.innerHTML = TitleStr; }
     tDom = document.getElementById('AlertText');
     if (tDom != null) { tDom.innerHTML = MsgStr; }
-    ButtonClickSimulation('#AlertBtn');
+    if (document.getElementById('AlertBtn')) {
+        ButtonClickSimulation('#AlertBtn');
+    }
+    else {
+        alert(MsgStr);
+    }
 }
 
 //檢查字串是否全英文

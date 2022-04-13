@@ -399,7 +399,12 @@ function AlertClick(TitleStr, MsgStr) {
     if (tDom != null) {
         tDom.innerHTML = MsgStr;
     }
-    ButtonClickSimulation('#AlertBtn');
+    if (document.getElementById('AlertBtn')) {
+        ButtonClickSimulation('#AlertBtn');
+    }
+    else {
+        alert(MsgStr);
+    }
 }
 //檢查字串是否全英文
 function isLetters(str) {
