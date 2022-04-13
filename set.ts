@@ -197,7 +197,7 @@ export var MenuList: {//下拉式選單資訊物件
         MenuArr: [],
         DataFromDB: true
     },
-    TEST_ALL_CUST:{
+    TEST_ALL_CUST: {
         MenuArr: [],
         DataFromDB: true
     }
@@ -290,6 +290,7 @@ export var PageSetObj: PageSetObj = {//此物件屬性儲存都是頁面名稱
     NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],//需要百萬訊息標示的頁面
     NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],//需要匯出的頁面
     NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//頁面載入時不預設搜尋
+    TableNeedDefer: [],
 }
 
 //月份對應的字串
@@ -2973,7 +2974,7 @@ export class DynamicClass {//此class定義某欄位值改變時影響其他欄�
                     },
                 }
             },
-            TESTERCOST_SUMMARY:{
+            TESTERCOST_SUMMARY: {
                 InfluenceToFieldNames: {
                     BU: {
                         field_7: {
@@ -2982,7 +2983,7 @@ export class DynamicClass {//此class定義某欄位值改變時影響其他欄�
                     },
                 }
             },
-            COST_SUMMARY:{
+            COST_SUMMARY: {
                 InfluenceToFieldNames: {
                     BU: {
                         field_7: {

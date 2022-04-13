@@ -423,6 +423,10 @@ class SearchOperation {
         if (set.PageSetObj.NeedYScroll.indexOf(tmpPageName) > -1) {
             TableObj.scrollY = '60vh';
         }
+        if (set.PageSetObj.TableNeedDefer.indexOf(tmpPageName) > -1) {
+            TableObj.deferRender = true;
+            TableObj.orderClasses = false;
+        }
         if (tmpPageName == 'Actual') {
             TableObj.columnDefs = [
                 {

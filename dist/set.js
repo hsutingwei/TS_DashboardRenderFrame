@@ -255,7 +255,8 @@ export var PageSetObj = {
     noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
     NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],
     NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
-    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'], //頁面載入時不預設搜尋
+    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    TableNeedDefer: [],
 };
 //月份對應的字串
 export var MonthFormat;

@@ -440,6 +440,10 @@ class SearchOperation implements Search, ClickSearch {
         if (set.PageSetObj.NeedYScroll.indexOf(tmpPageName) > -1) {
             TableObj.scrollY = '60vh';
         }
+        if (set.PageSetObj.TableNeedDefer.indexOf(tmpPageName) > -1) {
+            TableObj.deferRender = true;
+            TableObj.orderClasses = false;
+        }
         if (tmpPageName == 'Actual') {
             TableObj.columnDefs = [
                 {
@@ -736,21 +740,6 @@ class SearchOperation implements Search, ClickSearch {
         }
         else {
             doAjax('Search', true, Query, function (data: string[]) {
-                /*for (let i = 0; i < data.length; i++) {
-                    if (data[i].indexOf('Sub-Total') == 0) {
-                        let ttt = data[i].split(',');
-                        for (let j = 0; j < ttt.length; j++) {
-                            if (ttt[j].indexOf('Sub-Total') == 0) {
-                                ttt[j] = ttt[j].replace('(', '（');
-                                ttt[j] = ttt[j].replace(')', '）');
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                        data[i] = ttt.join(',');
-                    }
-                }*/
                 let pm = new PageMake();
                 let ps = new set.PageSet();
                 let pt = new PageTool();
@@ -875,6 +864,7 @@ class SearchOperation implements Search, ClickSearch {
                     PageOperation.CheckReadWriteMode(false);
 
                     ps.FreezeField(tmpPageName);
+                    ps.MergeTableValue(tmpPageName);
                 });
                 if (HaveMillion || set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) { $('div.toolbar').html('<span style="color:blue">(M.NT)</span>'); }
 

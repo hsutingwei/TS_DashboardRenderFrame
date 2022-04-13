@@ -35,6 +35,7 @@ type PageSetObj = {//內容值填入頁面名稱
     NeedMillionInf: string[],//需要百萬訊息標示的頁面
     NeedExport: string[],//需要匯出的頁面
     NoDefaultSearch: string[],//頁面載入時不預設搜尋
+    TableNeedDefer: string[],//datatable.js需要設定延遲載入
 }
 
 interface PageStatus {
