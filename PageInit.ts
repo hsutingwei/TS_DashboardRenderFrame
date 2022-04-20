@@ -43,7 +43,7 @@ $(function () {
         for (let i = 0; i < gPageObj.PageNameObj[tPageName].ChildName.length; i++) {
             cr.SetColorRuleFromFront(gPageObj.PageNameObj[tPageName].ChildName[i]);
         }
-        
+
         po.InitListArr(tPageName);
 
         if (ps.isMainIndex(tPageName)) {
@@ -1724,6 +1724,9 @@ export class PageMake implements PageRender {
                     tmpReadHtml = 'read';
                     LineAllNotCanEdit = false;
                 }
+                else {
+                    LineAllNotCanEdit = true;
+                }
 
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     aPart += tmpArr[j];
@@ -1742,7 +1745,7 @@ export class PageMake implements PageRender {
                     }
                     aPart += tStr;
                 }
-                else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])){
+                else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) {
                     let tStr = '<span class="ring ' + tmpReadHtml + '" style="--tw-ring-color:' + tmpArr[j] + '">' + tmpArr[j] + '</span>';
                     aPart += tStr;
                 }
@@ -2189,7 +2192,7 @@ export class PageMake implements PageRender {
 export class PageTool {
     //有下拉選單的欄位值，將Key值替換成Value值
     public GetListValue(tMenuArr: string[], keyValue: string): string {
-        if (keyValue == ''){
+        if (keyValue == '') {
             return keyValue;
         }
         let HaveDash = true;//Menu會有Dash來做前端動態改變Menu的功能
@@ -2370,7 +2373,7 @@ export class PageTool {
             }
         }
     }
-    
+
     public SetDefaultValue(DefaultObj: { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] }, UrlObj: { [key: string]: string }) {
         var UrlKeys = Object.keys(UrlObj);
 
