@@ -695,21 +695,6 @@ class SearchOperation {
         }
         else {
             doAjax('Search', true, Query, function (data) {
-                /*for (let i = 0; i < data.length; i++) {
-                    if (data[i].indexOf('Sub-Total') == 0) {
-                        let ttt = data[i].split(',');
-                        for (let j = 0; j < ttt.length; j++) {
-                            if (ttt[j].indexOf('Sub-Total') == 0) {
-                                ttt[j] = ttt[j].replace('(', '（');
-                                ttt[j] = ttt[j].replace(')', '）');
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                        data[i] = ttt.join(',');
-                    }
-                }*/
                 let pm = new PageMake();
                 let ps = new set.PageSet();
                 let pt = new PageTool();
@@ -833,6 +818,7 @@ class SearchOperation {
                     }
                     PageOperation.CheckReadWriteMode(false);
                     ps.FreezeField(tmpPageName);
+                    ps.MergeTableValue(tmpPageName);
                 });
                 if (HaveMillion || set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) {
                     $('div.toolbar').html('<span style="color:blue">(M.NT)</span>');
@@ -1684,6 +1670,9 @@ export class PageMake {
                     tmpReadHtml = 'read';
                     LineAllNotCanEdit = false;
                 }
+                else {
+                    LineAllNotCanEdit = true;
+                }
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     aPart += tmpArr[j];
                 }
@@ -1819,11 +1808,15 @@ export class PageMake {
                         for (c = j + 1; c < tmpTitleArr[i].length && tmpTitleArr[i][j] == tmpTitleArr[i][c]; col++, c++) {
                             tmpTitleArr[i][c] = '@';
                         }
-                        for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; row++, r++) {
-                            for (let k = j + 1; j < tmpTitleArr[r].length && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) {
-                                tmpTitleArr[r][k] = '@';
+                        for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; r++) {
+                            let k = 0;
+                            for (k = j + 1; k < tmpTitleArr[r].length && k < c && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) { }
+                            if (k == c) {
+                                for (k = j + 1; k < c; k++) {
+                                    tmpTitleArr[r][k] = '@';
+                                }
+                                row++;
                             }
-                            tmpTitleArr[r][j] = '@';
                         }
                         let LegthStr = this.MakeWidthAttributeStr(tPageName, FieldArr[j], (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : ''));
                         TitleHtml += '<' + LineNode + ' ' + LegthStr + (col > 0 ? ' colspan="' + (col + 1).toString() + '"' : '') + (row > 0 ? ' rowspan="' + (row + 1).toString() + '"' : '') + ' ' + (ShieldIdxArr.indexOf(j) > -1 ? 'style="display:none"' : '') + '>';

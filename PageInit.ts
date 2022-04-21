@@ -1864,9 +1864,13 @@ export class PageMake implements PageRender {
                     for (let j = 0, col = 0, row = 0, c = 0, r = 0; j < tmpTitleArr[i].length; j++) {
                         if (tmpTitleArr[i][j] == '@') { continue; }
                         for (c = j + 1; c < tmpTitleArr[i].length && tmpTitleArr[i][j] == tmpTitleArr[i][c]; col++, c++) { tmpTitleArr[i][c] = '@'; }
-                        for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; row++, r++) {
-                            for (let k = j + 1; j < tmpTitleArr[r].length && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) { tmpTitleArr[r][k] = '@'; }
-                            tmpTitleArr[r][j] = '@';
+                        for (r = i + 1; r < tmpTitleArr.length && tmpTitleArr[i][j] == tmpTitleArr[r][j]; r++) {
+                            let k = 0;
+                            for (k = j + 1; k < tmpTitleArr[r].length && k < c && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) { }
+                            if (k == c) {
+                                for (k = j + 1; k < c; k++) { tmpTitleArr[r][k] = '@'; }
+                                row++;
+                            }
                         }
 
                         let LegthStr = this.MakeWidthAttributeStr(tPageName, FieldArr[j], (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : ''));
