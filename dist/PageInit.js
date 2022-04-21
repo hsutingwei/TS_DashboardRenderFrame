@@ -1812,7 +1812,7 @@ export class PageMake {
                             let k = 0;
                             for (k = j + 1; k < tmpTitleArr[r].length && k < c && tmpTitleArr[r][j] == tmpTitleArr[r][k]; k++) { }
                             if (k == c) {
-                                for (k = j + 1; k < c; k++) {
+                                for (k = j; k < c; k++) {
                                     tmpTitleArr[r][k] = '@';
                                 }
                                 row++;
