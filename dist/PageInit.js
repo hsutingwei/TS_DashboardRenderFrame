@@ -85,6 +85,7 @@ class FormInf {
         this.TitleCell = []; //紀錄多重欄位(真實的欄位型態)
         this.NecessaryArr = []; //是否必填
         this.ModifiableArr = []; //可否修改
+        this.FullData = []; //這次的搜尋結果
         this.FormName = tFormName;
         if (tFieldArr != null) {
             this.FieldArr = tFieldArr;
@@ -260,9 +261,11 @@ class SearchOperation {
                         returnData.draw = data.draw;
                         returnData.recordsTotal = AllResultCount;
                         returnData.recordsFiltered = AllResultCount;
+                        gPageObj.PageNameObj[tPageName].FullData = [];
                         let tmpObj = new Array();
                         for (let i = 0; i < result.length; i++) {
                             let tmpArr = result[i].split(',');
+                            gPageObj.PageNameObj[tPageName].FullData.push(tmpArr);
                             let tObj = {};
                             for (let j = 0; j < tmpArr.length; j++) {
                                 tObj[tTableTitle[j]] = tmpArr[j];
@@ -309,6 +312,27 @@ class SearchOperation {
                     ]
                 };
                 let t2 = $('#' + TableIdName).DataTable(TableObj);
+                $.fn.dataTable.ext.search.push(function (settings, LineData, tIndex) {
+                    let SearchText = $('.dataTables_filter').find('input').val().toString().toLowerCase();
+                    if (SearchText == '') {
+                        return true;
+                    }
+                    else {
+                        for (let i = 0; i < gPageObj.PageNameObj[tPageName].FullData[tIndex].length; i++) {
+                            let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], false);
+                            if (set.PageSetObj.NoChangePage.indexOf(tPageName) < 0 && tmpSelectList.length > 0) {
+                                let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tPageName].FullData[tIndex][i]);
+                                if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
+                                    return true;
+                                }
+                            }
+                            else if (gPageObj.PageNameObj[tPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
                 $('.buttons-excel').addClass('btn btn-primary');
                 ButtonClickSimulation('#RowDataAreaBtn');
                 pt.LoadingMask('none');
@@ -508,8 +532,10 @@ class SearchOperation {
                         data: []
                     };
                     let tmpObj = new Array();
+                    gPageObj.PageNameObj[tmpPageName].FullData = [];
                     for (let i = 0; i < result.length; i++) {
                         let tmpArr = result[i].split(',');
+                        gPageObj.PageNameObj[tmpPageName].FullData.push(tmpArr);
                         let tObj = {};
                         for (let j = 0; j < tmpArr.length; j++) {
                             tObj[FieldArr[j]] = tmpArr[j];
@@ -744,6 +770,27 @@ class SearchOperation {
                 let t2 = $('#' + HiddenTableIdName);
                 if (set.PageSetObj.noDataTable.indexOf(tmpPageName) < 0 && document.getElementById(TableIdName)) {
                     t = t.DataTable(TableObj);
+                    $.fn.dataTable.ext.search.push(function (settings, LineData, tIndex) {
+                        let SearchText = $('.dataTables_filter').find('input').val().toString().toLowerCase();
+                        if (SearchText == '') {
+                            return true;
+                        }
+                        else {
+                            for (let i = 0; i < gPageObj.PageNameObj[tmpPageName].FullData[tIndex].length; i++) {
+                                let tmpSelectList = ps.GetListArr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false);
+                                if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) < 0 && tmpSelectList.length > 0) {
+                                    let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tmpPageName].FullData[tIndex][i]);
+                                    if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
+                                        return true;
+                                    }
+                                }
+                                else if (gPageObj.PageNameObj[tmpPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
                 }
                 if (document.getElementById(HiddenTableIdName)) {
                     t2 = t2.DataTable(HiddenTableObj);
@@ -1599,6 +1646,7 @@ export class PageMake {
         if (gPageObj.PageNameObj[tPageName] == null) {
             return '';
         }
+        gPageObj.PageNameObj[tPageName].FullData = [];
         let TableHtml = '<table ' + AttributeStr + '>';
         TableHtml += this.CreatTableTitle(tPageName, 'thead', set.PageSetObj.noDeletePage.indexOf(tPageName) > -1 ? new Array() : ['功能'], TitleArr);
         TableHtml += '<tbody>';
@@ -1618,6 +1666,7 @@ export class PageMake {
             let tmpId = 'tmprow' + i;
             TableHtml += '<tr id="' + tmpId + '">';
             let tmpArr = data[i].split(',');
+            gPageObj.PageNameObj[tPageName].FullData.push(tmpArr);
             let tmpModifuableArr = ps.CheckFieldModifiable(tPageName, tmpArr);
             let KeyValueArr = [];
             let ValueIdArr = [];
