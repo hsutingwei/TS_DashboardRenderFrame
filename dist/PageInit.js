@@ -591,7 +591,7 @@ class SearchOperation {
                         CheckArr.push(tmpArr[i]);
                     }
                     let tmpSelectList = ps.GetListArr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false);
-                    let tmpAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], '');
+                    let tmpAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
                     if (dc.NeedDynamicGetList(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false)) {
                         tmpAttrStr += ' onchange="' + dc.ReturnFunctionStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false, tdId) + '"';
                         for (let key in (_a = dc.DynamicInfObj[tmpPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]]) {
@@ -683,7 +683,7 @@ class SearchOperation {
                     let tmpSelectList = pm.FrontDynamicMenuRequest(tmpPageName, tFieldNameArr[i], ValueIdArr[i], false, KeyValueArr[i]);
                     let domId = ValueIdArr[i];
                     let tIdx = Number(domId.substring(domId.lastIndexOf('_') + 1));
-                    let tAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], '');
+                    let tAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
                     if (tmpSelectList != null && gPageObj.PageNameObj[tmpPageName].ModifiableArr[tIdx] && tmpModifuableArr[tIdx] && ShieldIdxArr.indexOf(tIdx) < 0 && LineArr[tIdx].innHtml.MenuPart != '') {
                         let tNewMenu = '';
                         if (ps.IsMultiSelect(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], false)) {
@@ -1155,7 +1155,7 @@ export class TableAndSearchOperation extends SearchOperation {
             else if (gPageObj.PageNameObj[tPageName].ModifiableArr[i]) {
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], false);
                 if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[i]) > -1) {
-                    tAttrStr += ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], '');
+                    tAttrStr += ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                     let FieldHtml = pm.MakeListHtml('Calendar', tAttrStr, tmpSelectList, GetDefault);
                     tmpArr.push(FieldHtml);
                 }
@@ -1163,14 +1163,14 @@ export class TableAndSearchOperation extends SearchOperation {
                     tmpArr.push('<input' + tAttrStr + ' class="form-control" title="新增模式不可上傳，請於修改模式中上傳" readonly>');
                 }
                 else if (GetDefault != '') { //有預設值，且不再需要更改
-                    let tmpWidth = ps.MakeWidth(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i]);
+                    let tmpWidth = ps.MakeWidth(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                     tmpArr.push('<input' + tAttrStr + ' class="form-control" value="' + GetDefault + '" style="width:' + tmpWidth + ';min-width:' + tmpWidth + '" readonly>');
                 }
                 else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i])) {
                     tmpArr.push('<input class="form-control" type="color"' + tAttrStr + ' value="">');
                 }
                 else {
-                    tAttrStr += ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], '');
+                    tAttrStr += ' ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                     if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], false)) {
                         tAttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], false, tId) + '"';
                         for (let key in (_a = dc.DynamicInfObj[tPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tPageName].TitleStrArr[i]]) {
@@ -1211,7 +1211,7 @@ export class TableAndSearchOperation extends SearchOperation {
             let domId = ValueIdArr[i];
             let tIdx = Number(domId.substring(domId.lastIndexOf('_') + 1));
             let realDomId = 'cell_' + AddLineCount + '_' + tIdx.toString();
-            let tAttrStr = ' id="' + realDomId + '" ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[tIdx], '');
+            let tAttrStr = ' id="' + realDomId + '" ' + pm.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[tIdx], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
             if (tmpSelectList != null && gPageObj.PageNameObj[tPageName].ModifiableArr[tIdx]) {
                 if (ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[tIdx], false)) {
                     let FieldHtml = pm.MakeListHtml('Multi Select', tAttrStr, tmpSelectList);
@@ -1700,7 +1700,7 @@ export class PageMake {
                     CheckArr.push(tmpArr[j]);
                 }
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
-                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '');
+                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                 if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], isSearch)) {
                     tmpAttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false, cellId) + '"';
                     for (let key in (_a = dc.DynamicInfObj[tPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
@@ -1791,7 +1791,7 @@ export class PageMake {
                 let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[j], ValueIdArr[j], false, KeyValueArr[j]);
                 let domId = ValueIdArr[j];
                 let tIdx = Number(domId.substring(domId.lastIndexOf('_') + 1));
-                let tAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[tIdx], '');
+                let tAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[tIdx], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                 if (tmpSelectList != null && gPageObj.PageNameObj[tPageName].ModifiableArr[tIdx] && tmpModifuableArr[tIdx] && ShieldIdxArr.indexOf(tIdx) < 0 && LineArr[tIdx].MenuPart != '') {
                     let tNewMenu = '';
                     tAttrStr += ' id="cell_' + i.toString() + '_' + tIdx.toString() + '_menu"';
@@ -1867,7 +1867,7 @@ export class PageMake {
                                 row++;
                             }
                         }
-                        let LegthStr = this.MakeWidthAttributeStr(tPageName, FieldArr[j], (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : ''));
+                        let LegthStr = this.MakeWidthAttributeStr(tPageName, FieldArr[j], (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : ''), gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
                         TitleHtml += '<' + LineNode + ' ' + LegthStr + (col > 0 ? ' colspan="' + (col + 1).toString() + '"' : '') + (row > 0 ? ' rowspan="' + (row + 1).toString() + '"' : '') + ' ' + (ShieldIdxArr.indexOf(j) > -1 ? 'style="display:none"' : '') + '>';
                         TitleHtml += '<span class="WordTitle">' + tmpTitleArr[i][j] + '</span></' + LineNode + '>';
                         col = 0, row = 0;
@@ -1880,7 +1880,7 @@ export class PageMake {
             }
             else {
                 for (let i = 0; i < FieldArr.length; i++) {
-                    TitleHtml += '<' + LineNode + ' ' + this.MakeWidthAttributeStr(tPageName, FieldArr[i], (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : '')) + '>' + FieldArr[i] + '</' + LineNode + '>';
+                    TitleHtml += '<' + LineNode + ' ' + this.MakeWidthAttributeStr(tPageName, FieldArr[i], (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : ''), gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read') + '>' + FieldArr[i] + '</' + LineNode + '>';
                 }
                 for (let j = 0; j < ExtraFieldArr.length; j++) {
                     TitleHtml += '<' + LineNode + '>' + ExtraFieldArr[j] + '</' + LineNode + '>';
@@ -1894,10 +1894,10 @@ export class PageMake {
     //tPageName: 頁面名稱
     //InputFieldName: 欄位名稱
     //StyleAttr: css定義
-    MakeWidthAttributeStr(tPageName, InputFieldName, StyleAttr) {
+    MakeWidthAttributeStr(tPageName, InputFieldName, StyleAttr, tMode) {
         let ps = new set.PageSet();
         let WidthAttributeStr = '';
-        let WidthStr = ps.MakeWidth(tPageName, InputFieldName);
+        let WidthStr = ps.MakeWidth(tPageName, InputFieldName, tMode);
         let tmpList = ps.GetListArr(tPageName, InputFieldName, false);
         WidthAttributeStr = WidthStr == '' ? '' : ' style="width:' + WidthStr + ';' + (tmpList.length == 0 ? 'min-width:' + WidthStr + ';' : '') + StyleAttr + '" data-width="' + WidthStr + '"';
         return WidthAttributeStr;
@@ -2007,15 +2007,15 @@ export class PageMake {
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[i]);
             if (DefaultIdx > -1) {
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], true);
-                let AttrStr = 'id="' + domId + '"' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '');
+                let AttrStr = 'id="' + domId + '"' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search');
                 if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[i]) > -1) {
                     htmlStr += this.MakeListHtml('Calendar', AttrStr, tmpSelectList, DefaultValue[DefaultIdx]);
                 }
                 else if (set.TableSetObj.CheckboxArr.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[i]) > -1) {
-                    htmlStr += '<input class="form-check-input" type="checkbox" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '') + ' ' + (DefaultValue[DefaultIdx] == 'true' || DefaultValue[DefaultIdx] == '1' ? 'checked' : '') + '>';
+                    htmlStr += '<input class="form-check-input" type="checkbox" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search') + ' ' + (DefaultValue[DefaultIdx] == 'true' || DefaultValue[DefaultIdx] == '1' ? 'checked' : '') + '>';
                 }
                 else if (tmpSelectList == null || tmpSelectList.length == 0) {
-                    htmlStr += '<input type="text" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '') + ' value="' + DefaultValue[DefaultIdx] + '">';
+                    htmlStr += '<input type="text" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search') + ' value="' + DefaultValue[DefaultIdx] + '">';
                 }
                 else {
                     if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch)) {
@@ -2042,7 +2042,7 @@ export class PageMake {
                 }
             }
             else {
-                htmlStr += '<input type="text" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '') + '>';
+                htmlStr += '<input type="text" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search') + '>';
             }
             htmlStr += '</div>';
         }

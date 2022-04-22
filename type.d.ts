@@ -127,7 +127,7 @@ interface PageRender {
     //tPageName: 頁面名稱
     //InputFieldName: 此DOM物件的欄位名稱
     //StyleAttr: 除了width其他的Style屬性
-    MakeWidthAttributeStr: (tPageName: string, InputFieldName: string, StyleAttr: string) => string;
+    MakeWidthAttributeStr: (tPageName: string, InputFieldName: string, StyleAttr: string, tMode: 'Read' | 'Write' | 'Search') => string;
 
     //製作選單DOM物件
     //Dom: Dom物件種類，如 select、Multi Select、Calendar

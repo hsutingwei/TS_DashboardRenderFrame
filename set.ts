@@ -1669,7 +1669,7 @@ export class PageSet {
 
     //建立input的寬度篩選器
     //InputFieldName: 欄位名稱
-    public MakeWidth(tPageName: string, InputFieldName: string): string {
+    public MakeWidth(tPageName: string, InputFieldName: string, tMode: 'Read' | 'Write' | 'Search'): string {
         let WidthStr = '';
         if (!InputFieldName) {
             return WidthStr;
