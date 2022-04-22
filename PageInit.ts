@@ -1753,9 +1753,12 @@ export class PageMake implements PageRender {
                 }
                 if (ps.NeedCheckSimilarity(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) { CheckArr.push(tmpArr[j]); }
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
-                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', gPageObj.PageNameObj[tPageName].isWriteMode ? 'Write' : 'Read');
+                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Read');
+                let tmpAttrStr2 = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Write');
                 if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], isSearch)) {
-                    tmpAttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false, cellId) + '"';
+                    let tmpStr = ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false, cellId) + '"';
+                    tmpAttrStr += tmpStr
+                    tmpAttrStr2 += tmpStr
                     for (let key in dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
                         let tKeyValue = tmpArr[j];
                         tKeyValue = df.ResetDynamicQuery(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], key, tKeyValue).toString();
@@ -1809,28 +1812,28 @@ export class PageMake implements PageRender {
                     let tClassName = 'write';
                     let tStr = '<span class="' + tClassName + '" style="display:none">';
                     if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1) {
-                        tStr += this.MakeListHtml('Calendar', tmpAttrStr, tmpSelectList, tmpArr[j]);
+                        tStr += this.MakeListHtml('Calendar', tmpAttrStr2, tmpSelectList, tmpArr[j]);
                     }
                     else if (op.FieldIsOnclick(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], tmpArr[0])) {
                         let tClickFun = op.GetOnclickHtml(tPageName, tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], tmpArr[0], tmpArr, 'up' + tmpArr[0]);
-                        tStr += '<input id="up' + tmpArr[0] + '" class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[j] + '" readonly><button class="btn" onclick="' + tClickFun + '">上傳</button>';
+                        tStr += '<input id="up' + tmpArr[0] + '" class="form-control" ' + tmpAttrStr2 + ' value="' + tmpArr[j] + '" readonly><button class="btn" onclick="' + tClickFun + '">上傳</button>';
                     }
                     else if (set.TableSetObj.TextAreaArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1) {
-                        tStr += '<textarea class="form-control" ' + tmpAttrStr + ' rows="' + (tmpArr[j].length < 20 ? 1 : (tmpArr[j].length < 35 ? 2 : 3)) + '">' + tmpArr[j] + '</textarea>';
+                        tStr += '<textarea class="form-control" ' + tmpAttrStr2 + ' rows="' + (tmpArr[j].length < 20 ? 1 : (tmpArr[j].length < 35 ? 2 : 3)) + '">' + tmpArr[j] + '</textarea>';
                     }
                     else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) {
-                        tStr += '<input class="form-control" type="color"' + tmpAttrStr + ' value="' + tmpArr[j] + '">';
+                        tStr += '<input class="form-control" type="color"' + tmpAttrStr2 + ' value="' + tmpArr[j] + '">';
                     }
                     else if (tmpSelectList.length == 0) {
-                        tStr += '<input class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[j] + '">';
+                        tStr += '<input class="form-control" ' + tmpAttrStr2 + ' value="' + tmpArr[j] + '">';
                     }
                     else if (!ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
-                        tmpAttrStr += ' id="' + cellId + '_menu"';
+                        tmpAttrStr2 += ' id="' + cellId + '_menu"';
                         if (ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)) {
-                            MenuPart = this.MakeListHtml('Multi Select', tmpAttrStr, tmpSelectList, tmpArr[j]);
+                            MenuPart = this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
                         }
                         else {
-                            MenuPart = this.MakeListHtml('select', tmpAttrStr, tmpSelectList, tmpArr[j]);
+                            MenuPart = this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
                         }
                     }
                     aPart += tStr;
