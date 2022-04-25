@@ -689,16 +689,17 @@ export class PageSet {
                     let Year: number = !isNaN(Number(ValueArr[tIdx])) ? parseInt(ValueArr[tIdx]) : 0;
                     let Now = new Date();
                     let NowYear: number = Now.getFullYear();
-                    let NowMonth: number = Now.getMonth();
+                    let NowMonth: number = Now.getMonth() + 1;
 
                     for (let i = 0; i < FieldArr.length; i++) {
-                        if (Year < NowYear && (PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit?.indexOf(FieldArr[i]) || -1) > -1) {
+                        if (Year < NowYear && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit!.indexOf(FieldArr[i]) > -1) {
                             mArr[i] = false;
                         }
-                        else if (Year >= NowYear && (PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit?.indexOf(FieldArr[i]) || -1) > -1) {
+                        else if (Year >= NowYear && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit!.indexOf(FieldArr[i]) > -1) {
                             if (FieldArr[i].indexOf('月') > -1) {
                                 let Month: number = parseInt(FieldArr[i]) || 0;
                                 if (Month >= NowMonth) { mArr[i] = true; }
+                                else { mArr[i] = false; }
                             }
                             else { mArr[i] = true; }
                         }

@@ -558,7 +558,7 @@ export class PageSet {
     //根據欄位值內容決定各欄位可否修改。此函式用於定義搜尋結果(data)每一行的可否修改
     //ValueArr: 一行的數據陣列
     CheckFieldModifiable(tPageName, ValueArr) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e;
         if (gPageObj.PageNameObj[tPageName] == null) {
             return [];
         }
@@ -613,16 +613,19 @@ export class PageSet {
                     let Year = !isNaN(Number(ValueArr[tIdx])) ? parseInt(ValueArr[tIdx]) : 0;
                     let Now = new Date();
                     let NowYear = Now.getFullYear();
-                    let NowMonth = Now.getMonth();
+                    let NowMonth = Now.getMonth() + 1;
                     for (let i = 0; i < FieldArr.length; i++) {
-                        if (Year < NowYear && (((_f = PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit) === null || _f === void 0 ? void 0 : _f.indexOf(FieldArr[i])) || -1) > -1) {
+                        if (Year < NowYear && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit.indexOf(FieldArr[i]) > -1) {
                             mArr[i] = false;
                         }
-                        else if (Year >= NowYear && (((_g = PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit) === null || _g === void 0 ? void 0 : _g.indexOf(FieldArr[i])) || -1) > -1) {
+                        else if (Year >= NowYear && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit && PageNameModifiableInf[tPageName].OnlyNowAndFutreEdit.indexOf(FieldArr[i]) > -1) {
                             if (FieldArr[i].indexOf('月') > -1) {
                                 let Month = parseInt(FieldArr[i]) || 0;
                                 if (Month >= NowMonth) {
                                     mArr[i] = true;
+                                }
+                                else {
+                                    mArr[i] = false;
                                 }
                             }
                             else {
