@@ -496,8 +496,7 @@ class SearchOperation {
             if (tDom != null) {
                 tDom.innerHTML = ttt;
             }
-            //let tmpTableTitleHtml = CreatTableTitle('thead', noDeletePage.indexOf(PageName) > -1 ? new Array() : ['功能'], tmpTitle);
-            //document.getElementById(PageName + 'Table').innerHTML = tmpTableTitleHtml;
+            let headerHtml = pm.CreatTableTitle(tmpPageName, 'thead', [], tmpTitle);
             let ShieldIdxArr = ps.NeedShieldField(tmpPageName);
             let AllResultCount = 0;
             TableObj.language = set.lang;
@@ -716,6 +715,12 @@ class SearchOperation {
                     }
                 }
             };
+            if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
+                headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
+                TableObj.headerCallback = function (thead, data, start, end, display) {
+                    $(thead).parent().html(headerHtml);
+                };
+            }
             let table = $('#' + tmpPageName + 'Table').DataTable(TableObj);
             //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
         }
