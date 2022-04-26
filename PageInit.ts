@@ -598,11 +598,11 @@ class SearchOperation implements Search, ClickSearch {
                 let KeyValueArr: string[] = [];
                 let ValueIdArr: string[] = [];
                 let tFieldNameArr: string[] = [];
-                let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
                 let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
                 for (let i = 0; $('td', row).eq(i).html() != null; i++) {
                     tmpArr.push($('td', row).eq(i).html());
                 }
+                let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
 
                 for (let i = 0; i < tmpArr.length; i++) {
                     let ColorHtml = '';

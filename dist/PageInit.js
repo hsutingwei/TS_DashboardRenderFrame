@@ -562,11 +562,11 @@ class SearchOperation {
                 let KeyValueArr = [];
                 let ValueIdArr = [];
                 let tFieldNameArr = [];
-                let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
                 let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
                 for (let i = 0; $('td', row).eq(i).html() != null; i++) {
                     tmpArr.push($('td', row).eq(i).html());
                 }
+                let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
                 for (let i = 0; i < tmpArr.length; i++) {
                     let ColorHtml = '';
                     let tdClick = '';
