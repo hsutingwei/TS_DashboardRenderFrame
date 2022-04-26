@@ -758,6 +758,11 @@ class SearchOperation implements Search, ClickSearch {
                     }
                 }
             };
+            TableObj.drawCallback = function (settings: any) {
+                let api = this.api();
+                let CurrentPageData = api.rows({ page: 'current' }).data();
+                ps.FreezeField(tmpPageName);
+            }
             if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
                 headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
                 TableObj.headerCallback = function (thead: any, data: any, start: any, end: any, display: any) {

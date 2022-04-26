@@ -715,6 +715,11 @@ class SearchOperation {
                     }
                 }
             };
+            TableObj.drawCallback = function (settings) {
+                let api = this.api();
+                let CurrentPageData = api.rows({ page: 'current' }).data();
+                ps.FreezeField(tmpPageName);
+            };
             if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
                 headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
                 TableObj.headerCallback = function (thead, data, start, end, display) {
