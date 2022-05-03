@@ -1726,6 +1726,7 @@ export class PageSet {
         for (let i = 0; i < data.length; i++) {
             let tmpArr = data[i].split(',');
             if (tmpArr[0] == '' || tmpArr[0] == '-') { continue; }
+            AllEmpty = false;
             if (!isNaN(Number(tmpArr[0]))) {
                 haveTitleAtFirst = false;
                 break;

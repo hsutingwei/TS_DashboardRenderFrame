@@ -1591,6 +1591,7 @@ export class PageSet {
             if (tmpArr[0] == '' || tmpArr[0] == '-') {
                 continue;
             }
+            AllEmpty = false;
             if (!isNaN(Number(tmpArr[0]))) {
                 haveTitleAtFirst = false;
                 break;
