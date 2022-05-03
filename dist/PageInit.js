@@ -2137,37 +2137,46 @@ export class PageMake {
                 let tPdArr = tPStr === null || tPStr === void 0 ? void 0 : tPStr.split(';');
                 let tKeyArr = [];
                 let haveAll = false;
+                let noDash = false;
                 for (let i = 0; tPStr != '' && tPdArr != null && i < tPdArr.length; i++) {
                     let ttt = tPdArr[i].split(',');
                     let tmpIdx = ttt[1].indexOf('-');
+                    if (tmpIdx < 0) {
+                        noDash = true;
+                    }
                     tKeyArr.push(ttt[1].substring(0, tmpIdx));
                     tPdArr[i] = ttt[0] + ',' + ttt[1].substring(tmpIdx + 1);
                 }
-                if (typeof Key === 'object') {
-                    for (let i = 0; i < Key.length; i++) {
-                        if (Key[i] == '') {
-                            haveAll = true;
-                            break;
+                if (noDash) {
+                    valueArr = tPdArr;
+                }
+                else {
+                    if (typeof Key === 'object') {
+                        for (let i = 0; i < Key.length; i++) {
+                            if (Key[i] == '') {
+                                haveAll = true;
+                                break;
+                            }
+                            for (let j = 0; j < tKeyArr.length; j++) {
+                                if (tKeyArr[j] == Key[i]) {
+                                    valueArr.push(tPdArr[j]);
+                                }
+                            }
                         }
-                        for (let j = 0; j < tKeyArr.length; j++) {
-                            if (tKeyArr[j] == Key[i]) {
+                    }
+                    else {
+                        if (Key == '') {
+                            haveAll = true;
+                        }
+                        for (let j = 0; !haveAll && j < tKeyArr.length; j++) {
+                            if (tKeyArr[j] == Key) {
                                 valueArr.push(tPdArr[j]);
                             }
                         }
                     }
-                }
-                else {
-                    if (Key == '') {
-                        haveAll = true;
+                    if (haveAll) {
+                        valueArr = tPdArr;
                     }
-                    for (let j = 0; !haveAll && j < tKeyArr.length; j++) {
-                        if (tKeyArr[j] == Key) {
-                            valueArr.push(tPdArr[j]);
-                        }
-                    }
-                }
-                if (haveAll) {
-                    valueArr = tPdArr;
                 }
                 let tFieldArr = (_b = document.getElementById('FieldName')) === null || _b === void 0 ? void 0 : _b.innerHTML.split(',');
                 let tfIdx = parseInt(FieldId.substring(FieldId.indexOf('_') + 1));
