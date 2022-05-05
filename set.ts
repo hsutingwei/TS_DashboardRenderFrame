@@ -1401,6 +1401,7 @@ export class PageSet {
         return reArr;
     }
 
+    //Update()時，修改參數值
     public ResetUpdateQuery(tPageName: string, data: string[], type: 'i' | 'u' | 'd'): string[] {
         let reArr: string[] = data;
 
@@ -1440,7 +1441,7 @@ export class PageSet {
                 DefaultObj.DisplayArr.splice(tIdx, 1);
             }
             else if (UrlObj['報表類型'] == '週' && (tIdx = DefaultObj.DisplayArr.indexOf('月份')) > -1) {
-                DefaultObj.DisplayArr.splice(tIdx, 1);
+                DefaultObj.DisplayArr.splice(tIdx, 1, '週From', '週To');
                 tIdx = DefaultObj.DisplayArr.indexOf('年度');
                 DefaultObj.DisplayArr.splice(tIdx, 1);
             }
@@ -3749,24 +3750,25 @@ export class UrlQuery {
                         ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
                         ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
                         Value?: string//Value固定此值
-                        RowTitleEx?: {//此欄位的某行行標題(line data 第一個值)所帶的值另外定義
-                            [RowTitle: string]: {//此RowTitle另外定義Value值
-                                ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
-                                ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
-                                Value?: string//Value固定此值
-                            }
-                        }
+                        ValueById?: string,//從DOM物件取得value
+                        ValueByName?: string,//從DOM物件(radio)取得value
                     }//Value取得優先順序從上述定義上到下，都沒有則空字串
                 },
                 RowTitleEx?: {//此欄位的某行行標題(line data 第一個值)所帶的值另外定義
                     [RowTitle: string]: {//此RowTitle另外定義Get參數
-                        [KeyName: string]: {//get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
-                            ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
-                            ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
-                            Value?: string//Value固定此值
-                        }//Value取得優先順序從上述定義上到下，都沒有則空字串
+                        key: {
+                            [KeyName: string]: {//get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
+                                ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
+                                ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
+                                Value?: string//Value固定此值
+                                ValueById?: string,//從DOM物件取得value
+                                ValueByName?: string,//從DOM物件(radio)取得value
+                            }//Value取得優先順序從上述定義上到下，都沒有則空字串
+                        },
+                        Url?: string//URL,若沒有則以傳入Function的參數為主
                     }
-                }
+                },
+                Url?: string,//URL
             }
         }
     } = {};
@@ -3779,226 +3781,300 @@ export class UrlQuery {
         let Month = (Before.getMonth() + 1).toString();//前一天月份
 
         this.UrlInfObj = {
-            SEMI_TABLE_MTD_YTM_NSB: {
-                ['NSB MTD(' + NowMonth + '-' + NowDay + ')Actual']: {
+            MainIO: {
+                'Input': {
                     key: {
+                        報表類型: {
+                            ValueByName: 'tabset'
+                        },
                         年度: {
-                            Value: Year
+                            ValueById: 'field_0'
                         },
                         月份: {
-                            Value: Month
+                            ValueById: 'field_1'
+                        },
+                        週From: {
+                            ValueById: 'field_2'
+                        },
+                        週To: {
+                            ValueById: 'field_2'
                         },
                         BU: {
-                            ValueForFieldName: 'BU',
-                            RowTitleEx: {
-                                DS: {
-                                    ValueForFieldName: 'Prod.',
-                                }
-                            }
+                            ValueForDataIdx: 0
                         },
-                        產品類別: {
-                            ValueForFieldName: 'Prod.',
-                            RowTitleEx: {
-                                DS: {
-                                    Value: '',
-                                }
-                            }
+                    },
+                    RowTitleEx: {
+                        'DS': {
+                            key: {
+                                報表類型: {
+                                    ValueByName: 'tabset'
+                                },
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                                月份: {
+                                    ValueById: 'field_1'
+                                },
+                                週From: {
+                                    ValueById: 'field_2'
+                                },
+                                週To: {
+                                    ValueById: 'field_2'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/SEMI/Default/DSPurchases'
                         }
-                    }
+                    },
+                    Url: 'http://192.168.5.141:83/SEMI/Default/Purchases'
                 },
-                'NSB YTMActual': {
+                'Output': {
                     key: {
-                        年度: {
-                            Value: Year
+                        報表類型: {
+                            ValueByName: 'tabset'
                         },
-                        BU: {
-                            ValueForFieldName: 'BU',
-                            RowTitleEx: {
-                                DS: {
-                                    ValueForFieldName: 'Prod.',
-                                }
-                            }
-                        },
-                        產品類別: {
-                            ValueForFieldName: 'Prod.',
-                            RowTitleEx: {
-                                DS: {
-                                    Value: '',
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            SEMI_TABLE_Top10_CUST_NSB: {
-                ['NSB MTD(' + NowMonth + '-' + NowDay + ')Actual']: {
-                    key: {
                         年度: {
-                            Value: Year
+                            ValueById: 'field_0'
                         },
                         月份: {
-                            Value: Month
+                            ValueById: 'field_1'
                         },
-                        CustType: {
-                            ValueForFieldName: 'Cust Type'
+                        週From: {
+                            ValueById: 'field_2'
+                        },
+                        週To: {
+                            ValueById: 'field_2'
+                        },
+                        BU: {
+                            ValueForDataIdx: 0
+                        },
+                    },
+                    RowTitleEx: {
+                        'DS': {
+                            key: {
+                                報表類型: {
+                                    ValueByName: 'tabset'
+                                },
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                                月份: {
+                                    ValueById: 'field_1'
+                                },
+                                週From: {
+                                    ValueById: 'field_2'
+                                },
+                                週To: {
+                                    ValueById: 'field_2'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/SEMI/Default/DSShipment'
+                        }
+                    },
+                    Url: 'http://192.168.5.141:83/SEMI/Default/Shipment'
+                },
+            },
+            MainFCNSB: {
+                'Customer': {
+                    key: {
+                        報表類型: {
+                            ValueByName: 'tabset'
+                        },
+                        年度: {
+                            ValueById: 'field_0'
+                        },
+                        月份: {
+                            ValueById: 'field_1'
+                        },
+                        週: {
+                            ValueById: 'field_2'
                         },
                         客戶: {
-                            ValueForFieldName: 'Top 10 Cust'
-                        }
-                    }
+                            ValueForDataIdx: 0
+                        },
+                    },
+                    Url: 'http://192.168.5.141:83/TestPPI/tmp/Default/FocusCustomer'
                 },
-                'NSB YTMActual': {
-                    key: {
-                        年度: {
-                            Value: Year
-                        },
-                        CustType: {
-                            ValueForFieldName: 'Cust Type'
-                        },
-                        客戶: {
-                            ValueForFieldName: 'Top 10 Cust'
-                        }
-                    }
-                }
             },
-            SEMI_TABLE_IN_OUT_GOODS: {
-                ['Input(' + NowMonth + '-' + NowDay + ')Target']: {
+            NSBPL: {
+                '年': {
                     key: {
                         年度: {
-                            Value: Year
-                        },
-                        月份: {
-                            Value: Month
+                            ValueById: 'field_0'
                         },
                         BU: {
-                            ValueForFieldName: 'BU',
-                            RowTitleEx: {
-                                DS: {
-                                    ValueForFieldName: 'Prod.',
-                                }
-                            }
+                            ValueForDataIdx: 0
                         },
-                        產品類別: {
-                            ValueForFieldName: 'Prod.',
-                            RowTitleEx: {
-                                DS: {
-                                    Value: '',
-                                }
-                            }
-                        }
-                    }
-                },
-                ['Output(' + NowMonth + '-' + NowDay + ')Target']: {
-                    key: {
-                        年度: {
-                            Value: Year
-                        },
-                        BU: {
-                            ValueForFieldName: 'BU',
-                            RowTitleEx: {
-                                DS: {
-                                    ValueForFieldName: 'Prod.',
-                                }
-                            }
-                        },
-                        產品類別: {
-                            ValueForFieldName: 'Prod.',
-                            RowTitleEx: {
-                                DS: {
-                                    Value: '',
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            Prober_Handler: {
-                'MTDEQ#': {
-                    key: {
-                        年度: {
-                            Value: Year
-                        },
-                        月份: {
-                            Value: Month
-                        },
-                        BU: {
-                            ValueForFieldName: 'BU'
-                        },
-                        'EQ Type': {
-                            ValueForFieldName: 'EQ Type'
-                        }
                     },
                     RowTitleEx: {
                         DS: {
-                            EQ: {
-                                ValueForFieldName: 'EQ Type',
-                            }
+                            key: {
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/DS/Default/APFCST'
                         }
-                    }
+                    },
+                    Url: 'http://192.168.5.141:83/TR/Default/APFCSTChart'
                 },
-                'YTMEQ#': {
+                '月': {
                     key: {
                         年度: {
-                            Value: Year
+                            ValueById: 'field_0'
+                        },
+                        月份: {
+                            ValueById: 'field_1'
                         },
                         BU: {
-                            ValueForFieldName: 'BU',
-                            RowTitleEx: {
-                                DS: {
-                                    ValueForFieldName: 'EQ Type',
-                                }
-                            }
+                            ValueForDataIdx: 0
                         },
-                        'EQ Type': {
-                            ValueForFieldName: 'EQ Type',
-                            RowTitleEx: {
-                                DS: {
-                                    Value: '',
-                                }
-                            }
-                        }
                     },
                     RowTitleEx: {
                         DS: {
-                            EQ: {
-                                ValueForFieldName: 'EQ Type',
-                            }
+                            key: {
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                                月份: {
+                                    ValueById: 'field_1'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/DS/Default/BillingFCST'
                         }
-                    }
-                }
+                    },
+                    Url: 'http://192.168.5.141:83/TR/Default/BillingFCSTChart'
+                },
             },
-            SEMI_TESTER: {
-                'MTDEQ#': {
+            FocusIO: {
+                'Input': {
                     key: {
+                        報表類型: {
+                            ValueByName: 'tabset'
+                        },
                         年度: {
-                            Value: Year
+                            ValueById: 'field_0'
                         },
                         月份: {
-                            Value: Month
+                            ValueById: 'field_1'
+                        },
+                        週From: {
+                            ValueById: 'field_2'
+                        },
+                        週To: {
+                            ValueById: 'field_2'
+                        },
+                        客戶: {
+                            ValueById: 'field_3'
                         },
                         BU: {
-                            ValueForFieldName: 'BU'
+                            ValueForDataIdx: 0
                         },
-                        'EQ Type': {
-                            ValueForFieldName: 'EQ Type'
+                    },
+                    RowTitleEx: {
+                        'DS': {
+                            key: {
+                                報表類型: {
+                                    ValueByName: 'tabset'
+                                },
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                                月份: {
+                                    ValueById: 'field_1'
+                                },
+                                週From: {
+                                    ValueById: 'field_2'
+                                },
+                                週To: {
+                                    ValueById: 'field_2'
+                                },
+                                客戶: {
+                                    ValueById: 'field_3'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/SEMI/Default/DSPurchases'
                         }
-                    }
+                    },
+                    Url: 'http://192.168.5.141:83/SEMI/Default/Purchases'
                 },
-                'YTMEQ#': {
+                'Output': {
                     key: {
+                        報表類型: {
+                            ValueByName: 'tabset'
+                        },
                         年度: {
-                            Value: Year
+                            ValueById: 'field_0'
+                        },
+                        月份: {
+                            ValueById: 'field_1'
+                        },
+                        週From: {
+                            ValueById: 'field_2'
+                        },
+                        週To: {
+                            ValueById: 'field_2'
+                        },
+                        客戶: {
+                            ValueById: 'field_3'
                         },
                         BU: {
-                            ValueForFieldName: 'BU'
+                            ValueForDataIdx: 0
                         },
-                        'EQ Type': {
-                            ValueForFieldName: 'EQ Type'
+                    },
+                    RowTitleEx: {
+                        'DS': {
+                            key: {
+                                報表類型: {
+                                    ValueByName: 'tabset'
+                                },
+                                年度: {
+                                    ValueById: 'field_0'
+                                },
+                                月份: {
+                                    ValueById: 'field_1'
+                                },
+                                週From: {
+                                    ValueById: 'field_2'
+                                },
+                                週To: {
+                                    ValueById: 'field_2'
+                                },
+                                客戶: {
+                                    ValueById: 'field_3'
+                                },
+                            },
+                            Url: 'http://192.168.5.141:83/SEMI/Default/DSShipment'
                         }
-                    }
-                }
-            }
+                    },
+                    Url: 'http://192.168.5.141:83/SEMI/Default/Shipment'
+                },
+            },
         }
+    }
+
+    //取得的Value需要經過額外運算
+    //tPageName: 頁面名稱
+    //tFieldName: 含有超連結的欄位名稱
+    //KeyName: 參數名稱
+    //tValue: value值
+    TransFromValue(tPageName: string, tFieldName: string, tKeyName: string, tValue: string): string {
+        if ((tPageName == 'MainIO' || tPageName == 'FocusIO') && (tFieldName == 'Input' || tFieldName == 'Output') && tKeyName == '週From') {
+            let tDateTime = new Date(tValue);
+            let LastDate = new Date(tDateTime.getTime() - 7 * 24 * 60 * 60 * 1000);
+            tValue = LastDate.getFullYear() + '/' + paddingLeft((LastDate.getMonth() + 1).toString(), 2) + '/' + paddingLeft((LastDate.getDate()).toString(), 2);
+        }
+        else if ((tPageName == 'MainIO' || tPageName == 'FocusIO') && (tFieldName == 'Input' || tFieldName == 'Output') && tKeyName == '週To') {
+            let tDateTime = new Date(tValue);
+            let LastDate = new Date(tDateTime.getTime() - 1 * 24 * 60 * 60 * 1000);
+            tValue = LastDate.getFullYear() + '/' + paddingLeft((LastDate.getMonth() + 1).toString(), 2) + '/' + paddingLeft((LastDate.getDate()).toString(), 2);
+        }
+        else if (tPageName == 'FocusIO' && (tFieldName == 'Input' || tFieldName == 'Output') && tKeyName == '客戶') {
+            tValue = (MenuList['FocusCustomerNSBTitle'].MenuArr.find(function (value) {
+                return value.split(',')[1] == tValue;
+            }) || '').split(',')[0];
+        }
+
+        return tValue;
     }
 
     //判斷此cell是否需要設定url get value參數
@@ -4019,68 +4095,96 @@ export class UrlQuery {
 
         if (this.NeedSetKeyValue(tPageName, tFieldName)) {
             let first = true;
+            let tUrl: string = Url;
 
+            //處理[FieldName: string]有RowTitleEx的例外規則
             if (this.UrlInfObj[tPageName] && this.UrlInfObj[tPageName][tFieldName] && this.UrlInfObj[tPageName][tFieldName].RowTitleEx && this.UrlInfObj[tPageName][tFieldName].RowTitleEx![tRowTitle] != null) {
-                for (let KeyName in this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle]) {
+                tUrl = this.UrlInfObj[tPageName][tFieldName].RowTitleEx![tRowTitle].Url ? this.UrlInfObj[tPageName][tFieldName].RowTitleEx![tRowTitle].Url! : tUrl;
+                for (let KeyName in this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key) {
                     let tKeyStr: string = KeyName;
                     let tValueStr: string = '';
-                    if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].ValueForFieldName != null) {
-                        let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].ValueForFieldName!);
+                    if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueForFieldName != null) {
+                        let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueForFieldName!);
                         tValueStr = LineData[tIdx];
                     }
-                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].ValueForDataIdx != null && this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].ValueForDataIdx! < LineData.length) {
-                        tValueStr = LineData[this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].ValueForDataIdx!];
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueForDataIdx != null && this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueForDataIdx! < LineData.length) {
+                        tValueStr = LineData[this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueForDataIdx!];
                     }
-                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].Value != null) {
-                        tValueStr = this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle][KeyName].Value!;
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].Value != null) {
+                        tValueStr = this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].Value!;
+                    }
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueById != null && document.getElementById(this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueById!)) {
+                        let tmpDom = $('#' + this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueById!);
+                        let tmpValue: any = tmpDom.val();
+                        if (tmpDom.find('input').val() != null) {
+                            tmpValue = tmpDom.find('input').val();
+                        }
+                        else if (tmpDom.is(':checkbox')) {
+                            tmpValue = tmpDom.is(':checked').toString();
+                        }
+                        else if (toType(tmpValue) == 'array') {
+                            if (tmpValue[0] == '') { tmpValue = ''; }//多選若只要選到All，則直接All
+                            else { tmpValue = tmpValue.join('@'); }
+                        }
+                        tValueStr = tmpValue;
+                    }
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueByName != null) {
+                        tValueStr = ($('input[name="' + this.UrlInfObj[tPageName]![tFieldName]!.RowTitleEx![tRowTitle].key[KeyName].ValueByName + '"]:checked') as any).val();
                     }
 
+                    tValueStr = this.TransFromValue(tPageName, tFieldName, KeyName, tValueStr);
                     if (!first) {
                         reUrlStr += '&';
                     }
                     first = false;
-                    reUrlStr += ch2Unicdoe(tKeyStr) + '=' + ch2Unicdoe(tValueStr);
+                    reUrlStr += encodeURI(tKeyStr + '=' + tValueStr);
                 }
             }
             else {
+                tUrl = this.UrlInfObj[tPageName]![tFieldName]!.Url ? this.UrlInfObj[tPageName]![tFieldName]!.Url! : tUrl;
                 for (let KeyName in this.UrlInfObj[tPageName]![tFieldName]!.key) {
                     let tKeyStr: string = KeyName;
                     let tValueStr: string = '';
 
-                    if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx && this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle] != null) {
-                        if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].ValueForFieldName != null) {
-                            let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].ValueForFieldName!);
-                            tValueStr = LineData[tIdx];
-                        }
-                        else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].ValueForDataIdx != null && this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].ValueForDataIdx! < LineData.length) {
-                            tValueStr = LineData[this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].ValueForDataIdx!];
-                        }
-                        else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].Value != null) {
-                            tValueStr = this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].RowTitleEx![tRowTitle].Value!;
-                        }
+                    if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForFieldName != null) {
+                        let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForFieldName!);
+                        tValueStr = LineData[tIdx];
                     }
-                    else {
-                        if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForFieldName != null) {
-                            let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForFieldName!);
-                            tValueStr = LineData[tIdx];
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx != null && this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx! < LineData.length) {
+                        tValueStr = LineData[this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx!];
+                    }
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].Value != null) {
+                        tValueStr = this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].Value!;
+                    }
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueById != null && document.getElementById(this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueById!)) {
+                        let tmpDom = $('#' + this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueById!);
+                        let tmpValue: any = tmpDom.val();
+                        if (tmpDom.find('input').val() != null) {
+                            tmpValue = tmpDom.find('input').val();
                         }
-                        else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx != null && this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx! < LineData.length) {
-                            tValueStr = LineData[this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueForDataIdx!];
+                        else if (tmpDom.is(':checkbox')) {
+                            tmpValue = tmpDom.is(':checked').toString();
                         }
-                        else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].Value != null) {
-                            tValueStr = this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].Value!;
+                        else if (toType(tmpValue) == 'array') {
+                            if (tmpValue[0] == '') { tmpValue = ''; }//多選若只要選到All，則直接All
+                            else { tmpValue = tmpValue.join('@'); }
                         }
+                        tValueStr = tmpValue;
+                    }
+                    else if (this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueByName != null) {
+                        tValueStr = ($('input[name="' + this.UrlInfObj[tPageName]![tFieldName]!.key[KeyName].ValueByName + '"]:checked') as any).val();
                     }
 
+                    tValueStr = this.TransFromValue(tPageName, tFieldName, KeyName, tValueStr);
                     if (!first) {
                         reUrlStr += '&';
                     }
                     first = false;
-                    reUrlStr += ch2Unicdoe(tKeyStr) + '=' + ch2Unicdoe(tValueStr);
+                    reUrlStr += encodeURI(tKeyStr + '=' + tValueStr);
                 }
             }
 
-            return Url + '?' + reUrlStr;
+            return tUrl + '?' + reUrlStr;
         }
 
         return reUrlStr;

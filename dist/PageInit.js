@@ -1947,8 +1947,8 @@ export class PageMake {
         var OptionHtml = '';
         var tValueArr = new Array();
         var isMulti = false;
-        if (SelectValue != null && SelectValue.toString().indexOf('/') > -1) {
-            tValueArr = SelectValue.toString().split('/');
+        if (SelectValue != null && SelectValue.toString().indexOf('@') > -1) {
+            tValueArr = SelectValue.toString().split('@');
             isMulti = true;
         }
         for (var j = 0; j < ValueArr.length; j++) {
@@ -2328,10 +2328,10 @@ export class PageTool {
             return KeyValueObj;
         }
         for (var i = 0; i < tmpArr.length; i++) {
-            var tArr = tmpArr[i].split('=');
-            var tmpKey = unicode2Ch(tArr[0]);
-            var tmpValue = unicode2Ch(tArr[1]);
-            KeyValueObj[tmpKey] = tmpValue.replace(/@/g, '/');
+            var tArr = decodeURI(tmpArr[i]).split('=');
+            var tmpKey = tArr[0];
+            var tmpValue = tArr[1];
+            KeyValueObj[tmpKey] = tmpValue;
         }
         return KeyValueObj;
     }
