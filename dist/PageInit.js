@@ -2208,8 +2208,8 @@ export class PageTool {
                 break;
             }
         }
-        if (keyValue.toString().indexOf('/') > -1) { //含有複選分隔符號
-            let tValueArr = keyValue.toString().split('/');
+        if (keyValue.toString().indexOf('@') > -1) { //含有複選分隔符號
+            let tValueArr = keyValue.toString().split('@');
             let reArr = new Array();
             for (let i = 0; i < tMenuArr.length; i++) {
                 let tmp = tMenuArr[i].split(',');
