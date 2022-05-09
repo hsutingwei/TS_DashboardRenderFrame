@@ -3024,7 +3024,7 @@ export class DynamicClass {//此class定義某欄位值改變時影響其他欄�
             if (this.DynamicInfObj[tPageName].InfluenceByThisFieldName == tFiledName) {
                 reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'\', ' + isSearchArea + ');';
             }
-            if (this.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFiledName] != null) {
+            if (this.DynamicInfObj[tPageName]?.InfluenceToFieldNames && this.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFiledName] != null) {
                 if (Object.keys(this.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFiledName]).length > 0) {
                     for (let key in this.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFiledName]) {
                         if ((isSearchArea && (this.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFiledName][key]?.EffectiveInSearchBar == false))

@@ -2827,17 +2827,17 @@ export class DynamicClass {
     //isSearchArea: 此函式是否來自搜尋Bar(目前未實作特殊功能)
     //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
     ReturnFunctionStr(tPageName, tFiledName, isSearchArea, TriggerFromId) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         let reStr = '';
         if (this.NeedDynamicGetList(tPageName, tFiledName, isSearchArea)) {
             if (this.DynamicInfObj[tPageName].InfluenceByThisFieldName == tFiledName) {
                 reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'\', ' + isSearchArea + ');';
             }
-            if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames[tFiledName]) != null) {
-                if (Object.keys((_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[tFiledName]).length > 0) {
-                    for (let key in (_c = this.DynamicInfObj[tPageName]) === null || _c === void 0 ? void 0 : _c.InfluenceToFieldNames[tFiledName]) {
-                        if ((isSearchArea && (((_e = (_d = this.DynamicInfObj[tPageName]) === null || _d === void 0 ? void 0 : _d.InfluenceToFieldNames[tFiledName][key]) === null || _e === void 0 ? void 0 : _e.EffectiveInSearchBar) == false))
-                            || (!isSearchArea && (!((_g = (_f = this.DynamicInfObj[tPageName]) === null || _f === void 0 ? void 0 : _f.InfluenceToFieldNames[tFiledName][key]) === null || _g === void 0 ? void 0 : _g.EffectiveInTable)))) {
+            if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames) && ((_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[tFiledName]) != null) {
+                if (Object.keys((_c = this.DynamicInfObj[tPageName]) === null || _c === void 0 ? void 0 : _c.InfluenceToFieldNames[tFiledName]).length > 0) {
+                    for (let key in (_d = this.DynamicInfObj[tPageName]) === null || _d === void 0 ? void 0 : _d.InfluenceToFieldNames[tFiledName]) {
+                        if ((isSearchArea && (((_f = (_e = this.DynamicInfObj[tPageName]) === null || _e === void 0 ? void 0 : _e.InfluenceToFieldNames[tFiledName][key]) === null || _f === void 0 ? void 0 : _f.EffectiveInSearchBar) == false))
+                            || (!isSearchArea && (!((_h = (_g = this.DynamicInfObj[tPageName]) === null || _g === void 0 ? void 0 : _g.InfluenceToFieldNames[tFiledName][key]) === null || _h === void 0 ? void 0 : _h.EffectiveInTable)))) {
                             continue;
                         }
                         reStr += this.FunctionName + '(\'' + tPageName + '\', \'' + key + '\', \'' + tFiledName + '\', ' + isSearchArea;
