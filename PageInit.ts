@@ -1651,13 +1651,14 @@ export class PageOperation extends TableAndSearchOperation {//PageName底下操�
     }
 
     //匯出功能(由後端產生檔案再回傳路徑)
-    public static ExportExcel(tPageName?: string): void {
+    public static ExportExcel(tPageName?: string, ExportIdName?: string): void {
         if (gPageObj.PageNameArr.length <= 0) { return; }
         let tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         let Query = gPageObj.PageNameObj[tmpPageName].LastQuery;
-        let sbtn: any = $('#ExportBtn');
+        let tIdName: string = ExportIdName ? ExportIdName : 'ExportBtn';
+        let sbtn: any = $('#' + tIdName);
         //sbtn.button('loading');
-        $("#ExportBtn").prop('disabled', true);
+        $("#" + tIdName).prop('disabled', true);
         SetButtonDisable('SearchBtn', true, 'loading...');
         if (Query.PageNumber != -1) { Query.PageNumber = -1; }
 
@@ -1673,7 +1674,7 @@ export class PageOperation extends TableAndSearchOperation {//PageName底下操�
             }
             //sbtn.button('reset');
             SetButtonDisable('SearchBtn', false, '搜尋');
-            $("#ExportBtn").prop('disabled', false);
+            $("#" + tIdName).prop('disabled', false);
         });
     }
 

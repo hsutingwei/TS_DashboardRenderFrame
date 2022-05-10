@@ -1594,15 +1594,16 @@ export class PageOperation extends TableAndSearchOperation {
         }
     }
     //匯出功能(由後端產生檔案再回傳路徑)
-    static ExportExcel(tPageName) {
+    static ExportExcel(tPageName, ExportIdName) {
         if (gPageObj.PageNameArr.length <= 0) {
             return;
         }
         let tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         let Query = gPageObj.PageNameObj[tmpPageName].LastQuery;
-        let sbtn = $('#ExportBtn');
+        let tIdName = ExportIdName ? ExportIdName : 'ExportBtn';
+        let sbtn = $('#' + tIdName);
         //sbtn.button('loading');
-        $("#ExportBtn").prop('disabled', true);
+        $("#" + tIdName).prop('disabled', true);
         SetButtonDisable('SearchBtn', true, 'loading...');
         if (Query.PageNumber != -1) {
             Query.PageNumber = -1;
@@ -1619,7 +1620,7 @@ export class PageOperation extends TableAndSearchOperation {
             }
             //sbtn.button('reset');
             SetButtonDisable('SearchBtn', false, '搜尋');
-            $("#ExportBtn").prop('disabled', false);
+            $("#" + tIdName).prop('disabled', false);
         });
     }
     static Logout() {
