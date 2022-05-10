@@ -2354,7 +2354,8 @@ export class PageSet {
                     tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
                     tableDom.eq(i).find('td').eq(j).css('z-index', '1');
                     tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
-                    if (titleDom.eq(i).find('th').eq(j).html() != null) {
+                    //合併儲存格後，只需判斷第一行(不確定會不會出錯)
+                    if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null) {
                         titleDom.eq(i).find('th').eq(j).css('left', widthCss);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
