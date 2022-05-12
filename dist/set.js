@@ -2832,7 +2832,7 @@ export class DynamicClass {
         let reStr = '';
         if (this.NeedDynamicGetList(tPageName, tFiledName, isSearchArea)) {
             if (this.DynamicInfObj[tPageName].InfluenceByThisFieldName == tFiledName) {
-                reStr += this.FunctionName + '(\'' + tPageName + '\', \'\', \'\', ' + isSearchArea + ');';
+                reStr += this.FunctionName + '(\'' + tPageName + '\', null, null, ' + isSearchArea + ');';
             }
             if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames) && ((_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[tFiledName]) != null) {
                 if (Object.keys((_c = this.DynamicInfObj[tPageName]) === null || _c === void 0 ? void 0 : _c.InfluenceToFieldNames[tFiledName]).length > 0) {
@@ -3381,7 +3381,7 @@ export class DynamicFunction {
     //tFieldName: 欄位名稱(因此欄位影響別的欄位的)
     //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
     static DynamicRequest(tPageName, idName, tFieldName, isSearch, TriggerFromId) {
-        var _a;
+        var _a, _b;
         let Today = new Date();
         let year = GetSelectValue('年度');
         if (tPageName == 'Actual') {
@@ -3401,7 +3401,7 @@ export class DynamicFunction {
         //判定是否需要呼叫後端
         //idName為被影響的搜尋bar的物件ID。因後端呼叫會影響全部的搜尋bar的menu值，idName不會有值
         if (idName != null) {
-            if (((_a = dc.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames[tFieldName]) != null) {
+            if (((_a = dc.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceToFieldNames) && ((_b = dc.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[tFieldName]) != null) {
                 if (idName == '') {
                     let df = new DynamicFunction();
                     df.FrontDynamic(tPageName, tFieldName);
