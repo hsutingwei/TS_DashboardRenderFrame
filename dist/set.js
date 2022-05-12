@@ -1084,7 +1084,7 @@ export class PageSet {
             || tPageName == 'Prober_Handler_DS')
             && SearchBarIdName == 'field_3') {
             CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 3, 4, 6];
+            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 3, 5, 6];
         }
         else if ((tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
             || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
@@ -1093,7 +1093,7 @@ export class PageSet {
             || tPageName == 'Prober_Handler_DS')
             && SearchBarIdName == 'field_4') {
             CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 3, 5, 6];
+            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 4, 5, 6];
         }
         return CloneObj;
     }
@@ -2375,24 +2375,27 @@ export class PageSet {
         let t = $('#' + TableIdName + ' tbody tr');
         let ShieldArr = this.NeedShieldField(tPageName);
         let MergeInf = {
-            APvsFCSTvsAct: {
-                CheckXRange: 11,
-                IgnoreXIdx: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            MainInv: {
+                CheckXRange: 4,
+                IgnoreXIdx: [1, 2, 3],
+                XWayRange: {
+                    12: {
+                        2: 2
+                    }
+                },
             },
-            ProdCustGPM: {
-                CheckXRange: 2,
+            FocusInv: {
+                CheckXRange: 4,
+                IgnoreXIdx: [1, 2, 3],
+                XWayRange: {
+                    12: {
+                        2: 2
+                    }
+                },
             },
-            Top10ProdCustGPM: {
+            NSBInv: {
                 CheckXRange: 1,
             },
-            APQuery: {
-                CheckXRange: 11,
-                IgnoreXIdx: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            },
-            FCSTQuery: {
-                CheckXRange: 11,
-                IgnoreXIdx: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            }
         };
         if (MergeInf[tPageName] == null) {
             return;
@@ -2407,45 +2410,65 @@ export class PageSet {
                 let tmpNowStr = t.eq(i).find('td').eq(j).html();
                 let tStr = tmpNowStr.replace('%', '');
                 if (firstValue.indexOf('total') < 0 && firstValue.indexOf('sub-total') < 0) {
-                    if (ShieldArr.indexOf(i) > -1) { //被屏蔽的欄位不檢查
-                        k = j + 1;
-                        continue;
-                    }
-                    if (!isNaN(Number(tStr)) || tStr == '-' || tStr.indexOf('</') > -1) { //數字欄位以及不是純值(有編輯/檢視、百萬表示等)不檢查
-                        k = j + 1;
-                        continue;
-                    }
-                    if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(j) > -1) {
-                        k = j + 1;
-                        continue;
+                    if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange[i] && MergeInf[tPageName].XWayRange[i][j]) { }
+                    else {
+                        if (ShieldArr.indexOf(i) > -1) { //被屏蔽的欄位不檢查
+                            k = j + 1;
+                            continue;
+                        }
+                        if (!isNaN(Number(tStr)) || tStr == '-' || tStr.indexOf('</') > -1) { //數字欄位以及不是純值(有編輯/檢視、百萬表示等)不檢查
+                            k = j + 1;
+                            continue;
+                        }
+                        if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(j) > -1) {
+                            k = j + 1;
+                            continue;
+                        }
                     }
                 }
                 let count = 0;
                 let rcount = 0;
-                if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
-                    if (rcount == 0) { //直檢查
-                        for (let m = i + 1; t.eq(m).html() != null && tmpNowStr == t.eq(m).find('td').eq(j).html() && (j == 0 || m <= RowCountArr[j - 1]); m++, rcount++) {
-                            t.eq(m).find('td').eq(j).css('display', 'none');
-                        }
-                    }
-                    RowCountArr[j] = i + rcount;
-                }
-                if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) { //第一欄位值為這些值時，不考慮過濾條件
-                    for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange[i] && MergeInf[tPageName].XWayRange[i][j]) {
+                    count = MergeInf[tPageName].XWayRange[i][j] - 1;
+                    let tCount = 0;
+                    for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && k < MergeInf[tPageName].CheckXRange && tCount < count; k++, tCount++) { //橫檢查
                         t.eq(i).find('td').eq(k).css('display', 'none');
                     }
                 }
                 else {
-                    for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
-                        if (ShieldArr.indexOf(k) > -1) {
-                            count--;
-                            continue;
+                    if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
+                        if (rcount == 0) { //直檢查
+                            for (let m = i + 1; t.eq(m).html() != null && tmpNowStr == t.eq(m).find('td').eq(j).html() && (j == 0 || m <= RowCountArr[j - 1]); m++, rcount++) {
+                                t.eq(m).find('td').eq(j).css('display', 'none');
+                            }
                         }
-                        else if (MergeInf[tPageName].OnlyYWayCheck != null && MergeInf[tPageName].OnlyYWayCheck.indexOf(k) > -1) {
-                            count--;
-                            break;
+                        RowCountArr[j] = i + rcount;
+                    }
+                    if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) { //第一欄位值為這些值時，不考慮過濾條件
+                        for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                            t.eq(i).find('td').eq(k).css('display', 'none');
                         }
-                        t.eq(i).find('td').eq(k).css('display', 'none');
+                    }
+                    else {
+                        for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                            if (ShieldArr.indexOf(k) > -1) {
+                                count--;
+                                continue;
+                            }
+                            else if (MergeInf[tPageName].OnlyYWayCheck != null && MergeInf[tPageName].OnlyYWayCheck.indexOf(k) > -1) {
+                                count--;
+                                break;
+                            }
+                            else if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange[i] && MergeInf[tPageName].XWayRange[i][k]) {
+                                count--;
+                                break;
+                            }
+                            else if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(k) > -1) {
+                                count--;
+                                continue;
+                            }
+                            t.eq(i).find('td').eq(k).css('display', 'none');
+                        }
                     }
                 }
                 if (count > 0) {
