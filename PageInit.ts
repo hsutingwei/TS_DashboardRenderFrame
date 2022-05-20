@@ -2086,31 +2086,31 @@ export class PageMake implements PageRender {
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], true);
                 let AttrStr = 'id="' + domId + '"' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search');
 
+                if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch)) {
+                    if (dc.DynamicInfObj[tPageName].InfluenceByThisFieldName == gPageObj.PageNameObj[tPageName].FieldArr[i]) {
+                        AttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch) + '" ';
+                    }
+                    else if (Object.keys(dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].FieldArr[i]] || []).length > 0) {
+                        let tDCHtml = '';
+                        tDCHtml += dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch);
+                        for (let key in dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].FieldArr[i]]) {
+                            KeyValueArr.push(DefaultValue[DefaultIdx]);
+                            ValueIdArr.push(key);
+                            tFieldNameArr.push(gPageObj.PageNameObj[tPageName].FieldArr[i]);
+                        }
+                        AttrStr += ' onchange="' + tDCHtml + '" ';
+                    }
+                }
                 if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[i]) > -1) {
                     htmlStr += this.MakeListHtml('Calendar', AttrStr, tmpSelectList, DefaultValue[DefaultIdx]);
                 }
                 else if (set.TableSetObj.CheckboxArr.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[i]) > -1) {
-                    htmlStr += '<input class="form-check-input" type="checkbox" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search') + ' ' + (DefaultValue[DefaultIdx] == 'true' || DefaultValue[DefaultIdx] == '1' ? 'checked' : '') + '>';
+                    htmlStr += '<input class="form-check-input" type="checkbox" class="form-control" ' + AttrStr + ' ' + (DefaultValue[DefaultIdx] == 'true' || DefaultValue[DefaultIdx] == '1' ? 'checked' : '') + '>';
                 }
                 else if (tmpSelectList == null || tmpSelectList.length == 0) {
-                    htmlStr += '<input type="text" class="form-control" id="' + domId + '" ' + this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], '', 'Search') + ' value="' + DefaultValue[DefaultIdx] + '">';
+                    htmlStr += '<input type="text" class="form-control" ' + AttrStr + ' value="' + DefaultValue[DefaultIdx] + '">';
                 }
                 else {
-                    if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch)) {
-                        if (dc.DynamicInfObj[tPageName].InfluenceByThisFieldName == gPageObj.PageNameObj[tPageName].FieldArr[i]) {
-                            AttrStr += ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch) + '" ';
-                        }
-                        else if (Object.keys(dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].FieldArr[i]] || []).length > 0) {
-                            let tDCHtml = '';
-                            tDCHtml += dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], isSearch);
-                            for (let key in dc.DynamicInfObj[tPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tPageName].FieldArr[i]]) {
-                                KeyValueArr.push(DefaultValue[DefaultIdx]);
-                                ValueIdArr.push(key);
-                                tFieldNameArr.push(gPageObj.PageNameObj[tPageName].FieldArr[i]);
-                            }
-                            AttrStr += ' onchange="' + tDCHtml + '" ';
-                        }
-                    }
                     if (ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[i], true)) {
                         htmlStr += this.MakeListHtml('Multi Select', AttrStr, tmpSelectList, DefaultValue[DefaultIdx]);
                     }
