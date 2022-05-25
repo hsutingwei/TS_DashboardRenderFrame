@@ -2829,6 +2829,70 @@ export class PageSet {
         return qy
     }
 
+    //客製化Datatable.js excel參數
+    public DataTableExportCustomize(tPageName: string, data: string[] | string[][], dtObj: { [index: string]: any }): { [index: string]: any } {
+        let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
+        if (tPageName == 'YIELD_RATE') {
+            if (LastQuery.QueryArr[0] == '總表') {
+                dtObj['buttons'][0]['customize'] = function (xlsx: any) {
+                    let sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    let styleSheet = xlsx.xl['styles.xml'];
+                    let n1 = '<numFmt formatCode="0.000%" numFmtId="170"/>';
+                    let s1 = '<xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>';
+                    styleSheet.childNodes[0].childNodes[0].innerHTML = styleSheet.childNodes[0].childNodes[0].innerHTML + n1;
+                    styleSheet.childNodes[0].childNodes[5].innerHTML = styleSheet.childNodes[0].childNodes[5].innerHTML + s1;
+                    let el = $('cellXfs', styleSheet);
+                    let styleIdx = $('xf', el).length - 1;
+                    $('row:eq(5) c[r]', sheet).attr('s', styleIdx);
+                }
+            }
+            else {
+                dtObj['buttons'][0]['customize'] = function (xlsx: any) {
+                    let sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    let styleSheet = xlsx.xl['styles.xml'];
+                    let n1 = '<numFmt formatCode="0.000%" numFmtId="170"/>';
+                    let s1 = '<xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>';
+                    styleSheet.childNodes[0].childNodes[0].innerHTML = styleSheet.childNodes[0].childNodes[0].innerHTML + n1;
+                    styleSheet.childNodes[0].childNodes[5].innerHTML = styleSheet.childNodes[0].childNodes[5].innerHTML + s1;
+                    let el = $('cellXfs', styleSheet);
+                    let styleIdx = $('xf', el).length - 1;
+                    $('row c[r^="E"]', sheet).attr('s', styleIdx);
+                }
+            }
+        }
+        else if (tPageName == 'OS_RATE') {
+            if (LastQuery.QueryArr[0] == '總表') {
+                dtObj['buttons'][0]['customize'] = function (xlsx: any) {
+                    let sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    let styleSheet = xlsx.xl['styles.xml'];
+                    let n1 = '<numFmt formatCode="0.000%" numFmtId="170"/>';
+                    let s1 = '<xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>';
+                    styleSheet.childNodes[0].childNodes[0].innerHTML = styleSheet.childNodes[0].childNodes[0].innerHTML + n1;
+                    styleSheet.childNodes[0].childNodes[5].innerHTML = styleSheet.childNodes[0].childNodes[5].innerHTML + s1;
+                    let el = $('cellXfs', styleSheet);
+                    let styleIdx = $('xf', el).length - 1;
+                    $('row:eq(3) c[r], row:eq(4) c[r]', sheet).attr('s', styleIdx);
+                }
+            }
+            else {
+                dtObj['buttons'][0]['customize'] = function (xlsx: any) {
+                    let sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    let styleSheet = xlsx.xl['styles.xml'];
+                    let n1 = '<numFmt formatCode="0.000%" numFmtId="170"/>';
+                    let s1 = '<xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>';
+                    styleSheet.childNodes[0].childNodes[0].innerHTML = styleSheet.childNodes[0].childNodes[0].innerHTML + n1;
+                    styleSheet.childNodes[0].childNodes[5].innerHTML = styleSheet.childNodes[0].childNodes[5].innerHTML + s1;
+                    let el = $('cellXfs', styleSheet);
+                    let styleIdx = $('xf', el).length - 1;
+                    $('row:eq(3) c[r], row:eq(4) c[r]', sheet).attr('s', styleIdx);
+                    $('row c[r^="C"], row c[r^="D"]', sheet).attr('s', styleIdx);
+                }
+            }
+        }
+
+        return dtObj;
+    }
+
     //判定欄位是否需要Color Type
     public NeedColorField(tPageName: string, tFieldName: string) {
         if (tPageName == 'ColorRule' && tFieldName == 'ColorCode') {

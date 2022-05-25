@@ -764,6 +764,7 @@ class SearchOperation {
                     if (tDom != null) {
                         tDom.innerHTML = HiddenHtml;
                     }
+                    HiddenTableObj = ps.DataTableExportCustomize(tmpPageName, data, HiddenTableObj);
                 }
                 let HaveMillion = false;
                 let UnitMode = GetSelectValue('單位');

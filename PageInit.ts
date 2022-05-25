@@ -806,6 +806,7 @@ class SearchOperation implements Search, ClickSearch {
                     let HiddenHtml = pt.CreatTable(qy, 'id="' + HiddenTableIdName + '" style="width:100%"');
                     let tDom = document.getElementById('HiddenTableArea');
                     if (tDom != null) { tDom.innerHTML = HiddenHtml }
+                    HiddenTableObj = ps.DataTableExportCustomize(tmpPageName, data, HiddenTableObj);
                 }
 
                 let HaveMillion = false;
