@@ -3458,55 +3458,55 @@ export class ColorRuleClass {
             if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][i] && ColorRuleArr[tPageName][i][0]) {
                 for (let tRule in ColorRuleArr[tPageName][i][0]) {
                     let tIdxArr: string[] = tRule.match(regexp) || [];
-                    for (let m = 1; m < tLineData.length; m++) {
+                    for (let m = 0; m < tLineData.length; m++) {
                         let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][i][0][tRule].Others, m, RowTitle[i]);
                         if (isConform) {
                             let tValue = tLineData[m].replace('%', '');
                             let tmRule = tRule;
                             let HaveDash = false;
-                            if (!isNaN(Number(tValue))) {
-                                for (let k = 0; k < tIdxArr.length; k++) {
-                                    let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
-                                    let tIdx: number = -1;
-                                    if (!isNaN(Number(tStr))) {
-                                        tIdx = Number(tStr);
-                                    }
-                                    else {
-                                        tIdx = RowTitle.indexOf(tStr);
-                                    }
-
-                                    while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                        if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
-                                            HaveDash = true;
-                                            break;
-                                        }
-                                        tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
-                                    }
-
-                                    if (HaveDash) { break; }
+                            //if (!isNaN(Number(tValue))) {
+                            for (let k = 0; k < tIdxArr.length; k++) {
+                                let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
+                                let tIdx: number = -1;
+                                if (!isNaN(Number(tStr))) {
+                                    tIdx = Number(tStr);
+                                }
+                                else {
+                                    tIdx = RowTitle.indexOf(tStr);
                                 }
 
-                                if (HaveDash) { continue; }
-                                if (eval(tmRule)) {
-                                    let tNode = {
-                                        Color: ColorRuleArr[tPageName][i][0][tRule].Color,//顏色
-                                        BackgroundColor: ColorRuleArr[tPageName][i][0][tRule].BackgroundColor,//背景顏色
-                                        Score: ColorRuleArr[tPageName][i][0][tRule].Others.Score
+                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                        HaveDash = true;
+                                        break;
                                     }
+                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                }
 
-                                    if (!this.HighlightObj[i]) {
-                                        let tpNode = { [m]: tNode };
-                                        this.HighlightObj[i] = tpNode;
-                                    }
-                                    else if (!this.HighlightObj[i][m]) {
-                                        this.HighlightObj[i][m] = tNode;
-                                    }
-                                    //如果目前Highlight權重高於目前的，則覆蓋
-                                    else if (tNode.Score > this.HighlightObj[i][m].Score) {
-                                        this.HighlightObj[i][m] = tNode;
-                                    }
+                                if (HaveDash) { break; }
+                            }
+
+                            if (HaveDash) { continue; }
+                            if (eval(tmRule)) {
+                                let tNode = {
+                                    Color: ColorRuleArr[tPageName][i][0][tRule].Color,//顏色
+                                    BackgroundColor: ColorRuleArr[tPageName][i][0][tRule].BackgroundColor,//背景顏色
+                                    Score: ColorRuleArr[tPageName][i][0][tRule].Others.Score
+                                }
+
+                                if (!this.HighlightObj[i]) {
+                                    let tpNode = { [m]: tNode };
+                                    this.HighlightObj[i] = tpNode;
+                                }
+                                else if (!this.HighlightObj[i][m]) {
+                                    this.HighlightObj[i][m] = tNode;
+                                }
+                                //如果目前Highlight權重高於目前的，則覆蓋
+                                else if (tNode.Score > this.HighlightObj[i][m].Score) {
+                                    this.HighlightObj[i][m] = tNode;
                                 }
                             }
+                            //}
                         }
                     }
                 }
@@ -3515,54 +3515,54 @@ export class ColorRuleClass {
             if (ColorRuleArr[tPageName] && ColorRuleArr[tPageName][RowTitle[i]] && ColorRuleArr[tPageName][RowTitle[i]][0]) {
                 for (let tRule in ColorRuleArr[tPageName][RowTitle[i]][0]) {
                     let tIdxArr: string[] = tRule.match(regexp) || [];
-                    for (let m = 1; m < tLineData.length; m++) {
+                    for (let m = 0; m < tLineData.length; m++) {
                         let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Others, m, RowTitle[i]);
                         if (isConform) {
                             let tmRule = tRule;
                             let tValue = tLineData[m].replace('%', '');
                             let HaveDash = false;
-                            if (!isNaN(Number(tValue))) {
-                                for (let k = 0; k < tIdxArr.length; k++) {
-                                    let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
-                                    let tIdx: number = -1;
-                                    if (!isNaN(Number(tStr))) {
-                                        tIdx = Number(tStr);
-                                    }
-                                    else {
-                                        tIdx = RowTitle.indexOf(tStr);
-                                    }
-
-                                    while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                        if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
-                                            HaveDash = true;
-                                            break;
-                                        }
-                                        tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
-                                    }
-                                    if (HaveDash) { break; }
+                            //if (!isNaN(Number(tValue))) {
+                            for (let k = 0; k < tIdxArr.length; k++) {
+                                let tStr: string = tIdxArr[k].replace('[', '').replace(']', '');
+                                let tIdx: number = -1;
+                                if (!isNaN(Number(tStr))) {
+                                    tIdx = Number(tStr);
+                                }
+                                else {
+                                    tIdx = RowTitle.indexOf(tStr);
                                 }
 
-                                if (HaveDash) { continue; }
-                                if (eval(tmRule)) {
-                                    let tNode = {
-                                        Color: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Color,//顏色
-                                        BackgroundColor: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].BackgroundColor,//背景顏色
-                                        Score: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Others.Score
+                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                        HaveDash = true;
+                                        break;
                                     }
+                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                }
+                                if (HaveDash) { break; }
+                            }
 
-                                    if (!this.HighlightObj[i]) {
-                                        let tpNode = { [m]: tNode };
-                                        this.HighlightObj[i] = tpNode;
-                                    }
-                                    else if (!this.HighlightObj[i][m]) {
-                                        this.HighlightObj[i][m] = tNode;
-                                    }
-                                    //如果目前Highlight權重高於目前的，則覆蓋
-                                    else if (tNode.Score > this.HighlightObj[i][m].Score) {
-                                        this.HighlightObj[i][m] = tNode;
-                                    }
+                            if (HaveDash) { continue; }
+                            if (eval(tmRule)) {
+                                let tNode = {
+                                    Color: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Color,//顏色
+                                    BackgroundColor: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].BackgroundColor,//背景顏色
+                                    Score: ColorRuleArr[tPageName][RowTitle[i]][0][tRule].Others.Score
+                                }
+
+                                if (!this.HighlightObj[i]) {
+                                    let tpNode = { [m]: tNode };
+                                    this.HighlightObj[i] = tpNode;
+                                }
+                                else if (!this.HighlightObj[i][m]) {
+                                    this.HighlightObj[i][m] = tNode;
+                                }
+                                //如果目前Highlight權重高於目前的，則覆蓋
+                                else if (tNode.Score > this.HighlightObj[i][m].Score) {
+                                    this.HighlightObj[i][m] = tNode;
                                 }
                             }
+                            //}
                         }
                     }
                 }
