@@ -1980,7 +1980,7 @@ export class PageMake {
             myChart.setOption(option, true);
         }
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        //myChart.setOption(option);
     }
     //初始化搜尋欄位
     //tPageName: 頁面名稱
