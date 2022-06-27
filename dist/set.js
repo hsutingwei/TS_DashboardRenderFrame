@@ -2811,86 +2811,102 @@ export class DynamicClass {
     constructor() {
         this.FunctionName = 'DynamicFunction.DynamicRequest'; //動態處理的觸發function
         this.DynamicInfObj = {
-            RentCost: {
-                InfluenceByThisFieldName: '年度',
+            TEST_EQP_Abnormal: {
                 InfluenceToFieldNames: {
+                    報表類型: {
+                        '': {
+                            MenuName: ''
+                        }
+                    },
+                    'BU': {
+                        'field_8': {
+                            MenuName: 'TEST_CUST',
+                        },
+                        'field_9': {
+                            MenuName: 'TEST_EQP_CATEGORY',
+                        },
+                        'field_10': {
+                            MenuName: 'TEST_EQP_NO',
+                            ValueByIdName: ['field_7', 'field_9'],
+                        },
+                        'field_11': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_7', 'field_9', 'field_10'],
+                        },
+                    },
+                    '機型': {
+                        'field_10': {
+                            MenuName: 'TEST_EQP_NO',
+                            ValueByIdName: ['field_7', 'field_9'],
+                        },
+                        'field_11': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_7', 'field_9', 'field_10'],
+                        },
+                    },
+                    '機台': {
+                        'field_11': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_7', 'field_9', 'field_10'],
+                        },
+                    }
+                }
+            },
+            TEST_EQP_RAM: {
+                InfluenceToFieldNames: {
+                    報表類型: {
+                        '': {
+                            MenuName: ''
+                        }
+                    },
                     'BU': {
                         'field_7': {
-                            MenuName: 'PH_MacType_Display',
-                            EffectiveInSearchBar: false,
-                            EffectiveInTable: true
+                            MenuName: 'TEST_CUST',
                         },
-                        'field_5': {
-                            MenuName: 'ProductName',
-                            EffectiveInSearchBar: false,
-                            EffectiveInTable: true
+                        'field_8': {
+                            MenuName: 'TEST_EQP_CATEGORY',
+                        },
+                        'field_9': {
+                            MenuName: 'TEST_EQP_NO',
+                            ValueByIdName: ['field_6', 'field_8'],
+                        },
+                        'field_10': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_6', 'field_8', 'field_9'],
                         },
                     },
+                    '機型': {
+                        'field_9': {
+                            MenuName: 'TEST_EQP_NO',
+                            ValueByIdName: ['field_6', 'field_8'],
+                        },
+                        'field_10': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_6', 'field_8', 'field_9'],
+                        },
+                    },
+                    '機台': {
+                        'field_10': {
+                            MenuName: 'TEST_TESTER',
+                            ValueByIdName: ['field_6', 'field_8', 'field_9'],
+                        },
+                    }
                 }
             },
-            RevenueMT_Cust: {
-                InfluenceByThisFieldName: '年度',
-            },
-            APMaintain: {
-                InfluenceByThisFieldName: '年度',
-            },
-            APQuery: {
-                InfluenceByThisFieldName: '年度',
-            },
-            FCSTQuery: {
-                InfluenceByThisFieldName: '年度'
-            },
-            APvsFCSTvsAct: {
-                InfluenceByThisFieldName: '年度',
+            DS_EQP_RAM: {
                 InfluenceToFieldNames: {
-                    'FCST 維護單位': {
-                        'field_4': {
-                            MenuName: 'FCSTSAName'
+                    報表類型: {
+                        '': {
+                            MenuName: ''
+                        }
+                    },
+                    '機型': {
+                        'field_7': {
+                            MenuName: 'DS_EQP_NO',
                         },
                     },
                 }
-            },
-            BillingFCSTChart: {
-                InfluenceByThisFieldName: '年度',
-                InfluenceToFieldNames: {
-                    BU: {
-                        field_4: {
-                            MenuName: 'BUProdList'
-                        },
-                    },
-                }
-            },
-            CustomerRevenueQuery: {
-                InfluenceByThisFieldName: '年度',
-            },
-            APFCSTChart: {
-                InfluenceByThisFieldName: '年度',
-                InfluenceToFieldNames: {
-                    BU: {
-                        field_3: {
-                            MenuName: 'BUProdList'
-                        },
-                    },
-                }
-            },
-            TESTERCOST_SUMMARY: {
-                InfluenceToFieldNames: {
-                    BU: {
-                        field_7: {
-                            MenuName: 'RCT_PRODUCTTYPE'
-                        },
-                    },
-                }
-            },
-            COST_SUMMARY: {
-                InfluenceToFieldNames: {
-                    BU: {
-                        field_7: {
-                            MenuName: 'RC_PRODUCTTYPE'
-                        },
-                    },
-                }
-            },
+            }
         };
     }
     NeedDynamicGetList(tPageName, tFiledName, isSearchArea) {

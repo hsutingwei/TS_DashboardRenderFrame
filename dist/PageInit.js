@@ -306,6 +306,7 @@ class SearchOperation {
                     paging: true,
                     scrollX: true,
                     searching: true,
+                    scrollCollapse: true,
                     dom: 'Bfrtip',
                     buttons: [
                         'excel'
@@ -2116,7 +2117,7 @@ export class PageMake {
     //FieldId: 搜尋BAR欄位ID(被影響的欄位)
     //KeyQuery: 下拉選單的值
     FrontDynamicMenuRequest(tPageName, FieldName, FieldId, isSearch, KeyQuery) {
-        var _a, _b;
+        var _a, _b, _c, _d;
         let dc = new set.DynamicClass();
         let ps = new set.PageSet();
         let valueArr = [];
@@ -2141,20 +2142,80 @@ export class PageMake {
                 let tKeyArr = [];
                 let haveAll = false;
                 let noDash = false;
+                let tKeyIdxRange = {};
+                let tLastFirstStr = '';
                 for (let i = 0; tPStr != '' && tPdArr != null && i < tPdArr.length; i++) {
                     let ttt = tPdArr[i].split(',');
                     let tmpIdx = ttt[1].indexOf('-');
                     if (tmpIdx < 0) {
                         noDash = true;
                     }
-                    tKeyArr.push(ttt[1].substring(0, tmpIdx));
+                    let tValueStr = ttt[1].substring(0, tmpIdx);
+                    tKeyArr.push(tValueStr);
                     tPdArr[i] = ttt[0] + ',' + ttt[1].substring(tmpIdx + 1);
+                    let tFirstStr = tValueStr.replace(/－/g, '-').split('＊')[0];
+                    if (!tKeyIdxRange[tFirstStr]) {
+                        tKeyIdxRange[tFirstStr] = { begin: i, end: i };
+                        if (tLastFirstStr != '') {
+                            tKeyIdxRange[tLastFirstStr].end = i;
+                        }
+                        tLastFirstStr = tFirstStr;
+                    }
                 }
+                tKeyIdxRange[tLastFirstStr].end = tPdArr.length;
                 if (noDash) {
                     valueArr = tPdArr;
                 }
                 else {
-                    if (typeof Key === 'object') {
+                    if (typeof Key === 'object' && ((_b = dc.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames[FieldName][FieldId].ValueByIdName) && ((_c = dc.DynamicInfObj[tPageName]) === null || _c === void 0 ? void 0 : _c.InfluenceToFieldNames[FieldName][FieldId].ValueByIdName.length) > 0) {
+                        let tCheckFirstKey = Key[0].split('@').find(x => x == '') ? [''] : Key[0].split('@'); //如果複選結果含有空白，則直接空白
+                        let tOthersEmpty = true; //第一個之後的條件是否全空白
+                        for (let k = 1; k < Key.length; k++) {
+                            if (!Key[k].split('@').find(x => x == '')) { //不可 != ''，因為複選可能同時有空白和非空白選項
+                                tOthersEmpty = false;
+                                break;
+                            }
+                        }
+                        if (tOthersEmpty) { //第一個之後的條件全空白可直接回begin、end範圍的陣列
+                            for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                let tmpValueArr = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                valueArr = valueArr.concat(tmpValueArr);
+                            }
+                        }
+                        else {
+                            for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                let begin = false;
+                                let tKIdx = -1;
+                                let tStartIdx = tCheckFirstKey[k].split('@').find(x => x == '') ? 0 : tKeyIdxRange[tCheckFirstKey[k]].begin;
+                                let tEndIdx = tCheckFirstKey[k].split('@').find(x => x == '') ? tKeyArr.length : tKeyIdxRange[tCheckFirstKey[k]].end;
+                                for (let i = tStartIdx; i < tEndIdx; i++) {
+                                    let flag = false;
+                                    let tArr = tKeyArr[i].replace(/－/g, '-').split('＊');
+                                    for (let j = 0; j < Key.length; j++) {
+                                        if (Key[j] == '' || (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == ''))) {
+                                        }
+                                        else if (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == tArr[j])) {
+                                        }
+                                        else if (Key[j] == tArr[j]) {
+                                            begin = true;
+                                            tKIdx = j;
+                                        }
+                                        else { //前一條件不符合，直接跳出不往下檢查
+                                            flag = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!flag) {
+                                        valueArr.push(tPdArr[i]);
+                                    }
+                                    if (begin && Key[tKIdx] != tArr[tKIdx]) { //因Menu列表有排序，出了範圍後面即可不檢查
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (typeof Key === 'object') {
                         for (let i = 0; i < Key.length; i++) {
                             if (Key[i] == '') {
                                 haveAll = true;
@@ -2181,7 +2242,7 @@ export class PageMake {
                         valueArr = tPdArr;
                     }
                 }
-                let tFieldArr = (_b = document.getElementById('FieldName')) === null || _b === void 0 ? void 0 : _b.innerHTML.split(',');
+                let tFieldArr = (_d = document.getElementById('FieldName')) === null || _d === void 0 ? void 0 : _d.innerHTML.split(',');
                 let tfIdx = parseInt(FieldId.substring(FieldId.indexOf('_') + 1));
                 if (!isNaN(tfIdx) && tFieldArr != null && valueArr != null) {
                     valueArr = valueArr.filter(onlyUnique);

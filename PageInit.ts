@@ -318,6 +318,7 @@ class SearchOperation implements Search, ClickSearch {
                     paging: true,
                     scrollX: true,
                     searching: true,
+                    scrollCollapse: true,
                     dom: 'Bfrtip',
                     buttons: [
                         'excel'
@@ -2206,18 +2207,78 @@ export class PageMake implements PageRender {
                 let tKeyArr = [];
                 let haveAll = false;
                 let noDash = false;
+                let tKeyIdxRange: { [key: string]: { begin: number, end: number } } = {};
+                let tLastFirstStr: string = '';
                 for (let i = 0; tPStr != '' && tPdArr != null && i < tPdArr.length; i++) {
                     let ttt = tPdArr[i].split(',')
                     let tmpIdx = ttt[1].indexOf('-');
                     if (tmpIdx < 0) { noDash = true; }
-                    tKeyArr.push(ttt[1].substring(0, tmpIdx));
+                    let tValueStr: string = ttt[1].substring(0, tmpIdx);
+                    tKeyArr.push(tValueStr);
                     tPdArr[i] = ttt[0] + ',' + ttt[1].substring(tmpIdx + 1);
+                    let tFirstStr = tValueStr.replace(/－/g, '-').split('＊')[0];
+                    if (!tKeyIdxRange[tFirstStr]) {
+                        tKeyIdxRange[tFirstStr] = { begin: i, end: i };
+                        if (tLastFirstStr != '') {
+                            tKeyIdxRange[tLastFirstStr].end = i;
+                        }
+                        tLastFirstStr = tFirstStr;
+                    }
                 }
+                tKeyIdxRange[tLastFirstStr].end = tPdArr.length;
                 if (noDash) {
                     valueArr = tPdArr;
                 }
                 else {
-                    if (typeof Key === 'object') {
+                    if (typeof Key === 'object' && dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![FieldName][FieldId].ValueByIdName && dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![FieldName][FieldId].ValueByIdName!.length > 0) {
+                        let tCheckFirstKey: string[] = Key[0].split('@').find(x => x == '') ? [''] : Key[0].split('@');//如果複選結果含有空白，則直接空白
+                        let tOthersEmpty: boolean = true;//第一個之後的條件是否全空白
+                        for (let k = 1; k < Key.length; k++) {
+                            if (!Key[k].split('@').find(x => x == '')) {//不可 != ''，因為複選可能同時有空白和非空白選項
+                                tOthersEmpty = false;
+                                break;
+                            }
+                        }
+                        if (tOthersEmpty) {//第一個之後的條件全空白可直接回begin、end範圍的陣列
+                            for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                let tmpValueArr: string[] = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                valueArr = valueArr!.concat(tmpValueArr);
+                            }
+                        }
+                        else {
+                            for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                let begin: boolean = false;
+                                let tKIdx: number = -1;
+                                let tStartIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') ? 0 : tKeyIdxRange[tCheckFirstKey[k]].begin;
+                                let tEndIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') ? tKeyArr.length : tKeyIdxRange[tCheckFirstKey[k]].end;
+                                for (let i = tStartIdx; i < tEndIdx; i++) {
+                                    let flag = false;
+                                    let tArr: string[] = tKeyArr[i].replace(/－/g, '-').split('＊');
+                                    for (let j = 0; j < Key.length; j++) {
+                                        if (Key[j] == '' || (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == ''))) {
+                                        }
+                                        else if (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == tArr[j])) {
+                                        }
+                                        else if (Key[j] == tArr[j]) {
+                                            begin = true;
+                                            tKIdx = j;
+                                        }
+                                        else {//前一條件不符合，直接跳出不往下檢查
+                                            flag = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!flag) {
+                                        valueArr.push(tPdArr![i]);
+                                    }
+                                    if (begin && Key[tKIdx] != tArr[tKIdx]) {//因Menu列表有排序，出了範圍後面即可不檢查
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (typeof Key === 'object') {
                         for (let i = 0; i < Key.length; i++) {
                             if (Key[i] == '') {
                                 haveAll = true;
