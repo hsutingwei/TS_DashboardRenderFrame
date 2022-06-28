@@ -2234,15 +2234,20 @@ export class PageMake implements PageRender {
                         let tCheckFirstKey: string[] = Key[0].split('@').find(x => x == '') ? [''] : Key[0].split('@');//如果複選結果含有空白，則直接空白
                         let tOthersEmpty: boolean = true;//第一個之後的條件是否全空白
                         for (let k = 1; k < Key.length; k++) {
-                            if (!Key[k].split('@').find(x => x == '')) {//不可 != ''，因為複選可能同時有空白和非空白選項
+                            if (Key[k].split('@').find(x => x == '') == null) {//不可 != ''，因為複選可能同時有空白和非空白選項
                                 tOthersEmpty = false;
                                 break;
                             }
                         }
                         if (tOthersEmpty) {//第一個之後的條件全空白可直接回begin、end範圍的陣列
-                            for (let k = 0; k < tCheckFirstKey.length; k++) {
-                                let tmpValueArr: string[] = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
-                                valueArr = valueArr!.concat(tmpValueArr);
+                            if (tCheckFirstKey.length == 1 && tCheckFirstKey[0] == '') {
+                                valueArr = tPdArr;
+                            }
+                            else {
+                                for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                    let tmpValueArr: string[] = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                    valueArr = valueArr!.concat(tmpValueArr);
+                                }
                             }
                         }
                         else {
