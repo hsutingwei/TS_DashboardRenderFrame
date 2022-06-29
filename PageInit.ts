@@ -2246,7 +2246,7 @@ export class PageMake implements PageRender {
                             else {
                                 for (let k = 0; k < tCheckFirstKey.length; k++) {
                                     let tmpValueArr: string[] = JSON.parse(JSON.stringify(tPdArr));
-                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end - tKeyIdxRange[tCheckFirstKey[k]].begin);
                                     valueArr = valueArr!.concat(tmpValueArr);
                                 }
                             }
