@@ -2076,8 +2076,8 @@ export class PageMake {
         for (let i = 0; i < ValueIdArr.length; i++) {
             let tNum = ValueIdArr[i].replace(tmpFieldName, '');
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tNum]);
-            if (DefaultIdx > -1) {
-                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, KeyValueArr[i]);
+            if (DefaultIdx > -1 && KeyValueArr[i] != '') { //預設值若為空白不需重新動態變動
+                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i]);
                 let domId = ValueIdArr[i];
                 if (tmpSelectList != null) {
                     document.getElementById(domId).innerHTML = this.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
@@ -2171,15 +2171,21 @@ export class PageMake {
                         let tCheckFirstKey = Key[0].split('@').find(x => x == '') ? [''] : Key[0].split('@'); //如果複選結果含有空白，則直接空白
                         let tOthersEmpty = true; //第一個之後的條件是否全空白
                         for (let k = 1; k < Key.length; k++) {
-                            if (!Key[k].split('@').find(x => x == '')) { //不可 != ''，因為複選可能同時有空白和非空白選項
+                            if (Key[k].split('@').find(x => x == '') == null) { //不可 != ''，因為複選可能同時有空白和非空白選項
                                 tOthersEmpty = false;
                                 break;
                             }
                         }
                         if (tOthersEmpty) { //第一個之後的條件全空白可直接回begin、end範圍的陣列
-                            for (let k = 0; k < tCheckFirstKey.length; k++) {
-                                let tmpValueArr = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
-                                valueArr = valueArr.concat(tmpValueArr);
+                            if (tCheckFirstKey.length == 1 && tCheckFirstKey[0] == '') {
+                                valueArr = tPdArr;
+                            }
+                            else {
+                                for (let k = 0; k < tCheckFirstKey.length; k++) {
+                                    let tmpValueArr = JSON.parse(JSON.stringify(tPdArr));
+                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                    valueArr = valueArr.concat(tmpValueArr);
+                                }
                             }
                         }
                         else {

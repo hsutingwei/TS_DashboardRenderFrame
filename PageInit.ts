@@ -2139,8 +2139,8 @@ export class PageMake implements PageRender {
         for (let i = 0; i < ValueIdArr.length; i++) {
             let tNum = ValueIdArr[i].replace(tmpFieldName, '');
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tNum]);
-            if (DefaultIdx > -1) {
-                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, KeyValueArr[i]);
+            if (DefaultIdx > -1 && KeyValueArr[i] != '') {//預設值若為空白不需重新動態變動
+                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i]);
                 let domId = ValueIdArr[i];
                 if (tmpSelectList != null) {
                     document.getElementById(domId)!.innerHTML = this.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
@@ -2245,7 +2245,8 @@ export class PageMake implements PageRender {
                             }
                             else {
                                 for (let k = 0; k < tCheckFirstKey.length; k++) {
-                                    let tmpValueArr: string[] = tPdArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                    let tmpValueArr: string[] = JSON.parse(JSON.stringify(tPdArr));
+                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
                                     valueArr = valueArr!.concat(tmpValueArr);
                                 }
                             }
