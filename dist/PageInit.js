@@ -1736,9 +1736,9 @@ export class PageMake {
                     tmpReadHtml = 'read';
                     LineAllNotCanEdit = false;
                 }
-                else {
+                /*else {
                     LineAllNotCanEdit = true;
-                }
+                }*/
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     aPart += tmpArr[j];
                 }
@@ -2183,7 +2183,7 @@ export class PageMake {
                             else {
                                 for (let k = 0; k < tCheckFirstKey.length; k++) {
                                     let tmpValueArr = JSON.parse(JSON.stringify(tPdArr));
-                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end);
+                                    tmpValueArr = tmpValueArr.splice(tKeyIdxRange[tCheckFirstKey[k]].begin, tKeyIdxRange[tCheckFirstKey[k]].end - tKeyIdxRange[tCheckFirstKey[k]].begin);
                                     valueArr = valueArr.concat(tmpValueArr);
                                 }
                             }

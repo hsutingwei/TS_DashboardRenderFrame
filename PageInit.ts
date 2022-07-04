@@ -1789,9 +1789,9 @@ export class PageMake implements PageRender {
                     tmpReadHtml = 'read';
                     LineAllNotCanEdit = false;
                 }
-                else {
+                /*else {
                     LineAllNotCanEdit = true;
-                }
+                }*/
 
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     aPart += tmpArr[j];
