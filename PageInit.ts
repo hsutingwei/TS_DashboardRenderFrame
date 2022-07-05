@@ -501,6 +501,8 @@ class SearchOperation implements Search, ClickSearch {
         }
         cr.SetColorRuleFromFront(tmpPageName);
         if (PageNumber >= 1) {
+            let tAddRowCount: number = 0;//增加幾個row計數
+            let tAddRowObj: { [count: number]: any } = {};//新增的obj暫存。key是計數，value是對應的欄位內容
             let ColumnObj = new Array();
             let TableIdName = tmpPageName + 'Table';
             let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
@@ -509,8 +511,12 @@ class SearchOperation implements Search, ClickSearch {
             let titleInfArr = new Array();
             let pm = new PageMake();
             let FieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
-            for (let i = 0; i < FieldArr.length; i++) {
-                ColumnObj.push({ data: FieldArr[i], title: FieldArr[i] });
+            let tmpFieldArr = JSON.parse(JSON.stringify(FieldArr));
+            if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                tmpFieldArr.push('功能');
+            }
+            for (let i = 0; i < tmpFieldArr.length; i++) {
+                ColumnObj.push({ data: tmpFieldArr[i], title: tmpFieldArr[i] });
             }
             tmpTitle = ps.MakeTableTitle(titleInfArr, tmpPageName);
             let ttt = '<table ' + AttributeStr + '></table>';
@@ -518,7 +524,7 @@ class SearchOperation implements Search, ClickSearch {
             if (tDom != null) {
                 tDom.innerHTML = ttt;
             }
-            let headerHtml: string = pm.CreatTableTitle(tmpPageName, 'thead', [], tmpTitle);
+            let headerHtml: string = pm.CreatTableTitle(tmpPageName, 'thead', set.PageSetObj.noDeletePage.indexOf(tmpPageName) > -1 ? [] : ['功能'], tmpTitle);
             let ShieldIdxArr = ps.NeedShieldField(tmpPageName);
             let AllResultCount = 0;
             TableObj.language = set.lang;
@@ -559,6 +565,13 @@ class SearchOperation implements Search, ClickSearch {
                         data: []
                     }
                     let tmpObj = new Array();
+                    if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
+                        for (let i = 1; i <= tAddRowCount; i++) {
+                            if (tAddRowObj[i] != null) {
+                                tmpObj.push(tAddRowObj[i]);
+                            }
+                        }
+                    }
                     gPageObj.PageNameObj[tmpPageName].FullData = [];
                     for (let i = 0; i < result.length; i++) {
                         let tmpArr = result[i].split(',');
@@ -566,6 +579,9 @@ class SearchOperation implements Search, ClickSearch {
                         let tObj: { [key: string]: string } = {};
                         for (let j = 0; j < tmpArr.length; j++) {
                             tObj[FieldArr[j]] = tmpArr[j];
+                        }
+                        if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                            tObj['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
                         }
                         tmpObj.push(tObj);
                     }
@@ -600,8 +616,11 @@ class SearchOperation implements Search, ClickSearch {
                 let ValueIdArr: string[] = [];
                 let tFieldNameArr: string[] = [];
                 let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
-                for (let i = 0; $('td', row).eq(i).html() != null; i++) {
-                    tmpArr.push($('td', row).eq(i).html());
+                for (let i = 0; i < FieldArr.length; i++) {
+                    tmpArr.push(data[FieldArr[i]]);
+                }
+                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                    tmpArr.push(data['功能']);
                 }
                 let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
 
@@ -746,10 +765,14 @@ class SearchOperation implements Search, ClickSearch {
                     $('td', row).eq(i).attr('onclick', LineArr[i].onclick);
                     $('td', row).eq(i).html(LineArr[i].innHtml.aPart + LineArr[i].innHtml.MenuPart + LineArr[i].innHtml.bPart);
                 }
+
+                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                    $('td', row).eq(tmpArr.length).html('<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>');
+                }
             };
             TableObj.rowCallback = function (row: any, data: any) {
                 if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
-                    for (let i = 0; $('td:eq(' + i + ')', row).html(); i++) {
+                    for (let i = 0; $('td:eq(' + i + ')', row).html() != null; i++) {
                         if ($('td:eq(' + i + ') select', row).html() != null) {
                             $('td:eq(' + i + ') select', row).selectpicker('render');//可搜尋下拉式初始化 
                         }
@@ -772,8 +795,30 @@ class SearchOperation implements Search, ClickSearch {
                 }
             }
 
-            let table = $('#' + tmpPageName + 'Table').DataTable(TableObj);
+            let t = $('#' + tmpPageName + 'Table').DataTable(TableObj);
             //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
+
+            $('#addRow').unbind().on('click', function () {//新增時觸發
+                tAddRowCount++;
+                let tmpArr: string[] = PageOperation.AddRowInitValueList(tmpPageName);
+                let tNode: { [key: string]: string } = {};
+                for (let i = 0; i < FieldArr.length; i++){
+                    tNode[FieldArr[i]] = tmpArr[i];
+                }
+                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                    tNode['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
+                }
+                tAddRowObj[tAddRowCount] = tNode;
+                t.page(0).draw('page');
+                ps.FreezeField(tmpPageName);
+            });
+
+            $('#' + TableIdName + ' tbody').unbind().on('click', 'tr td .DeleteFun', function () {//刪除時觸發
+                $(this).parent().parent('tr').css('display', 'none');
+                if ($(this).parent().parent('tr').find('td').eq(0).html() == '') {
+                    tAddRowCount--;
+                }
+            });
         }
         else {
             doAjax('Search', true, Query, function (data: string[]) {
@@ -1294,6 +1339,49 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
                     let FieldHtml = pm.MakeListHtml('select', tAttrStr, tmpSelectList);
                     tmpArr[tIdx] = FieldHtml;
                 }
+            }
+        }
+        AddLineCount--;
+
+        return tmpArr;
+    }
+
+    //新增欄位時，初始化選單欄位(僅value值，沒有html)
+    public static AddRowInitValueList(tPageName: string): string[] {
+        let tmpArr: string[] = new Array();
+        let op = new set.OnclickPage();
+        let ps = new set.PageSet();
+        let ShieldIdxArr = ps.NeedShieldField(tPageName);
+
+        if (gPageObj.PageNameObj[tPageName] == null) { return []; }
+
+        for (let i = 0; i < gPageObj.PageNameObj[tPageName].ModifiableArr.length; i++) {
+            let GetDefault = ps.AddLineDefaultValue(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i]);
+            if (ShieldIdxArr.indexOf(i) > -1) {
+                tmpArr.push('');
+            }
+            else if (gPageObj.PageNameObj[tPageName].ModifiableArr[i]) {
+                if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[i]) > -1) {
+                    tmpArr.push(GetDefault);
+                }
+                else if (op.FieldIsOnclick(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], '')) {
+                    tmpArr.push('');
+                }
+                else if (GetDefault != '') {//有預設值，且不再需要更改
+                    tmpArr.push(GetDefault);
+                }
+                else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i])) {
+                    tmpArr.push('');
+                }
+                else {
+                    tmpArr.push('');
+                }
+            }
+            else {
+                if (GetDefault != '') {//有預設值，且不再需要更改
+                    tmpArr.push(GetDefault);
+                }
+                else { tmpArr.push(''); }
             }
         }
         AddLineCount--;
