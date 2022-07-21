@@ -178,7 +178,7 @@ function formatFloat(num, pos) {
             reStr += '0';
         }
     }
-    return reStr;
+    return parseFloat(reStr);
 }
 function toType(obj) {
     var type = typeof (obj);
