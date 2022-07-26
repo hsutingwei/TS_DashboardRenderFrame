@@ -2227,6 +2227,10 @@ export class PageMake implements PageRender {
         for (let i = 0; i < ValueIdArr.length; i++) {
             let tNum = ValueIdArr[i].replace(tmpFieldName, '');
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tNum]);
+            let tListArr: string[] = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[tNum], true);
+            if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != '') {//若沒有預設值，但Menu List沒有All的選項，則賦值Menu List的第一個值
+                KeyValueArr[i] = tListArr[0].split(',')[0];
+            }
             if (DefaultIdx > -1 && KeyValueArr[i] != '') {//預設值若為空白不需重新動態變動
                 let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i]);
                 let domId = ValueIdArr[i];

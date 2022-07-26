@@ -3482,7 +3482,7 @@ export class DynamicFunction {
     //tFieldName: 欄位名稱(因此欄位影響別的欄位的)
     //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
     static DynamicRequest(tPageName, idName, tFieldName, isSearch, TriggerFromId) {
-        var _a, _b;
+        var _a, _b, _c, _d, _e;
         let Today = new Date();
         let year = GetSelectValue('年度');
         if (tPageName == 'Actual') {
@@ -3523,6 +3523,15 @@ export class DynamicFunction {
                         valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch, tValue);
                         document.getElementById(TargetID).innerHTML = pm.MakeOptionHtml(valueArr || [], '');
                         $('#' + TargetID).selectpicker('refresh');
+                    }
+                    else if (((_c = dc.DynamicInfObj[tPageName]) === null || _c === void 0 ? void 0 : _c.InfluenceToFieldNames[tFieldName][idName].ValueByIdName) && ((_d = dc.DynamicInfObj[tPageName]) === null || _d === void 0 ? void 0 : _d.InfluenceToFieldNames[tFieldName][idName].ValueByIdName.length) > 0) {
+                        let tValueArr = [];
+                        (_e = dc.DynamicInfObj[tPageName]) === null || _e === void 0 ? void 0 : _e.InfluenceToFieldNames[tFieldName][idName].ValueByIdName.forEach(function (item) {
+                            tValueArr.push(typeof $('#' + item).val() == 'object' ? $('#' + item).val().join('@') : $('#' + item).val().toString());
+                        });
+                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch, tValueArr);
+                        document.getElementById(idName).innerHTML = pm.MakeOptionHtml(valueArr || [], '');
+                        $('#' + idName).selectpicker('refresh');
                     }
                     else {
                         valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch);

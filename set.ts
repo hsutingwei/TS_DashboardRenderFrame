@@ -3788,6 +3788,15 @@ export class DynamicFunction {
                         document.getElementById(TargetID)!.innerHTML = pm.MakeOptionHtml(valueArr || [], '');
                         $('#' + TargetID).selectpicker('refresh');
                     }
+                    else if (dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFieldName][idName].ValueByIdName && dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFieldName][idName].ValueByIdName!.length > 0) {
+                        let tValueArr: string[] = [];
+                        dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![tFieldName][idName].ValueByIdName!.forEach(function (item) {
+                            tValueArr.push(typeof $('#' + item).val() == 'object' ? ($('#' + item).val() as string[]).join('@') : $('#' + item).val()!.toString());
+                        });
+                        valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch, tValueArr);
+                        document.getElementById(idName)!.innerHTML = pm.MakeOptionHtml(valueArr || [], '');
+                        $('#' + idName).selectpicker('refresh');
+                    }
                     else {
                         valueArr = pm.FrontDynamicMenuRequest(tPageName, tFieldName, idName, isSearch);
                         document.getElementById(idName)!.innerHTML = pm.MakeOptionHtml(valueArr || [], '');
