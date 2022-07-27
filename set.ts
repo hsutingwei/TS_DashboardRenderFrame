@@ -1386,8 +1386,8 @@ export class PageSet {
     //修改搜尋結果
     //tPageName: 頁面名稱
     //data: 搜尋結果
-    public EditSearchResult(tPageName: string, data: string[]): string[] {
-        let reArr: string[] = data;
+    public EditSearchResult(tPageName: string, data: string[]): string[] | { [key: string]: string }[] {
+        let reArr: string[] | { [key: string]: string }[] = data;
 
         if (tPageName == 'TEST_OUT_GOODS_LIST' || tPageName == 'TEST_IN_GOODS_LIST' || tPageName == 'TEST_RECEIVE_LIST'
             || tPageName == 'TEST_LOTSIZE_LIST' || tPageName == 'DS_IN_GOODS_LIST' || tPageName == 'DS_OUT_GOODS_LIST'
@@ -1396,6 +1396,20 @@ export class PageSet {
             || tPageName == 'Prober_Handler_DS_LIST' || tPageName == 'CompRevenueChart' || tPageName == 'Top10CustomerRevenue') {
             data.splice(0, 1);
             reArr = data;
+        }
+        else if (tPageName == 'CFM_HUMIDITY_TEMP') {
+            reArr = JSON.parse(data[0]);
+            let tObj: { [key: string]: string }[] = JSON.parse(data[0]);
+            let tOrderObj: { [order: number]: string } = {};
+            Object.keys(tObj[0]).forEach((key) => {
+                tOrderObj[gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(tObj[0][key])] = key;
+            });
+            tObj.splice(0, 1);
+            reArr = tObj;
+            gPageObj.PageNameObj[tPageName].FullDataObjOrder = [];
+            for (let i = 0; tOrderObj[i] != null; i++) {
+                gPageObj.PageNameObj[tPageName].FullDataObjOrder.push(tOrderObj[i]);
+            }
         }
 
         return reArr;
@@ -1461,7 +1475,7 @@ export class PageSet {
     //建立需要客製化Title的頁面(合併儲存格格式，例:['BU', 'BU']表BU左右兩格合併為一格)
     //TitleInfArr: Search回傳的data陣列
     //tPageName: 頁面名稱
-    public MakeTableTitle(TitleInfArr: Array<string>, tPageName: string): Array<Array<string>> {
+    public MakeTableTitle(TitleInfArr: Array<string> | { [key: string]: string }[], tPageName: string): Array<Array<string>> {
         let reObj: string[][] = new Array();
         let year: any = GetSelectValue('年度');
         let yStr: string = year != null ? year.toString() : '';
@@ -1713,7 +1727,7 @@ export class PageSet {
     //定義圖表的option
     //tPageName: 頁面名稱
     //data: 數據
-    public ChartsOption(tPageName: string, data: string[]): EChartOption {
+    public ChartsOption(tPageName: string, data: string[] | { [key: string]: string }[]): EChartOption {
         if (gPageObj.PageNameObj[tPageName] == null) { return {}; }
         let option: any = {};
         let tdata: number[][] = [];
@@ -1725,7 +1739,7 @@ export class PageSet {
         let AllEmpty = true;//第一列是否全空值
 
         for (let i = 0; i < data.length; i++) {
-            let tmpArr = data[i].split(',');
+            let tmpArr = typeof data[i] == 'string' ? (data[i] as string).split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             if (tmpArr[0] == '' || tmpArr[0] == '-') { continue; }
             AllEmpty = false;
             if (!isNaN(Number(tmpArr[0]))) {
@@ -1739,7 +1753,7 @@ export class PageSet {
 
         for (let i = 0; i < data.length; i++) {
             tHavePersent.push(false);
-            let tmpArr = data[i].split(',');
+            let tmpArr = typeof data[i] == 'string' ? (data[i] as string).split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             let newtdata: number[] = [];
             if (haveTitleAtFirst) { tmpTitle.push(tmpArr[0]); }
             for (let j = haveTitleAtFirst ? 1 : 0; j < tmpArr.length; j++) {//跳過一開始的Title
@@ -2772,7 +2786,7 @@ export class PageSet {
     }//檢查是否為多選下拉式
 
     //產生匯出的資訊Query，標題/內容
-    public GetExportQuery(tPageName: string, data: string[] | string[][], tmpTitle: string[][]) {
+    public GetExportQuery(tPageName: string, data: string[] | string[][] | { [key: string]: string }[], tmpTitle: string[][]) {
         let qy: { FieldName: string[], QueryResult: string[] } = {
             'FieldName': [],
             'QueryResult': []
@@ -2830,7 +2844,7 @@ export class PageSet {
     }
 
     //客製化Datatable.js excel參數
-    public DataTableExportCustomize(tPageName: string, data: string[] | string[][], dtObj: { [index: string]: any }): { [index: string]: any } {
+    public DataTableExportCustomize(tPageName: string, data: string[] | string[][] | { [key: string]: string }[], dtObj: { [index: string]: any }): { [index: string]: any } {
         let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
         if (tPageName == 'YIELD_RATE') {
             if (LastQuery.QueryArr[0] == '總表') {
@@ -3446,7 +3460,7 @@ export class ColorRuleClass {
     }
 
     //將搜尋結果與顏色規則初始化Hightlight座標資訊物件
-    InitColorObj(tPageName: string, data: string[][] | string[]) {
+    InitColorObj(tPageName: string, data: string[][] | string[] | { [key: string]: string }[]) {
         let regexp = /\[[^\[&^\]]+\]/g;
         this.HighlightObj = {};
         let RowTitle: string[] = [];//左邊第一個值的Title
@@ -3457,6 +3471,9 @@ export class ColorRuleClass {
         for (let i = 0; i < data.length; i++) {
             if (typeof data[i] == 'string') {
                 tData[i] = (data[i] as string).split(',');
+            }
+            else if (typeof data[i] == 'object'){
+                tData[i] = gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             }
             RowTitle.push(tData[i][0]);
 

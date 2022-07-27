@@ -210,15 +210,17 @@ function paddingLeft(str, length) {
     }
 } //左邊補零
 function CheckDecimalPoint(DataArr) {
-    for (var i = 0; i < DataArr.length; i++) {
-        var tmpArr = DataArr[i].split(',');
-        var nArr = new Array();
-        for (var j = 0; j < tmpArr.length; j++) {
-            tmpArr[j] = tmpArr[j].trim();
-            tmpArr[j] = CheckDecimalPointFn(tmpArr[j], tmpArr[j].indexOf('%') > -1 ? 1 : 2);
-            nArr.push(tmpArr[j]);
+    if (DataArr.length > 0 && typeof DataArr[0] == 'string') {
+        for (var i = 0; i < DataArr.length; i++) {
+            var tmpArr = DataArr[i].split(',');
+            var nArr = new Array();
+            for (var j = 0; j < tmpArr.length; j++) {
+                tmpArr[j] = tmpArr[j].trim();
+                tmpArr[j] = CheckDecimalPointFn(tmpArr[j], tmpArr[j].indexOf('%') > -1 ? 1 : 2);
+                nArr.push(tmpArr[j]);
+            }
+            DataArr[i] = nArr.join(',');
         }
-        DataArr[i] = nArr.join(',');
     }
     return DataArr;
 }

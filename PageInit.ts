@@ -87,6 +87,7 @@ class FormInf {
     NecessaryArr: Array<boolean> = [];//是否必填
     ModifiableArr: Array<boolean> = [];//可否修改
     FullData: string[][] = [];//這次的搜尋結果
+    FullDataObjOrder: string[] = [];//搜尋結果物件的讀取順序(內容值為物件屬性名稱)，此功能應用於Dapper的回傳結果
 
     constructor(tFormName: string, tFieldArr?: Array<string>, tNecessaryArr?: Array<boolean | number | string>, tModifiableArr?: Array<boolean | number | string>) {
         this.FormName = tFormName;
@@ -118,6 +119,17 @@ class FormInf {
             let ps = new set.PageSet();
             this.ModifiableArr = ps.InitModifiable(tFormName, this.TitleStrArr);
         }
+    }
+
+    //將Object型別的回傳結果(一行)，轉回string陣列
+    LineDataObjToArray(LineData: { [key: string]: string }): string[] {
+        let tNLineData: string[] = [];
+        this.FullDataObjOrder.forEach(function (item) {
+            if (LineData[item] != null) {
+                tNLineData.push(LineData[item]);
+            }
+        });
+        return tNLineData;
     }
 }
 
@@ -180,7 +192,7 @@ class SearchOperation implements Search, ClickSearch {
     //因此程式結構這樣寫，設定的部分統一寫在PageSet)
     //tPageName: 頁面名稱
     //data: 搜尋結果
-    public EditSearchResult(tPageName: string, data: string[]): string[] {
+    public EditSearchResult(tPageName: string, data: string[]): string[] | { [key: string]: string }[] {
         let ps = new set.PageSet();
         return ps.EditSearchResult(tPageName, data);
     }
@@ -480,6 +492,7 @@ class SearchOperation implements Search, ClickSearch {
         }
 
         if (!ps.CheckSearchQuery(tmpPageName, fQueryArr)) {
+            SetButtonDisable('SearchBtn', false, '搜尋');
             return;
         }
 
@@ -827,19 +840,19 @@ class SearchOperation implements Search, ClickSearch {
                 let pt = new PageTool();
                 gPageObj.PageNameObj[tmpPageName].SetTableTitle(data);
                 let so = new SearchOperation();
-                data = so.EditSearchResult(tmpPageName, data);
-                if (set.PageSetObj.NeedCheckDecimalPoint.indexOf(tmpPageName) > -1) { data = CheckDecimalPoint(data); }
+                let tdata: string[] | { [key: string]: string }[] = so.EditSearchResult(tmpPageName, data);
+                if (set.PageSetObj.NeedCheckDecimalPoint.indexOf(tmpPageName) > -1) { tdata = CheckDecimalPoint(tdata); }
                 if (set.PageSetObj.ChartPage.indexOf(tmpPageName) > -1) {
-                    pm.MakeChart(tmpPageName, data);
+                    pm.MakeChart(tmpPageName, tdata);
                 }
 
                 let TableIdName = tmpPageName + 'Table';
                 let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
                 let tmpTitle = new Array();
                 //gPageObj.PageNameObj[tmpPageName].SetTableTitle(data.length > 0 ? data[0].split(',') : undefined);
-                tmpTitle = ps.MakeTableTitle(data, tmpPageName);
+                tmpTitle = ps.MakeTableTitle(tdata, tmpPageName);
 
-                let TableHtml = pm.CreatReadWriteTable(tmpPageName, data, AttributeStr, tmpTitle);
+                let TableHtml = pm.CreatReadWriteTable(tmpPageName, tdata, AttributeStr, tmpTitle);
                 if (set.PageSetObj.noDataTable.indexOf(tmpPageName) > -1 && set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) {
                     TableHtml = '<div class="toolbar"><span style="color:blue">(M.NT)</span></div>' + TableHtml;
                 }
@@ -849,11 +862,11 @@ class SearchOperation implements Search, ClickSearch {
                 let HiddenTableIdName = tmpPageName + 'TableHidden';
 
                 if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1 && document.getElementById('HiddenTableArea')) {
-                    let qy = ps.GetExportQuery(tmpPageName, data, tmpTitle);
+                    let qy = ps.GetExportQuery(tmpPageName, tdata, tmpTitle);
                     let HiddenHtml = pt.CreatTable(qy, 'id="' + HiddenTableIdName + '" style="width:100%"');
                     let tDom = document.getElementById('HiddenTableArea');
                     if (tDom != null) { tDom.innerHTML = HiddenHtml }
-                    HiddenTableObj = ps.DataTableExportCustomize(tmpPageName, data, HiddenTableObj);
+                    HiddenTableObj = ps.DataTableExportCustomize(tmpPageName, tdata, HiddenTableObj);
                 }
 
                 let HaveMillion = false;
@@ -1795,7 +1808,7 @@ export class PageOperation extends TableAndSearchOperation {//PageName底下操�
 }
 
 export class PageMake implements PageRender {
-    public CreatReadWriteTable(tPageName: string, data: Array<string>, AttributeStr: string, TitleArr: Array<Array<string>>) {
+    public CreatReadWriteTable(tPageName: string, data: Array<string> | { [key: string]: string }[], AttributeStr: string, TitleArr: Array<Array<string>>) {
         if (gPageObj.PageNameObj[tPageName] == null) { return ''; }
         gPageObj.PageNameObj[tPageName].FullData = [];
         let TableHtml = '<table ' + AttributeStr + '>';
@@ -1817,7 +1830,7 @@ export class PageMake implements PageRender {
         for (let i = 0; i < data.length; i++) {
             let tmpId = 'tmprow' + i;
             TableHtml += '<tr id="' + tmpId + '">';
-            let tmpArr: string[] = data[i].split(',');
+            let tmpArr: string[] = typeof data[i] == 'string' ? (data[i] as string).split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             gPageObj.PageNameObj[tPageName].FullData.push(tmpArr);
             let tmpModifuableArr = ps.CheckFieldModifiable(tPageName, tmpArr);
             let KeyValueArr: string[] = [];
@@ -1923,7 +1936,7 @@ export class PageMake implements PageRender {
                         tStr += '<textarea class="form-control" ' + tmpAttrStr2 + ' rows="' + (tmpArr[j].length < 20 ? 1 : (tmpArr[j].length < 35 ? 2 : 3)) + '">' + tmpArr[j] + '</textarea>';
                     }
                     else if (ps.NeedColorField(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) {
-                        tStr += '<input class="form-control" type="color"' + tmpAttrStr2 + ' value="' + tmpArr[j] + '">';
+                        tStr += '<input class="form-control" type="color"' + tmpAttrStr2 + ' value="' + tmpArr[j].replace(/，/g, ',') + '">';
                     }
                     else if (tmpSelectList.length == 0) {
                         tStr += '<input class="form-control" ' + tmpAttrStr2 + ' value="' + tmpArr[j] + '">';
@@ -2116,7 +2129,7 @@ export class PageMake implements PageRender {
         return OptionHtml;
     }
 
-    public MakeChart(tPageName: string, data: string[]): void {
+    public MakeChart(tPageName: string, data: string[] | { [key: string]: string }[]): void {
         let dom = document.getElementById('ChartArea') as HTMLDivElement;
         if (dom == null) { return; }
 
@@ -2224,15 +2237,30 @@ export class PageMake implements PageRender {
             if (tDom != null) { tDom.style.display = 'none'; }
         }
 
+        let HaveDone: string[] = [];
         for (let i = 0; i < ValueIdArr.length; i++) {
+            if (HaveDone.indexOf(ValueIdArr[i]) > -1) { continue; }//被影響的欄位已處理過，則跳過
             let tNum = ValueIdArr[i].replace(tmpFieldName, '');
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tNum]);
-            let tListArr: string[] = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[tNum], true);
-            if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != '') {//若沒有預設值，但Menu List沒有All的選項，則賦值Menu List的第一個值
-                KeyValueArr[i] = tListArr[0].split(',')[0];
+            let tListArr: string[] = ps.GetListArr(tPageName, tFieldNameArr[i], true);
+            let tmpKeyValue: string | string[] = [];
+            if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != ''
+                && dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName != null && dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName!.length > 0) {
+                dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName?.forEach(function (item, idx) {
+                    let tmpIdx: number = Number(item.split('_')[1]);
+                    tListArr = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[tmpIdx], true);
+                    (tmpKeyValue as string[]).push(tListArr[0].split(',')[0]);
+                });
             }
-            if (DefaultIdx > -1 && KeyValueArr[i] != '') {//預設值若為空白不需重新動態變動
-                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i]);
+            else if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != '') {//若沒有預設值，但Menu List沒有All的選項，則賦值Menu List的第一個值
+                tmpKeyValue = tListArr[0].split(',')[0];
+            }
+            else {
+                tmpKeyValue = ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i];
+            }
+            if (DefaultIdx > -1 && tmpKeyValue.length > 0 && tmpKeyValue[0] != '') {//預設值若為空白不需重新動態變動
+                let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, tmpKeyValue);
+                HaveDone.push(ValueIdArr[i]);
                 let domId = ValueIdArr[i];
                 if (tmpSelectList != null) {
                     document.getElementById(domId)!.innerHTML = this.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
@@ -2462,12 +2490,12 @@ export class PageTool {
 
     //將數據轉換成匯出格式的數據
     //tdata: 數據(不含Title)
-    public MakeExportData(tPageName: string, tdata: string[] | string[][]): string[] {
+    public MakeExportData(tPageName: string, tdata: string[] | string[][] | { [key: string]: string }[]): string[] {
         let reData: string[] = new Array();
         let ps = new set.PageSet();
 
         for (let i = 0; i < tdata.length; i++) {
-            let tmpArr = typeof tdata[i] == 'string' ? tdata[i].toString().split(',') : tdata[i] as string[];
+            let tmpArr = typeof tdata[i] == 'string' ? tdata[i].toString().split(',') : (typeof tdata[i] == 'object' ? gPageObj.PageNameObj[tPageName].LineDataObjToArray(tdata[i]) : tdata[i] as string[]);
             let tReArr: string[] = new Array();
             let ps = new set.PageSet();
             for (let j = 0; j < tmpArr.length; j++) {

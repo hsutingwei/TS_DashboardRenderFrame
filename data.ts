@@ -208,16 +208,18 @@ function paddingLeft(str: string, length: number): string {//左邊補零
     else { return paddingRight('0' + str, length); }
 }//左邊補零
 
-function CheckDecimalPoint(DataArr: Array<string>): Array<string> {//檢查數字小數點位數，無則補位數
-    for (var i = 0; i < DataArr.length; i++) {
-        var tmpArr = DataArr[i].split(',');
-        var nArr = new Array();
-        for (var j = 0; j < tmpArr.length; j++) {
-            tmpArr[j] = tmpArr[j].trim();
-            tmpArr[j] = CheckDecimalPointFn(tmpArr[j], tmpArr[j].indexOf('%') > -1 ? 1 : 2);
-            nArr.push(tmpArr[j]);
+function CheckDecimalPoint(DataArr: string[] | { [key: string]: string }[]): string[] | { [key: string]: string }[] {//檢查數字小數點位數，無則補位數
+    if (DataArr.length > 0 && typeof DataArr[0] == 'string') {
+        for (var i = 0; i < DataArr.length; i++) {
+            var tmpArr = (DataArr[i] as string).split(',');
+            var nArr = new Array();
+            for (var j = 0; j < tmpArr.length; j++) {
+                tmpArr[j] = tmpArr[j].trim();
+                tmpArr[j] = CheckDecimalPointFn(tmpArr[j], tmpArr[j].indexOf('%') > -1 ? 1 : 2);
+                nArr.push(tmpArr[j]);
+            }
+            DataArr[i] = nArr.join(',');
         }
-        DataArr[i] = nArr.join(',');
     }
 
     return DataArr;

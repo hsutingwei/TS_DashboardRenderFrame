@@ -1286,6 +1286,20 @@ export class PageSet {
             data.splice(0, 1);
             reArr = data;
         }
+        else if (tPageName == 'CFM_HUMIDITY_TEMP') {
+            reArr = JSON.parse(data[0]);
+            let tObj = JSON.parse(data[0]);
+            let tOrderObj = {};
+            Object.keys(tObj[0]).forEach((key) => {
+                tOrderObj[gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(tObj[0][key])] = key;
+            });
+            tObj.splice(0, 1);
+            reArr = tObj;
+            gPageObj.PageNameObj[tPageName].FullDataObjOrder = [];
+            for (let i = 0; tOrderObj[i] != null; i++) {
+                gPageObj.PageNameObj[tPageName].FullDataObjOrder.push(tOrderObj[i]);
+            }
+        }
         return reArr;
     }
     //Update()時，修改參數值
@@ -1588,7 +1602,7 @@ export class PageSet {
         let haveTitleAtFirst = true;
         let AllEmpty = true; //第一列是否全空值
         for (let i = 0; i < data.length; i++) {
-            let tmpArr = data[i].split(',');
+            let tmpArr = typeof data[i] == 'string' ? data[i].split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             if (tmpArr[0] == '' || tmpArr[0] == '-') {
                 continue;
             }
@@ -1604,7 +1618,7 @@ export class PageSet {
         }
         for (let i = 0; i < data.length; i++) {
             tHavePersent.push(false);
-            let tmpArr = data[i].split(',');
+            let tmpArr = typeof data[i] == 'string' ? data[i].split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             let newtdata = [];
             if (haveTitleAtFirst) {
                 tmpTitle.push(tmpArr[0]);
@@ -3201,6 +3215,9 @@ export class ColorRuleClass {
         for (let i = 0; i < data.length; i++) {
             if (typeof data[i] == 'string') {
                 tData[i] = data[i].split(',');
+            }
+            else if (typeof data[i] == 'object') {
+                tData[i] = gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             }
             RowTitle.push(tData[i][0]);
             for (let j = 0; j < tData[i].length; j++) {
