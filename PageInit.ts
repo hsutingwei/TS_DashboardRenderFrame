@@ -2237,30 +2237,40 @@ export class PageMake implements PageRender {
             if (tDom != null) { tDom.style.display = 'none'; }
         }
 
-        let HaveDone: string[] = [];
+        //let HaveDone: string[] = [];
         for (let i = 0; i < ValueIdArr.length; i++) {
-            if (HaveDone.indexOf(ValueIdArr[i]) > -1) { continue; }//被影響的欄位已處理過，則跳過
+            //if (HaveDone.indexOf(ValueIdArr[i]) > -1) { continue; }//被影響的欄位已處理過，則跳過//由於複數動態欄位有各自的預設值，因此還需全部都檢查
             let tNum = ValueIdArr[i].replace(tmpFieldName, '');
             let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tNum]);
             let tListArr: string[] = ps.GetListArr(tPageName, tFieldNameArr[i], true);
             let tmpKeyValue: string | string[] = [];
             if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != ''
                 && dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName != null && dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName!.length > 0) {
+                //若沒有預設值且欄位是多重來源動態Menu，則自動選擇個來源List的第一個值
                 dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName?.forEach(function (item, idx) {
                     let tmpIdx: number = Number(item.split('_')[1]);
                     tListArr = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].FieldArr[tmpIdx], true);
                     (tmpKeyValue as string[]).push(tListArr[0].split(',')[0]);
                 });
             }
-            else if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != '') {//若沒有預設值，但Menu List沒有All的選項，則賦值Menu List的第一個值
+            else if (KeyValueArr[i] == '' && tListArr.length > 0 && tListArr[0].split(',')[0] != '') {
+                //若沒有預設值，但Menu List沒有All的選項，則賦值Menu List的第一個值
                 tmpKeyValue = tListArr[0].split(',')[0];
+            }
+            else if (dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName != null && dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName!.length > 0) {
+                dc.DynamicInfObj[tPageName].InfluenceToFieldNames![tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName?.forEach(function (item, idx) {
+                    //若有預設值且欄位是多重來源動態Menu，則將預設值帶入FrontDynamicMenuRequest的參數
+                    let tmpIdx: number = Number(item.split('_')[1]);
+                    let tDIdx: number = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tmpIdx]);
+                    (tmpKeyValue as string[]).push(DefaultValue[tDIdx]);
+                });
             }
             else {
                 tmpKeyValue = ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i];
             }
             if (DefaultIdx > -1 && tmpKeyValue.length > 0 && tmpKeyValue[0] != '') {//預設值若為空白不需重新動態變動
                 let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, tmpKeyValue);
-                HaveDone.push(ValueIdArr[i]);
+                //HaveDone.push(ValueIdArr[i]);
                 let domId = ValueIdArr[i];
                 if (tmpSelectList != null) {
                     document.getElementById(domId)!.innerHTML = this.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
