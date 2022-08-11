@@ -16,13 +16,15 @@ export let NeedAjaxArr: string[] = [];//儲存那些頁面名稱需要紀錄Ajax
 var AddLineCount: number = -1;//用來記錄新增的筆數(負值是用來與Table的行數做區分)
 
 $(function () {
+    let po = new PageOperation();
+    let pm = new PageMake();
+    let ps = new set.PageSet();
+    pm.IniteMenuBar(false, 'MenuBarLink2');
+    pm.IniteMenuBar(true, 'MenuBarLink');
     $('[data-toggle="tooltip"]').tooltip();
     let cr = new set.ColorRuleClass();
     cr.InitColorRule();
 
-    let po = new PageOperation();
-    let pm = new PageMake();
-    let ps = new set.PageSet();
     let tPageName: string | undefined = document.getElementById('PageName')?.innerHTML;
 
     if (tPageName != undefined && tPageName != '' && gPageObj.PageNameObj[tPageName] == null) {
@@ -2458,6 +2460,60 @@ export class PageMake implements PageRender {
         }
 
         return valueArr;
+    }
+
+    //渲染MenuBar
+    //NeedCheckRight: 是否需要檢查權限(false僅回傳MenuName不會回傳URL)
+    //DomId: DOM ID
+    public IniteMenuBar(NeedCheckRight: boolean, DomId?: string) {
+        doAjax('GetMenu', true, NeedCheckRight ? 'true' : 'false', function (data: MenuObj[]) {
+            let MenuHtml: string = '';
+            let MenuRender = function (MenuObj: MenuObj, MenuLevel: number) {
+                let tReHtml: string = '';
+                let ULAttrStr = "";//ul標籤
+                let LIAttrStr = "";//li標籤
+                let aAttrStr = "";//a標籤
+                switch (MenuLevel) {
+                    case 1:
+                        ULAttrStr = "class=\"nav navbar-nav\"";
+                        LIAttrStr = "class=\"dropdown\"";
+                        aAttrStr = "class=\"LinkClass dropdown-toggle text-2xl text-black hover:text-green-500 hover:font-bold focus:text-green-500 focus:font-bold\"";
+                        break;
+                    case 2:
+                        ULAttrStr = "class=\"dropdown-menu\"";
+                        LIAttrStr = "class=\"nav-item dropdown\"";
+                        aAttrStr = "class=\"dropdown-item LinkClass\"";
+                        break;
+                    default:
+                        ULAttrStr = "class=\"submenu dropdown-menu\"";
+                        aAttrStr = "class=\"dropdown-item LinkClass\"";
+                        break;
+                }
+
+                tReHtml += '<ul ' + ULAttrStr + '>';
+                for (let i = 0; MenuObj[i] != null; i++) {
+                    let HrefStr = (MenuObj[i].CanUse ? " href=\"" + MenuObj[i].URL + "\" target=\"_blank\"" : "");
+                    let aID = MenuLevel == 1 ? " id=\"drop" + MenuLevel.toString() + "_" + i.toString() + "\"" : "";
+                    let tmpAaAttrStr = aAttrStr + aID + HrefStr + (MenuObj[i].URL != "" && !MenuObj[i].CanUse ? " style=\"color:gray\"" : "");
+                    let AInnerStr = MenuObj[i].Child != null ? (MenuLevel == 1 ? "<span class='caret'></span>" : "<span class='float-right'>&raquo</span>") : "";
+                    if (MenuLevel == 1 && MenuObj[i].Child == null) { tmpAaAttrStr = tmpAaAttrStr.replace("data-toggle=\"dropdown\"", ""); }
+                    if (MenuLevel == 1 && AInnerStr != "") { tmpAaAttrStr = tmpAaAttrStr.replace("class=\"", "class=\"cursor-pointer "); }
+                    tReHtml += '<li ' + LIAttrStr + '><a ' + tmpAaAttrStr + '>' + MenuObj[i].MenuName + AInnerStr + '</a>'
+                        + (MenuObj[i].Child != null ? MenuRender(MenuObj[i].Child, MenuLevel + 1) : '')
+                        + '</li>';
+                }
+                tReHtml += '</ul>';
+                return tReHtml;
+            }
+
+            data.forEach(function (item) {
+                MenuHtml += MenuRender(item, 1);
+            });
+            document.getElementById(DomId ? DomId : 'MenuBarLink')!.innerHTML = MenuHtml;
+            if (DomId && DomId == 'MenuBarLink') {
+                $('#MenuBarLink2').addClass('hidden');
+            }
+        });
     }
 }
 

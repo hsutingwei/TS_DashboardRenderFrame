@@ -2,6 +2,7 @@ interface Window {
     PageOperation: typeof import("./PageInit")["PageOperation"];
     DynamicFunction: typeof import("./set")["DynamicFunction"];
     PPMake: typeof import("./PPI")["PPMake"];
+    PPSearch: typeof import("./PPI")["PPSearch"];
     PageTool: typeof import("./PageInit")["PageTool"];
 }
 
@@ -36,6 +37,15 @@ type PageSetObj = {//內容值填入頁面名稱
     NeedExport: string[],//需要匯出的頁面
     NoDefaultSearch: string[],//頁面載入時不預設搜尋
     TableNeedDefer: string[],//datatable.js需要設定延遲載入
+}
+
+type MenuObj = {//MenuBar物件
+    [Order: number]: {
+        MenuName: string,//顯示名稱
+        URL: string,//連結
+        CanUse: boolean,//是否有權限
+        Child: MenuObj//子Menu
+    }
 }
 
 interface PageStatus {
