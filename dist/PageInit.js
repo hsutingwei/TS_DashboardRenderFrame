@@ -19,17 +19,22 @@ export var gPageObj = {
     PageNameArr: [],
     PageNameObj: {}
 };
-export var CheckArr = []; //存放這次搜尋的文本(用於檢查相似度)
-export let NeedAjaxArr = []; //儲存那些頁面名稱需要紀錄Ajax執行狀態
-var AddLineCount = -1; //用來記錄新增的筆數(負值是用來與Table的行數做區分)
+/**存放這次搜尋的文本(用於檢查相似度) */
+export var CheckArr = [];
+/**儲存那些頁面名稱需要紀錄Ajax執行狀態 */
+export let NeedAjaxArr = [];
+/**用來記錄新增的筆數(負值是用來與Table的行數做區分) */
+var AddLineCount = -1;
 $(function () {
     var _a, _b, _c, _d;
-    $('[data-toggle="tooltip"]').tooltip();
-    let cr = new set.ColorRuleClass();
-    cr.InitColorRule();
     let po = new PageOperation();
     let pm = new PageMake();
     let ps = new set.PageSet();
+    pm.IniteMenuBar(false, 'MenuBarLink2');
+    pm.IniteMenuBar(true, 'MenuBarLink');
+    $('[data-toggle="tooltip"]').tooltip();
+    let cr = new set.ColorRuleClass();
+    cr.InitColorRule();
     let tPageName = (_a = document.getElementById('PageName')) === null || _a === void 0 ? void 0 : _a.innerHTML;
     if (tPageName != undefined && tPageName != '' && gPageObj.PageNameObj[tPageName] == null) {
         ps.ResetMenuDocumentInnerHtml(tPageName);
@@ -80,13 +85,20 @@ $(function () {
 });
 class FormInf {
     constructor(tFormName, tFieldArr, tNecessaryArr, tModifiableArr) {
-        this.FieldArr = []; //欄位名稱
-        this.TitleStrArr = []; //Table顯示的欄位名稱(多重欄位會降維一維陣列儲存)
-        this.TitleCell = []; //紀錄多重欄位(真實的欄位型態)
-        this.NecessaryArr = []; //是否必填
-        this.ModifiableArr = []; //可否修改
-        this.FullData = []; //這次的搜尋結果
-        this.FullDataObjOrder = []; //搜尋結果物件的讀取順序(內容值為物件屬性名稱)，此功能應用於Dapper的回傳結果
+        /**欄位名稱 */
+        this.FieldArr = [];
+        /**Table顯示的欄位名稱(多重欄位會降維一維陣列儲存) */
+        this.TitleStrArr = [];
+        /**紀錄多重欄位(真實的欄位型態) */
+        this.TitleCell = [];
+        /**是否必填 */
+        this.NecessaryArr = [];
+        /**可否修改 */
+        this.ModifiableArr = [];
+        /**這次的搜尋結果 */
+        this.FullData = [];
+        /**搜尋結果物件的讀取順序(內容值為物件屬性名稱)，此功能應用於Dapper的回傳結果 */
+        this.FullDataObjOrder = [];
         this.FormName = tFormName;
         if (tFieldArr != null) {
             this.FieldArr = tFieldArr;
@@ -127,7 +139,10 @@ class FormInf {
             this.ModifiableArr = ps.InitModifiable(tFormName, this.TitleStrArr);
         }
     }
-    //將Object型別的回傳結果(一行)，轉回string陣列
+    /**將Object型別的回傳結果(一行)，轉回string陣列
+     * @param {{ [key: string]: string }} LineData key:欄位名稱; value:欄位值
+     * @return {string[]} 回傳欄位值組成的陣列
+    */
     LineDataObjToArray(LineData) {
         let tNLineData = [];
         this.FullDataObjOrder.forEach(function (item) {
@@ -138,25 +153,34 @@ class FormInf {
         return tNLineData;
     }
 }
+/**一個頁面對應一個Table */
 export class PageInf extends FormInf {
     constructor(tPageName, tFieldArr, tNecessaryArr, tModifiableArr) {
         super(tPageName, tFieldArr, tNecessaryArr, tModifiableArr);
-        //一個頁面對應一個Table
-        this.PageName = this.FormName; //Page名稱
-        this.PageNumber = -1; //目前取得第幾頁的資料，用於分頁搜尋。-1為全部結果
-        this.APageCount = 10; //預設一頁10筆
-        this.isWriteMode = false; //目前表格是否為編輯模式
-        this.LastQuery = {}; //上次的查詢條件
-        this.ParentName = ''; //父PageName
-        this.ChildName = []; //子PageName
-        this.BlockId = ''; //此Form所在div id(區塊搜尋才會用到)
-        this.SubBlockId = []; //此Form所含的子div id(區塊搜尋才會用到)
+        /**Page名稱 */
+        this.PageName = this.FormName;
+        /**目前取得第幾頁的資料，用於分頁搜尋。-1為全部結果 */
+        this.PageNumber = -1;
+        /**預設一頁10筆 */
+        this.APageCount = 10;
+        /**目前表格是否為編輯模式 */
+        this.isWriteMode = false;
+        /**上次的查詢條件 */
+        this.LastQuery = {};
+        /**父PageName */
+        this.ParentName = '';
+        /**子PageName */
+        this.ChildName = [];
+        /**此Form所在div id(區塊搜尋才會用到) */
+        this.BlockId = '';
+        /**此Form所含的子div id(區塊搜尋才會用到) */
+        this.SubBlockId = [];
         let ps = new set.PageSet();
         let tmpNumberArr = ps.DefineSearPageInf(tPageName);
         this.PageNumber = tmpNumberArr[0];
         this.APageCount = tmpNumberArr[1];
     }
-    // 定義此PageName的Title
+    /**定義此PageName的Title */
     SetTableTitle(data) {
         let ps = new set.PageSet();
         if (set.PageSetObj.NeedResetFieldArr.indexOf(this.PageName) > -1) {
@@ -169,35 +193,43 @@ export class PageInf extends FormInf {
         }
     }
 }
-//此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承
+/**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承 */
 class SearchOperation {
-    //重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
-    //因此程式結構這樣寫，設定的部分統一寫在PageSet)
-    //tPageName: 頁面名稱
-    //sQuery: 搜尋Query
+    /**重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
+     * 因此程式結構這樣寫，設定的部分統一寫在PageSet)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} sQuery 搜尋Query
+     * @return {string[]} 回傳重新定義的搜尋陣列
+     */
     ResetSearchQuery(tPageName, sQuery) {
         let ps = new set.PageSet();
         return ps.ResetSearchQuery(tPageName, sQuery);
     }
-    //重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
-    //因此程式結構這樣寫，設定的部分統一寫在PageSet)
-    //tPageName: 頁面名稱
-    //sQuery: 搜尋Query
+    /**重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
+     * 因此程式結構這樣寫，設定的部分統一寫在PageSet)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} Query 搜尋Query
+     * @param {string[][]} data 搜尋結果陣列(二維)
+     * @return {string} 回傳重新定義的Title
+     */
     SetFormTitleFromQuery(tPageName, Query, data) {
         let ps = new set.PageSet();
         return ps.SetFormTitleFromQuery(tPageName, Query, data);
     }
-    //修改搜尋結果(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
-    //因此程式結構這樣寫，設定的部分統一寫在PageSet)
-    //tPageName: 頁面名稱
-    //data: 搜尋結果
+    /**修改搜尋結果(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
+     * 因此程式結構這樣寫，設定的部分統一寫在PageSet)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} data 搜尋結果陣列
+     * @return {string[] | { [key: string]: string }[]} 回傳重新定義的搜尋結果
+     */
     EditSearchResult(tPageName, data) {
         let ps = new set.PageSet();
         return ps.EditSearchResult(tPageName, data);
     }
-    //cell欄位的點擊搜尋觸發的函式
-    //tPageName: 頁面名稱
-    //qyStr: 點擊搜尋的搜尋Query
+    /**點擊搜尋觸發的函式(cell欄位或其他)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} qyStr 點擊搜尋的搜尋Query
+     */
     static ClickSearch(tPageName, qyStr) {
         if (gPageObj.PageNameObj[tPageName] == null) {
             return;
@@ -353,6 +385,10 @@ class SearchOperation {
             });
         }
     }
+    /**頁面搜尋觸發的函式
+     * @param {string} tPageName 頁面名稱
+     * @param {number} JumPage 搜尋結果指定呈現的頁面
+     */
     static Search(tPageName, JumPage) {
         let sbtn = $('#SearchBtn');
         //sbtn.button('loading');
@@ -997,9 +1033,10 @@ class SearchOperation {
     }
 }
 export class TableAndSearchOperation extends SearchOperation {
-    //Update Submit
-    //tPageName: 頁面名稱
-    //isAsync: AJAX是否異步請求(預設true)
+    /**Update Submit
+     * @param {string} tPageName 頁面名稱
+     * @param {boolean} isAsync AJAX是否異步請求(預設true)
+     */
     static UpdateSubmit(tPageName, isAsync) {
         let tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         if (gPageObj.PageNameObj[tmpPageName] != null) {
@@ -1164,8 +1201,10 @@ export class TableAndSearchOperation extends SearchOperation {
             });
         }
     }
-    //切換檢視/編輯模式。; 根據現在的編輯模式狀態切換檢視/編輯模式。
-    //isClick: 是否為Button觸發
+    /**切換檢視/編輯模式。; 根據現在的編輯模式狀態切換檢視/編輯模式。
+     * @param {boolean} isClick 是否為Button觸發
+     * @param {string} tPageName 頁面名稱
+     */
     static CheckReadWriteMode(isClick, tPageName) {
         let tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         if (isClick) { //是否點擊切換模式按鈕
@@ -1195,7 +1234,10 @@ export class TableAndSearchOperation extends SearchOperation {
             ViewChange2('write', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'block' : 'none');
         }
     }
-    //新增欄位時，初始化選單欄位
+    /**新增欄位時，初始化選單欄位
+     * @param {string} tPageName 頁面名稱
+     * @return {string[]} 回傳html串列(一行)
+     */
     static AddRowInitList(tPageName) {
         var _a;
         let tmpArr = new Array();
@@ -1293,7 +1335,10 @@ export class TableAndSearchOperation extends SearchOperation {
         AddLineCount--;
         return tmpArr;
     }
-    //新增欄位時，初始化選單欄位(僅value值，沒有html)
+    /**新增欄位時，初始化選單欄位(僅value值，沒有html)
+     * @param {string} tPageName 頁面名稱
+     * @return {string[]} 欄位初始值串列(一行)
+     */
     static AddRowInitValueList(tPageName) {
         let tmpArr = new Array();
         let op = new set.OnclickPage();
@@ -1336,13 +1381,15 @@ export class TableAndSearchOperation extends SearchOperation {
         AddLineCount--;
         return tmpArr;
     }
-    //刪除Table某一行
-    //RowId: 該行DOM ID(tr的id)
+    /**刪除Table某一行
+     * @param {string} RowId 該行DOM ID(tr的id)
+     */
     DeleteBtn(RowId) {
         document.getElementById(RowId).style.display = 'none';
     }
-    //取消修改
-    //tPageName: 頁面名稱
+    /**取消修改
+     * @param {string} tPageName 頁面名稱
+     */
     static ReSetWrite(tPageName) {
         let tmpPageName = '';
         if (gPageObj.PageNameArr.length == 0) {
@@ -1355,8 +1402,9 @@ export class TableAndSearchOperation extends SearchOperation {
         this.CheckReadWriteMode(true, tmpPageName);
         PageOperation.Search(tmpPageName, oriPage);
     }
-    //數據重載(先呼叫後端去除快取的function，再重新搜尋)
-    //tPageName: 頁面名稱
+    /**數據重載(先呼叫後端去除快取的function，再重新搜尋)
+     * @param {string} tPageName 頁面名稱
+     */
     static ReloadData(tPageName) {
         let tmpPageName = '';
         if (gPageObj.PageNameArr.length == 0) {
@@ -1375,10 +1423,14 @@ export class TableAndSearchOperation extends SearchOperation {
         });
     }
 }
-//此class定義Page的操作功能
+/**此class定義Page的操作功能
+ * PageName底下操作功能定義於此
+ */
 export class PageOperation extends TableAndSearchOperation {
-    //Update點擊觸發的功能
-    //此函式還未將Query傳入後端
+    /**Update點擊觸發的功能。
+     * 此函式還未將Query傳入後端
+     * @param {string} tPageName 頁面名稱
+     */
     UpdateClick(tPageName) {
         if (gPageObj.PageNameObj[tPageName] != null) {
             let ps = new set.PageSet();
@@ -1466,7 +1518,7 @@ export class PageOperation extends TableAndSearchOperation {
             }
         }
     }
-    //初始化Menu內容
+    /**初始化Menu內容 */
     InitListArr(tPageName) {
         var _a;
         let ps = new set.PageSet();
@@ -1483,8 +1535,9 @@ export class PageOperation extends TableAndSearchOperation {
             //}
         }
     }
-    //AP定版功能
-    //tPageName: 頁面名稱
+    /**AP定版功能
+     * @param {string} tPageName 頁面名稱
+     */
     static VersionSet(tPageName) {
         let sbtn = $('#VersionBtn');
         //sbtn.button('loading');
@@ -1520,7 +1573,9 @@ export class PageOperation extends TableAndSearchOperation {
             location.reload();
         });
     }
-    //AP、FCST匯入功能
+    /**AP、FCST匯入功能
+     * @param {string} tPageName 頁面名稱
+    */
     static UploadData(tPageName) {
         if (gPageObj.PageNameArr.length <= 0) {
             return;
@@ -1600,7 +1655,9 @@ export class PageOperation extends TableAndSearchOperation {
             });
         }
     }
-    //有拖拉功能的上傳功能(總經理報表的專案管理)
+    /**有拖拉功能的上傳功能(總經理報表的專案管理)
+     * @param {string} tPageName 頁面名稱
+    */
     static UploadData2(tPageName) {
         var _a;
         if (gPageObj.PageNameArr.length <= 0) {
@@ -1693,7 +1750,10 @@ export class PageOperation extends TableAndSearchOperation {
             });
         }
     }
-    //匯出功能(由後端產生檔案再回傳路徑)
+    /**匯出功能(由後端產生檔案再回傳路徑)
+     * @param {string} tPageName 頁面名稱
+     * @param {string} ExportIdName 觸發此event的匯出button
+    */
     static ExportExcel(tPageName, ExportIdName) {
         if (gPageObj.PageNameArr.length <= 0) {
             return;
@@ -1728,7 +1788,7 @@ export class PageOperation extends TableAndSearchOperation {
             window.location.assign(data);
         });
     }
-    //LinkToERP功能。目前實作於自有產品
+    /**LinkToERP功能。目前實作於自有產品 */
     static LinkToERP(tPageName) {
         if (gPageObj.PageNameArr.length <= 0) {
             return;
@@ -1752,6 +1812,13 @@ export class PageOperation extends TableAndSearchOperation {
     }
 }
 export class PageMake {
+    /**產生Table Html。
+     * 含各欄位的menu選單、檢視/編輯、預設值、動態觸發欄位...等
+     * @param {string} tPageName 頁面名稱
+     * @param {Array<string> | { [key: string]: string }[]} data 搜尋結果
+     * @param {string} AttributeStr Table 需額外附帶的屬性(需完整字串，如 'class="abc" style="display:none"')
+     * @param {Array<Array<string>>} TitleArr Title呈現
+     */
     CreatReadWriteTable(tPageName, data, AttributeStr, TitleArr) {
         var _a;
         if (gPageObj.PageNameObj[tPageName] == null) {
@@ -1937,11 +2004,12 @@ export class PageMake {
         //CheckArr = SegWord(CheckArr);
         return TableHtml;
     }
-    //建立Table表單的Title欄位的Html
-    //tPageName: 頁面名稱
-    //DomName:表單的id名稱，將此函式定義的html產生致此ID的innerHtml
-    //ExtraFieldArr:需要額外建立的欄位名稱，此不存在於FieldArr
-    //TitleArr:Title欄位名稱二維陣列
+    /**建立Table表單的Title欄位的Html
+     * @param {string} DomName 頁面名稱
+     * @param {string} tPageName 表單的id名稱，將此函式定義的html產生致此ID的innerHtml
+     * @param {Array<string>} ExtraFieldArr 需要額外建立的欄位名稱，此不存在於FieldArr
+     * @param {Array<Array<string>>} tPageName Title欄位名稱二維陣列
+     */
     CreatTableTitle(tPageName, DomName, ExtraFieldArr, TitleArr) {
         let ps = new set.PageSet();
         let tmpTitleArr = new Array();
@@ -2004,10 +2072,13 @@ export class PageMake {
         }
         return TitleHtml;
     }
-    //定義dom物件的style屬性
-    //tPageName: 頁面名稱
-    //InputFieldName: 欄位名稱
-    //StyleAttr: css定義
+    /**定義dom物件的style屬性
+     * @param {string} tPageName 頁面名稱
+     * @param {string} InputFieldName 欄位名稱
+     * @param {string} StyleAttr css定義
+     * @param {'Read' | 'Write' | 'Search'} tMode 呼叫此funtion是來自什麼操作
+     * @return {string} 回傳style屬性(字串包含style="")
+     */
     MakeWidthAttributeStr(tPageName, InputFieldName, StyleAttr, tMode) {
         let ps = new set.PageSet();
         let WidthAttributeStr = '';
@@ -2016,11 +2087,13 @@ export class PageMake {
         WidthAttributeStr = WidthStr == '' ? '' : ' style="width:' + WidthStr + ';' + (tmpList.length == 0 ? 'min-width:' + WidthStr + ';' : '') + StyleAttr + '" data-width="' + WidthStr + '"';
         return WidthAttributeStr;
     }
-    //製作選單DOM物件
-    //Dom: select/Multi Select/Calendar
-    //AttributeStr: DOM物件額外的屬性字串
-    //ValueArr: Menu內容
-    //SelectValue: Menu預設值
+    /**製作選單DOM物件
+     * @param {string} Dom select/Multi Select/Calendar
+     * @param {string} AttributeStr DOM物件額外的屬性字串
+     * @param {string[]} ValueArr Menu內容
+     * @param {string} SelectValue Menu預設值
+     * @return 回傳select的html
+    */
     MakeListHtml(Dom, AttributeStr, ValueArr, SelectValue) {
         var DomHtml = '';
         if (Dom == 'select') {
@@ -2041,9 +2114,11 @@ export class PageMake {
         }
         return DomHtml;
     }
-    //製作Select Option Html
-    //ValueArr: Menu內容
-    //SelectValue: Menu預設值
+    /**製作Select Option Html
+     * @param {string[]} ValueArr Menu內容
+     * @param {string} SelectValue Menu預設值
+     * @return {string} 回傳 select dom的innerHtml
+     */
     MakeOptionHtml(ValueArr, SelectValue) {
         var OptionHtml = '';
         var tValueArr = new Array();
@@ -2066,6 +2141,10 @@ export class PageMake {
         }
         return OptionHtml;
     }
+    /**產生圖表
+     * @param {string} tPageName 頁面名稱
+     * @param {string[] | { [key: string]: string }[]} data 搜尋結果
+     */
     MakeChart(tPageName, data) {
         let dom = document.getElementById('ChartArea');
         if (dom == null) {
@@ -2080,8 +2159,9 @@ export class PageMake {
         // 使用刚指定的配置项和数据显示图表。
         //myChart.setOption(option);
     }
-    //初始化搜尋欄位
-    //tPageName: 頁面名稱
+    /**初始化搜尋欄位
+     * @param {string} tPageName 頁面名稱
+     */
     InitSearchArea(tPageName) {
         var _a, _b, _c, _d;
         if (gPageObj.PageNameObj[tPageName] == null) {
@@ -2192,6 +2272,7 @@ export class PageMake {
             }
             else if (dc.DynamicInfObj[tPageName].InfluenceToFieldNames[tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName != null && dc.DynamicInfObj[tPageName].InfluenceToFieldNames[tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName.length > 0) {
                 (_d = dc.DynamicInfObj[tPageName].InfluenceToFieldNames[tFieldNameArr[i]][ValueIdArr[i]].ValueByIdName) === null || _d === void 0 ? void 0 : _d.forEach(function (item, idx) {
+                    //若有預設值且欄位是多重來源動態Menu，則將預設值帶入FrontDynamicMenuRequest的參數
                     let tmpIdx = Number(item.split('_')[1]);
                     let tDIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tPageName].FieldArr[tmpIdx]);
                     tmpKeyValue.push(DefaultValue[tDIdx]);
@@ -2236,11 +2317,13 @@ export class PageMake {
             $('.form_date').datetimepicker(DatePickerObj);
         }
     }
-    //動態影響生成Menu(不經後端的Menu)
-    //tPageName: 頁面名稱
-    //FieldName: 欄位名稱(因值改變而影響別的欄位)
-    //FieldId: 搜尋BAR欄位ID(被影響的欄位)
-    //KeyQuery: 下拉選單的值
+    /**動態影響生成Menu(不經後端的Menu)
+     * @param {string} tPageName 頁面名稱
+     * @param {string} FieldName 欄位名稱(因值改變而影響別的欄位)
+     * @param {string} FieldId 搜尋BAR欄位ID(被影響的欄位)
+     * @param {boolean} isSearch 呼叫此function是否來自搜尋bar初始化
+     * @param {string[] | string} KeyQuery 下拉選單的值
+     */
     FrontDynamicMenuRequest(tPageName, FieldName, FieldId, isSearch, KeyQuery) {
         var _a, _b, _c, _d;
         let dc = new set.DynamicClass();
@@ -2389,9 +2472,70 @@ export class PageMake {
         }
         return valueArr;
     }
+    /**渲染MenuBar
+     * @param {boolean} NeedCheckRight 是否需要檢查權限(false僅回傳MenuName不會回傳URL)
+     * @param {string} DomId DOM ID
+     * @param {string} PageMode 用來分辨哪個BU(部份系統才需要)
+    */
+    IniteMenuBar(NeedCheckRight, DomId, PageMode) {
+        doAjax('../Home/GetMenu' + (NeedCheckRight ? '2' : ''), true, { NeedCheckRight: NeedCheckRight ? '1' : '0', bu: PageMode }, function (data) {
+            let MenuHtml = '';
+            let MenuRender = function (MenuObj, MenuLevel) {
+                let tReHtml = '';
+                let ULAttrStr = ""; //ul標籤
+                let LIAttrStr = ""; //li標籤
+                let aAttrStr = ""; //a標籤
+                switch (MenuLevel) {
+                    case 1:
+                        ULAttrStr = "class=\"nav navbar-nav\"";
+                        LIAttrStr = "class=\"dropdown\"";
+                        aAttrStr = "class=\"LinkClass dropdown-toggle text-2xl text-black hover:text-green-500 hover:font-bold focus:text-green-500 focus:font-bold\"";
+                        break;
+                    case 2:
+                        ULAttrStr = "class=\"dropdown-menu\"";
+                        LIAttrStr = "class=\"nav-item dropdown\"";
+                        aAttrStr = "class=\"dropdown-item LinkClass\"";
+                        break;
+                    default:
+                        ULAttrStr = "class=\"submenu dropdown-menu\"";
+                        aAttrStr = "class=\"dropdown-item LinkClass\"";
+                        break;
+                }
+                tReHtml += '<ul ' + ULAttrStr + '>';
+                for (let i = 0; MenuObj[i] != null; i++) {
+                    let HrefStr = (MenuObj[i].CanUse ? " href=\"" + MenuObj[i].URL + "\" target=\"_blank\"" : "");
+                    let aID = MenuLevel == 1 ? " id=\"drop" + MenuLevel.toString() + "_" + i.toString() + "\"" : "";
+                    let tmpAaAttrStr = aAttrStr + aID + HrefStr + (MenuObj[i].URL != "" && !MenuObj[i].CanUse ? " style=\"color:gray\"" : "");
+                    let AInnerStr = MenuObj[i].Child != null ? (MenuLevel == 1 ? "<span class='caret'></span>" : "<span class='float-right'>&raquo</span>") : "";
+                    if (MenuLevel == 1 && MenuObj[i].Child == null) {
+                        tmpAaAttrStr = tmpAaAttrStr.replace("data-toggle=\"dropdown\"", "");
+                    }
+                    if (MenuLevel == 1 && AInnerStr != "") {
+                        tmpAaAttrStr = tmpAaAttrStr.replace("class=\"", "class=\"cursor-pointer ");
+                    }
+                    tReHtml += '<li ' + LIAttrStr + '><a ' + tmpAaAttrStr + '>' + MenuObj[i].MenuName + AInnerStr + '</a>'
+                        + (MenuObj[i].Child != null ? MenuRender(MenuObj[i].Child, MenuLevel + 1) : '')
+                        + '</li>';
+                }
+                tReHtml += '</ul>';
+                return tReHtml;
+            };
+            data.forEach(function (item) {
+                MenuHtml += MenuRender(item, 1);
+            });
+            document.getElementById(DomId ? DomId : 'MenuBarLink').innerHTML = MenuHtml;
+            if (DomId && DomId == 'MenuBarLink') {
+                $('#MenuBarLink2').addClass('hidden');
+            }
+        });
+    }
 }
 export class PageTool {
-    //有下拉選單的欄位值，將Key值替換成Value值
+    /**有下拉選單的欄位值，將Key值替換成Value值
+     * @param {string[]} tMenuArr 某一個Menu值串列
+     * @param {string} keyValue 需要被替換的原字串
+     * @return {string} 回傳根據Menu值替換後的結果
+     */
     GetListValue(tMenuArr, keyValue) {
         if (keyValue == '') {
             return keyValue;
@@ -2424,8 +2568,11 @@ export class PageTool {
         }
         return '';
     }
-    //將數據轉換成匯出格式的數據
-    //tdata: 數據(不含Title)
+    /**將數據轉換成匯出格式的數據
+     * @param {string} tPageName 頁面名稱
+     * @param {string[] | string[][] | { [key: string]: string }[]} tdata 數據(不含Title)
+     * @return {string[]} 回傳調整過後的數據
+     */
     MakeExportData(tPageName, tdata) {
         let reData = new Array();
         let ps = new set.PageSet();
@@ -2459,8 +2606,10 @@ export class PageTool {
         }
         return reData;
     }
-    //將Title物件轉換為一維陣列//匯出的函式會用
-    //TitleArr: Title的物件
+    /**將Title物件轉換為一維陣列。
+     * 匯出的函式會用
+     * @param {string} tPageName 頁面名稱
+     * @param {string[][]} TitleArr Title的物件 */
     ObjTitleToStrArr(tPageName, TitleArr) {
         let reTitleArr = new Array();
         if (TitleArr.length > 0) {
@@ -2514,7 +2663,9 @@ export class PageTool {
             ButtonClickSimulation('#LoadingMaskBtn');
         }
     }
-    //get傳遞參數設置搜尋條件
+    /**get傳遞參數設置搜尋條件
+     * @return {{ [key: string]: string }} 根據Get(From URL)回傳物件
+     */
     UrlGetVariable() {
         var getUrl = location.search.replace('?', '');
         var tmpArr = getUrl.split('&');
@@ -2530,7 +2681,7 @@ export class PageTool {
         }
         return KeyValueObj;
     }
-    //修改下拉式選單可否使用
+    /**修改下拉式選單可否使用 */
     SelectDisableChange(ExceptforIdArr, mode) {
         for (var i = 0; document.getElementById('field_' + i); i++) {
             if (ExceptforIdArr.indexOf('field_' + i) < 0 && document.getElementById('field_' + i).innerHTML.indexOf('<option') > -1) {
@@ -2538,9 +2689,10 @@ export class PageTool {
             }
         }
     }
-    //除了指定的搜尋Bar物件ID以外，其餘Menu重新整理
-    //ExceptforIdArr: 搜尋Bar物件ID
-    //tPageName: 頁面名稱
+    /**除了指定的搜尋Bar物件ID以外，其餘Menu重新整理
+     * @param {string[]} ExceptforIdArr 搜尋Bar物件ID
+     * @param {string} tPageName 頁面名稱
+     */
     ReloadSelectOption(ExceptforIdArr, tPageName) {
         if (gPageObj.PageNameArr.length <= 0) {
             return;
@@ -2565,6 +2717,11 @@ export class PageTool {
             }
         }
     }
+    /**重新定義搜尋欄位初始值
+     * @param DefaultObj 原來的搜尋Obj Inf.
+     * @param UrlObj 來自Get參數(from URL)的搜尋欄位初始值obj Inf.
+     * @return 回傳重新定義的搜尋預設值物件
+     */
     SetDefaultValue(DefaultObj, UrlObj) {
         var UrlKeys = Object.keys(UrlObj);
         for (var i = 0; i < UrlKeys.length; i++) {
