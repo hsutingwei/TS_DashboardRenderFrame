@@ -1445,10 +1445,12 @@ export class PageSet {
         return reArr;
     }
 
-    //根據URL參數重新設定搜尋欄位的顯示狀態
-    //DefaultObj: 原來的搜尋參數物件
-    //UrlObj: URL參數物件(已解碼)
-    public ResetSearchDisplayFromURL(DefaultObj: { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] }, UrlObj: { [key: string]: string }) {
+    /**根據URL參數重新設定搜尋欄位的顯示狀態
+     * @param DefaultObj 原來的搜尋參數物件
+     * @param UrlObj URL參數物件(已解碼)
+     * @return 回傳重新定義的搜尋預設值物件
+     */
+    public ResetSearchDisplayFromURL(DefaultObj: { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] }, UrlObj: { [key: string]: string }): { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] } {
         if (UrlObj['報表類型']) {
             let tIdx: number = 0;
             if (UrlObj['報表類型'] == '年' && (tIdx = DefaultObj.DisplayArr.indexOf('月份')) > -1) {
@@ -3472,7 +3474,7 @@ export class ColorRuleClass {
             if (typeof data[i] == 'string') {
                 tData[i] = (data[i] as string).split(',');
             }
-            else if (typeof data[i] == 'object'){
+            else if (typeof data[i] == 'object') {
                 tData[i] = gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             }
             RowTitle.push(tData[i][0]);
