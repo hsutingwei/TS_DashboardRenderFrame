@@ -1,8 +1,9 @@
 import { NeedAjaxArr, gPageObj, PageInf, PageMake, PageOperation, PageTool } from './PageInit.js';
 import { PageSet, TableSetObj, UrlQuery, ColorRuleClass } from './set.js';
 
-//此class用於定義Part Page Search的搜尋流程
-//每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
+/**此class用於定義Part Page Search的搜尋流程。
+ * 每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
+ */
 export class PPSearch implements PartPageSearch {
     static PageSearch(): void {
         let pps = new PPSearch();
@@ -52,8 +53,9 @@ export class PPSearch implements PartPageSearch {
     }
 }
 
-//此class用於定義個專案的Part Page Search的區塊搜尋後的表單圖表渲染邏輯
-//以及定義Part Page Search需要額外的邏輯功能
+/**此class用於定義個專案的Part Page Search的區塊搜尋後的表單圖表渲染邏輯。
+ * 以及定義Part Page Search需要額外的邏輯功能
+ */
 export class PPMake implements BlockReport {
     TableReport(tPageName: string, IdName: string, data: string[]): void {
         let ps = new PageSet();
@@ -353,7 +355,7 @@ export class PPMake implements BlockReport {
 
     }
 
-    //給合併儲存格後的表格上色(只針對有合併的範圍)
+    /**給合併儲存格後的表格上色(只針對有合併的範圍) */
     ColorMergeCell(tPageName: string): void {
         let TableInf: {
             [tPageName: string]: {

@@ -11,9 +11,12 @@ export var gPageObj: PageStatus = {
     PageNameArr: [],
     PageNameObj: {}
 };
-export var CheckArr: Array<string> = [];//存放這次搜尋的文本(用於檢查相似度)
-export let NeedAjaxArr: string[] = [];//儲存那些頁面名稱需要紀錄Ajax執行狀態
-var AddLineCount: number = -1;//用來記錄新增的筆數(負值是用來與Table的行數做區分)
+/**存放這次搜尋的文本(用於檢查相似度) */
+export var CheckArr: Array<string> = [];
+/**儲存那些頁面名稱需要紀錄Ajax執行狀態 */
+export let NeedAjaxArr: string[] = [];
+/**用來記錄新增的筆數(負值是用來與Table的行數做區分) */
+var AddLineCount: number = -1;
 
 $(function () {
     let po = new PageOperation();
@@ -2153,6 +2156,7 @@ export class PageMake implements PageRender {
      * @param {string} AttributeStr DOM物件額外的屬性字串
      * @param {string[]} ValueArr Menu內容
      * @param {string} SelectValue Menu預設值
+     * @return 回傳select的html
     */
     public MakeListHtml(Dom: string, AttributeStr: string, ValueArr: string[], SelectValue?: string): string {//製作選單DOM物件
         var DomHtml = '';

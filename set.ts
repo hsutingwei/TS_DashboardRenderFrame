@@ -3,10 +3,14 @@ import { extend } from 'jquery';
 import './PageInit.js'
 import { gPageObj, PageInf, PageMake, PageOperation, PageTool } from './PageInit.js';
 
-export var MenuList: {//下拉式選單資訊物件
-    [key: string]: {//Menu名稱
-        MenuArr: string[],//Menu內容(key1,value1;key2,value2)
-        DataFromDB: boolean//內容是否由後端DB產生
+/**下拉式選單資訊物件 */
+export var MenuList: {
+    /**Menu名稱 */
+    [key: string]: {
+        /**Menu內容(key1,value1;key2,value2) */
+        MenuArr: string[],
+        /**內容是否由後端DB產生 */
+        DataFromDB: boolean
     }
 } = {
     'Process': {
@@ -202,13 +206,20 @@ export var MenuList: {//下拉式選單資訊物件
         DataFromDB: true
     }
 };
-export var NeedClickObj: {//表單內部值需要Click Function的定義
-    [PageName: string]: {//頁面名稱
-        [FieldName: string]: {//欄位名稱。表示這個頁面有哪些欄位名稱有Click Function
-            Function: string,//觸發的Function名稱
-            ValueQuery: Array<string | number>,//Function要傳入的參數。數值表示對應該行的line data索引; 字串表示以指定值作為參數，若需要輸入數值則以中括號表示，例如:[3.14]
-            NotShowInRowTitle?: Array<string | number>,//某些行不跑Click Function判定。字串表示該行的首欄位Title; number表示行座標。
-            AnotherValue?: string,//需額外傳遞的參數
+/**表單內部值需要Click Function的定義 */
+export var NeedClickObj: {
+    /**頁面名稱 */
+    [PageName: string]: {
+        /**欄位名稱。表示這個頁面有哪些欄位名稱有Click Function */
+        [FieldName: string]: {
+            /**觸發的Function名稱 */
+            Function: string,
+            /**Function要傳入的參數。數值表示對應該行的line data索引; 字串表示以指定值作為參數，若需要輸入數值則以中括號表示，例如:[3.14] */
+            ValueQuery: Array<string | number>,
+            /**某些行不跑Click Function判定。字串表示該行的首欄位Title; number表示行座標。 */
+            NotShowInRowTitle?: Array<string | number>,
+            /**需額外傳遞的參數 */
+            AnotherValue?: string,
         }
     }
 } = {
@@ -246,17 +257,28 @@ export var lang = {
         "sSortDescending": ": 以降冪排列此列"
     }
 };
-export var DCMenuIdNameList: Array<string> = [];//紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID
-export let ColorRuleArr: {//存放顏色Highlight規則
-    [PageName: string]: {//頁面名稱
-        [CellOrRowIdx: number | string]: {//行座標or縱坐標or行標題
-            [isLateral: number]: {//是否橫坐標判定(1:true; 0:false)
-                [Rule: string]: {//顏色規則
-                    Color: string,//顏色
-                    BackgroundColor: string,//背景顏色
-                    Others: {//特殊規則
-                        'Score': number,//權重，用於規則有重疊時來決定規則優先順序
-                        [TitleOrFieldName: string]: string | number,//Row Title or Field Name，指對應到這些特殊條件才符合此規則
+/**紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID */
+export var DCMenuIdNameList: Array<string> = [];
+/**存放顏色Highlight規則 */
+export let ColorRuleArr: {
+    /**頁面名稱 */
+    [PageName: string]: {
+        /**行座標or縱坐標or行標題 */
+        [CellOrRowIdx: number | string]: {
+            /**是否橫坐標判定(1:true; 0:false) */
+            [isLateral: number]: {
+                /**顏色規則 */
+                [Rule: string]: {
+                    /**顏色 */
+                    Color: string,
+                    /**背景顏色 */
+                    BackgroundColor: string,
+                    /**特殊規則 */
+                    Others: {
+                        /**權重，用於規則有重疊時來決定規則優先順序 */
+                        'Score': number,
+                        /**Row Title or Field Name，指對應到這些特殊條件才符合此規則 */
+                        [TitleOrFieldName: string]: string | number,
                     }
                 }
             }
@@ -264,36 +286,60 @@ export let ColorRuleArr: {//存放顏色Highlight規則
     }
 } = {};
 
-export var TableSetObj: TableSetObj = {//此物件屬性儲存都是欄位名稱
-    MoneyFieldArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],//需要千分位表示數字的欄位名稱
-    NeedModifyDisplayArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'Taeget GP %', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],//需要將顯示的值做特別修改
-    MillionFieldArr: [],//需要轉百萬的欄位
-    IgnoreZero: [],//若是0，可忽略的欄位
-    SetRight: [],//欄位需要置右的欄位名稱
-    DatePickerArr: ['開始時間', '預計完成日', '實際完成日', 'ISSUE_DATE', '週From', '週To'],//日期選單
-    TextAreaArr: ['備註'],//需要textarea的欄位名稱
+/**此物件屬性儲存都是欄位名稱 */
+export var TableSetObj: TableSetObj = {
+    /**需要千分位表示數字的欄位名稱 */
+    MoneyFieldArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+    /**需要將顯示的值做特別修改 */
+    NeedModifyDisplayArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'Taeget GP %', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+    /**需要轉百萬的欄位 */
+    MillionFieldArr: [],
+    /**若是0，可忽略的欄位 */
+    IgnoreZero: [],
+    /**欄位需要置右的欄位名稱 */
+    SetRight: [],
+    /**日期選單 */
+    DatePickerArr: ['開始時間', '預計完成日', '實際完成日', 'ISSUE_DATE', '週From', '週To'],
+    /**需要textarea的欄位名稱 */
+    TextAreaArr: ['備註'],
+    /**需要Checkbox的欄位名稱 */
     CheckboxArr: ['成本為0或空值'],
 }
 
-export var PageSetObj: PageSetObj = {//此物件屬性儲存都是頁面名稱
-    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//不需要刪除功能的頁面
-    noSortPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//不需要排序的頁面
-    noInSearchingPage: ['APMaintain', 'FCSTMaintain', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//不需要表格內搜尋的頁面
-    noPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB'],//不需要分頁的頁面
-    ChartPage: ['BillingFCSTChart', 'CompRevenueChart', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'APFCSTChart'],//需要圖表的頁面
-    NoChangePage: [],//不需要運行替換顯示欄位的機制的頁面
-    NeedYScroll: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct'],//需要Y軸滾輪的頁面
-    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct', 'FTRUNCARDCOST', 'CPRUNCARDCOST'],//需要使用DataTable的凍結欄位渲染
-    NeedResetFieldArr: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'Top10ProdCustGPM', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//需要重新定義欄位名稱(一開始後端傳過來的欄位名稱是搜尋欄位)
-    NeedCheckDecimalPoint: [],//需要檢查百分比小數幾位數
-    noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],//不需要DataTable渲染
-    NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],//需要百萬訊息標示的頁面
-    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],//需要匯出的頁面
-    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],//頁面載入時不預設搜尋
+/**此物件屬性儲存都是頁面名稱 */
+export var PageSetObj: PageSetObj = {
+    /**不需要刪除功能的頁面 */
+    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    /**不需要排序的頁面 */
+    noSortPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    /**不需要表格內搜尋的頁面 */
+    noInSearchingPage: ['APMaintain', 'FCSTMaintain', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    /**不需要分頁的頁面 */
+    noPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB'],
+    /**需要圖表的頁面 */
+    ChartPage: ['BillingFCSTChart', 'CompRevenueChart', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'APFCSTChart'],
+    /**不需要運行替換顯示欄位的機制的頁面 */
+    NoChangePage: [],
+    /**需要Y軸滾輪的頁面 */
+    NeedYScroll: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct'],
+    /**需要使用DataTable的凍結欄位渲染 */
+    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct', 'FTRUNCARDCOST', 'CPRUNCARDCOST'],
+    /**需要重新定義欄位名稱(一開始後端傳過來的欄位名稱是搜尋欄位) */
+    NeedResetFieldArr: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'Top10ProdCustGPM', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    /**需要檢查百分比小數幾位數 */
+    NeedCheckDecimalPoint: [],
+    /**不需要DataTable渲染 */
+    noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
+    /**需要百萬訊息標示的頁面 */
+    NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],
+    /**需要匯出的頁面 */
+    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
+    /**頁面載入時不預設搜尋 */
+    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
     TableNeedDefer: [],
 }
 
-//月份對應的字串
+/**月份對應的字串 */
 export enum MonthFormat {
     Jan = 1,
     Feb = 2,
@@ -309,13 +355,13 @@ export enum MonthFormat {
     Dec = 12
 }
 
-//年報表對應字串
+/**年報表對應字串 */
 export enum YearFormat {
     上半年 = 1,
     下半年 = 2
 }
 
-//季報表對應字串
+/**季報表對應字串 */
 export enum SeasonFormat {
     Q1 = 1,
     Q2 = 2,
@@ -323,13 +369,15 @@ export enum SeasonFormat {
     Q4 = 4
 }
 
-//此class的函示會隨著不同系統有不同的定義
-//需調整if/else
-//或是覆寫
+/**此class的函示會隨著不同系統有不同的定義。
+ * 需調整if/else，或是覆寫
+ */
 export class PageSet {
     //頁面DOM的設定⬇
 
-    //重設Menu的InnerHtml值(懶得要求後端維護者修改，故於此重新定義)
+    /**重設Menu的InnerHtml值(懶得要求後端維護者修改，故於此重新定義)
+     * @param {string} tPageName 頁面名稱
+     */
     public ResetMenuDocumentInnerHtml(tPageName: string) {
         if (tPageName == 'APvsFCSTvsAct') {
             let MenuName = 'FCSTSAName';
@@ -347,8 +395,9 @@ export class PageSet {
         }
     }
 
-    //動態給定Menu Bar超連結
-    //tPageName: 頁面名稱
+    /**動態給定Menu Bar超連結
+     * @param {string} tPageName 頁面名稱
+     */
     public SetMaintain(tPageName: string) {
         let tMaintainObj: {
             [PageName: string]: {
@@ -395,14 +444,17 @@ export class PageSet {
 
     //初始化定義物件屬性⬇
 
-    //定義PageName底下的子PageName，區塊搜尋的各區塊Block Id、Sub Block Id、點擊搜尋的子Table都於此定義
-    //tPageName: 頁面名稱
+    /**定義PageName底下的子PageName，區塊搜尋的各區塊Block Id、Sub Block Id、點擊搜尋的子Table都於此定義
+     * @param {string} tPageName 頁面名稱
+     */
     public SetChildPageName(tPageName: string): void {
         if (gPageObj.PageNameObj[tPageName] == null) { return; }
         let ChildPageName: {
             [ChildPageName: string]: {
-                BlockId?: string,//此子頁面名稱所屬的DOM物件ID名稱(目前實作於區塊搜尋)
-                SubBlockId?: string[]//此子頁面名稱所含的子DOM物件名稱(目前實作於區塊搜尋)
+                /**此子頁面名稱所屬的DOM物件ID名稱(目前實作於區塊搜尋) */
+                BlockId?: string,
+                /**此子頁面名稱所含的子DOM物件名稱(目前實作於區塊搜尋) */
+                SubBlockId?: string[]
             }
         } = {};
         let ChildPageNameArr: string[] = [];
@@ -502,9 +554,10 @@ export class PageSet {
         }
     }
 
-    //定義查詢的查詢頁數、查詢的一頁幾筆
-    //tPageName: 頁面名稱
-    //回傳值[PageNumber, NumberPerAPage]
+    /**定義查詢的查詢頁數、查詢的一頁幾筆
+     * @param {string} tPageName 頁面名稱
+     * @return 回傳值[PageNumber, NumberPerAPage]
+     */
     public DefineSearPageInf(tPageName: string): [number, number] {
         let PageNumber = -1;
         let NumberPerAPage = 10;
@@ -521,15 +574,19 @@ export class PageSet {
         return [PageNumber, NumberPerAPage];
     }
 
-    // 定義該頁面可否修改陣列
-    // tPageName:頁面名稱
-    // tFieldArr:頁面的欄位名稱陣列
-    public InitModifiable(tPageName: string, tFieldArr: Array<string>): Array<boolean> {//初始化可否修改陣列
+    /**初始化可否修改陣列
+     * @param {string} tPageName 頁面名稱
+     * @param {Array<string>} tPageName 頁面的欄位名稱陣列
+     * @return 回傳可否修改陣列(對應每個欄位順序)
+     */
+    public InitModifiable(tPageName: string, tFieldArr: Array<string>): Array<boolean> {
         let tModifiableArr: Array<boolean> = [];
         let ModifiableInf: {
             [PageName: string]: {
-                AllFalse?: boolean,//所有欄位都不可修改
-                SomeFalse?: string[]//欄位名稱陣列。僅定義中的欄位名稱不可修改
+                /**所有欄位都不可修改 */
+                AllFalse?: boolean,
+                /**欄位名稱陣列。僅定義中的欄位名稱不可修改 */
+                SomeFalse?: string[]
             }
         } = {
             CustDefi: { SomeFalse: ['年度'] },
@@ -561,12 +618,19 @@ export class PageSet {
         return tModifiableArr;
     }
 
-    //新增欄位時各欄位的預設值(欄位值基本不需要更改的)
+    /**新增欄位時各欄位的預設值(欄位值基本不需要更改的)
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 欄位名稱
+     * @return 回傳欄位預設值，若無則空字串
+     */
     public AddLineDefaultValue(tPageName: string, tFieldName: string): string {
         type DefaultSet = {
-            [key: string]: {//key:欄位名稱
-                GetValueBySearchBar: boolean,//是否根據搜尋條件帶入值
-                SetValue?: string//設定此欄位的預設值
+            /**key:欄位名稱 */
+            [key: string]: {
+                /**是否根據搜尋條件帶入值 */
+                GetValueBySearchBar: boolean,
+                /**設定此欄位的預設值 */
+                SetValue?: string
             }
         }
 
@@ -621,17 +685,25 @@ export class PageSet {
         return '';
     }
 
-    //根據欄位值內容決定各欄位可否修改。此函式用於定義搜尋結果(data)每一行的可否修改
-    //ValueArr: 一行的數據陣列
+    /**根據欄位值內容決定各欄位可否修改。此函式用於定義搜尋結果(data)每一行的可否修改
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} ValueArr 一行的數據陣列
+     * @return 回傳這一行欄位可否修改串列
+     */
     public CheckFieldModifiable(tPageName: string, ValueArr: string[]): boolean[] {
         if (gPageObj.PageNameObj[tPageName] == null) { return []; }
 
-        let FieldModifiableInf: {//所有頁面中的欄位可否修改定義
-            [FieldName: string]: {//欄位名稱。新規則則再增加屬性定義
-                ValueNotEmptyThenNoEdit?: string[],//此欄位名稱值若不是空白，則此陣列中的欄位名稱不可修改
+        /**所有頁面中的欄位可否修改定義 */
+        let FieldModifiableInf: {
+            /**欄位名稱。新規則則再增加屬性定義 */
+            [FieldName: string]: {
+                /**此欄位名稱值若不是空白，則此陣列中的欄位名稱不可修改 */
+                ValueNotEmptyThenNoEdit?: string[],
                 ValueThenNoEdit?: {
-                    Value: string[],//此欄位名稱值若是指定值的其中一個，則ThenNoEdit陣列中的欄位名稱不可修改
-                    ThenNoEdit: string[],//不可修改的目標欄位名稱
+                    /**此欄位名稱值若是指定值的其中一個，則ThenNoEdit陣列中的欄位名稱不可修改 */
+                    Value: string[],
+                    /**不可修改的目標欄位名稱 */
+                    ThenNoEdit: string[],
                 },
             }
         } = {
@@ -649,9 +721,12 @@ export class PageSet {
             }
         };
 
-        let PageNameModifiableInf: {//部分頁面名稱的可否修改定義
-            [PageName: string]: {//頁面名稱
-                OnlyNowAndFutreEdit?: string[],//此頁面名稱的這些欄位名稱陣列只有現在和未來的月份可以修改
+        /**部分頁面名稱的可否修改定義 */
+        let PageNameModifiableInf: {
+            /**頁面名稱 */
+            [PageName: string]: {
+                /**此頁面名稱的這些欄位名稱陣列只有現在和未來的月份可以修改 */
+                OnlyNowAndFutreEdit?: string[],
             }
         } = {
             FCSTMaintain: {
@@ -711,9 +786,11 @@ export class PageSet {
         return mArr;
     }
 
-    //下拉式,input的篩選器
-    //fFieldName: 欄位名稱
-    //isSearch: 是不是搜尋欄位的模式。false表示Table裡的下拉式選單
+    /**下拉式,input的篩選器
+     * @param {string} tPageName 頁面名稱
+     * @param {string} fFieldName 欄位名稱
+     * @param {boolean} isSearch 是不是搜尋欄位的模式。false表示Table裡的下拉式選單
+     */
     public GetListArr(tPageName: string, fFieldName: string, isSearch: boolean) {
         //加入下拉式選單會影響其他選單的功能(純前端切換)
         let reArr: Array<string> = new Array();
@@ -836,7 +913,11 @@ export class PageSet {
         return reArr;
     }
 
-    //產生下拉式的數據陣列(由前端定義下拉式選單)
+    /**產生下拉式的數據陣列(由前端定義下拉式選單)
+     * @param {string} tPageName 頁面名稱
+     * @param {string} fListName Menu名稱
+     * @return 回傳對應Menu名稱的值傳列
+     */
     public GetList(tPageName: string, fListName: string) {
         let reArr = new Array();
 
@@ -924,7 +1005,13 @@ export class PageSet {
         return reArr;
     }
 
-    //下拉式選單需要額外加選項
+    /**下拉式選單需要額外加選項 
+     * @param {string} tPageName 頁面名稱
+     * @param {string} fFieldName 欄位名稱
+     * @param {boolean} isSearch 呼叫此function是否來自搜尋Bar初始化
+     * @param {string} reArr Menu值串列
+     * @return 回傳修改過的Menu值串列
+    */
     public GetListTitle(tPageName: string, fFieldName: string, isSearch: boolean, reArr: string[]): string[] {
         if (isSearch && (tPageName == 'APMaintain' && fFieldName == 'Ver')) {
             let tmpArr = ['-1,'];
@@ -972,8 +1059,10 @@ export class PageSet {
         return reArr;
     }
 
-    //搜尋欄位的預設值
-    //tPageName: 頁面名稱
+    /**搜尋欄位的預設值
+     * @param {string} tPageName 頁面名稱
+     * @return 回傳搜尋物件Inf.
+     */
     public InitSearchObj(tPageName: string): { DisplayArr: string[], DefaultKey: string[], DefaultValue: string[] } {
         let Today = new Date();
         let date = Today.getDate();
@@ -1127,11 +1216,12 @@ export class PageSet {
         }
 
         return obj;
-    }//搜尋欄位的預設值
+    }
 
-    //定義特殊欄位需要有額外的class name(目前實作於Search Bar)
-    //tPageName: 頁面名稱
-    //tFieldName: 欄位名稱
+    /**定義特殊欄位需要有額外的class name(目前實作於Search Bar)
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 欄位名稱
+     */
     public SearchBarClassName(tPageName: string, tFieldName: string): string {
         let reStr = '';
         switch (tFieldName) {
@@ -1157,10 +1247,12 @@ export class PageSet {
         return reStr;
     }
 
-    //DatePicker的option設定
-    //tPageName: 頁面名稱
-    //DateObj: Datepicker的option物件
-    //SearchBarIdName: 日期選單的Dom ID名稱
+    /**DatePicker的option設定
+     * @param {string} tPageName 頁面名稱
+     * @param {any} DateObj Datepicker的option物件
+     * @param {string} SearchBarIdName 日期選單的Dom ID名稱
+     * @return 回傳修改過後Datepicker的option
+     */
     public SetDatePick(tPageName: string, DateObj: any, SearchBarIdName: string): any {
         let CloneObj: any = JSON.parse(JSON.stringify(DateObj));
 
@@ -1190,9 +1282,10 @@ export class PageSet {
 
     //重新定義物件屬性⬇
 
-    // 定義Table表單的欄位Title
-    // tPageName:頁面名稱
-    // TitleInfArr:可以是Search回傳的data; 也可以是搜尋Query。因有些PageName的欄位會由TitleInfArr來決定Title
+    /**定義Table表單的欄位Title
+     * @param {string} tPageName 頁面名稱
+     * @param {string} TitleInfArr 可以是Search回傳的data; 也可以是搜尋Query。因有些PageName的欄位會由TitleInfArr來決定Title
+     */
     public ResetFieldArr(tPageName: string, TitleInfArr?: Array<string>): { FieldArr: string[], NecessaryArr: boolean[], ModifiableArr: boolean[] } {
         //if (gPageObj.PageNameObj[tPageName] == null) { return { FieldArr: [], NecessaryArr: [], ModifiableArr: [] }; }
         let tFieldArr: Array<string> = [];
@@ -1353,9 +1446,11 @@ export class PageSet {
         return { FieldArr: tFieldArr, NecessaryArr: newNecessaryArr, ModifiableArr: newModifiableArr };
     }
 
-    //重設搜尋Query的值(目前實作於ClickSearch裡，由於NeedClickObj物件無法將所有狀況定義出來，因此特殊狀況於此function定義)
-    //tPageName: 頁面名稱
-    //sQuery: 搜尋Query
+    /**重設搜尋Query的值(目前實作於ClickSearch裡，由於NeedClickObj物件無法將所有狀況定義出來，因此特殊狀況於此function定義)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} sQuery 搜尋Query
+     * @return 回傳重新定義的搜尋值串列
+     */
     public ResetSearchQuery(tPageName: string, sQuery: string[]): string[] {
         let reQuery = sQuery;
         for (let i = 0; i < reQuery.length; i++) {
@@ -1383,9 +1478,11 @@ export class PageSet {
         return reQuery;
     }
 
-    //修改搜尋結果
-    //tPageName: 頁面名稱
-    //data: 搜尋結果
+    /**修改搜尋結果
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} data 搜尋結果
+     * @return 回傳重新定義的搜尋結果串列
+     */
     public EditSearchResult(tPageName: string, data: string[]): string[] | { [key: string]: string }[] {
         let reArr: string[] | { [key: string]: string }[] = data;
 
@@ -1415,7 +1512,11 @@ export class PageSet {
         return reArr;
     }
 
-    //Update()時，修改參數值
+    /**Update()時，修改參數值 
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} data 修改數據串列
+     * @param {'i' | 'u' | 'd'} type 呼叫此function的模式，新增/更新/刪除
+    */
     public ResetUpdateQuery(tPageName: string, data: string[], type: 'i' | 'u' | 'd'): string[] {
         let reArr: string[] = data;
 
@@ -1474,9 +1575,11 @@ export class PageSet {
 
     //Table、Chart相關定義⬇
 
-    //建立需要客製化Title的頁面(合併儲存格格式，例:['BU', 'BU']表BU左右兩格合併為一格)
-    //TitleInfArr: Search回傳的data陣列
-    //tPageName: 頁面名稱
+    /**建立需要客製化Title的頁面(合併儲存格格式，例:['BU', 'BU']表BU左右兩格合併為一格)
+     * @param {Array<string> | { [key: string]: string }[]} TitleInfArr Search回傳的data陣列
+     * @param {string} tPageName 頁面名稱
+     * @return 回傳重新定義的客製化Title
+     */
     public MakeTableTitle(TitleInfArr: Array<string> | { [key: string]: string }[], tPageName: string): Array<Array<string>> {
         let reObj: string[][] = new Array();
         let year: any = GetSelectValue('年度');
@@ -1654,7 +1757,10 @@ export class PageSet {
         return reObj;
     }
 
-    //檢查需要被屏蔽的列
+    /**檢查需要被屏蔽的列 
+     * @param {string} tPageName 頁面名稱
+     * @return 回傳定義的是否有被屏蔽串列(索引值對應欄位順序)
+    */
     public NeedShieldField(tPageName: string): Array<number> {
         let bu = document.getElementById('BuName')?.innerHTML;
         let tFieldIdxArr: Array<number> = [];
@@ -1668,9 +1774,11 @@ export class PageSet {
         return tFieldIdxArr;
     }
 
-    //檢查需要被屏蔽的行
-    //tPageName: 頁面名稱
-    //data: 數據(搜尋結果)
+    /**檢查需要被屏蔽的行
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} data 數據(搜尋結果)
+     * @return 回傳有被屏蔽的索引值(行座標)
+     */
     public NeedShieldRank(tPageName: string, data: string[]) {
         var tRankIdxArr = [];
 
@@ -1685,8 +1793,11 @@ export class PageSet {
         return tRankIdxArr;
     }
 
-    //建立input的寬度篩選器
-    //InputFieldName: 欄位名稱
+    /**建立input的寬度篩選器
+     * @param {string} tPageName 頁面名稱
+     * @param {string} InputFieldName 欄位名稱
+     * @param {'Read' | 'Write' | 'Search'} tMode 呼叫此function來自哪個模式，檢視/編輯/搜尋
+     */
     public MakeWidth(tPageName: string, InputFieldName: string, tMode: 'Read' | 'Write' | 'Search'): string {
         let WidthStr = '';
         if (!InputFieldName) {
@@ -1726,9 +1837,10 @@ export class PageSet {
         return WidthStr;
     }
 
-    //定義圖表的option
-    //tPageName: 頁面名稱
-    //data: 數據
+    /**定義圖表的option
+     * @param {string} tPageName 頁面名稱
+     * @param {string[] | { [key: string]: string }[]} data 數據
+     */
     public ChartsOption(tPageName: string, data: string[] | { [key: string]: string }[]): EChartOption {
         if (gPageObj.PageNameObj[tPageName] == null) { return {}; }
         let option: any = {};
@@ -2450,8 +2562,9 @@ export class PageSet {
         return option;
     }
 
-    //定義凍結欄位(使用DataTable渲染)
-    //tPageName: 頁面名稱
+    /**定義凍結欄位(使用DataTable渲染)
+     * @param {string} tPageName 頁面名稱
+     */
     public GetDataTableFreezeValue(tPageName: string) {
         let reObj: { leftColumns?: number } = {};
         let ReportMode = GetSelectValue('報表類型');
@@ -2472,7 +2585,9 @@ export class PageSet {
         return reObj;
     }
 
-    //設定凍結欄位(不使用DataTable渲染)
+    /**設定凍結欄位(不使用DataTable渲染) 
+     * @param {string} tPageName 頁面名稱
+    */
     public FreezeField(tPageName: string): void {
         var tmpArr = new Array();
         var LeftCount = 0;
@@ -2523,8 +2638,9 @@ export class PageSet {
         }
     }
 
-    //將PageName對應的Table做合併儲存格，於此定義各PageName的合併儲存格範圍
-    //tPageName: 頁面名稱
+    /**將PageName對應的Table做合併儲存格，於此定義各PageName的合併儲存格範圍
+     * @param {string} tPageName 頁面名稱
+     */
     public MergeTableValue(tPageName: string) {
         let TableIdName = tPageName + 'Table';
         let t = $('#' + TableIdName + ' tbody tr');
@@ -2656,8 +2772,9 @@ export class PageSet {
 
     //Table、Chart相關定義⬆
 
-    //定義那些頁面名稱是多個區塊搜尋的主頁面
-    //tPageName: 頁面名稱
+    /**定義那些頁面名稱是多個區塊搜尋的主頁面
+     * @param {string} tPageName 頁面名稱
+     */
     public isMainIndex(tPageName: string): boolean {
         if (tPageName == 'Index') {
             return true;
@@ -2665,9 +2782,10 @@ export class PageSet {
         return false;
     }
 
-    //需要檢查相似度的欄位
-    // tPageName:頁面名稱
-    // tFieldName:頁面的某一個欄位名稱
+    /**需要檢查相似度的欄位
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 欄位名稱
+     */
     public NeedCheckSimilarity(tPageName: string, tFieldName: string): boolean {//需要檢查相似度的欄位
         if (tPageName == 'EndCustomer' && (tFieldName == '終端客戶' || tFieldName == '客戶簡稱')) {
             return true;
@@ -2675,10 +2793,12 @@ export class PageSet {
         return false;
     }//需要檢查相似度的欄位
 
-    //不需要替換Menu的表單欄位//true: 不需要替換; false: 要替換
-    //tFieldName: 欄位名稱
-    //tPageName: 頁面名稱
-    //FieldValue: 欄位值
+    /**不需要替換Menu的表單欄位
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} FieldValue 欄位值
+     * @return true: 不需要替換; false: 要替換
+     */
     public NoChangeField(tFieldName: string, tPageName: string, FieldValue: string): boolean {
         if ((tPageName == 'APvsFCSTvsAct' || tPageName == 'APQuery' || tPageName == 'FCSTQuery')
             && (tFieldName == 'BU' || tFieldName == '新/舊客戶' || tFieldName == 'BU' || tFieldName == 'SA/PC')) {
@@ -2688,10 +2808,13 @@ export class PageSet {
         return false;
     }
 
-    //需要將顯示的值做修改(百萬、千分位、小數點)
-    //tFieldName: 欄位名稱
-    //valueStr: 欄位值
-    //tRowTitleName: 行Title(每一行最左邊的值)
+    /**需要將顯示的值做修改(百萬、千分位、小數點)
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} valueStr 欄位值
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
+     * @return 回傳修改過後的字串
+     */
     public NeedModifyDisplay(tFieldName: string, valueStr: string, tPageName: string, tRowTitleName?: string): string {
         var ReStr = valueStr;
         var ReportMode = GetSelectValue('報表類型');
@@ -2755,10 +2878,11 @@ export class PageSet {
         return ReStr;
     }
 
-    //檢查是否為複選下拉式
-    //tPageName: 頁面名稱
-    //tFieldName: 欄位名稱
-    //isSearchArea: 是否為搜尋欄位裡的選單
+    /**檢查是否為複選下拉式
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 欄位名稱
+     * @param {boolean} isSearchArea 是否為搜尋欄位裡的選單
+     */
     public IsMultiSelect(tPageName: string, tFieldName: string, isSearchArea: boolean): boolean {
         if (isSearchArea) {
             if (tPageName == 'APQuery' && (tFieldName == 'SA' || tFieldName == 'BU')) {
@@ -2787,7 +2911,11 @@ export class PageSet {
         return false;
     }//檢查是否為多選下拉式
 
-    //產生匯出的資訊Query，標題/內容
+    /**產生匯出的資訊Query，標題/內容 
+     * @param {string} tPageName 頁面名稱
+     * @param {string[] | string[][] | { [key: string]: string }[]} data 搜尋結果
+     * @param {string[][]} tmpTitle 標題串列
+    */
     public GetExportQuery(tPageName: string, data: string[] | string[][] | { [key: string]: string }[], tmpTitle: string[][]) {
         let qy: { FieldName: string[], QueryResult: string[] } = {
             'FieldName': [],
@@ -2845,7 +2973,11 @@ export class PageSet {
         return qy
     }
 
-    //客製化Datatable.js excel參數
+    /**客製化Datatable.js excel參數
+     * @param {string} tPageName 頁面名稱
+     * @param {string[] | string[][] | { [key: string]: string }[]} data 搜尋結果
+     * @param {{ [index: string]: any }} dtObj 原Datatable.js參數
+     */
     public DataTableExportCustomize(tPageName: string, data: string[] | string[][] | { [key: string]: string }[], dtObj: { [index: string]: any }): { [index: string]: any } {
         let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
         if (tPageName == 'YIELD_RATE') {
@@ -2909,7 +3041,10 @@ export class PageSet {
         return dtObj;
     }
 
-    //判定欄位是否需要Color Type
+    /**判定欄位是否需要Color Type
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 欄位名稱
+     */
     public NeedColorField(tPageName: string, tFieldName: string) {
         if (tPageName == 'ColorRule' && tFieldName == 'ColorCode') {
             return true;
@@ -2918,9 +3053,10 @@ export class PageSet {
         return false;
     }
 
-    //檢查搜尋字串合法
-    //tPageName: 頁面名稱
-    //Data: 搜尋值陣列
+    /**檢查搜尋字串合法
+     * @param {string} tPageName 頁面名稱
+     * @param {string} data 搜尋值陣列
+     */
     public CheckSearchQuery(tPageName: string, data: string[]) {
         if (tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE' || tPageName == 'TEST_RECEIVE') {
             let tS: any = new Date(data[3]);
@@ -2938,10 +3074,11 @@ export class PageSet {
         return true;
     }
 
-    //從搜尋條件設定表單的Title(目前實作於ClickSearch裡)
-    //tPageName: 頁面名稱
-    //Query: 搜尋Query
-    //data: 搜尋結果
+    /**從搜尋條件設定表單的Title(目前實作於ClickSearch裡)
+     * @param {string} tPageName 頁面名稱
+     * @param {string[]} Query 搜尋Query
+     * @param {string[][]} data 搜尋結果
+     */
     public SetFormTitleFromQuery(tPageName: string, Query?: string[], data?: string[][]): string {
         let reTitleStr = '';
 
@@ -3005,18 +3142,30 @@ export class PageSet {
     }
 }
 
-export class DynamicClass {//此class定義某欄位值改變時影響其他欄位
+/**此class定義某欄位值改變時影響其他欄位 */
+export class DynamicClass {
     DynamicInfObj: {
-        [PageName: string]: {//PageName頁面名稱
-            InfluenceByThisFieldName?: string,//因某個欄位名稱而動態影響Menu內容(目前只實作於經後端的Menu，會在這些欄位改變時觸發改變所有經後端產生的Menu)
-            InfluenceToFieldNames?: {//於此物件定義的欄位名稱，指這些欄位名稱被改變時會觸發動態Menu取值(目前只實作於不經後端的Menu)
-                [FieldName: string]: {//欄位名稱
-                    [FieldId: string]: {//此欄位名稱會影響哪些搜尋Bar上的欄位ID，使其動態改變Menu值。可用cell_y_x來表示table內某一欄位座標，如 cell_y_7(x需定值)
-                        MenuName: string,//此欄位ID需要用到的Menu名稱
-                        EffectiveInSearchBar?: boolean,//動態載入在搜尋Bar是否有效。無定義則表示有效
-                        EffectiveInTable?: boolean,//動態載入在Table是否有效。無定義則表示無效
-                        ValueByIdName?: string[],//此被影響的欄位需帶入那些IdName(搜尋bar)的值
-                    }//若FieldName沒有定義FieldId，則表示有此動態影響關係，但有其他的動作定義(於DynamicFunction中定義)
+        /**PageName頁面名稱 */
+        [PageName: string]: {
+            /**因某個欄位名稱而動態影響Menu內容(目前只實作於經後端的Menu，會在這些欄位改變時觸發改變所有經後端產生的Menu) */
+            InfluenceByThisFieldName?: string,
+            /**於此物件定義的欄位名稱，指這些欄位名稱被改變時會觸發動態Menu取值(目前只實作於不經後端的Menu) */
+            InfluenceToFieldNames?: {
+                /**欄位名稱 */
+                [FieldName: string]: {
+                    /**此欄位名稱會影響哪些搜尋Bar上的欄位ID，使其動態改變Menu值。可用cell_y_x來表示table內某一欄位座標，如 cell_y_7(x需定值)
+                     * 若FieldName沒有定義FieldId，則表示有此動態影響關係，但有其他的動作定義(於DynamicFunction中定義)
+                     */
+                    [FieldId: string]: {
+                        /**此欄位ID需要用到的Menu名稱 */
+                        MenuName: string,
+                        /**動態載入在搜尋Bar是否有效。無定義則表示有效 */
+                        EffectiveInSearchBar?: boolean,
+                        /**動態載入在Table是否有效。無定義則表示無效 */
+                        EffectiveInTable?: boolean,
+                        /**此被影響的欄位需帶入那些IdName(搜尋bar)的值 */
+                        ValueByIdName?: string[],
+                    }
                 }
             }
         }
@@ -3139,11 +3288,12 @@ export class DynamicClass {//此class定義某欄位值改變時影響其他欄�
         return false;
     }
 
-    //根據定義產生call function字串
-    //tPageName: 頁面名稱
-    //tFiledName: 欄位名稱
-    //isSearchArea: 此函式是否來自搜尋Bar(目前未實作特殊功能)
-    //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
+    /**根據定義產生call function字串
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFiledName 欄位名稱
+     * @param {boolean} isSearchArea 此函式是否來自搜尋Bar(目前未實作特殊功能)
+     * @param {string} TriggerFromId 觸發此函式的DOM ID(目前實作於Table內部的觸發)
+     */
     ReturnFunctionStr(tPageName: string, tFiledName: string, isSearchArea: boolean, TriggerFromId?: string): string {
         let reStr = '';
         if (this.NeedDynamicGetList(tPageName, tFiledName, isSearchArea)) {
@@ -3179,10 +3329,11 @@ export class DynamicClass {//此class定義某欄位值改變時影響其他欄�
 }
 
 export class OnclickPage {
-    //判定這個cell有沒有Click Function
-    //tPageName: 頁面名稱
-    //FieldName: 欄位名稱
-    //RowTitle: 該行行Title
+    /**判定這個cell有沒有Click Function
+     * @param {string} tPageName 頁面名稱
+     * @param {string} FieldName 欄位名稱
+     * @param {string} RowTitle 該行行Title
+     */
     FieldIsOnclick(tPageName: string, FieldName: string, RowTitle: string) {
         if (NeedClickObj[tPageName] && NeedClickObj[tPageName][FieldName] && (NeedClickObj[tPageName][FieldName].NotShowInRowTitle || []).indexOf(RowTitle) < 0) {
             return true;
@@ -3190,12 +3341,15 @@ export class OnclickPage {
 
         return false;
     }
-    //tPageName: 頁面名稱
-    //tTablePageName: click search的table頁面名稱
-    //FieldName: 欄位名稱
-    //RowTitle: 該行行Title
-    //dataArr: 一行的data陣列
-    //p1: 需額外加入的參數
+
+    /**
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tTablePageName click search的table頁面名稱
+     * @param {string} FieldName 欄位名稱
+     * @param {string} RowTitle 該行行Title
+     * @param {Array<string>} dataArr 一行的data陣列
+     * @param {string} p1 需額外加入的參數
+     */
     GetOnclickHtml(tPageName: string, tTablePageName: string, FieldName: string, RowTitle: string, dataArr: Array<string>, p1?: string) {
         let regexp = /\[[^\[&^\]]+\]/g;
         if (this.FieldIsOnclick(tPageName, FieldName, RowTitle)) {
@@ -3229,17 +3383,24 @@ export class OnclickPage {
 }
 
 export class ColorRuleClass {
-    HighlightObj: {//經過規則判定，每行確定要Highlight的座標資訊
+    /**經過規則判定，每行確定要Highlight的座標資訊 */
+    HighlightObj: {
         [RowIdx: number]: {
-            [CellIdx: number]: {//行座標
-                Color: string,//顏色
-                BackgroundColor: string,//背景顏色
-                Score: number,//目前Highlight的權重，用於決定複數規則下是否覆寫
+            /**行座標 */
+            [CellIdx: number]: {
+                /**顏色 */
+                Color: string,
+                /**背景顏色 */
+                BackgroundColor: string,
+                /**目前Highlight的權重，用於決定複數規則下是否覆寫 */
+                Score: number,
             }
         }
     } = {};
 
-    //從前端定義顏色規則(有些專案還沒支援由後端資料庫定義顏色功能，因此需要由前端定義)
+    /**從前端定義顏色規則(有些專案還沒支援由後端資料庫定義顏色功能，因此需要由前端定義)
+     * @param {string} tPageName 頁面名稱
+     */
     SetColorRuleFromFront(tPageName: string) {
         let ReportMode = GetSelectValue('報表類型');
         type Node = {
@@ -3315,8 +3476,10 @@ export class ColorRuleClass {
         }
     }
 
-    //判斷是否為特殊規則時，是否不看搜尋Bar。
-    //一般先判斷RowTitle，判斷欄位名稱，再判斷搜尋Bar
+    /**判斷是否為特殊規則時，是否不看搜尋Bar。
+     * 一般先判斷RowTitle，判斷欄位名稱，再判斷搜尋Bar
+     * @param {string} tPageName 頁面名稱
+     */
     NotSearchBar(tPageName: string): boolean {
         let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
 
@@ -3329,7 +3492,7 @@ export class ColorRuleClass {
         return false;
     }
 
-    //定義特殊規則
+    /**定義特殊規則 */
     SetOtherRules(Query: string[]): { 'Score': number, [TitleOrFieldName: string]: string | number } {
         let tNode: { 'Score': number, [TitleOrFieldName: string]: string | number } = { 'Score': Number(Query[5]) };
         if (Query.length > 6) {
@@ -3350,7 +3513,7 @@ export class ColorRuleClass {
         return tNode;
     }
 
-    //根據後端傳至前端的顏色規則，初始化顏色規則物件
+    /**根據後端傳至前端的顏色規則，初始化顏色規則物件 */
     InitColorRule() {
         if (document.getElementById('ColorRule')?.innerHTML != null) {
             //let tmpColorStr = document.getElementById('ColorRule').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -3411,11 +3574,12 @@ export class ColorRuleClass {
         }
     }
 
-    //判斷此欄位值是否符合特殊規則。若沒定義特殊規則則回傳true
-    //tPageName: 頁面名稱
-    //Others: 判定規則
-    //CellIdx: 行座標
-    //RowTitle: 左邊第一值
+    /**判斷此欄位值是否符合特殊規則。若沒定義特殊規則則回傳true
+     * @param {string} tPageName 頁面名稱
+     * @param {{ 'Score': number, [TitleOrFieldName: string]: string | number }} Others 判定規則
+     * @param {number} CellIdx 行座標
+     * @param {string} RowTitle 左邊第一值
+     */
     isConformRule(tPageName: string, Others: { 'Score': number, [TitleOrFieldName: string]: string | number }, CellIdx: number, RowTitle: string): boolean {
         let tmpBool: boolean[] = [];
         let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
@@ -3461,7 +3625,10 @@ export class ColorRuleClass {
         return !haveOtherRules ? true : false;
     }
 
-    //將搜尋結果與顏色規則初始化Hightlight座標資訊物件
+    /**將搜尋結果與顏色規則初始化Hightlight座標資訊物件
+     * @param {string} tPageName 頁面名稱
+     * @param {string[][] | string[] | { [key: string]: string }[]} data 搜尋結果
+     */
     InitColorObj(tPageName: string, data: string[][] | string[] | { [key: string]: string }[]) {
         let regexp = /\[[^\[&^\]]+\]/g;
         this.HighlightObj = {};
@@ -3664,7 +3831,7 @@ export class ColorRuleClass {
         }
     }
 
-    //檢查行座標是否需要Highlight。回傳style格式的字串
+    /**檢查行座標是否需要Highlight。回傳style格式的字串 */
     CheckColorRule(RowIdx: number, CellIdx: number): string {
         let c: string = this.HighlightObj[RowIdx] && this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].Color : '';
         let b: string = this.HighlightObj[RowIdx] && this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].BackgroundColor : '';
@@ -3679,9 +3846,9 @@ export class ColorRuleClass {
     }
 }
 
-//此class定義動態改變欄位時觸發的function(用於搜尋bar)
+/**此class定義動態改變欄位時觸發的function(用於搜尋bar) */
 export class DynamicFunction {
-    //此函式用於定義非FrontDynamicMenuRequest的動作。(此函式用於前端動態影響的條件下且idName = ''，call function)
+    /**此函式用於定義非FrontDynamicMenuRequest的動作。(此函式用於前端動態影響的條件下且idName = ''，call function) */
     private FrontDynamic(tPageName: string, tFieldName: string): void {
         if (tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
             || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
@@ -3708,12 +3875,12 @@ export class DynamicFunction {
         }
     }
 
-    //此函式用於定義需要通過後端取值時，另外還需要純前端的改變。
+    /**此函式用於定義需要通過後端取值時，另外還需要純前端的改變。 */
     private FrontDynamicInBackCall(tPageName: string): void {
 
     }
 
-    //此函式用於定義需要通過後端取值時，DynamicRequest最後結束前需要執行的動作
+    /**此函式用於定義需要通過後端取值時，DynamicRequest最後結束前需要執行的動作 */
     private DynamicInBackCallAtEnd(tPageName: string, isSearch: boolean): void {
         if (tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS') {
             SelectRefresh('field_2');
@@ -3743,7 +3910,7 @@ export class DynamicFunction {
         }
     }
 
-    //重新定義動態欄位的Query值
+    /**重新定義動態欄位的Query值 */
     public ResetDynamicQuery(tPageName: string, tFiledName: string, TargetIdName: string, key: string | string[]): string | string[] {
         if (tPageName == 'RentCost' && tFiledName == 'BU' && TargetIdName == 'field_7') {
             if (key == 'CP' || key == 'LCD') {
@@ -3757,11 +3924,13 @@ export class DynamicFunction {
         return key;
     }
 
-    //動態影響觸發的function。包含純前端的改變、透過後端取值的ajax呼叫
-    //tPageName: 頁面名稱
-    //idName: html物件ID名稱(搜尋bar、可以是table某欄位的ID)(受到影響的)
-    //tFieldName: 欄位名稱(因此欄位影響別的欄位的)
-    //TriggerFromId: 觸發此函式的DOM ID(目前實作於Table內部的觸發)
+    /**動態影響觸發的function。包含純前端的改變、透過後端取值的ajax呼叫
+     * @param {string} tPageName 頁面名稱
+     * @param {string} idName html物件ID名稱(搜尋bar、可以是table某欄位的ID)(受到影響的)
+     * @param {string} tFieldName 欄位名稱(因此欄位影響別的欄位的)
+     * @param {boolean} isSearch 觸發此function是否來自搜尋bar初始化
+     * @param {string} TriggerFromId 觸發此函式的DOM ID(目前實作於Table內部的觸發)
+     */
     public static DynamicRequest(tPageName: string, idName: string, tFieldName: string, isSearch: boolean, TriggerFromId?: string): void {
         let Today = new Date();
         let year = GetSelectValue('年度');
@@ -3871,42 +4040,65 @@ export class DynamicFunction {
     }
 }
 
-//此class用於定義Table間因某欄位而影響其他欄位的動作
+/**此class用於定義Table間因某欄位而影響其他欄位的動作 */
 export class DynamicFunctionInTable extends DynamicFunction {
     public static DynamicRequest(tPageName: string, idName: string, tFieldName: string): void {
 
     }
 }
 
-//此class用於定義欄位含有超連結時，需額外帶的get參數
+/**此class用於定義欄位含有超連結時，需額外帶的get參數 */
 export class UrlQuery {
-    UrlInfObj: {//定義各頁面各欄位含有超連結且需有需額外帶的get參數的物件
-        [PageName: string]: {//頁面名稱
-            [FieldName: string]: {//欄位名稱，需要定義get參數的欄位名稱
+    /**定義各頁面各欄位含有超連結且需有需額外帶的get參數的物件 */
+    UrlInfObj: {
+        /**頁面名稱 */
+        [PageName: string]: {
+            /**欄位名稱，需要定義get參數的欄位名稱 */
+            [FieldName: string]: {
                 key: {
-                    [KeyName: string]: {//get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
-                        ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
-                        ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
-                        Value?: string//Value固定此值
-                        ValueById?: string,//從DOM物件取得value
-                        ValueByName?: string,//從DOM物件(radio)取得value
-                    }//Value取得優先順序從上述定義上到下，都沒有則空字串
-                },
-                RowTitleEx?: {//此欄位的某行行標題(line data 第一個值)所帶的值另外定義
-                    [RowTitle: string]: {//此RowTitle另外定義Get參數
-                        key: {
-                            [KeyName: string]: {//get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
-                                ValueForFieldName?: string,//Value從該PageName的"欄位名稱"對應的行座標取得
-                                ValueForDataIdx?: number,//Value從該PageName的Table對應的"行座標"取得
-                                Value?: string//Value固定此值
-                                ValueById?: string,//從DOM物件取得value
-                                ValueByName?: string,//從DOM物件(radio)取得value
-                            }//Value取得優先順序從上述定義上到下，都沒有則空字串
-                        },
-                        Url?: string//URL,若沒有則以傳入Function的參數為主
+                    /**get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
+                     * Value取得優先順序從上述定義上到下，都沒有則空字串
+                     */
+                    [KeyName: string]: {
+                        /**Value從該PageName的"欄位名稱"對應的行座標取得 */
+                        ValueForFieldName?: string,
+                        /**Value從該PageName的Table對應的"行座標"取得 */
+                        ValueForDataIdx?: number,
+                        /**Value固定此值 */
+                        Value?: string
+                        /**從DOM物件取得value */
+                        ValueById?: string,
+                        /**從DOM物件(radio)取得value */
+                        ValueByName?: string,
                     }
                 },
-                Url?: string,//URL
+                /**此欄位的某行行標題(line data 第一個值)所帶的值另外定義 */
+                RowTitleEx?: {
+                    /**此RowTitle另外定義Get參數 */
+                    [RowTitle: string]: {
+                        key: {
+                            /**get參數的key值(此為超連結目標網址頁面裡的搜尋bar欄位名稱)
+                             * Value取得優先順序從上述定義上到下，都沒有則空字串
+                             */
+                            [KeyName: string]: {
+                                /**Value從該PageName的"欄位名稱"對應的行座標取得 */
+                                ValueForFieldName?: string,
+                                /**Value從該PageName的Table對應的"行座標"取得 */
+                                ValueForDataIdx?: number,
+                                /**Value固定此值 */
+                                Value?: string
+                                /**從DOM物件取得value */
+                                ValueById?: string,
+                                /**從DOM物件(radio)取得value */
+                                ValueByName?: string,
+                            }
+                        },
+                        /**URL,若沒有則以傳入Function的參數為主 */
+                        Url?: string
+                    }
+                },
+                /**URL */
+                Url?: string,
             }
         }
     } = {};
@@ -4190,11 +4382,12 @@ export class UrlQuery {
         }
     }
 
-    //取得的Value需要經過額外運算
-    //tPageName: 頁面名稱
-    //tFieldName: 含有超連結的欄位名稱
-    //KeyName: 參數名稱
-    //tValue: value值
+    /**取得的Value需要經過額外運算
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 含有超連結的欄位名稱
+     * @param {string} tKeyName 參數名稱
+     * @param {string} tValue value值
+     */
     TransFromValue(tPageName: string, tFieldName: string, tKeyName: string, tValue: string): string {
         if ((tPageName == 'MainIO' || tPageName == 'FocusIO') && (tFieldName == 'Input' || tFieldName == 'Output') && tKeyName == '週From') {
             let tDateTime = new Date(tValue);
@@ -4215,19 +4408,21 @@ export class UrlQuery {
         return tValue;
     }
 
-    //判斷此cell是否需要設定url get value參數
-    //tPageName: 頁面名稱
-    //tFieldName: 此cell的欄位名稱
+    /**判斷此cell是否需要設定url get value參數
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 此cell的欄位名稱
+     */
     NeedSetKeyValue(tPageName: string, tFieldName: string): boolean {
         return this.UrlInfObj[tPageName] && this.UrlInfObj[tPageName][tFieldName] ? true : false;
     }
 
-    //根據定義回傳此cell的含get參數的Url字串
-    //Url: 超連結網址
-    //tPageName: 頁面名稱
-    //tFieldName: 此cell的欄位名稱
-    //tRowTitle: 此cell的行標題(line data的第一個值)
-    //LineData: 此cell所在的line data全部值
+    /**根據定義回傳此cell的含get參數的Url字串
+     * @param {string} Url 超連結網址
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tFieldName 此cell的欄位名稱
+     * @param {string} tRowTitle 此cell的行標題(line data的第一個值)
+     * @param {string} LineData 此cell所在的line data全部值
+     */
     GetUrl(Url: string, tPageName: string, tFieldName: string, tRowTitle: string, LineData: string[]): string {
         let reUrlStr = '';
 
@@ -4331,10 +4526,14 @@ export class UrlQuery {
 
 export class TableExtend {
     TableExtendObj: {
-        [PageName: string]: {//頁面名稱
-            [RowIdx: number]: {//行座標(對應原Data座標)
-                SubIdx: number[],//Sub Node 行座標(對應原Data座標)
-                SubHtml: string//Table Html，此RowIdx隱藏展開的html
+        /**頁面名稱 */
+        [PageName: string]: {
+            /**行座標(對應原Data座標) */
+            [RowIdx: number]: {
+                /**Sub Node 行座標(對應原Data座標) */
+                SubIdx: number[],
+                /**Table Html，此RowIdx隱藏展開的html */
+                SubHtml: string
             }
         }
     } = {};
