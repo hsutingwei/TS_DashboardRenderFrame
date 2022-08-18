@@ -83,8 +83,10 @@ $(function () {
     })
 });
 
+/**定義Table表單屬性
+ * TitleArr.length = NecessaryArr.length = ModifiableArr.length
+ */
 class FormInf {
-    //TitleArr.length = NecessaryArr.length = ModifiableArr.length
     /**表單名稱 */
     FormName: string;
     /**欄位名稱 */
@@ -102,6 +104,12 @@ class FormInf {
     /**搜尋結果物件的讀取順序(內容值為物件屬性名稱)，此功能應用於Dapper的回傳結果 */
     FullDataObjOrder: string[] = [];
 
+    /**初始化表單屬性
+     * @param {string} tFormName 表單名稱
+     * @param {Array<string>} tFieldArr 欄位名稱(來自ID="FieldName"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tNecessaryArr 是否必填(來自ID="Necessary"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tModifiableArr 可否修改
+     */
     constructor(tFormName: string, tFieldArr?: Array<string>, tNecessaryArr?: Array<boolean | number | string>, tModifiableArr?: Array<boolean | number | string>) {
         this.FormName = tFormName;
         if (tFieldArr != null) {
@@ -149,7 +157,9 @@ class FormInf {
     }
 }
 
-/**一個頁面對應一個Table */
+/**定義頁面屬性
+ * 一個頁面對應一個Table 
+ * @extends FormInf*/
 export class PageInf extends FormInf {
     /**Page名稱 */
     PageName: string = this.FormName;
@@ -172,6 +182,12 @@ export class PageInf extends FormInf {
     /**紀錄此頁面的Ajax請求的狀態(目前只實作於區塊搜尋) */
     AjaxStatus: any;
 
+    /**初始化頁面屬性
+     * @param {string} tPageName 表單名稱
+     * @param {Array<string>} tFieldArr 欄位名稱(來自ID="FieldName"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tNecessaryArr 是否必填(來自ID="Necessary"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tModifiableArr 可否修改
+     */
     constructor(tPageName: string, tFieldArr?: Array<string>, tNecessaryArr?: Array<boolean | number | string>, tModifiableArr?: Array<boolean | number | string>) {
         super(tPageName, tFieldArr, tNecessaryArr, tModifiableArr);
         let ps = new set.PageSet();
@@ -194,7 +210,8 @@ export class PageInf extends FormInf {
     }
 }
 
-/**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承 */
+/**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承
+ */
 class SearchOperation implements Search, ClickSearch {
     /**重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
      * 因此程式結構這樣寫，設定的部分統一寫在PageSet)

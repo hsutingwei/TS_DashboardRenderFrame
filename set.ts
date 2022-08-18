@@ -2647,13 +2647,19 @@ export class PageSet {
         let ShieldArr = this.NeedShieldField(tPageName);
 
         type MergeInf = {
+            /**PageName */
             [key: string]: {
-                CheckXRange: number,//檢查是否需要合併的範圍
-                IgnoreXIdx?: number[],//要被忽略檢查的列座標。座標範圍須小於CheckXRange才有效
-                OnlyYWayCheck?: number[],//只需直行合併的列座標
-                XWayRange?: {//指定座標合併儲存格(目前僅x方向判定)
+                /**檢查是否需要合併的範圍 */
+                CheckXRange: number,
+                /**要被忽略檢查的列座標。座標範圍須小於CheckXRange才有效 */
+                IgnoreXIdx?: number[],
+                /**只需直行合併的列座標 */
+                OnlyYWayCheck?: number[],
+                /**指定座標合併儲存格(目前僅x方向判定) */
+                XWayRange?: {
                     [yIndex: number]: {
-                        [xIndex: number]: number//value(number): 合併儲存格欄位數
+                        /**value(number): 合併儲存格欄位數 */
+                        [xIndex: number]: number
                     }
                 }
             }

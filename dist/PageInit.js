@@ -83,7 +83,16 @@ $(function () {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     });
 });
+/**定義Table表單屬性
+ * TitleArr.length = NecessaryArr.length = ModifiableArr.length
+ */
 class FormInf {
+    /**初始化表單屬性
+     * @param {string} tFormName 表單名稱
+     * @param {Array<string>} tFieldArr 欄位名稱(來自ID="FieldName"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tNecessaryArr 是否必填(來自ID="Necessary"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tModifiableArr 可否修改
+     */
     constructor(tFormName, tFieldArr, tNecessaryArr, tModifiableArr) {
         /**欄位名稱 */
         this.FieldArr = [];
@@ -153,8 +162,16 @@ class FormInf {
         return tNLineData;
     }
 }
-/**一個頁面對應一個Table */
+/**定義頁面屬性
+ * 一個頁面對應一個Table
+ * @extends FormInf*/
 export class PageInf extends FormInf {
+    /**初始化頁面屬性
+     * @param {string} tPageName 表單名稱
+     * @param {Array<string>} tFieldArr 欄位名稱(來自ID="FieldName"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tNecessaryArr 是否必填(來自ID="Necessary"的DOM InnerHtml)
+     * @param {Array<boolean | number | string>} tModifiableArr 可否修改
+     */
     constructor(tPageName, tFieldArr, tNecessaryArr, tModifiableArr) {
         super(tPageName, tFieldArr, tNecessaryArr, tModifiableArr);
         /**Page名稱 */
@@ -193,7 +210,8 @@ export class PageInf extends FormInf {
         }
     }
 }
-/**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承 */
+/**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承
+ */
 class SearchOperation {
     /**重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
      * 因此程式結構這樣寫，設定的部分統一寫在PageSet)

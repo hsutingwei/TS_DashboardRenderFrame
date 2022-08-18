@@ -91,7 +91,9 @@ interface PageObj {
     [PageName: string]: PageInf;
 }
 
-/**Dashboard基礎的頁面搜尋 */
+/**Dashboard基礎的頁面搜尋 
+ * @abstract
+*/
 abstract class Search {
     /**搜尋接口(函式實例化是因為此函式是網頁上會值接觸發的功能)
      * @param {string} tPageName 頁面名稱
@@ -100,7 +102,9 @@ abstract class Search {
     static Search: (tPageName?: string, JumPage?: number) => void;
 }
 
-/**Dashboard頁面中，表單上欄位的點擊搜尋 */
+/**Dashboard頁面中，表單上欄位的點擊搜尋
+ * @abstract
+ */
 abstract class ClickSearch {
     /**點擊搜尋接口(函式實例化是因為此函式是網頁上會值接觸發的功能)
      * @param {string} tPageName 頁面名稱
@@ -109,7 +113,9 @@ abstract class ClickSearch {
     static ClickSearch: (tPageName: string, qyStr: string[]) => void;
 }
 
-/**Dashboard頁面中，區塊搜尋 */
+/**Dashboard頁面中，區塊搜尋 
+ * @abstract
+*/
 abstract class PartPageSearch {
     /**整個頁面的搜尋，用於依序呼叫每個Block的搜尋 */
     static PageSearch: () => void;
@@ -126,7 +132,9 @@ abstract class PartPageSearch {
     SubBlockRouter: (tPageName: string, data: string[]) => void;
 }
 
-/**表單操作，部分操作是以Table.js為前提 */
+/**表單操作，部分操作是以Table.js為前提
+ * @abstract
+ */
 abstract class TableOperation {
     /**更新接口(函式實例化是因為此函式是網頁上會值接觸發的功能)
      * @param {string} tPageName 頁面名稱
