@@ -260,31 +260,7 @@ export var lang = {
 /**紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID */
 export var DCMenuIdNameList: Array<string> = [];
 /**存放顏色Highlight規則 */
-export let ColorRuleArr: {
-    /**頁面名稱 */
-    [PageName: string]: {
-        /**行座標or縱坐標or行標題 */
-        [CellOrRowIdx: number | string]: {
-            /**是否橫坐標判定(1:true; 0:false) */
-            [isLateral: number]: {
-                /**顏色規則 */
-                [Rule: string]: {
-                    /**顏色 */
-                    Color: string,
-                    /**背景顏色 */
-                    BackgroundColor: string,
-                    /**特殊規則 */
-                    Others: {
-                        /**權重，用於規則有重疊時來決定規則優先順序 */
-                        'Score': number,
-                        /**Row Title or Field Name，指對應到這些特殊條件才符合此規則 */
-                        [TitleOrFieldName: string]: string | number,
-                    }
-                }
-            }
-        }
-    }
-} = {};
+export let ColorRuleArr: ColorRuleArr = {};
 
 /**此物件屬性儲存都是欄位名稱 */
 export var TableSetObj: TableSetObj = {
@@ -3409,75 +3385,152 @@ export class ColorRuleClass {
      */
     SetColorRuleFromFront(tPageName: string) {
         let ReportMode = GetSelectValue('報表類型');
-        type Node = {
-            Rule: string[];
-            Color: string[];
-            BackgroundColor: string[];
-            isLateral: boolean;
-        }
 
-        if (tPageName == 'ProdCustGPM') {
+        if (tPageName == 'MainIO' || tPageName == 'FocusIO') {
             //ColorRuleArr = {};//設定初始化清空
-            let tNode: {
-                [CellIdx: number]: Node;
-            } = {};
-            let tcNode: Node = {
-                Rule: ['[10] < [7]'],
-                Color: ['white'],
-                BackgroundColor: ['red'],
-                isLateral: true
+            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+                '3': {
+                    1: {
+                        "[3]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[3]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                },
+                '6': {
+                    1: {
+                        "[6]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[6]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                }
             };
-            let TargetIdx = 10;
-            tNode[TargetIdx] = tcNode;
-
-            if (!ColorRuleArr[tPageName]) {
-                ColorRuleArr[tPageName] = tNode;
-            }
-            else if (!ColorRuleArr[tPageName][TargetIdx]) {
-                ColorRuleArr[tPageName][TargetIdx] = tcNode;
+            for (let CellOrRowIdx in tcNode) {
+                if (!ColorRuleArr[tPageName]) {
+                    ColorRuleArr[tPageName] = tcNode;
+                }
+                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                }
             }
         }
-        else if (tPageName == 'Top10ProdCustGPM') {
+        else if (tPageName == 'MainNSB' || tPageName == 'FocusNSB' || tPageName == 'NSBNSB') {
             //ColorRuleArr = {};//設定初始化清空
-            let tNode: {
-                [CellIdx: number]: Node;
-            } = {};
-            let tcNode: Node = {
-                Rule: ['[9] < [6]'],
-                Color: ['white'],
-                BackgroundColor: ['red'],
-                isLateral: true
+            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+                '7': {
+                    1: {
+                        "[7]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[7]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                },
+                '8': {
+                    1: {
+                        "[8]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[8]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                }
             };
-            let TargetIdx = 9;
-            tNode[TargetIdx] = tcNode;
-
-            if (!ColorRuleArr[tPageName]) {
-                ColorRuleArr[tPageName] = tNode;
-            }
-            else if (!ColorRuleArr[tPageName][TargetIdx]) {
-                ColorRuleArr[tPageName][TargetIdx] = tcNode;
+            for (let CellOrRowIdx in tcNode) {
+                if (!ColorRuleArr[tPageName]) {
+                    ColorRuleArr[tPageName] = tcNode;
+                }
+                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                }
             }
         }
-        else if (tPageName == 'Top10CustomerRevenue') {
+        else if (tPageName == 'NSBPL') {
             //ColorRuleArr = {};//設定初始化清空
-            let LasyQuery = gPageObj.PageNameObj[tPageName].LastQuery;
-            let tNode: {
-                [CellIdx: number | string]: Node;
-            } = {};
-            let tcNode: Node = {
-                Rule: ['[' + LasyQuery[1] + ' AP達成率] > 100'],
-                Color: ['red'],
-                BackgroundColor: [''],
-                isLateral: false
+            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+                '5': {
+                    1: {
+                        "[5]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[5]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                },
+                '6': {
+                    1: {
+                        "[6]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[6]<90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                    }
+                }
             };
-            let TargetIdx: number | string = LasyQuery[1] + ' AP達成率';
-            tNode[TargetIdx] = tcNode;
-
-            if (!ColorRuleArr[tPageName]) {
-                ColorRuleArr[tPageName] = tNode;
-            }
-            else if (!ColorRuleArr[tPageName][TargetIdx]) {
-                ColorRuleArr[tPageName][TargetIdx] = tcNode;
+            for (let CellOrRowIdx in tcNode) {
+                if (!ColorRuleArr[tPageName]) {
+                    ColorRuleArr[tPageName] = tcNode;
+                }
+                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                }
             }
         }
     }
