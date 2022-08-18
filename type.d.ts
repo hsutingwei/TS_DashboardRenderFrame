@@ -82,28 +82,28 @@ type MenuObj = {
 /**顏色指標物件 */
 type ColorRuleArr = {
     /**頁面名稱 */
-    [PageName: string]: {
-        /**行座標or縱坐標or行標題 */
-        [CellOrRowIdx: number | string]: ColorisLateral
-    }
+    [PageName: string]: ColorCellOrRowIdx
 }
 
-/**顏色指標物件-橫直(1:true; 0:false) */
-type ColorisLateral = {
-    /**是否橫坐標判定(1:true; 0:false) */
-    [isLateral: number]: {
-        /**顏色規則 */
-        [Rule: string]: {
-            /**顏色 */
-            Color: string,
-            /**背景顏色 */
-            BackgroundColor: string,
-            /**特殊規則 */
-            Others: {
-                /**權重，用於規則有重疊時來決定規則優先順序 */
-                'Score': number,
-                /**Row Title or Field Name，指對應到這些特殊條件才符合此規則 */
-                [TitleOrFieldName: string]: string | number,
+/**顏色指標物件-此type用於前端定義時用 */
+type ColorCellOrRowIdx = {
+    /**行座標or縱坐標or行標題 */
+    [CellOrRowIdx: number | string]: {
+        /**是否橫坐標判定(1:true; 0:false) */
+        [isLateral: number]: {
+            /**顏色規則 */
+            [Rule: string]: {
+                /**顏色 */
+                Color: string,
+                /**背景顏色 */
+                BackgroundColor: string,
+                /**特殊規則 */
+                Others: {
+                    /**權重，用於規則有重疊時來決定規則優先順序 */
+                    'Score': number,
+                    /**Row Title or Field Name，指對應到這些特殊條件才符合此規則 */
+                    [TitleOrFieldName: string]: string | number,
+                }
             }
         }
     }

@@ -3388,7 +3388,7 @@ export class ColorRuleClass {
 
         if (tPageName == 'MainIO' || tPageName == 'FocusIO') {
             //ColorRuleArr = {};//設定初始化清空
-            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+            let tcNode: ColorCellOrRowIdx = {
                 '3': {
                     1: {
                         "[3]>120": {
@@ -3437,7 +3437,7 @@ export class ColorRuleClass {
         }
         else if (tPageName == 'MainNSB' || tPageName == 'FocusNSB' || tPageName == 'NSBNSB') {
             //ColorRuleArr = {};//設定初始化清空
-            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+            let tcNode: ColorCellOrRowIdx = {
                 '7': {
                     1: {
                         "[7]>120": {
@@ -3486,7 +3486,7 @@ export class ColorRuleClass {
         }
         else if (tPageName == 'NSBPL') {
             //ColorRuleArr = {};//設定初始化清空
-            let tcNode: { [CellOrRowIdx: string]: ColorisLateral } = {
+            let tcNode: ColorCellOrRowIdx = {
                 '5': {
                     1: {
                         "[5]>120": {
