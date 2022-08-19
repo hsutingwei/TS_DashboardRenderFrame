@@ -3176,86 +3176,12 @@ export class ColorRuleClass {
      */
     SetColorRuleFromFront(tPageName) {
         let ReportMode = GetSelectValue('報表類型');
-        if (tPageName == 'MainIO' || tPageName == 'FocusIO') {
+        if (tPageName == 'CP_EQGA') {
             //ColorRuleArr = {};//設定初始化清空
             let tcNode = {
-                '3': {
-                    1: {
-                        "[3]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                        "[3]&lt;90": {
-                            Color: 'red',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                    }
-                },
-                '6': {
-                    1: {
-                        "[6]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                        "[6]&lt;90": {
-                            Color: 'red',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                    }
-                }
-            };
-            for (let CellOrRowIdx in tcNode) {
-                if (!ColorRuleArr[tPageName]) {
-                    ColorRuleArr[tPageName] = tcNode;
-                }
-                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
-                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
-                }
-            }
-        }
-        else if (tPageName == 'MainNSB' || tPageName == 'FocusNSB' || tPageName == 'NSBNSB') {
-            //ColorRuleArr = {};//設定初始化清空
-            let tcNode = {
-                '7': {
-                    1: {
-                        "[7]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                        "[7]&lt;90": {
-                            Color: 'red',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                    }
-                },
                 '8': {
                     1: {
-                        "[8]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                        "[8]&lt;90": {
+                        "[8]&lt;0": {
                             Color: 'red',
                             BackgroundColor: '',
                             Others: {
@@ -3263,7 +3189,7 @@ export class ColorRuleClass {
                             }
                         },
                     }
-                }
+                },
             };
             for (let CellOrRowIdx in tcNode) {
                 if (!ColorRuleArr[tPageName]) {
@@ -3274,52 +3200,88 @@ export class ColorRuleClass {
                 }
             }
         }
-        else if (tPageName == 'NSBPL') {
-            //ColorRuleArr = {};//設定初始化清空
-            let tcNode = {
-                '5': {
-                    1: {
-                        "[5]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
+        else if (tPageName == 'CPCAP') {
+            if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
+                //ColorRuleArr = {};//設定初始化清空
+                let tcNode = {
+                    '9': {
+                        1: {
+                            "[9]&lt;0": {
+                                Color: 'red',
+                                BackgroundColor: '',
+                                Others: {
+                                    'Score': 1
+                                }
+                            },
+                        }
+                    },
+                    '-1': {
+                        0: {
+                            "[4]==''": {
+                                Color: 'white',
+                                BackgroundColor: 'red',
+                                Others: {
+                                    Score: 1
+                                }
                             }
-                        },
-                        "[5]&lt;90": {
-                            Color: 'red',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
+                        }
                     }
-                },
-                '6': {
-                    1: {
-                        "[6]>120": {
-                            Color: 'blue',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
-                        "[6]&lt;90": {
-                            Color: 'red',
-                            BackgroundColor: '',
-                            Others: {
-                                'Score': 1
-                            }
-                        },
+                };
+                for (let CellOrRowIdx in tcNode) {
+                    if (!ColorRuleArr[tPageName]) {
+                        ColorRuleArr[tPageName] = tcNode;
+                    }
+                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
                     }
                 }
-            };
-            for (let CellOrRowIdx in tcNode) {
-                if (!ColorRuleArr[tPageName]) {
-                    ColorRuleArr[tPageName] = tcNode;
+            }
+            else if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Prober' || gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Tester') {
+                //ColorRuleArr = {};//設定初始化清空
+                let tcNode = {
+                    '-1': {
+                        0: {
+                            "[9]&lt;0": {
+                                Color: 'white',
+                                BackgroundColor: 'red',
+                                Others: {
+                                    Score: 1
+                                }
+                            }
+                        }
+                    }
+                };
+                for (let CellOrRowIdx in tcNode) {
+                    if (!ColorRuleArr[tPageName]) {
+                        ColorRuleArr[tPageName] = tcNode;
+                    }
+                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                    }
                 }
-                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
-                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+            }
+            else if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'ProbeCard' || gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Testboard') {
+                //ColorRuleArr = {};//設定初始化清空
+                let tcNode = {
+                    '-1': {
+                        0: {
+                            "[10]&lt;0": {
+                                Color: 'white',
+                                BackgroundColor: 'red',
+                                Others: {
+                                    Score: 1
+                                }
+                            }
+                        }
+                    }
+                };
+                for (let CellOrRowIdx in tcNode) {
+                    if (!ColorRuleArr[tPageName]) {
+                        ColorRuleArr[tPageName] = tcNode;
+                    }
+                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                    }
                 }
             }
         }
@@ -3474,7 +3436,7 @@ export class ColorRuleClass {
         }
         for (let i = 0; i &lt; tData.length; i++) {
             let tLineData = tData[i];
-            //縱坐標判定
+            /**縱坐標判定 */
             if (ColorRuleArr[tPageName] &amp;&amp; ColorRuleArr[tPageName][i] &amp;&amp; ColorRuleArr[tPageName][i][0]) {
                 for (let tRule in ColorRuleArr[tPageName][i][0]) {
                     let tIdxArr = tRule.match(regexp) || [];
@@ -3531,7 +3493,7 @@ export class ColorRuleClass {
                     }
                 }
             }
-            //縱Title判定。縱坐標、縱Title，兩個判定不寫成一個的原因:讓權重去決定要不要覆寫
+            /**縱Title判定。縱坐標、縱Title，兩個判定不寫成一個的原因:讓權重去決定要不要覆寫 */
             if (ColorRuleArr[tPageName] &amp;&amp; ColorRuleArr[tPageName][RowTitle[i]] &amp;&amp; ColorRuleArr[tPageName][RowTitle[i]][0]) {
                 for (let tRule in ColorRuleArr[tPageName][RowTitle[i]][0]) {
                     let tIdxArr = tRule.match(regexp) || [];
@@ -3588,7 +3550,56 @@ export class ColorRuleClass {
                     }
                 }
             }
-            //橫坐標判定
+            /**縱坐標-1判定(-1表全部的綜座標) */
+            if (ColorRuleArr[tPageName] &amp;&amp; ColorRuleArr[tPageName][-1] &amp;&amp; ColorRuleArr[tPageName][-1][0]) {
+                for (let tRule in ColorRuleArr[tPageName][-1][0]) {
+                    let tIdxArr = tRule.match(regexp) || [];
+                    for (let m = 0; m &lt; tLineData.length; m++) {
+                        let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][-1][0][tRule].Others, m, RowTitle[-1]);
+                        if (isConform) {
+                            let tValue = tLineData[m].replace('%', '');
+                            let tmRule = tRule;
+                            let HaveDash = false;
+                            for (let k = 0; k &lt; tIdxArr.length; k++) {
+                                let tStr = tIdxArr[k].replace('[', '').replace(']', '');
+                                let tIdx = -1;
+                                if (!isNaN(Number(tStr))) {
+                                    tIdx = Number(tStr);
+                                }
+                                else {
+                                    tIdx = RowTitle.indexOf(tStr);
+                                }
+                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
+                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                        HaveDash = true;
+                                        break;
+                                    }
+                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                }
+                                if (HaveDash) {
+                                    break;
+                                }
+                            }
+                            if (HaveDash) {
+                                continue;
+                            }
+                            if (eval(tmRule)) {
+                                let tNode = {
+                                    Color: ColorRuleArr[tPageName][-1][0][tRule].Color,
+                                    BackgroundColor: ColorRuleArr[tPageName][-1][0][tRule].BackgroundColor,
+                                    Score: ColorRuleArr[tPageName][-1][0][tRule].Others.Score
+                                };
+                                for (let j = 0; j &lt; gPageObj.PageNameObj[tPageName].TitleStrArr.length; j++) {
+                                    if (!this.HighlightObj[i][j] || tNode.Score > this.HighlightObj[i][j].Score) {
+                                        this.HighlightObj[i][j] = tNode;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            /**橫坐標判定 */
             for (let CellIdx in ColorRuleArr[tPageName]) {
                 //索引為欄位名稱的狀況
                 let tCellIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(CellIdx);
@@ -3632,7 +3643,14 @@ export class ColorRuleClass {
                                     BackgroundColor: ColorRuleArr[tPageName][CellIdx][1][tRule].BackgroundColor,
                                     Score: ColorRuleArr[tPageName][CellIdx][1][tRule].Others.Score,
                                 };
-                                if (!this.HighlightObj[i]) {
+                                if (Number(CellIdx) == -1) {
+                                    for (let j = 0; j &lt; gPageObj.PageNameObj[tPageName].TitleStrArr.length; j++) {
+                                        if (!this.HighlightObj[i][j] || tNode.Score > this.HighlightObj[i][j].Score) {
+                                            this.HighlightObj[i][j] = tNode;
+                                        }
+                                    }
+                                }
+                                else if (!this.HighlightObj[i]) {
                                     let tpNode = { [tCellIdx]: tNode };
                                     this.HighlightObj[i] = tpNode;
                                 }
@@ -4354,7 +4372,7 @@ window.DynamicFunction = DynamicFunction;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Thu Aug 18 2022 15:20:40 GMT+0800 (台北標準時間)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Aug 19 2022 11:25:04 GMT+0800 (台北標準時間)
 </footer>
 
 <script> prettyPrint(); </script>

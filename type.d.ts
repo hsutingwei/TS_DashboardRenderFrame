@@ -79,15 +79,55 @@ type MenuObj = {
     }
 }
 
-/**顏色指標物件 */
+/**顏色指標物件
+ * @example 
+ * let a: ColorTuleArr = {
+ *      Actual: {
+ *          '8': {
+                1: {
+                    "[3]>120": {
+                        Color: 'blue',
+                        BackgroundColor: '',
+                        Others: {
+                            'Score': 1
+                        }
+                    },
+                }
+            },
+            -1: { //-1表示全部
+                [1]:{},//表該行符合Rule，則該行所有座標Highlight
+                [0]:{}//表該列符合Rule，則該列整行Highlight
+                //兩個目前效果相同
+            }
+ *      }
+    }
+ */
 type ColorRuleArr = {
     /**頁面名稱 */
     [PageName: string]: ColorCellOrRowIdx
 }
 
-/**顏色指標物件-此type用於前端定義時用 */
+/**顏色指標物件-此type用於前端定義時用
+ * @example 
+ * '8': {
+        1: {
+            "[3]>120": {
+                Color: 'blue',
+                BackgroundColor: '',
+                Others: {
+                    'Score': 1
+                }
+            },
+        }
+    },
+    -1: { //-1表示全部
+        [1]:{},//表該行符合Rule，則該行所有座標Highlight
+        [0]:{}//表該列符合Rule，則該列整行Highlight
+        //兩個目前效果相同
+    }
+ */
 type ColorCellOrRowIdx = {
-    /**行座標or縱坐標or行標題 */
+    /**行座標or縱坐標or行標題。 */
     [CellOrRowIdx: number | string]: {
         /**是否橫坐標判定(1:true; 0:false) */
         [isLateral: number]: {
