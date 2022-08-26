@@ -536,7 +536,7 @@ export class PageSet {
      */
     public DefineSearPageInf(tPageName: string): [number, number] {
         let PageNumber = -1;
-        let NumberPerAPage = 10;
+        let NumberPerAPage = this.DefineMenuLength(tPageName)[0];
 
         if (tPageName == 'TEST_OUT_GOODS_LIST' || tPageName == 'TEST_IN_GOODS_LIST' || tPageName == 'TEST_RECEIVE_LIST'
             || tPageName == 'TEST_LOTSIZE_LIST' || tPageName == 'DS_IN_GOODS_LIST' || tPageName == 'DS_OUT_GOODS_LIST'
@@ -544,10 +544,29 @@ export class PageSet {
             || tPageName == 'Prober_Handler_FT_LIST' || tPageName == 'Tester_Activation_LIST' || tPageName == 'Prober_Handler_LBI_LIST'
             || tPageName == 'Prober_Handler_DS_LIST') {
             PageNumber = 1;
-            NumberPerAPage = 10;
         }
 
         return [PageNumber, NumberPerAPage];
+    }
+
+    /**定義DataTable的Menu Length
+ * @param {string} tPageName 頁面名稱
+ */
+    public DefineMenuLength(tPageName: string): number[] {
+        let DefaultMenuLength: number[] = [10, 30, 50];
+
+        switch (tPageName) {
+            case 'CPCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            case 'FTCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            default:
+                break;
+        }
+
+        return DefaultMenuLength;
     }
 
     /**初始化可否修改陣列

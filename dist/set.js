@@ -487,16 +487,32 @@ export class PageSet {
      */
     DefineSearPageInf(tPageName) {
         let PageNumber = -1;
-        let NumberPerAPage = 10;
+        let NumberPerAPage = this.DefineMenuLength(tPageName)[0];
         if (tPageName == 'TEST_OUT_GOODS_LIST' || tPageName == 'TEST_IN_GOODS_LIST' || tPageName == 'TEST_RECEIVE_LIST'
             || tPageName == 'TEST_LOTSIZE_LIST' || tPageName == 'DS_IN_GOODS_LIST' || tPageName == 'DS_OUT_GOODS_LIST'
             || tPageName == 'Prober_Handler_CPLCD_LIST' || tPageName == 'INK_Activation_LIST' || tPageName == 'AOI_Activation_LIST'
             || tPageName == 'Prober_Handler_FT_LIST' || tPageName == 'Tester_Activation_LIST' || tPageName == 'Prober_Handler_LBI_LIST'
             || tPageName == 'Prober_Handler_DS_LIST') {
             PageNumber = 1;
-            NumberPerAPage = 10;
         }
         return [PageNumber, NumberPerAPage];
+    }
+    /**定義DataTable的Menu Length
+ * @param {string} tPageName 頁面名稱
+ */
+    DefineMenuLength(tPageName) {
+        let DefaultMenuLength = [10, 30, 50];
+        switch (tPageName) {
+            case 'CPCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            case 'FTCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            default:
+                break;
+        }
+        return DefaultMenuLength;
     }
     /**初始化可否修改陣列
      * @param {string} tPageName 頁面名稱
@@ -2428,14 +2444,11 @@ export class PageSet {
         var tmpArr = new Array();
         var LeftCount = 0;
         var ShieldIdx = this.NeedShieldField(tPageName);
-        if (tPageName == 'APMaintain' || tPageName == 'FCSTMaintain') {
-            LeftCount = 8;
-        }
-        else if (tPageName == 'CPRUNCARDCOST') {
+        if (tPageName == 'CPCAP' && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
             LeftCount = 10;
         }
-        else if (tPageName == 'FCSTMaintain') {
-            LeftCount = 11;
+        else if (tPageName == 'FTCAP' && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
+            LeftCount = 10;
         }
         if (LeftCount > 0) {
             var tableDom = $('#' + tPageName + 'Table tbody tr');
@@ -2453,13 +2466,17 @@ export class PageSet {
                     tableDom.eq(i).find('td').eq(j).css('left', widthCss);
                     tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
                     tableDom.eq(i).find('td').eq(j).css('z-index', '1');
-                    tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                        tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    }
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
                     if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null) {
                         titleDom.eq(i).find('th').eq(j).css('left', widthCss);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
-                        titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
+                        if (titleDom.eq(i).find('th').eq(j).css('background-color') == '' || titleDom.eq(i).find('th').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                            titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
+                        }
                     }
                     var tmpWidth = parseInt(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
                     var tmpPadding = parseInt(tableDom.eq(i).find('td').eq(j).css('padding').replace('px', ''));

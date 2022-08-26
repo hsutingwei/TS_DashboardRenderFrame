@@ -531,11 +531,11 @@ class SearchOperation {
             return;
         }
         let cr = new set.ColorRuleClass();
+        Query.QueryArr = fQueryArr;
+        gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
         if (set.PageSetObj.NeedDataTableFreeze.indexOf(tmpPageName) > -1) {
             TableObj.fixedColumns = ps.GetDataTableFreezeValue(tmpPageName);
         }
-        Query.QueryArr = fQueryArr;
-        gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
         if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1) {
             let tmpTitle = ps.SetFormTitleFromQuery(tmpPageName, Query.QueryArr);
             if (tmpTitle != '') {
@@ -546,297 +546,308 @@ class SearchOperation {
         }
         cr.SetColorRuleFromFront(tmpPageName);
         if (PageNumber >= 1) {
-            let tAddRowCount = 0; //增加幾個row計數
-            let tAddRowObj = {}; //新增的obj暫存。key是計數，value是對應的欄位內容
-            let ColumnObj = new Array();
-            let TableIdName = tmpPageName + 'Table';
-            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
-            gPageObj.PageNameObj[tmpPageName].SetTableTitle();
-            let tmpTitle = new Array();
-            let titleInfArr = new Array();
-            let pm = new PageMake();
-            let FieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
-            let tmpFieldArr = JSON.parse(JSON.stringify(FieldArr));
-            if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
-                tmpFieldArr.push('功能');
-            }
-            for (let i = 0; i < tmpFieldArr.length; i++) {
-                ColumnObj.push({ data: tmpFieldArr[i], title: tmpFieldArr[i] });
-            }
-            tmpTitle = ps.MakeTableTitle(titleInfArr, tmpPageName);
-            let ttt = '<table ' + AttributeStr + '></table>';
-            let tDom = document.getElementById('TableArea');
-            if (tDom != null) {
-                tDom.innerHTML = ttt;
-            }
-            let headerHtml = pm.CreatTableTitle(tmpPageName, 'thead', set.PageSetObj.noDeletePage.indexOf(tmpPageName) > -1 ? [] : ['功能'], tmpTitle);
-            let ShieldIdxArr = ps.NeedShieldField(tmpPageName);
-            let AllResultCount = 0;
-            TableObj.language = set.lang;
-            TableObj.processing = true;
-            TableObj.serverSide = true;
-            TableObj.orderMulti = false;
-            TableObj.ajax = function (data, callback, settings) {
-                //封裝請求參數
-                let param = {
-                    limit: 1,
-                    page: 1,
-                    start: 1
-                };
-                Query.PageNumber = (data.start / data.length) + 1; //當前頁碼
-                //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
-                /*param.start = data.start;//開始的記錄序號
-                param.page = (data.start / data.length) + 1;//當前頁碼
-                param.start = (Query.PageNumber - 1) * data.length;//開始的記錄序號*/
-                Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
-                //console.log(param);
-                //ajax請求數據
-                doAjax('Search', true, Query, function (result) {
-                    if (Query.PageNumber == 1 && result.length > 0) {
-                        let tArr = result[0].split(';');
-                        AllResultCount = parseInt(tArr[0]);
-                        result[0] = tArr[1];
-                    }
-                    let returnData = {
-                        draw: data.draw,
-                        recordsTotal: AllResultCount,
-                        recordsFiltered: AllResultCount,
-                        data: []
+            Query.PageNumber = 1;
+            Query.NumberPerAPage = ps.DefineMenuLength(tmpPageName)[0];
+            //此動作流程是為了在分頁搜尋時先取得後端回傳的Title
+            //此搜尋Query跟搜尋第一頁的搜尋結果一模一樣，再由後端將結果存入快取
+            doAjax('Search', true, Query, function (FirstData) {
+                if (Query.PageNumber == 1 && FirstData.length > 0) {
+                    FirstData[0] = FirstData[0].split(';')[1];
+                }
+                gPageObj.PageNameObj[tmpPageName].SetTableTitle(FirstData[0].split(','));
+                let tAddRowCount = 0; //增加幾個row計數
+                let tAddRowObj = {}; //新增的obj暫存。key是計數，value是對應的欄位內容
+                let ColumnObj = new Array();
+                let TableIdName = tmpPageName + 'Table';
+                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
+                let tmpTitle = new Array();
+                let pm = new PageMake();
+                let FieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
+                let tmpFieldArr = JSON.parse(JSON.stringify(FieldArr));
+                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                    tmpFieldArr.push('功能');
+                }
+                for (let i = 0; i < tmpFieldArr.length; i++) {
+                    ColumnObj.push({ data: tmpFieldArr[i], title: tmpFieldArr[i] });
+                }
+                tmpTitle = ps.MakeTableTitle(tmpFieldArr, tmpPageName);
+                let ttt = '<table ' + AttributeStr + '></table>';
+                let tDom = document.getElementById('TableArea');
+                if (tDom != null) {
+                    tDom.innerHTML = ttt;
+                }
+                let headerHtml = pm.CreatTableTitle(tmpPageName, 'thead', set.PageSetObj.noDeletePage.indexOf(tmpPageName) > -1 ? [] : ['功能'], tmpTitle);
+                let ShieldIdxArr = ps.NeedShieldField(tmpPageName);
+                let AllResultCount = 0;
+                TableObj.language = set.lang;
+                TableObj.processing = true;
+                TableObj.serverSide = true;
+                TableObj.orderMulti = false;
+                TableObj.ajax = function (data, callback, settings) {
+                    //封裝請求參數
+                    let param = {
+                        limit: 1,
+                        page: 1,
+                        start: 1
                     };
-                    let tmpObj = new Array();
-                    if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
-                        for (let i = 1; i <= tAddRowCount; i++) {
-                            if (tAddRowObj[i] != null) {
-                                tmpObj.push(tAddRowObj[i]);
+                    Query.PageNumber = (data.start / data.length) + 1; //當前頁碼
+                    //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
+                    /*param.start = data.start;//開始的記錄序號
+                    param.page = (data.start / data.length) + 1;//當前頁碼
+                    param.start = (Query.PageNumber - 1) * data.length;//開始的記錄序號*/
+                    Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
+                    //console.log(param);
+                    //ajax請求數據
+                    doAjax('Search', true, Query, function (result) {
+                        if (Query.PageNumber == 1 && result.length > 0) {
+                            let tArr = result[0].split(';');
+                            AllResultCount = parseInt(tArr[0]);
+                            result[0] = tArr[1];
+                        }
+                        let so = new SearchOperation();
+                        result = so.EditSearchResult(tmpPageName, result);
+                        let returnData = {
+                            draw: data.draw,
+                            recordsTotal: AllResultCount,
+                            recordsFiltered: AllResultCount,
+                            data: []
+                        };
+                        let tmpObj = new Array();
+                        if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
+                            for (let i = 1; i <= tAddRowCount; i++) {
+                                if (tAddRowObj[i] != null) {
+                                    tmpObj.push(tAddRowObj[i]);
+                                }
                             }
                         }
-                    }
-                    gPageObj.PageNameObj[tmpPageName].FullData = [];
-                    for (let i = 0; i < result.length; i++) {
-                        let tmpArr = result[i].split(',');
-                        gPageObj.PageNameObj[tmpPageName].FullData.push(tmpArr);
-                        let tObj = {};
-                        for (let j = 0; j < tmpArr.length; j++) {
-                            tObj[FieldArr[j]] = tmpArr[j];
+                        gPageObj.PageNameObj[tmpPageName].FullData = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let tmpArr = result[i].split(',');
+                            gPageObj.PageNameObj[tmpPageName].FullData.push(tmpArr);
+                            let tObj = {};
+                            for (let j = 0; j < tmpArr.length; j++) {
+                                tObj[FieldArr[j]] = tmpArr[j];
+                            }
+                            if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                                tObj['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
+                            }
+                            tmpObj.push(tObj);
                         }
-                        if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
-                            tObj['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
+                        returnData.data = tmpObj;
+                        $('.selectpicker').selectpicker();
+                        callback(returnData);
+                        //sbtn.button('reset');
+                        SetButtonDisable('SearchBtn', false, '搜尋');
+                    });
+                };
+                TableObj.columns = ColumnObj;
+                TableObj.createdRow = function (row, data, index) {
+                    var _a;
+                    let LineArr = [];
+                    let op = new set.OnclickPage();
+                    let dc = new set.DynamicClass();
+                    let cr = new set.ColorRuleClass();
+                    let df = new set.DynamicFunction();
+                    let pm = new PageMake();
+                    let pt = new PageTool();
+                    let tmpArr = [];
+                    let KeyValueArr = [];
+                    let ValueIdArr = [];
+                    let tFieldNameArr = [];
+                    let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
+                    for (let i = 0; i < FieldArr.length; i++) {
+                        tmpArr.push(data[FieldArr[i]]);
+                    }
+                    if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                        tmpArr.push(data['功能']);
+                    }
+                    cr.InitColorObj(tmpPageName, [tmpArr]);
+                    let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
+                    for (let i = 0; i < tmpArr.length; i++) {
+                        let ColorHtml = '';
+                        let tdClick = '';
+                        let tdClass = '';
+                        let tdStyle = '';
+                        let tdId = 'cell_' + index.toString() + '_' + i.toString();
+                        let aPart = '';
+                        let MenuPart = '';
+                        let bPart = '';
+                        if (!gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && op.FieldIsOnclick(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0])) {
+                            tdClick = op.GetOnclickHtml(tmpPageName, tmpPageName + '_LIST', gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0], tmpArr);
                         }
-                        tmpObj.push(tObj);
-                    }
-                    returnData.data = tmpObj;
-                    $('.selectpicker').selectpicker();
-                    callback(returnData);
-                    //sbtn.button('reset');
-                    SetButtonDisable('SearchBtn', false, '搜尋');
-                });
-            };
-            TableObj.columns = ColumnObj;
-            TableObj.createdRow = function (row, data, index) {
-                var _a;
-                let LineArr = [];
-                let op = new set.OnclickPage();
-                let dc = new set.DynamicClass();
-                let cr = new set.ColorRuleClass();
-                let df = new set.DynamicFunction();
-                let pm = new PageMake();
-                let pt = new PageTool();
-                let tmpArr = [];
-                let KeyValueArr = [];
-                let ValueIdArr = [];
-                let tFieldNameArr = [];
-                let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
-                for (let i = 0; i < FieldArr.length; i++) {
-                    tmpArr.push(data[FieldArr[i]]);
-                }
-                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
-                    tmpArr.push(data['功能']);
-                }
-                let tmpModifuableArr = ps.CheckFieldModifiable(tmpPageName, tmpArr);
-                for (let i = 0; i < tmpArr.length; i++) {
-                    let ColorHtml = '';
-                    let tdClick = '';
-                    let tdClass = '';
-                    let tdStyle = '';
-                    let tdId = 'cell_' + index.toString() + '_' + i.toString();
-                    let aPart = '';
-                    let MenuPart = '';
-                    let bPart = '';
-                    if (!gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && op.FieldIsOnclick(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0])) {
-                        tdClick = op.GetOnclickHtml(tmpPageName, tmpPageName + '_LIST', gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0], tmpArr);
-                    }
-                    ColorHtml = cr.CheckColorRule(i, i);
-                    tdClass = (tdClick != '' ? 'ClickSearch' : '');
-                    tdStyle = ColorHtml + (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : '');
-                    if (set.TableSetObj.SetRight.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
+                        ColorHtml = cr.CheckColorRule(0, i);
                         tdClass = (tdClick != '' ? 'ClickSearch' : '');
-                        tdStyle += 'text-align:right !important;';
-                    }
-                    if (ps.NeedCheckSimilarity(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i])) {
-                        CheckArr.push(tmpArr[i]);
-                    }
-                    let tmpSelectList = ps.GetListArr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false);
-                    let tmpAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
-                    if (dc.NeedDynamicGetList(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false)) {
-                        tmpAttrStr += ' onchange="' + dc.ReturnFunctionStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false, tdId) + '"';
-                        for (let key in (_a = dc.DynamicInfObj[tmpPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]]) {
-                            let tKeyValue = tmpArr[i];
-                            tKeyValue = df.ResetDynamicQuery(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], key, tKeyValue).toString();
-                            KeyValueArr.push(tKeyValue);
-                            ValueIdArr.push(key);
-                            tFieldNameArr.push(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]);
+                        tdStyle = ColorHtml + (ShieldIdxArr.indexOf(i) > -1 ? 'display:none;' : '');
+                        if (set.TableSetObj.SetRight.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
+                            tdClass = (tdClick != '' ? 'ClickSearch' : '');
+                            tdStyle += 'text-align:right !important;';
                         }
-                    }
-                    if (set.TableSetObj.IgnoreZero.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1 && tmpArr[i] == '0') {
-                        tmpArr[i] = '';
-                    }
-                    let tmpReadHtml = '';
-                    if (gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && tmpModifuableArr[i]) {
-                        tmpReadHtml = 'read';
-                    }
-                    if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
-                        aPart += tmpArr[i];
-                    }
-                    else if (set.TableSetObj.NeedModifyDisplayArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
-                        let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + ps.NeedModifyDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[i], tmpPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[i] + '</span>';
-                        aPart += tStr;
-                    }
-                    else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
-                        let tStr = '';
-                        if (tmpReadHtml.length > 0) {
-                            tStr = '<span class="' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
+                        if (ps.NeedCheckSimilarity(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i])) {
+                            CheckArr.push(tmpArr[i]);
                         }
-                        else {
-                            tStr = '<span>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
+                        let tmpSelectList = ps.GetListArr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false);
+                        let tmpAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
+                        if (dc.NeedDynamicGetList(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false)) {
+                            tmpAttrStr += ' onchange="' + dc.ReturnFunctionStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false, tdId) + '"';
+                            for (let key in (_a = dc.DynamicInfObj[tmpPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]]) {
+                                let tKeyValue = tmpArr[i];
+                                tKeyValue = df.ResetDynamicQuery(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], key, tKeyValue).toString();
+                                KeyValueArr.push(tKeyValue);
+                                ValueIdArr.push(key);
+                                tFieldNameArr.push(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]);
+                            }
                         }
-                        aPart += tStr;
-                    }
-                    else if (tmpReadHtml.length > 0) {
-                        let tStr = '<span class=" ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + tmpArr[i] + '</span>';
-                        aPart += tStr;
-                    }
-                    else {
-                        aPart += tmpArr[i];
-                    }
-                    if (gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && tmpModifuableArr[i] && ShieldIdxArr.indexOf(i) < 0) {
-                        let tClassName = 'write';
-                        let tStr = '<span class="' + tClassName + '"' + (isWriteMode ? '' : ' style="display:none"') + '>';
-                        if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
-                            tStr += pm.MakeListHtml('Calendar', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                        if (set.TableSetObj.IgnoreZero.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1 && tmpArr[i] == '0') {
+                            tmpArr[i] = '';
                         }
-                        else if (op.FieldIsOnclick(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0])) {
-                            let tClickFun = op.GetOnclickHtml(tmpPageName, tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0], tmpArr, 'up' + tmpArr[0]);
-                            tStr += '<input id="up' + tmpArr[0] + '" class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[i] + '" readonly><button class="btn" onclick="' + tClickFun + '">上傳</button>';
+                        let tmpReadHtml = '';
+                        if (gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && tmpModifuableArr[i]) {
+                            tmpReadHtml = 'read';
                         }
-                        else if (set.TableSetObj.TextAreaArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
-                            tStr += '<textarea class="form-control" ' + tmpAttrStr + ' rows="' + (tmpArr[i].length < 20 ? 1 : (tmpArr[i].length < 35 ? 2 : 3)) + '">' + tmpArr[i] + '</textarea>';
+                        if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
+                            aPart += tmpArr[i];
                         }
-                        else if (ps.NeedColorField(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i])) {
-                            tStr += '<input class="form-control" type="color"' + tmpAttrStr + ' value="' + tmpArr[i] + '">';
+                        else if (set.TableSetObj.NeedModifyDisplayArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
+                            let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + ps.NeedModifyDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[i], tmpPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[i] + '</span>';
+                            aPart += tStr;
                         }
-                        else if (tmpSelectList.length == 0) {
-                            tStr += '<input class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[i] + '">';
-                        }
-                        else if (!ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
-                            tmpAttrStr += ' id="' + tdId + '_menu"';
-                            if (ps.IsMultiSelect(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false)) {
-                                MenuPart = pm.MakeListHtml('Multi Select', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                        else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
+                            let tStr = '';
+                            if (tmpReadHtml.length > 0) {
+                                tStr = '<span class="' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
                             }
                             else {
-                                MenuPart = pm.MakeListHtml('select', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                                tStr = '<span>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
                             }
+                            aPart += tStr;
                         }
-                        aPart += tStr;
-                        bPart += '</span>';
-                    }
-                    else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
-                        aPart += '<input value="' + tmpArr[i] + '" style="display:none"/>';
-                    }
-                    LineArr.push({
-                        class: tdClass,
-                        id: tdId,
-                        style: tdStyle,
-                        onclick: tdClick,
-                        innHtml: {
-                            aPart: aPart,
-                            MenuPart: MenuPart,
-                            bPart: bPart
-                        }
-                    });
-                }
-                for (let i = 0; i < ValueIdArr.length; i++) {
-                    let tmpSelectList = pm.FrontDynamicMenuRequest(tmpPageName, tFieldNameArr[i], ValueIdArr[i], false, KeyValueArr[i]);
-                    let domId = ValueIdArr[i];
-                    let tIdx = Number(domId.substring(domId.lastIndexOf('_') + 1));
-                    let tAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
-                    if (tmpSelectList != null && gPageObj.PageNameObj[tmpPageName].ModifiableArr[tIdx] && tmpModifuableArr[tIdx] && ShieldIdxArr.indexOf(tIdx) < 0 && LineArr[tIdx].innHtml.MenuPart != '') {
-                        let tNewMenu = '';
-                        if (ps.IsMultiSelect(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], false)) {
-                            tNewMenu = pm.MakeListHtml('Multi Select', tAttrStr, tmpSelectList, tmpArr[tIdx]);
+                        else if (tmpReadHtml.length > 0) {
+                            let tStr = '<span class=" ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + tmpArr[i] + '</span>';
+                            aPart += tStr;
                         }
                         else {
-                            tNewMenu = pm.MakeListHtml('select', tAttrStr, tmpSelectList, tmpArr[tIdx]);
+                            aPart += tmpArr[i];
                         }
-                        LineArr[tIdx].innHtml.MenuPart = tNewMenu;
+                        if (gPageObj.PageNameObj[tmpPageName].ModifiableArr[i] && tmpModifuableArr[i] && ShieldIdxArr.indexOf(i) < 0) {
+                            let tClassName = 'write';
+                            let tStr = '<span class="' + tClassName + '"' + (isWriteMode ? '' : ' style="display:none"') + '>';
+                            if (set.TableSetObj.DatePickerArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
+                                tStr += pm.MakeListHtml('Calendar', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                            }
+                            else if (op.FieldIsOnclick(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0])) {
+                                let tClickFun = op.GetOnclickHtml(tmpPageName, tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[0], tmpArr, 'up' + tmpArr[0]);
+                                tStr += '<input id="up' + tmpArr[0] + '" class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[i] + '" readonly><button class="btn" onclick="' + tClickFun + '">上傳</button>';
+                            }
+                            else if (set.TableSetObj.TextAreaArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
+                                tStr += '<textarea class="form-control" ' + tmpAttrStr + ' rows="' + (tmpArr[i].length < 20 ? 1 : (tmpArr[i].length < 35 ? 2 : 3)) + '">' + tmpArr[i] + '</textarea>';
+                            }
+                            else if (ps.NeedColorField(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i])) {
+                                tStr += '<input class="form-control" type="color"' + tmpAttrStr + ' value="' + tmpArr[i] + '">';
+                            }
+                            else if (tmpSelectList.length == 0) {
+                                tStr += '<input class="form-control" ' + tmpAttrStr + ' value="' + tmpArr[i] + '">';
+                            }
+                            else if (!ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
+                                tmpAttrStr += ' id="' + tdId + '_menu"';
+                                if (ps.IsMultiSelect(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false)) {
+                                    MenuPart = pm.MakeListHtml('Multi Select', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                                }
+                                else {
+                                    MenuPart = pm.MakeListHtml('select', tmpAttrStr, tmpSelectList, tmpArr[i]);
+                                }
+                            }
+                            aPart += tStr;
+                            bPart += '</span>';
+                        }
+                        else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
+                            aPart += '<input value="' + tmpArr[i] + '" style="display:none"/>';
+                        }
+                        LineArr.push({
+                            class: tdClass,
+                            id: tdId,
+                            style: tdStyle,
+                            onclick: tdClick,
+                            innHtml: {
+                                aPart: aPart,
+                                MenuPart: MenuPart,
+                                bPart: bPart
+                            }
+                        });
                     }
-                }
-                for (let i = 0; i < tmpArr.length; i++) {
-                    $('td', row).eq(i).attr('id', LineArr[i].id);
-                    $('td', row).eq(i).attr('class', LineArr[i].class);
-                    $('td', row).eq(i).attr('style', LineArr[i].style);
-                    $('td', row).eq(i).attr('onclick', LineArr[i].onclick);
-                    $('td', row).eq(i).html(LineArr[i].innHtml.aPart + LineArr[i].innHtml.MenuPart + LineArr[i].innHtml.bPart);
-                }
-                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
-                    $('td', row).eq(tmpArr.length).html('<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>');
-                }
-            };
-            TableObj.rowCallback = function (row, data) {
-                var _a;
-                if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
-                    for (let i = 0; $('td:eq(' + i + ')', row).html() != null; i++) {
-                        if ($('td:eq(' + i + ') select', row).html() != null) {
-                            $('td:eq(' + i + ') select', row).selectpicker('render'); //可搜尋下拉式初始化 
-                        }
-                        if ($('td:eq(' + i + ') .MoneyFormat', row).html() != null && (((_a = $('td:eq(' + i + ') .MoneyFormat', row).attr('class')) === null || _a === void 0 ? void 0 : _a.indexOf('read')) || -1) < 0) {
-                            $('td:eq(' + i + ') .MoneyFormat', row).css('display', 'block');
+                    for (let i = 0; i < ValueIdArr.length; i++) {
+                        let tmpSelectList = pm.FrontDynamicMenuRequest(tmpPageName, tFieldNameArr[i], ValueIdArr[i], false, KeyValueArr[i]);
+                        let domId = ValueIdArr[i];
+                        let tIdx = Number(domId.substring(domId.lastIndexOf('_') + 1));
+                        let tAttrStr = pm.MakeWidthAttributeStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], '', gPageObj.PageNameObj[tmpPageName].isWriteMode ? 'Write' : 'Read');
+                        if (tmpSelectList != null && gPageObj.PageNameObj[tmpPageName].ModifiableArr[tIdx] && tmpModifuableArr[tIdx] && ShieldIdxArr.indexOf(tIdx) < 0 && LineArr[tIdx].innHtml.MenuPart != '') {
+                            let tNewMenu = '';
+                            if (ps.IsMultiSelect(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[tIdx], false)) {
+                                tNewMenu = pm.MakeListHtml('Multi Select', tAttrStr, tmpSelectList, tmpArr[tIdx]);
+                            }
+                            else {
+                                tNewMenu = pm.MakeListHtml('select', tAttrStr, tmpSelectList, tmpArr[tIdx]);
+                            }
+                            LineArr[tIdx].innHtml.MenuPart = tNewMenu;
                         }
                     }
-                }
-            };
-            TableObj.drawCallback = function (settings) {
-                let api = this.api();
-                let CurrentPageData = api.rows({ page: 'current' }).data();
-                ps.FreezeField(tmpPageName);
-                ps.MergeTableValue(tmpPageName);
-            };
-            if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
-                headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
-                TableObj.headerCallback = function (thead, data, start, end, display) {
-                    $(thead).parent().html(headerHtml);
+                    for (let i = 0; i < tmpArr.length; i++) {
+                        $('td', row).eq(i).attr('id', LineArr[i].id);
+                        $('td', row).eq(i).attr('class', LineArr[i].class);
+                        $('td', row).eq(i).attr('style', LineArr[i].style);
+                        $('td', row).eq(i).attr('onclick', LineArr[i].onclick);
+                        $('td', row).eq(i).html(LineArr[i].innHtml.aPart + LineArr[i].innHtml.MenuPart + LineArr[i].innHtml.bPart);
+                    }
+                    if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                        $('td', row).eq(tmpArr.length).html('<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>');
+                    }
                 };
-            }
-            let t = $('#' + tmpPageName + 'Table').DataTable(TableObj);
-            //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
-            $('#addRow').unbind().on('click', function () {
-                tAddRowCount++;
-                let tmpArr = PageOperation.AddRowInitValueList(tmpPageName);
-                let tNode = {};
-                for (let i = 0; i < FieldArr.length; i++) {
-                    tNode[FieldArr[i]] = tmpArr[i];
+                TableObj.rowCallback = function (row, data) {
+                    var _a;
+                    if (gPageObj.PageNameObj[tmpPageName].isWriteMode) {
+                        for (let i = 0; $('td:eq(' + i + ')', row).html() != null; i++) {
+                            if ($('td:eq(' + i + ') select', row).html() != null) {
+                                $('td:eq(' + i + ') select', row).selectpicker('render'); //可搜尋下拉式初始化 
+                            }
+                            if ($('td:eq(' + i + ') .MoneyFormat', row).html() != null && (((_a = $('td:eq(' + i + ') .MoneyFormat', row).attr('class')) === null || _a === void 0 ? void 0 : _a.indexOf('read')) || -1) < 0) {
+                                $('td:eq(' + i + ') .MoneyFormat', row).css('display', 'block');
+                            }
+                        }
+                    }
+                };
+                TableObj.drawCallback = function (settings) {
+                    let api = this.api();
+                    let CurrentPageData = api.rows({ page: 'current' }).data();
+                    ps.FreezeField(tmpPageName);
+                    ps.MergeTableValue(tmpPageName);
+                };
+                if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
+                    headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
+                    TableObj.headerCallback = function (thead, data, start, end, display) {
+                        $(thead).parent().html(headerHtml);
+                    };
                 }
-                if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
-                    tNode['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
-                }
-                tAddRowObj[tAddRowCount] = tNode;
-                t.page(0).draw('page');
-                ps.FreezeField(tmpPageName);
-            });
-            $('#' + TableIdName + ' tbody').unbind().on('click', 'tr td .DeleteFun', function () {
-                $(this).parent().parent('tr').css('display', 'none');
-                if ($(this).parent().parent('tr').find('td').eq(0).html() == '') {
-                    tAddRowCount--;
-                }
+                let t = $('#' + tmpPageName + 'Table').DataTable(TableObj);
+                //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
+                $('#addRow').unbind().on('click', function () {
+                    tAddRowCount++;
+                    let tmpArr = PageOperation.AddRowInitValueList(tmpPageName);
+                    let tNode = {};
+                    for (let i = 0; i < FieldArr.length; i++) {
+                        tNode[FieldArr[i]] = tmpArr[i];
+                    }
+                    if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
+                        tNode['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
+                    }
+                    tAddRowObj[tAddRowCount] = tNode;
+                    t.page(0).draw('page');
+                    ps.FreezeField(tmpPageName);
+                });
+                $('#' + TableIdName + ' tbody').unbind().on('click', 'tr td .DeleteFun', function () {
+                    $(this).parent().parent('tr').css('display', 'none');
+                    if ($(this).parent().parent('tr').find('td').eq(0).html() == '') {
+                        tAddRowCount--;
+                    }
+                });
             });
         }
         else {
