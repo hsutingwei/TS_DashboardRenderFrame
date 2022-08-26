@@ -515,16 +515,32 @@ export class PageSet {
      */
     DefineSearPageInf(tPageName) {
         let PageNumber = -1;
-        let NumberPerAPage = 10;
+        let NumberPerAPage = this.DefineMenuLength(tPageName)[0];
         if (tPageName == 'TEST_OUT_GOODS_LIST' || tPageName == 'TEST_IN_GOODS_LIST' || tPageName == 'TEST_RECEIVE_LIST'
             || tPageName == 'TEST_LOTSIZE_LIST' || tPageName == 'DS_IN_GOODS_LIST' || tPageName == 'DS_OUT_GOODS_LIST'
             || tPageName == 'Prober_Handler_CPLCD_LIST' || tPageName == 'INK_Activation_LIST' || tPageName == 'AOI_Activation_LIST'
             || tPageName == 'Prober_Handler_FT_LIST' || tPageName == 'Tester_Activation_LIST' || tPageName == 'Prober_Handler_LBI_LIST'
             || tPageName == 'Prober_Handler_DS_LIST') {
             PageNumber = 1;
-            NumberPerAPage = 10;
         }
         return [PageNumber, NumberPerAPage];
+    }
+    /**定義DataTable的Menu Length
+ * @param {string} tPageName 頁面名稱
+ */
+    DefineMenuLength(tPageName) {
+        let DefaultMenuLength = [10, 30, 50];
+        switch (tPageName) {
+            case 'CPCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            case 'FTCAP':
+                DefaultMenuLength = [30, 50, 70];
+                break;
+            default:
+                break;
+        }
+        return DefaultMenuLength;
     }
     /**初始化可否修改陣列
      * @param {string} tPageName 頁面名稱
@@ -2456,14 +2472,11 @@ export class PageSet {
         var tmpArr = new Array();
         var LeftCount = 0;
         var ShieldIdx = this.NeedShieldField(tPageName);
-        if (tPageName == 'APMaintain' || tPageName == 'FCSTMaintain') {
-            LeftCount = 8;
-        }
-        else if (tPageName == 'CPRUNCARDCOST') {
+        if (tPageName == 'CPCAP' &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
             LeftCount = 10;
         }
-        else if (tPageName == 'FCSTMaintain') {
-            LeftCount = 11;
+        else if (tPageName == 'FTCAP' &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
+            LeftCount = 10;
         }
         if (LeftCount > 0) {
             var tableDom = $('#' + tPageName + 'Table tbody tr');
@@ -2481,13 +2494,17 @@ export class PageSet {
                     tableDom.eq(i).find('td').eq(j).css('left', widthCss);
                     tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
                     tableDom.eq(i).find('td').eq(j).css('z-index', '1');
-                    tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                        tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    }
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
                     if (i &lt; 1 &amp;&amp; titleDom.eq(i).find('th').eq(j).html() != null) {
                         titleDom.eq(i).find('th').eq(j).css('left', widthCss);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
-                        titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
+                        if (titleDom.eq(i).find('th').eq(j).css('background-color') == '' || titleDom.eq(i).find('th').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                            titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
+                        }
                     }
                     var tmpWidth = parseInt(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
                     var tmpPadding = parseInt(tableDom.eq(i).find('td').eq(j).css('padding').replace('px', ''));
@@ -3200,88 +3217,70 @@ export class ColorRuleClass {
                 }
             }
         }
-        else if (tPageName == 'CPCAP') {
-            if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
-                //ColorRuleArr = {};//設定初始化清空
-                let tcNode = {
-                    '9': {
-                        1: {
-                            "[9]&lt;0": {
-                                Color: 'red',
-                                BackgroundColor: '',
-                                Others: {
-                                    'Score': 1
-                                }
-                            },
-                        }
-                    },
-                    '-1': {
-                        0: {
-                            "[4]==''": {
-                                Color: 'white',
-                                BackgroundColor: 'red',
-                                Others: {
-                                    Score: 1
-                                }
+        else if (tPageName == 'NSBPL' || tPageName == 'NSBMID') {
+            //ColorRuleArr = {};//設定初始化清空
+            let tcNode = {
+                '6': {
+                    1: {
+                        "[6]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
                             }
-                        }
+                        },
+                        "[6]&lt;90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
                     }
-                };
-                for (let CellOrRowIdx in tcNode) {
-                    if (!ColorRuleArr[tPageName]) {
-                        ColorRuleArr[tPageName] = tcNode;
+                },
+                '7': {
+                    1: {
+                        "[7]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[7]&lt;90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
                     }
-                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
-                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
+                },
+                '8': {
+                    1: {
+                        "[8]>120": {
+                            Color: 'blue',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
+                        "[8]&lt;90": {
+                            Color: 'red',
+                            BackgroundColor: '',
+                            Others: {
+                                'Score': 1
+                            }
+                        },
                     }
+                },
+            };
+            for (let CellOrRowIdx in tcNode) {
+                if (!ColorRuleArr[tPageName]) {
+                    ColorRuleArr[tPageName] = tcNode;
                 }
-            }
-            else if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Prober' || gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Tester') {
-                //ColorRuleArr = {};//設定初始化清空
-                let tcNode = {
-                    '-1': {
-                        0: {
-                            "[9]&lt;0": {
-                                Color: 'white',
-                                BackgroundColor: 'red',
-                                Others: {
-                                    Score: 1
-                                }
-                            }
-                        }
-                    }
-                };
-                for (let CellOrRowIdx in tcNode) {
-                    if (!ColorRuleArr[tPageName]) {
-                        ColorRuleArr[tPageName] = tcNode;
-                    }
-                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
-                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
-                    }
-                }
-            }
-            else if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'ProbeCard' || gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == 'Testboard') {
-                //ColorRuleArr = {};//設定初始化清空
-                let tcNode = {
-                    '-1': {
-                        0: {
-                            "[10]&lt;0": {
-                                Color: 'white',
-                                BackgroundColor: 'red',
-                                Others: {
-                                    Score: 1
-                                }
-                            }
-                        }
-                    }
-                };
-                for (let CellOrRowIdx in tcNode) {
-                    if (!ColorRuleArr[tPageName]) {
-                        ColorRuleArr[tPageName] = tcNode;
-                    }
-                    else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
-                        ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
-                    }
+                else if (!ColorRuleArr[tPageName][CellOrRowIdx]) {
+                    ColorRuleArr[tPageName][CellOrRowIdx] = tcNode[CellOrRowIdx];
                 }
             }
         }
@@ -3420,6 +3419,7 @@ export class ColorRuleClass {
             if (typeof data[i] == 'string') {
                 tData[i] = data[i].split(',');
             }
+            else if (typeof data[i] == 'object' &amp;&amp; toType(data[i]) == 'array') { } //do nothing
             else if (typeof data[i] == 'object') {
                 tData[i] = gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             }
@@ -3457,11 +3457,11 @@ export class ColorRuleClass {
                                     tIdx = RowTitle.indexOf(tStr);
                                 }
                                 while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                    if (tData[tIdx][m] == '-') {
                                         HaveDash = true;
                                         break;
                                     }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                    tmRule = tmRule.replace(tIdxArr[k], isNaN(Number(tData[tIdx][m])) || tData[tIdx][m] == '' ? '\'' + tData[tIdx][m] + '\'' : tData[tIdx][m]);
                                 }
                                 if (HaveDash) {
                                     break;
@@ -3514,11 +3514,11 @@ export class ColorRuleClass {
                                     tIdx = RowTitle.indexOf(tStr);
                                 }
                                 while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
+                                    if (tData[tIdx][m] == '-') {
                                         HaveDash = true;
                                         break;
                                     }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
+                                    tmRule = tmRule.replace(tIdxArr[k], isNaN(Number(tData[tIdx][m])) || tData[tIdx][m] == '' ? '\'' + tData[tIdx][m] + '\'' : tData[tIdx][m]);
                                 }
                                 if (HaveDash) {
                                     break;
@@ -3550,55 +3550,9 @@ export class ColorRuleClass {
                     }
                 }
             }
-            /**縱坐標-1判定(-1表全部的綜座標) */
-            if (ColorRuleArr[tPageName] &amp;&amp; ColorRuleArr[tPageName][-1] &amp;&amp; ColorRuleArr[tPageName][-1][0]) {
-                for (let tRule in ColorRuleArr[tPageName][-1][0]) {
-                    let tIdxArr = tRule.match(regexp) || [];
-                    for (let m = 0; m &lt; tLineData.length; m++) {
-                        let isConform = this.isConformRule(tPageName, ColorRuleArr[tPageName][-1][0][tRule].Others, m, RowTitle[-1]);
-                        if (isConform) {
-                            let tValue = tLineData[m].replace('%', '');
-                            let tmRule = tRule;
-                            let HaveDash = false;
-                            for (let k = 0; k &lt; tIdxArr.length; k++) {
-                                let tStr = tIdxArr[k].replace('[', '').replace(']', '');
-                                let tIdx = -1;
-                                if (!isNaN(Number(tStr))) {
-                                    tIdx = Number(tStr);
-                                }
-                                else {
-                                    tIdx = RowTitle.indexOf(tStr);
-                                }
-                                while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[tIdx][m] == '-' || tData[tIdx][m] == '') {
-                                        HaveDash = true;
-                                        break;
-                                    }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[tIdx][m]);
-                                }
-                                if (HaveDash) {
-                                    break;
-                                }
-                            }
-                            if (HaveDash) {
-                                continue;
-                            }
-                            if (eval(tmRule)) {
-                                let tNode = {
-                                    Color: ColorRuleArr[tPageName][-1][0][tRule].Color,
-                                    BackgroundColor: ColorRuleArr[tPageName][-1][0][tRule].BackgroundColor,
-                                    Score: ColorRuleArr[tPageName][-1][0][tRule].Others.Score
-                                };
-                                for (let j = 0; j &lt; gPageObj.PageNameObj[tPageName].TitleStrArr.length; j++) {
-                                    if (!this.HighlightObj[i][j] || tNode.Score > this.HighlightObj[i][j].Score) {
-                                        this.HighlightObj[i][j] = tNode;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            /**縱坐標-1判定(-1表全部的綜座標)
+             * 20220826: 已取消，因此功能邏輯與橫坐標-1相同
+             */
             /**橫坐標判定 */
             for (let CellIdx in ColorRuleArr[tPageName]) {
                 //索引為欄位名稱的狀況
@@ -3624,11 +3578,11 @@ export class ColorRuleClass {
                                     tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(tStr);
                                 }
                                 while (tmRule.indexOf(tIdxArr[k]) > -1) {
-                                    if (tData[i][tIdx] == '-' || tData[i][tIdx] == '') {
+                                    if (tData[i][tIdx] == '-') {
                                         HaveDash = true;
                                         break;
                                     }
-                                    tmRule = tmRule.replace(tIdxArr[k], tData[i][tIdx]);
+                                    tmRule = tmRule.replace(tIdxArr[k], isNaN(Number(tData[i][tIdx])) || tData[i][tIdx] == '' ? '\'' + tData[i][tIdx] + '\'' : tData[i][tIdx]);
                                 }
                                 if (HaveDash) {
                                     break;
@@ -3645,7 +3599,11 @@ export class ColorRuleClass {
                                 };
                                 if (Number(CellIdx) == -1) {
                                     for (let j = 0; j &lt; gPageObj.PageNameObj[tPageName].TitleStrArr.length; j++) {
-                                        if (!this.HighlightObj[i][j] || tNode.Score > this.HighlightObj[i][j].Score) {
+                                        if (!this.HighlightObj[i]) {
+                                            let tpNode = { [j]: tNode };
+                                            this.HighlightObj[i] = tpNode;
+                                        }
+                                        else if (!this.HighlightObj[i][j] || tNode.Score > this.HighlightObj[i][j].Score) {
                                             this.HighlightObj[i][j] = tNode;
                                         }
                                     }
@@ -4372,7 +4330,7 @@ window.DynamicFunction = DynamicFunction;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Aug 19 2022 11:25:04 GMT+0800 (台北標準時間)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Aug 26 2022 10:55:04 GMT+0800 (台北標準時間)
 </footer>
 
 <script> prettyPrint(); </script>
