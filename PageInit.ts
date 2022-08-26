@@ -2804,16 +2804,21 @@ export class PageTool {
      * @param {string[]} ExceptforIdArr 搜尋Bar物件ID
      * @param {string} tPageName 頁面名稱
      */
-    public ReloadSelectOption(ExceptforIdArr: string[], tPageName?: string) {
+     public ReloadSelectOption(ExceptforIdArr: string[], tPageName?: string) {
         if (gPageObj.PageNameArr.length <= 0) { return; }
         let tmpPageName: string = '';
         tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         let ps = new set.PageSet();
         let pm = new PageMake();
+        let dc = new set.DynamicClass();
         let tmpObj = ps.InitSearchObj(tmpPageName);
         let DefaultValue = tmpObj.DefaultValue;//各欄位的預設值
         let DefaultKey = tmpObj.DefaultKey;
         let tmpFieldArr = gPageObj.PageNameObj[tmpPageName].FieldArr;
+        let KeyValueArr: string[] = [];
+        let ValueIdArr: any[] = [];
+        let tFieldNameArr: string[] = [];
+        let tmpFieldName = 'field_';
         for (let i = 0; document.getElementById('field_' + i); i++) {
             if (ExceptforIdArr.indexOf('field_' + i) < 0 && document.getElementById('field_' + i)!.innerHTML.indexOf('<option') > -1) {
                 let DefaultIdx = DefaultKey.indexOf(tmpFieldArr[i]);
@@ -2824,6 +2829,28 @@ export class PageTool {
                     if (tmpSelectList != null && tmpSelectList.length > 0) {
                         document.getElementById('field_' + i)!.innerHTML = pm.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
                     }
+
+                    if (Object.keys(dc.DynamicInfObj[tmpPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tmpPageName].FieldArr[i]] || []).length > 0) {
+                        let tDCHtml = '';
+                        tDCHtml += dc.ReturnFunctionStr(tmpPageName, gPageObj.PageNameObj[tmpPageName].FieldArr[i], true);
+                        for (let key in dc.DynamicInfObj[tmpPageName].InfluenceToFieldNames?.[gPageObj.PageNameObj[tmpPageName].FieldArr[i]]) {
+                            KeyValueArr.push(DefaultValue[DefaultIdx]);
+                            ValueIdArr.push(key);
+                            tFieldNameArr.push(gPageObj.PageNameObj[tmpPageName].FieldArr[i]);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < ValueIdArr.length; i++) {
+            let tNum = ValueIdArr[i].replace(tmpFieldName, '');
+            let DefaultIdx = DefaultKey.indexOf(gPageObj.PageNameObj[tmpPageName].FieldArr[tNum]);
+            if (DefaultIdx > -1) {
+                let tmpSelectList = pm.FrontDynamicMenuRequest(tmpPageName, tFieldNameArr[i], ValueIdArr[i], true, KeyValueArr[i]);
+                let domId = ValueIdArr[i];
+                if (tmpSelectList != null) {
+                    document.getElementById(domId)!.innerHTML = pm.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
                 }
             }
         }

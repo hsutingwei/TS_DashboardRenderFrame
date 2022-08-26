@@ -4058,8 +4058,10 @@ export class DynamicFunction {
                             }
                         }
 
+                        let ps = new PageSet();
                         let po = new PageOperation();
                         let df = new DynamicFunction();
+                        ps.ResetMenuDocumentInnerHtml(tPageName);
                         df.FrontDynamicInBackCall(tPageName);
 
                         po.InitListArr(tPageName);
