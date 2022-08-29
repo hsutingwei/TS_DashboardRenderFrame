@@ -865,6 +865,7 @@ class SearchOperation implements Search, ClickSearch {
                 TableObj.drawCallback = function (settings: any) {
                     let api = this.api();
                     let CurrentPageData = api.rows({ page: 'current' }).data();
+                    ps.AlignedHeader(tmpPageName);
                     ps.FreezeField(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
                 }

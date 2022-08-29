@@ -2485,6 +2485,22 @@ export class PageSet {
             }
         }
     }
+    /**Datatable.js 對齊Header和body */
+    AlignedHeader(tPageName) {
+        var tableDom = $('#' + tPageName + 'Table tbody tr');
+        var titleDom = $('#' + tPageName + 'Table_wrapper thead tr');
+        if ((tPageName == 'CPCAP' || tPageName == 'FTCAP') && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        }
+        else {
+            for (let i = 0; titleDom.eq(i).html() != null && tableDom.eq(0).html() != null; i++) {
+                for (let j = 0; titleDom.eq(i).find('th').eq(j).html() != null; j++) {
+                    let tdw = tableDom.eq(i).find('td').eq(j).width() || 0;
+                    titleDom.eq(i).find('th').eq(j).width(tdw);
+                }
+            }
+        }
+    }
     /**將PageName對應的Table做合併儲存格，於此定義各PageName的合併儲存格範圍
      * @param {string} tPageName 頁面名稱
      */
