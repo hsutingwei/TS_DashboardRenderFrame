@@ -559,18 +559,24 @@ class SearchOperation {
                 let tAddRowObj = {}; //新增的obj暫存。key是計數，value是對應的欄位內容
                 let ColumnObj = new Array();
                 let TableIdName = tmpPageName + 'Table';
-                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%;"';
-                let tmpTitle = new Array();
+                let AttributeStr = 'id="' + TableIdName + '" class="row-border table-striped whitespace-nowrap" style="width:100%;"';
+                let tmpTitle = ps.MakeTableTitle(FirstData.length > 0 ? FirstData[0].split(',') : [], tmpPageName);
                 let pm = new PageMake();
                 let FieldArr = gPageObj.PageNameObj[tmpPageName].TitleStrArr;
-                let tmpFieldArr = JSON.parse(JSON.stringify(FieldArr));
+                let tmpFieldArr = [];
+                for (let i = 0; tmpTitle.length > 0 && i < tmpTitle[0].length; i++) {
+                    let tmpStr = '';
+                    for (let j = 0; j < tmpTitle.length; j++) {
+                        tmpStr += tmpTitle[j][i];
+                    }
+                    tmpFieldArr.push(tmpStr);
+                }
                 if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
                     tmpFieldArr.push('功能');
                 }
                 for (let i = 0; i < tmpFieldArr.length; i++) {
                     ColumnObj.push({ data: tmpFieldArr[i], title: tmpFieldArr[i] });
                 }
-                tmpTitle = ps.MakeTableTitle(tmpFieldArr, tmpPageName);
                 let ttt = '<table ' + AttributeStr + '></table>';
                 let tDom = document.getElementById('TableArea');
                 if (tDom != null) {
@@ -626,7 +632,7 @@ class SearchOperation {
                             gPageObj.PageNameObj[tmpPageName].FullData.push(tmpArr);
                             let tObj = {};
                             for (let j = 0; j < tmpArr.length; j++) {
-                                tObj[FieldArr[j]] = tmpArr[j];
+                                tObj[tmpFieldArr[j]] = tmpArr[j];
                             }
                             if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
                                 tObj['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
@@ -655,8 +661,8 @@ class SearchOperation {
                     let ValueIdArr = [];
                     let tFieldNameArr = [];
                     let isWriteMode = gPageObj.PageNameObj[tmpPageName].isWriteMode;
-                    for (let i = 0; i < FieldArr.length; i++) {
-                        tmpArr.push(data[FieldArr[i]]);
+                    for (let i = 0; i < tmpFieldArr.length; i++) {
+                        tmpArr.push(data[tmpFieldArr[i]]);
                     }
                     if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
                         tmpArr.push(data['功能']);
@@ -817,7 +823,7 @@ class SearchOperation {
                 TableObj.drawCallback = function (settings) {
                     let api = this.api();
                     let CurrentPageData = api.rows({ page: 'current' }).data();
-                    ps.AlignedHeader(tmpPageName);
+                    //ps.AlignedHeader(tmpPageName);
                     ps.FreezeField(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
                 };
@@ -833,8 +839,8 @@ class SearchOperation {
                     tAddRowCount++;
                     let tmpArr = PageOperation.AddRowInitValueList(tmpPageName);
                     let tNode = {};
-                    for (let i = 0; i < FieldArr.length; i++) {
-                        tNode[FieldArr[i]] = tmpArr[i];
+                    for (let i = 0; i < tmpFieldArr.length; i++) {
+                        tNode[tmpFieldArr[i]] = tmpArr[i];
                     }
                     if (set.PageSetObj.noDeletePage.indexOf(tmpPageName) < 0) {
                         tNode['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tmpPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
