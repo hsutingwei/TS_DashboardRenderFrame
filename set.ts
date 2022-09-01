@@ -3300,6 +3300,9 @@ export class DynamicClass {
                     return true;
                 }
             }
+            else if (this.DynamicInfObj[tPageName]?.InfluenceToFieldNames?.[tFiledName] && this.DynamicInfObj[tPageName]?.InfluenceToFieldNames?.[tFiledName][''] != null) {
+                return false
+            }
         }
         if (this.DynamicInfObj[tPageName]?.InfluenceToFieldNames?.[tFiledName]) {
             return true;

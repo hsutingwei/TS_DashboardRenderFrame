@@ -554,7 +554,7 @@ class SearchOperation {
                 if (Query.PageNumber == 1 && FirstData.length > 0) {
                     FirstData[0] = FirstData[0].split(';')[1];
                 }
-                gPageObj.PageNameObj[tmpPageName].SetTableTitle(FirstData[0].split(','));
+                gPageObj.PageNameObj[tmpPageName].SetTableTitle(FirstData.length > 0 ? FirstData[0].split(',') : []);
                 let tAddRowCount = 0; //增加幾個row計數
                 let tAddRowObj = {}; //新增的obj暫存。key是計數，value是對應的欄位內容
                 let ColumnObj = new Array();

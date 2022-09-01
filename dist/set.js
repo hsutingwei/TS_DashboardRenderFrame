@@ -3066,15 +3066,18 @@ export class DynamicClass {
         };
     }
     NeedDynamicGetList(tPageName, tFiledName, isSearchArea) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e, _f, _g;
         if (isSearchArea != null) {
             if (isSearchArea) { //搜尋Bar
                 if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceByThisFieldName) == tFiledName) {
                     return true;
                 }
             }
+            else if (((_c = (_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames) === null || _c === void 0 ? void 0 : _c[tFiledName]) && ((_e = (_d = this.DynamicInfObj[tPageName]) === null || _d === void 0 ? void 0 : _d.InfluenceToFieldNames) === null || _e === void 0 ? void 0 : _e[tFiledName]['']) != null) {
+                return false;
+            }
         }
-        if ((_c = (_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames) === null || _c === void 0 ? void 0 : _c[tFiledName]) {
+        if ((_g = (_f = this.DynamicInfObj[tPageName]) === null || _f === void 0 ? void 0 : _f.InfluenceToFieldNames) === null || _g === void 0 ? void 0 : _g[tFiledName]) {
             return true;
         }
         return false;
