@@ -2550,7 +2550,7 @@ export class PageSet {
                             k = j + 1;
                             continue;
                         }
-                        if (!isNaN(Number(tStr)) || tStr == '-' || tStr.indexOf('</') > -1) { //數字欄位以及不是純值(有編輯/檢視、百萬表示等)不檢查
+                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' || tStr.indexOf('</') > -1) {
                             k = j + 1;
                             continue;
                         }
@@ -2572,7 +2572,9 @@ export class PageSet {
                 else {
                     if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
                         if (rcount == 0) { //直檢查
-                            for (let m = i + 1; t.eq(m).html() != null && tmpNowStr == t.eq(m).find('td').eq(j).html() && (j == 0 || m <= RowCountArr[j - 1]); m++, rcount++) {
+                            let tLastRowIndex = 0; //前一個縱座標
+                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0 && MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1; tLastRowIndex--) { }
+                            for (let m = i + 1; t.eq(m).html() != null && tmpNowStr == t.eq(m).find('td').eq(j).html() && (j == 0 || m <= RowCountArr[tLastRowIndex]); m++, rcount++) {
                                 t.eq(m).find('td').eq(j).css('display', 'none');
                             }
                         }
