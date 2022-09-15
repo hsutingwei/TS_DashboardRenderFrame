@@ -387,8 +387,8 @@ class SearchOperation implements Search, ClickSearch {
                         'excel'
                     ]
                 }
-                let t2 = $('#' + TableIdName).DataTable(TableObj);
-                $.fn.dataTable.ext.search.push(
+                let t2: any = $('#' + TableIdName).DataTable(TableObj);
+                t2.search.push(
                     function (settings: any, LineData: string[], tIndex: number): boolean {
                         let SearchText: string = $('.dataTables_filter').find('input').val()!.toString().toLowerCase();
                         if (SearchText == '') { return true; }
@@ -953,7 +953,7 @@ class SearchOperation implements Search, ClickSearch {
                 let t2: any = $('#' + HiddenTableIdName);
                 if (set.PageSetObj.noDataTable.indexOf(tmpPageName) < 0 && document.getElementById(TableIdName)) {
                     t = t.DataTable(TableObj);
-                    $.fn.dataTable.ext.search.push(
+                    t.search.push(
                         function (settings: any, LineData: string[], tIndex: number): boolean {
                             let SearchText: string = $('.dataTables_filter').find('input').val()!.toString().toLowerCase();
                             if (SearchText == '') { return true; }

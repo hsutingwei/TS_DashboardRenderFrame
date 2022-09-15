@@ -375,7 +375,7 @@ class SearchOperation {
                     ]
                 };
                 let t2 = $('#' + TableIdName).DataTable(TableObj);
-                $.fn.dataTable.ext.search.push(function (settings, LineData, tIndex) {
+                t2.search.push(function (settings, LineData, tIndex) {
                     let SearchText = $('.dataTables_filter').find('input').val().toString().toLowerCase();
                     if (SearchText == '') {
                         return true;
@@ -910,7 +910,7 @@ class SearchOperation {
                 let t2 = $('#' + HiddenTableIdName);
                 if (set.PageSetObj.noDataTable.indexOf(tmpPageName) < 0 && document.getElementById(TableIdName)) {
                     t = t.DataTable(TableObj);
-                    $.fn.dataTable.ext.search.push(function (settings, LineData, tIndex) {
+                    t.search.push(function (settings, LineData, tIndex) {
                         let SearchText = $('.dataTables_filter').find('input').val().toString().toLowerCase();
                         if (SearchText == '') {
                             return true;
