@@ -387,21 +387,22 @@ class SearchOperation implements Search, ClickSearch {
                         'excel'
                     ]
                 }
-                let t2: any = $('#' + TableIdName).DataTable(TableObj);
-                t2.search.push(
+                let t2 = $('#' + TableIdName).DataTable(TableObj);
+                $.fn.dataTable.ext.search.push(
                     function (settings: any, LineData: string[], tIndex: number): boolean {
+                        let tFPageName: string = settings.sTableId.replace('Table', '');
                         let SearchText: string = $('.dataTables_filter').find('input').val()!.toString().toLowerCase();
                         if (SearchText == '') { return true; }
                         else {
-                            for (let i = 0; i < gPageObj.PageNameObj[tPageName].FullData[tIndex].length; i++) {
-                                let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[i], false);
-                                if (set.PageSetObj.NoChangePage.indexOf(tPageName) < 0 && tmpSelectList.length > 0) {
-                                    let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tPageName].FullData[tIndex][i]);
+                            for (let i = 0; i < gPageObj.PageNameObj[tFPageName].FullData[tIndex].length; i++) {
+                                let tmpSelectList = ps.GetListArr(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false);
+                                if (set.PageSetObj.NoChangePage.indexOf(tFPageName) < 0 && tmpSelectList.length > 0) {
+                                    let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
                                     if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
                                         return true;
                                     }
                                 }
-                                else if (gPageObj.PageNameObj[tPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
+                                else if (gPageObj.PageNameObj[tFPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
                                     return true;
                                 }
                             }
@@ -953,20 +954,21 @@ class SearchOperation implements Search, ClickSearch {
                 let t2: any = $('#' + HiddenTableIdName);
                 if (set.PageSetObj.noDataTable.indexOf(tmpPageName) < 0 && document.getElementById(TableIdName)) {
                     t = t.DataTable(TableObj);
-                    t.search.push(
+                    $.fn.dataTable.ext.search.push(
                         function (settings: any, LineData: string[], tIndex: number): boolean {
+                            let tFPageName: string = settings.sTableId.replace('Table', '');
                             let SearchText: string = $('.dataTables_filter').find('input').val()!.toString().toLowerCase();
                             if (SearchText == '') { return true; }
                             else {
-                                for (let i = 0; i < gPageObj.PageNameObj[tmpPageName].FullData[tIndex].length; i++) {
-                                    let tmpSelectList = ps.GetListArr(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false);
-                                    if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) < 0 && tmpSelectList.length > 0) {
-                                        let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tmpPageName].FullData[tIndex][i]);
+                                for (let i = 0; i < gPageObj.PageNameObj[tFPageName].FullData[tIndex].length; i++) {
+                                    let tmpSelectList = ps.GetListArr(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false);
+                                    if (set.PageSetObj.NoChangePage.indexOf(tFPageName) < 0 && tmpSelectList.length > 0) {
+                                        let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
                                         if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
                                             return true;
                                         }
                                     }
-                                    else if (gPageObj.PageNameObj[tmpPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
+                                    else if (gPageObj.PageNameObj[tFPageName].FullData[tIndex][i].toLowerCase().indexOf(SearchText) > -1) {
                                         return true;
                                     }
                                 }
