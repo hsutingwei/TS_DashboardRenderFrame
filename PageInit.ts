@@ -179,7 +179,7 @@ export class PageInf extends FormInf {
     BlockId: string = '';
     /**此Form所含的子div id(區塊搜尋才會用到) */
     SubBlockId: string[] = [];
-    /**紀錄此頁面的Ajax請求的狀態(目前只實作於區塊搜尋) */
+    /**紀錄此頁面的Ajax請求的狀態 */
     AjaxStatus: any;
 
     /**初始化頁面屬性
@@ -312,6 +312,11 @@ class SearchOperation implements Search, ClickSearch {
                 lengthMenu: [[10, 30, 50], [10, 30, 50]],
                 //bLengthChange: false,
                 ajax: function (data: any, callback: any, settings: any) {
+                    if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
+                        gPageObj.PageNameObj[tPageName].AjaxStatus.abort();
+                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
+                    }
+
                     Query.PageNumber = (data.start / data.length) + 1;//當前頁碼
                     //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
                     /*param.start = data.start;//開始的記錄序號
@@ -320,7 +325,7 @@ class SearchOperation implements Search, ClickSearch {
                     Query.NumberPerAPage = data.length;//頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    doAjax('Search', true, Query, function (result: string[]) {
+                    gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (result: string[]) {
                         let returnData: any = {};
                         if (Query.PageNumber == 1 && result.length > 0) {
                             let tArr = result[0].split(';');
@@ -348,6 +353,7 @@ class SearchOperation implements Search, ClickSearch {
                         //$('.selectpicker').selectpicker();
                         callback(returnData);
 
+                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
                         if (document.getElementById('RowDataArea')!.style.display != 'block') {
                             ButtonClickSimulation('#RowDataAreaBtn');
                         }
@@ -616,6 +622,11 @@ class SearchOperation implements Search, ClickSearch {
                 TableObj.serverSide = true;
                 TableObj.orderMulti = false;
                 TableObj.ajax = function (data: any, callback: any, settings: any) {
+                    if (gPageObj.PageNameObj[tmpPageName].AjaxStatus != null) {
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus.abort();
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
+                    }
+
                     //封裝請求參數
                     let param = {
                         limit: 1,
@@ -630,7 +641,7 @@ class SearchOperation implements Search, ClickSearch {
                     Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    doAjax('Search', true, Query, function (result: string[]) {
+                    gPageObj.PageNameObj[tmpPageName] = doAjax2('Search', true, Query, function (result: string[]) {
                         type tDataInf = {
                             draw: any,
                             recordsTotal: number,
@@ -675,6 +686,7 @@ class SearchOperation implements Search, ClickSearch {
                         $('.selectpicker').selectpicker();
                         callback(returnData);
                         //sbtn.button('reset');
+                        gPageObj.PageNameObj[tmpPageName] = null;
                         SetButtonDisable('SearchBtn', false, '搜尋');
                     });
                 };

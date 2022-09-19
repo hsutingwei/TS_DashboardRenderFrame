@@ -303,6 +303,10 @@ class SearchOperation {
                 lengthMenu: [[10, 30, 50], [10, 30, 50]],
                 //bLengthChange: false,
                 ajax: function (data, callback, settings) {
+                    if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
+                        gPageObj.PageNameObj[tPageName].AjaxStatus.abort();
+                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
+                    }
                     Query.PageNumber = (data.start / data.length) + 1; //當前頁碼
                     //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
                     /*param.start = data.start;//開始的記錄序號
@@ -311,7 +315,7 @@ class SearchOperation {
                     Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    doAjax('Search', true, Query, function (result) {
+                    gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (result) {
                         let returnData = {};
                         if (Query.PageNumber == 1 && result.length > 0) {
                             let tArr = result[0].split(';');
@@ -336,6 +340,7 @@ class SearchOperation {
                         returnData.data = tmpObj;
                         //$('.selectpicker').selectpicker();
                         callback(returnData);
+                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
                         if (document.getElementById('RowDataArea').style.display != 'block') {
                             ButtonClickSimulation('#RowDataAreaBtn');
                         }
@@ -592,6 +597,10 @@ class SearchOperation {
                 TableObj.serverSide = true;
                 TableObj.orderMulti = false;
                 TableObj.ajax = function (data, callback, settings) {
+                    if (gPageObj.PageNameObj[tmpPageName].AjaxStatus != null) {
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus.abort();
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
+                    }
                     //封裝請求參數
                     let param = {
                         limit: 1,
@@ -606,7 +615,7 @@ class SearchOperation {
                     Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    doAjax('Search', true, Query, function (result) {
+                    gPageObj.PageNameObj[tmpPageName] = doAjax2('Search', true, Query, function (result) {
                         if (Query.PageNumber == 1 && result.length > 0) {
                             let tArr = result[0].split(';');
                             AllResultCount = parseInt(tArr[0]);
@@ -645,6 +654,7 @@ class SearchOperation {
                         $('.selectpicker').selectpicker();
                         callback(returnData);
                         //sbtn.button('reset');
+                        gPageObj.PageNameObj[tmpPageName] = null;
                         SetButtonDisable('SearchBtn', false, '搜尋');
                     });
                 };
