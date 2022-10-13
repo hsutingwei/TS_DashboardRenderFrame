@@ -2462,12 +2462,27 @@ export class PageSet {
                     else if (ShieldIdx.indexOf(j) > -1) {
                         continue;
                     }
+                    var tmpWidth = Number(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
+                    var tmpPadding = Number(tableDom.eq(i).find('td').eq(j).css('padding-left').replace('px', ''));
+                    //若前一個含有直行的合併儲存格需額外再加上寬度
+                    if (j == 1 && tableDom.eq(i).find('td').eq(0).css('display') == 'none') {
+                        for (let m = j - 1; m >= 0 && tableDom.eq(i).find('td').eq(m).css('display') == 'none'; m--) {
+                            let k = 0;
+                            for (k = i - 1; k >= 0 && tableDom.eq(k).find('td').eq(m).css('display') == 'none'; k--) { }
+                            if (k >= 0 && k != i && tableDom.eq(k).find('td').eq(m).attr('rowspan') != null && Number(tableDom.eq(k).find('td').eq(m).attr('rowspan')) >= i - k + 1) {
+                                let tmpWidth2 = Number(tableDom.eq(k).find('td').eq(m).css('width').replace('px', ''));
+                                LeftWidth += tmpWidth2 + tmpPadding * 2;
+                            }
+                        }
+                    }
                     var widthCss = LeftWidth.toString() + 'px';
-                    tableDom.eq(i).find('td').eq(j).css('left', widthCss);
-                    tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
-                    tableDom.eq(i).find('td').eq(j).css('z-index', '1');
-                    if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
-                        tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none') {
+                        tableDom.eq(i).find('td').eq(j).css('left', widthCss);
+                        tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
+                        tableDom.eq(i).find('td').eq(j).css('z-index', '1');
+                        if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                            tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                        }
                     }
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
                     if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null) {
@@ -2478,9 +2493,9 @@ export class PageSet {
                             titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
                         }
                     }
-                    var tmpWidth = parseInt(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
-                    var tmpPadding = parseInt(tableDom.eq(i).find('td').eq(j).css('padding').replace('px', ''));
-                    LeftWidth += tmpWidth + tmpPadding * 2;
+                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none') {
+                        LeftWidth += tmpWidth + tmpPadding * 2;
+                    }
                 }
             }
         }

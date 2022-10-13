@@ -885,8 +885,8 @@ class SearchOperation implements Search, ClickSearch {
                     let api = this.api();
                     let CurrentPageData = api.rows({ page: 'current' }).data();
                     //ps.AlignedHeader(tmpPageName);
-                    ps.FreezeField(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
+                    ps.FreezeField(tmpPageName);
                 }
                 if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
                     headerHtml = headerHtml.replace('<thead>', '').replace('</thead>', '');
