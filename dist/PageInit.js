@@ -835,8 +835,8 @@ class SearchOperation {
                 TableObj.drawCallback = function (settings) {
                     let api = this.api();
                     let CurrentPageData = api.rows({ page: 'current' }).data();
-                    //ps.AlignedHeader(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
+                    ps.AlignedHeader(tmpPageName);
                     ps.FreezeField(tmpPageName);
                 };
                 if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {

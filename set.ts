@@ -2601,6 +2601,7 @@ export class PageSet {
 
             for (var i = 0; tableDom.eq(i).html(); i++) {
                 var LeftWidth = 0;
+                var ThLeftWidth = 0;
                 for (var j = 0; j < LeftCount; j++) {
                     if (tableDom.eq(i).find('td').eq(j).html() == '表中數據為空') {
                         break;
@@ -2636,7 +2637,8 @@ export class PageSet {
 
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
                     if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null) {
-                        titleDom.eq(i).find('th').eq(j).css('left', widthCss);
+                        let thWidth = ThLeftWidth.toString() + 'px';
+                        titleDom.eq(i).find('th').eq(j).css('left', thWidth);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
                         if (titleDom.eq(i).find('th').eq(j).css('background-color') == '' || titleDom.eq(i).find('th').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
@@ -2646,6 +2648,11 @@ export class PageSet {
 
                     if (tableDom.eq(i).find('td').eq(j).css('display') != 'none') {
                         LeftWidth += tmpWidth + tmpPadding * 2;
+                    }
+                    if (i < 1 && titleDom.eq(i).find('th').eq(j).css('display') != 'none') {
+                        var thWidth = Number(titleDom.eq(i).find('th').eq(j).css('width').replace('px', ''));
+                        var thPadding = Number(titleDom.eq(i).find('th').eq(j).css('padding-left').replace('px', ''));
+                        ThLeftWidth += thWidth + thPadding * 2;
                     }
                 }
             }
@@ -2657,17 +2664,18 @@ export class PageSet {
         var tableDom = $('#' + tPageName + 'Table tbody tr');
         var titleDom = $('#' + tPageName + 'Table_wrapper thead tr');
 
+        /**目前測試只有Ajax 分頁模式下在drawCallback需要額外讓Table重繪 */
         if ((tPageName == 'CPCAP' || tPageName == 'FTCAP') && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
         }
-        else {
+        /*else {
             for (let i = 0; titleDom.eq(i).html() != null && tableDom.eq(0).html() != null; i++) {
                 for (let j = 0; titleDom.eq(i).find('th').eq(j).html() != null; j++) {
                     let tdw: number = tableDom.eq(i).find('td').eq(j).width() || 0;
                     titleDom.eq(i).find('th').eq(j).width(tdw);
                 }
             }
-        }
+        }*/
     }
 
     /**將PageName對應的Table做合併儲存格，於此定義各PageName的合併儲存格範圍

@@ -884,8 +884,8 @@ class SearchOperation implements Search, ClickSearch {
                 TableObj.drawCallback = function (settings: any) {
                     let api = this.api();
                     let CurrentPageData = api.rows({ page: 'current' }).data();
-                    //ps.AlignedHeader(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
+                    ps.AlignedHeader(tmpPageName);
                     ps.FreezeField(tmpPageName);
                 }
                 if (tmpTitle.length > 0 && tmpTitle[0].length > 0) {
@@ -2825,7 +2825,7 @@ export class PageTool {
      * @param {string[]} ExceptforIdArr 搜尋Bar物件ID
      * @param {string} tPageName 頁面名稱
      */
-     public ReloadSelectOption(ExceptforIdArr: string[], tPageName?: string) {
+    public ReloadSelectOption(ExceptforIdArr: string[], tPageName?: string) {
         if (gPageObj.PageNameArr.length <= 0) { return; }
         let tmpPageName: string = '';
         tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
