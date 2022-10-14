@@ -1,5 +1,5 @@
 import { NeedAjaxArr, gPageObj, PageMake } from './PageInit.js';
-import { PageSet, TableSetObj, UrlQuery, ColorRuleClass } from './set.js';
+import { PageSet, TableSetObj, UrlQuery, ColorRuleClass, MenuList } from './set.js';
 /**此class用於定義Part Page Search的搜尋流程。
  * 每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
  */
@@ -405,6 +405,52 @@ export class PPMake {
             };
             let t = $('#IndexAlertTable').DataTable(TableObj);
         }
+    }
+    /**初始化個區塊的搜尋Menu
+     * @param {string} tPageName 頁面名稱
+     */
+    static InitBlockMenu(tPageName) {
+        let MenuInf = {
+            OEEIndex: {
+                OEECPType: {
+                    DomId: 'Block1_Search',
+                    DefaultValue: '',
+                    EventPageName: ['OEE_CP']
+                },
+                OEELCDType: {
+                    DomId: 'Block2_Search',
+                    DefaultValue: '',
+                    EventPageName: ['OEE_LCD']
+                },
+                OEEFTType: {
+                    DomId: 'Block3_Search',
+                    DefaultValue: 'Tray',
+                    EventPageName: ['OEE_FT']
+                },
+                OEEDSType: {
+                    DomId: 'Block4_Search',
+                    DefaultValue: '挑檢',
+                    EventPageName: ['OEE_DS']
+                }
+            }
+        };
+        let pm = new PageMake();
+        if (MenuInf[tPageName]) {
+            Object.keys(MenuInf[tPageName]).forEach((key) => {
+                if (MenuList[key] != null) {
+                    let AttrStr = pm.MakeWidthAttributeStr(tPageName, key, '', 'Search');
+                    let htmlStr = pm.MakeListHtml('select', AttrStr, MenuList[key].MenuArr, MenuInf[tPageName][key].DefaultValue);
+                    document.getElementById(MenuInf[tPageName][key].DomId).innerHTML = htmlStr;
+                    $('#' + MenuInf[tPageName][key].DomId).unbind().change(function () {
+                        let pps = new PPSearch();
+                        MenuInf[tPageName][key].EventPageName.forEach(function (value) {
+                            pps.BlockSearch(value);
+                        });
+                    });
+                }
+            });
+        }
+        $('.selectpicker').selectpicker(); //可搜尋下拉式初始化
     }
 }
 window.PPMake = PPMake;

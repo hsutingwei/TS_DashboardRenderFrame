@@ -54,6 +54,7 @@ $(function () {
         if (ps.isMainIndex(tPageName)) {
             (async function (tPageName: string) {
                 const { PPSearch, PPMake } = await import("./PPI.js");
+                PPMake.InitBlockMenu(tPageName);
                 NeedAjaxArr = gPageObj.PageNameObj[tPageName].ChildName
                 if (set.PageSetObj.NoDefaultSearch.indexOf(tPageName) < 0) {
                     PPSearch.PageSearch();
