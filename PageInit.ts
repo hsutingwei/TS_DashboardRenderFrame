@@ -520,7 +520,7 @@ class SearchOperation implements Search, ClickSearch {
         }
         TableObj = {
             language: set.lang,  //提示信息
-            lengthMenu: [[10, 30, 50], [10, 30, 50]],
+            lengthMenu: [ps.DefineMenuLength(tmpPageName), ps.DefineMenuLength(tmpPageName)],
             scrollY: false,
             scrollX: true,
             scrollCollapse: true,

@@ -502,7 +502,7 @@ class SearchOperation {
         }
         TableObj = {
             language: set.lang,
-            lengthMenu: [[10, 30, 50], [10, 30, 50]],
+            lengthMenu: [ps.DefineMenuLength(tmpPageName), ps.DefineMenuLength(tmpPageName)],
             scrollY: false,
             scrollX: true,
             scrollCollapse: true,
