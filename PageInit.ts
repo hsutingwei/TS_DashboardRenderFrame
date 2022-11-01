@@ -443,9 +443,8 @@ class SearchOperation implements Search, ClickSearch {
 
         let domId = 'field_';
 
-        //預設一頁10筆
-        let tNumberPerAPage = gPageObj.PageNameObj[tmpPageName].PageNumber != -1 ? gPageObj.PageNameObj[tmpPageName].APageCount : -1;
-        let PageNumber = gPageObj.PageNameObj[tmpPageName].PageNumber;
+        let tNumberPerAPage = ps.DefineSearPageInf(tmpPageName)[1];
+        let PageNumber = ps.DefineSearPageInf(tmpPageName)[0];
         let bu = GetSelectValue('BU') || '';
         if (typeof bu == 'object') {
             bu = bu.join('@');
