@@ -1,5 +1,5 @@
 import { NeedAjaxArr, gPageObj, PageMake } from './PageInit.js';
-import { PageSet, TableSetObj, UrlQuery, ColorRuleClass, MenuList } from './set.js';
+import { PageSet, UrlQuery, ColorRuleClass, MenuList, ValueDisplay } from './set.js';
 /**此class用於定義Part Page Search的搜尋流程。
  * 每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
  */
@@ -125,7 +125,7 @@ export class PPMake {
     }
     ChartReport(tPageName, IdName, data) {
     }
-    CreatTableTitle(tPageName, DomName, ExtraFieldArr, TitleArr, BkColorArr) {
+    CreatTableTitle(tPageName, DomName, ExtraFieldArr, TitleArr, BkColorArr, IdName) {
         let tmpTitleArr = new Array();
         for (let i = 0; i < TitleArr.length; i++) {
             let tttArr = new Array();
@@ -140,7 +140,7 @@ export class PPMake {
         }
         let TitleHtml = '<' + DomName + ' class="AutoNewline">';
         let SameIdxArr = [];
-        for (let i = 0, j = 0; i < tmpTitleArr[0].length; i = j) {
+        for (let i = 0, j = 0; tmpTitleArr.length > 0 && i < tmpTitleArr[0].length; i = j) {
             for (j = i + 1; j < tmpTitleArr[0].length && tmpTitleArr[0][i] == tmpTitleArr[0][j]; j++) { }
             SameIdxArr.push(j);
         }
@@ -180,6 +180,10 @@ export class PPMake {
                 TitleHtml += '</tr>';
             }
         }
+        else if ((tPageName.indexOf('OEE') > -1 && IdName != 'Block1_3' && IdName != 'Block2_3' && IdName != 'Block3_3' && IdName != 'Block4_3')
+            || tPageName.indexOf('CIRCLE') > -1) {
+            return '';
+        }
         else {
             let pm = new PageMake();
             let ps = new PageSet();
@@ -194,62 +198,14 @@ export class PPMake {
         TitleHtml += '</' + DomName + '>';
         return TitleHtml;
     }
-    CreatReadWriteTable(tPageName, data, AttributeStr, TitleArr) {
-        let ps = new PageSet();
-        let HeadArr = ps.MakeTableTitle(new Array(), tPageName);
+    CreatReadWriteTable(tPageName, data, AttributeStr, TitleArr, IdName) {
+        let vd = new ValueDisplay();
         let tFieldArr = [];
         let TableId = tPageName + '_Table';
         let htmlStr = '';
-        let tmphtmlStr = '';
-        let tAttitute = 'table-layout:fixed;height:100%;width:100%;';
-        let tAttitute2 = 'table-layout:fixed;height:100%;width:100%;';
-        let StrLimit = 20;
-        let TableObj = {};
-        if (tPageName == 'SEMI_PART_DETAIL' || tPageName == 'SEMI_PART_INFO') {
-            tAttitute = 'max-height:45vh;width:100%;';
-            TableObj = {
-                scrollY: '40vh',
-                scrollX: false,
-                scrollCollapse: true,
-                autoWidth: false,
-                searching: false,
-                paging: false,
-                bInfo: false,
-                ordering: false
-            };
-        }
-        else if (tPageName == 'SEMI_PROJECT') {
-            tAttitute = 'overflow-y:auto;height:27vh;width:100%;display:block;';
-            tAttitute2 = 'overflow-y:auto;height:27vh;width:100%;display:none;';
-        }
-        else {
-            tAttitute = 'height:100%;width:100%;';
-        }
-        htmlStr += '<table id="' + TableId + '" class="table table-bordered ' + TableId + '" style="' + tAttitute + '">';
-        htmlStr += this.CreatTableTitle(tPageName, 'thead', [], HeadArr);
-        tAttitute = '';
-        htmlStr += '<tbody style="' + tAttitute + '">';
-        for (let i = 0; i < HeadArr.length; i++) {
-            for (let j = 0; j < HeadArr[i].length; j++) {
-                if (tFieldArr.length <= j) {
-                    tFieldArr.push('');
-                }
-                if (tFieldArr[j] != HeadArr[i][j]) {
-                    tFieldArr[j] += HeadArr[i][j];
-                }
-            }
-        }
-        if (gPageObj.PageNameObj[tPageName].TitleStrArr != tFieldArr) {
-            gPageObj.PageNameObj[tPageName].TitleStrArr = tFieldArr;
-        }
-        for (let i = 2; i < tFieldArr.length; i++) {
-            if (TableSetObj.MoneyFieldArr.indexOf(tFieldArr[i]) < 0) {
-                TableSetObj.MoneyFieldArr.push(tFieldArr[i]);
-            }
-            if (TableSetObj.NeedModifyDisplayArr.indexOf(tFieldArr[i]) < 0) {
-                TableSetObj.NeedModifyDisplayArr.push(tFieldArr[i]);
-            }
-        }
+        htmlStr += '<table id="' + TableId + '" class="whitespace-nowrap ' + TableId + '" style="' + AttributeStr + '">';
+        htmlStr += this.CreatTableTitle(tPageName, 'thead', [], TitleArr, undefined, IdName);
+        htmlStr += '<tbody>';
         let uq = new UrlQuery();
         let cr = new ColorRuleClass();
         cr.InitColorObj(tPageName, data);
@@ -257,7 +213,6 @@ export class PPMake {
             let tmpArr = data[i].split(',');
             let tmpRowTitle = tmpArr[0];
             htmlStr += '<tr>';
-            tmphtmlStr += '<tr>';
             for (let j = 0; j < tmpArr.length; j++) {
                 let FieldIdx = -1;
                 let hrefUrl = '';
@@ -271,41 +226,19 @@ export class PPMake {
                     }
                 }
                 let tmpStr = tmpArr[j].replace('%', '');
-                let InnStr = TableSetObj.NeedModifyDisplayArr.indexOf(tFieldArr[j]) > -1 ? ps.NeedModifyDisplay(tFieldArr[j], tmpArr[j], tPageName) : tmpArr[j];
-                if (tFieldArr[j] == '改善成效') {
-                    if (tmpArr[j] != '') {
-                        let DirName = tmpArr[j].substring(0, tmpArr[j].lastIndexOf('\\') + 1);
-                        let tFileName = tmpArr[j].replace(DirName, '');
-                        hrefUrl = '..\\Default\\UpLoadFile\\' + tmpArr[j];
-                        InnStr = 'Download';
-                    }
-                    else {
-                        hrefUrl = '#';
-                        InnStr = '';
-                    }
-                }
+                let InnStr = vd.NeedModifyDisplay(tFieldArr[j], tmpArr[j], tPageName, isNaN(Number(tmpRowTitle)) ? tmpRowTitle : undefined);
                 let ColorHtml = cr.CheckColorRule(i, j);
                 ColorHtml += ColorHtml != '' ? 'font-weight:bold;' : '';
                 let AttributeStr = '';
-                let tmpInnStr = InnStr;
                 if (hrefUrl != '') {
                     AttributeStr = 'href="' + hrefUrl + '" class="magic-btn" style="cursor: pointer;font-weight:bold;color:black" target="_blank"';
                     InnStr = '<a ' + AttributeStr + '>' + InnStr + '</a>';
                 }
-                if (tPageName == 'SEMI_PROJECT' && (tFieldArr[j] == '問題(What)' || tFieldArr[j] == '行動方案(How)')) {
-                    let tttStr = tmpArr[j];
-                    if (tmpArr[j].length > StrLimit) {
-                        tttStr = tmpArr[j].substring(0, StrLimit) + '...';
-                    }
-                    htmlStr += '<td style="text-align:right;' + ColorHtml + '">' + tttStr + '</td>';
+                if (tmpStr != '' && !isNaN(Number(tmpStr))) {
+                    htmlStr += '<td style="text-align:right;' + ColorHtml + '">' + InnStr + '</td>';
                 }
                 else {
-                    if (tmpStr != '' && !isNaN(Number(tmpStr))) {
-                        htmlStr += '<td style="text-align:right;' + ColorHtml + '">' + InnStr + '</td>';
-                    }
-                    else {
-                        htmlStr += '<td style="text-align:left;' + ColorHtml + '">' + InnStr + '</td>';
-                    }
+                    htmlStr += '<td style="text-align:left;' + ColorHtml + '">' + InnStr + '</td>';
                 }
             }
             htmlStr += '</tr>';

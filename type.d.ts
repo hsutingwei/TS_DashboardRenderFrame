@@ -12,12 +12,6 @@ interface JQuery {
 
 /**內容值填入欄位名稱 */
 type TableSetObj = {
-    /**需要千分位表示數字的欄位名稱 */
-    MoneyFieldArr: string[],
-    /**需要將顯示的值做特別修改 */
-    NeedModifyDisplayArr: string[],
-    /**需要轉百萬的欄位 */
-    MillionFieldArr: string[],
     /**若是0，可忽略的欄位 */
     IgnoreZero: string[],
     /**欄位需要置右的欄位名稱 */
@@ -147,6 +141,32 @@ type ColorCellOrRowIdx = {
             }
         }
     }
+}
+
+/**數值呈現規則設定物件 */
+type NumberCheckRule = {
+    [Name: string]: {
+        /**小數位數 */
+        Digits: (...args: any[]) => string,
+        /**尾端要加入的字串 */
+        TailString?: (...args: any[]) => string,
+        /**若數值為空的規則 */
+        EmptyRule?: (...args: any[]) => string,
+        /**百萬格式 */
+        MillionFormat?: boolean,
+        /**千分位格式 */
+        KilobitFormat?: boolean,
+    }
+}
+
+/**數字呈現修改規則 */
+type NumberDisplayRule = {
+    /**PageName */
+    PageName?: NumberCheckRule,
+    /**行標題 */
+    RowTitle?: NumberCheckRule,
+    /**欄位名稱 */
+    FieldName?: NumberCheckRule
 }
 
 interface PageStatus {

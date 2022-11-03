@@ -712,6 +712,7 @@ class SearchOperation implements Search, ClickSearch {
                     let df = new set.DynamicFunction();
                     let pm = new PageMake();
                     let pt = new PageTool();
+                    let vd = new set.ValueDisplay();
                     let tmpArr: string[] = [];
                     let KeyValueArr: string[] = [];
                     let ValueIdArr: string[] = [];
@@ -773,8 +774,8 @@ class SearchOperation implements Search, ClickSearch {
                         if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
                             aPart += tmpArr[i];
                         }
-                        else if (set.TableSetObj.NeedModifyDisplayArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1) {
-                            let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + ps.NeedModifyDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[i], tmpPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[i] + '</span>';
+                        else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[0])) {
+                            let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + vd.NeedModifyDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[i], tmpPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[i] + '</span>';
                             aPart += tStr;
                         }
                         else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
@@ -929,6 +930,7 @@ class SearchOperation implements Search, ClickSearch {
                 let pm = new PageMake();
                 let ps = new set.PageSet();
                 let pt = new PageTool();
+                let vd = new set.ValueDisplay();
                 gPageObj.PageNameObj[tmpPageName].SetTableTitle(data);
                 let so = new SearchOperation();
                 let tdata: string[] | { [key: string]: string }[] = so.EditSearchResult(tmpPageName, data);
@@ -962,7 +964,7 @@ class SearchOperation implements Search, ClickSearch {
 
                 let HaveMillion = false;
                 let UnitMode = GetSelectValue('單位');
-                for (let i = 0; i < gPageObj.PageNameObj[tmpPageName].TitleStrArr.length; i++) { if (set.TableSetObj.MillionFieldArr.indexOf(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i]) > -1 && UnitMode != '數量') { HaveMillion = true; break; } }
+                for (let i = 0; i < gPageObj.PageNameObj[tmpPageName].TitleStrArr.length; i++) { if (vd.NeedMillionFormat(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName) && UnitMode != '數量') { HaveMillion = true; break; } }
                 if (HaveMillion || set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) { TableObj.dom = '<"toolbar">frtip'; }
 
                 let t: any = $('#' + TableIdName);
@@ -1948,6 +1950,7 @@ export class PageMake implements PageRender {
         let dc = new set.DynamicClass();
         let cr = new set.ColorRuleClass();
         let df = new set.DynamicFunction();
+        let vd = new set.ValueDisplay();
         let LineAllNotCanEdit = true;
         cr.InitColorObj(tPageName, data);
 
@@ -2021,8 +2024,8 @@ export class PageMake implements PageRender {
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     aPart += tmpArr[j];
                 }
-                else if (set.TableSetObj.NeedModifyDisplayArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1) {
-                    let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '">' + ps.NeedModifyDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tmpArr[j], tPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[j] + '</span>';
+                else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpFirstTitle)) {
+                    let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '">' + vd.NeedModifyDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tmpArr[j], tPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[j] + '</span>';
                     aPart += tStr;
                 }
                 else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
@@ -2704,7 +2707,7 @@ export class PageTool {
      */
     public MakeExportData(tPageName: string, tdata: string[] | string[][] | { [key: string]: string }[]): string[] {
         let reData: string[] = new Array();
-        let ps = new set.PageSet();
+        let vd = new set.ValueDisplay();
 
         for (let i = 0; i < tdata.length; i++) {
             let tmpArr = typeof tdata[i] == 'string' ? tdata[i].toString().split(',') : (typeof tdata[i] == 'object' ? gPageObj.PageNameObj[tPageName].LineDataObjToArray(tdata[i]) : tdata[i] as string[]);
@@ -2715,7 +2718,7 @@ export class PageTool {
                     tReArr.push(tmpArr[j]);
                     continue;
                 }
-                if (set.TableSetObj.MoneyFieldArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1) {
+                if (vd.NeedKilobitFormat(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[0])) {
                     if (tmpArr[j].indexOf('%') > -1) {
                         tmpArr[j] = MoneyFormat(tmpArr[j].replace('%', '')) + '%';
                     }
