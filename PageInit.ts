@@ -279,95 +279,126 @@ class SearchOperation implements Search, ClickSearch {
         document.getElementById('RowDataAreaTitle')!.innerHTML = tTitleStr;
 
         if (tPageNumber > -1) {
-            let TableIdName = Query.PageName + 'Table';
-            let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%"';
-            let tTableHtml = '<table ' + AttributeStr + '></table>';
-            let ColumnObj = [];
-            gPageObj.PageNameObj[tPageName].SetTableTitle(Query.QueryArr);
-            let tTableTitle: string[] = gPageObj.PageNameObj[tPageName].TitleStrArr;
-
-            for (let i = 0; i < tTableTitle.length; i++) {
-                ColumnObj.push({ 'data': tTableTitle[i], 'title': tTableTitle[i] });
-            }
-
-            let ExcelHtmlStr = '<button type="button" class="btn btn-primary" style="margin:3px;float:left" id="ExportBtn" onclick="PageOperation.ExportExcel(\'' + tPageName + '\')" data-loading-text="Downloading..."><i class="fa fa-download"></i>匯出</button>';
-            document.getElementById('RowDataAreaText')!.innerHTML = ExcelHtmlStr + '<br>' + tTableHtml;
-            let AllResultCount = 0;
-
-            let tTableInf: any = {
-                language: set.lang,  //提示資訊
-                stripeClasses: ["odd", "even"],  //為奇偶行加上樣式，相容不支援CSS偽類的場合
-                processing: true,  //隱藏載入提示,自行處理
-                serverSide: true,  //啟用伺服器端分頁
-                searching: false,  //禁用原生搜索
-                orderMulti: false,
-                scrollY: '65vh',
-                scrollCollapse: true,
-                scrollX: true,
-                order: [],
-                ordering: false,
-                columnDefs: [{
-                    "targets": 'nosort',  //列的樣式名
-                    "orderable": false    //包含上樣式名‘nosort’的禁止排序
-                }],
-                lengthMenu: [[10, 30, 50], [10, 30, 50]],
-                //bLengthChange: false,
-                ajax: function (data: any, callback: any, settings: any) {
-                    if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
-                        gPageObj.PageNameObj[tPageName].AjaxStatus.abort();
-                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
+            Query.PageNumber = 1;
+            Query.NumberPerAPage = ps.DefineMenuLength(tPageName)[0];
+            //此動作流程是為了在分頁搜尋時先取得後端回傳的Title
+            //此搜尋Query跟搜尋第一頁的搜尋結果一模一樣，再由後端將結果存入快取
+            doAjax('Search', true, Query, function (FirstData: string[]) {
+                if (Query.PageNumber == 1 && FirstData.length > 0) {
+                    FirstData[0] = FirstData[0].split(';')[1];
+                }
+                gPageObj.PageNameObj[tPageName].SetTableTitle(FirstData.length > 0 ? FirstData[0].split(',') : []);
+                let tmpTitle = ps.MakeTableTitle(FirstData.length > 0 ? FirstData[0].split(',') : [], tPageName);
+                let tmpFieldArr: string[] = [];
+                let ColumnObj = [];
+                for (let i = 0; tmpTitle.length > 0 && i < tmpTitle[0].length; i++) {
+                    let tmpStr: string = '';
+                    for (let j = 0; j < tmpTitle.length; j++) {
+                        tmpStr += tmpTitle[j][i];
                     }
+                    tmpFieldArr.push(tmpStr);
+                }
+                if (set.PageSetObj.noDeletePage.indexOf(tPageName) < 0) {
+                    tmpFieldArr.push('功能');
+                }
+                for (let i = 0; i < tmpFieldArr.length; i++) {
+                    ColumnObj.push({ data: tmpFieldArr[i], title: tmpFieldArr[i] });
+                }
 
-                    Query.PageNumber = (data.start / data.length) + 1;//當前頁碼
-                    //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
-                    /*param.start = data.start;//開始的記錄序號
-                    param.page = (data.start / data.length) + 1;//當前頁碼
-                    param.start = (Query.PageNumber - 1) * data.length;//開始的記錄序號*/
-                    Query.NumberPerAPage = data.length;//頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
-                    //console.log(param);
-                    //ajax請求數據
-                    gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (result: string[]) {
-                        let returnData: any = {};
-                        if (Query.PageNumber == 1 && result.length > 0) {
-                            let tArr = result[0].split(';');
-                            AllResultCount = parseInt(tArr[0]);
-                            result[0] = tArr[1];
+                let TableIdName = Query.PageName + 'Table';
+                let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%"';
+                let tTableHtml = '<table ' + AttributeStr + '></table>';
+                //let tTableTitle: string[] = gPageObj.PageNameObj[tPageName].TitleStrArr;
+
+                let ExcelHtmlStr = '<button type="button" class="btn btn-primary" style="margin:3px;float:left" id="ExportBtn" onclick="PageOperation.ExportExcel(\'' + tPageName + '\')" data-loading-text="Downloading..."><i class="fa fa-download"></i>匯出</button>';
+                document.getElementById('RowDataAreaText')!.innerHTML = ExcelHtmlStr + '<br>' + tTableHtml;
+                let AllResultCount = 0;
+
+                let tTableInf: any = {
+                    language: set.lang,  //提示資訊
+                    stripeClasses: ["odd", "even"],  //為奇偶行加上樣式，相容不支援CSS偽類的場合
+                    processing: true,  //隱藏載入提示,自行處理
+                    serverSide: true,  //啟用伺服器端分頁
+                    searching: false,  //禁用原生搜索
+                    orderMulti: false,
+                    scrollY: '65vh',
+                    scrollCollapse: true,
+                    scrollX: true,
+                    order: [],
+                    ordering: false,
+                    columnDefs: [{
+                        "targets": 'nosort',  //列的樣式名
+                        "orderable": false    //包含上樣式名‘nosort’的禁止排序
+                    }],
+                    lengthMenu: [[10, 30, 50], [10, 30, 50]],
+                    //bLengthChange: false,
+                    ajax: function (data: any, callback: any, settings: any) {
+                        if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
+                            gPageObj.PageNameObj[tPageName].AjaxStatus.abort();
+                            gPageObj.PageNameObj[tPageName].AjaxStatus = null;
                         }
 
-                        so.EditSearchResult(tPageName, result);
-
-                        returnData.draw = data.draw;
-                        returnData.recordsTotal = AllResultCount;
-                        returnData.recordsFiltered = AllResultCount;
-                        gPageObj.PageNameObj[tPageName].FullData = [];
-                        let tmpObj = new Array();
-                        for (let i = 0; i < result.length; i++) {
-                            let tmpArr = result[i].split(',');
-                            gPageObj.PageNameObj[tPageName].FullData.push(tmpArr);
-                            let tObj: { [ColumnName: string]: any } = {};
-                            for (let j = 0; j < tmpArr.length; j++) {
-                                tObj[tTableTitle[j]] = tmpArr[j];
+                        Query.PageNumber = (data.start / data.length) + 1;//當前頁碼
+                        //gPageObj.PageNameObj[tPageName].PageNumber = Query.PageNumber;
+                        /*param.start = data.start;//開始的記錄序號
+                        param.page = (data.start / data.length) + 1;//當前頁碼
+                        param.start = (Query.PageNumber - 1) * data.length;//開始的記錄序號*/
+                        Query.NumberPerAPage = data.length;//頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
+                        //console.log(param);
+                        //ajax請求數據
+                        gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (result: string[]) {
+                            type tDataInf = {
+                                draw: any,
+                                recordsTotal: number,
+                                recordsFiltered: number,
+                                data: string[]
                             }
-                            tmpObj.push(tObj);
-                        }
-                        returnData.data = tmpObj;
-                        //$('.selectpicker').selectpicker();
-                        callback(returnData);
+                            if (Query.PageNumber == 1 && result.length > 0) {
+                                let tArr = result[0].split(';');
+                                AllResultCount = parseInt(tArr[0]);
+                                result[0] = tArr[1];
+                            }
 
-                        gPageObj.PageNameObj[tPageName].AjaxStatus = null;
-                        if (document.getElementById('RowDataArea')!.style.display != 'block') {
-                            ButtonClickSimulation('#RowDataAreaBtn');
-                        }
-                        pt.LoadingMask('none');
-                        //sbtn.button('reset');
-                        SetButtonDisable('SearchBtn', false, '搜尋');
-                    });
-                },
-                //列表表頭欄位
-                columns: ColumnObj
-            }
-            let table = $('#' + TableIdName).DataTable(tTableInf);
-            //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
+                            result = so.EditSearchResult(tPageName, result) as string[];
+                            let returnData: tDataInf = {
+                                draw: data.draw,
+                                recordsTotal: AllResultCount,
+                                recordsFiltered: AllResultCount,
+                                data: []
+                            }
+                            gPageObj.PageNameObj[tPageName].FullData = [];
+                            let tmpObj = new Array();
+                            for (let i = 0; i < result.length; i++) {
+                                let tmpArr = result[i].split(',');
+                                gPageObj.PageNameObj[tPageName].FullData.push(tmpArr);
+                                let tObj: { [ColumnName: string]: any } = {};
+                                for (let j = 0; j < tmpArr.length; j++) {
+                                    tObj[tmpFieldArr[j]] = tmpArr[j];
+                                }
+                                if (set.PageSetObj.noDeletePage.indexOf(tPageName) < 0) {
+                                    tObj['功能'] = '<button type="button" class="btn btn-danger DeleteFun write" ' + (gPageObj.PageNameObj[tPageName].isWriteMode ? '' : 'style="display:none"') + '>刪除</button>';
+                                }
+                                tmpObj.push(tObj);
+                            }
+                            returnData.data = tmpObj;
+                            //$('.selectpicker').selectpicker();
+                            callback(returnData);
+
+                            gPageObj.PageNameObj[tPageName].AjaxStatus = null;
+                            if (document.getElementById('RowDataArea')!.style.display != 'block') {
+                                ButtonClickSimulation('#RowDataAreaBtn');
+                            }
+                            pt.LoadingMask('none');
+                            //sbtn.button('reset');
+                            SetButtonDisable('SearchBtn', false, '搜尋');
+                        });
+                    },
+                    //列表表頭欄位
+                    columns: ColumnObj
+                }
+                let table = $('#' + TableIdName).DataTable(tTableInf);
+                //此處需調用api()方法,否則返回的是JQuery對象而不是DataTables的API對象
+            });
         }
         else {
             doAjax('Search', true, Query, function (data: string[]) {
