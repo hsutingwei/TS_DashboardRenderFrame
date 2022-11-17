@@ -388,34 +388,29 @@ export class PPMake implements BlockReport {
                     /**此Menu所在的Dom ID */
                     DomId: string,
                     /**此Menu的預設值 */
-                    DefaultValue: string,
+                    DefaultValue: string[],
                     /**此Menu會觸法重新搜尋的PageName */
                     EventPageName:string[]
                 }
             }
         }
         let MenuInf: MenuObj = {
-            OEEIndex: {
-                OEECPType: {
-                    DomId: 'Block1_Search',
-                    DefaultValue: '',
-                    EventPageName: ['OEE_CP']
-                },
-                OEELCDType: {
-                    DomId: 'Block2_Search',
-                    DefaultValue: '',
-                    EventPageName: ['OEE_LCD']
-                },
-                OEEFTType: {
-                    DomId: 'Block3_Search',
-                    DefaultValue: 'Tray',
-                    EventPageName: ['OEE_FT']
-                },
-                OEEDSType: {
+            Index: {
+                Prod: {
                     DomId: 'Block4_Search',
-                    DefaultValue: '挑檢',
-                    EventPageName: ['OEE_DS']
-                }
+                    DefaultValue: ['NOMAL', 'ENG'],
+                    EventPageName: ['HOLD_LOT']
+                },
+                Type: {
+                    DomId: 'Block7_Search',
+                    DefaultValue: ['RECEIVE', 'WIP', 'HOLD', 'FG'],
+                    EventPageName: ['STA']
+                },
+                單位: {
+                    DomId: 'Block8_Search',
+                    DefaultValue: ['數量'],
+                    EventPageName: ['WIP']
+                },
             }
         }
 
@@ -425,7 +420,7 @@ export class PPMake implements BlockReport {
             Object.keys(MenuInf[tPageName]).forEach((key) => {
                 if (MenuList[key] != null) {
                     let AttrStr = pm.MakeWidthAttributeStr(tPageName, key, '', 'Search');
-                    let htmlStr = pm.MakeListHtml('select', AttrStr, MenuList[key].MenuArr, MenuInf[tPageName][key].DefaultValue);
+                    let htmlStr = pm.MakeListHtml('select', AttrStr, MenuList[key].MenuArr, MenuInf[tPageName][key].DefaultValue.join('@'));
                     document.getElementById(MenuInf[tPageName][key].DomId)!.innerHTML = htmlStr;
 
                     $('#' + MenuInf[tPageName][key].DomId).unbind().change(function () {

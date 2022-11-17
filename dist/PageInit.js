@@ -2369,6 +2369,9 @@ export class PageMake {
                     document.getElementById(domId).innerHTML = this.MakeOptionHtml(tmpSelectList, DefaultValue[DefaultIdx]);
                 }
             }
+            else if (ValueIdArr[i] == '') {
+                set.DynamicFunction.DynamicRequest(tPageName, ValueIdArr[i], tFieldNameArr[i], true);
+            }
         }
         let TableIdName = tPageName + 'Table';
         $('.selectpicker').selectpicker(); //可搜尋下拉式初始化

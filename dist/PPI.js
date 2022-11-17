@@ -344,27 +344,22 @@ export class PPMake {
      */
     static InitBlockMenu(tPageName) {
         let MenuInf = {
-            OEEIndex: {
-                OEECPType: {
-                    DomId: 'Block1_Search',
-                    DefaultValue: '',
-                    EventPageName: ['OEE_CP']
-                },
-                OEELCDType: {
-                    DomId: 'Block2_Search',
-                    DefaultValue: '',
-                    EventPageName: ['OEE_LCD']
-                },
-                OEEFTType: {
-                    DomId: 'Block3_Search',
-                    DefaultValue: 'Tray',
-                    EventPageName: ['OEE_FT']
-                },
-                OEEDSType: {
+            Index: {
+                Prod: {
                     DomId: 'Block4_Search',
-                    DefaultValue: '挑檢',
-                    EventPageName: ['OEE_DS']
-                }
+                    DefaultValue: ['NOMAL', 'ENG'],
+                    EventPageName: ['HOLD_LOT']
+                },
+                Type: {
+                    DomId: 'Block7_Search',
+                    DefaultValue: ['RECEIVE', 'WIP', 'HOLD', 'FG'],
+                    EventPageName: ['STA']
+                },
+                單位: {
+                    DomId: 'Block8_Search',
+                    DefaultValue: ['數量'],
+                    EventPageName: ['WIP']
+                },
             }
         };
         let pm = new PageMake();
@@ -372,7 +367,7 @@ export class PPMake {
             Object.keys(MenuInf[tPageName]).forEach((key) => {
                 if (MenuList[key] != null) {
                     let AttrStr = pm.MakeWidthAttributeStr(tPageName, key, '', 'Search');
-                    let htmlStr = pm.MakeListHtml('select', AttrStr, MenuList[key].MenuArr, MenuInf[tPageName][key].DefaultValue);
+                    let htmlStr = pm.MakeListHtml('select', AttrStr, MenuList[key].MenuArr, MenuInf[tPageName][key].DefaultValue.join('@'));
                     document.getElementById(MenuInf[tPageName][key].DomId).innerHTML = htmlStr;
                     $('#' + MenuInf[tPageName][key].DomId).unbind().change(function () {
                         let pps = new PPSearch();
