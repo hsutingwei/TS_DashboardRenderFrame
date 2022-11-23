@@ -238,9 +238,11 @@ function CheckDecimalPointFn(Num: string | number, nCount: number): string {
     }
 
     if (!HavePoint) {
-        NumStr += '.';
-        for (var i = 0; i < nCount; i++) {
-            NumStr += '0';
+        if (nCount > 0) {
+            NumStr += '.';
+            for (var i = 0; i < nCount; i++) {
+                NumStr += '0';
+            }
         }
     }
     else {
