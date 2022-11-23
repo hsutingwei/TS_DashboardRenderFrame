@@ -262,35 +262,25 @@ export class PPMake {
     /**給合併儲存格後的表格上色(只針對有合併的範圍) */
     ColorMergeCell(tPageName) {
         let TableInf = {
-            SEMI_TABLE_MTD_YTM_NSB: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(222,236,246)',
+            PE_TTAD: {
+                TitleColor: 'rgb(0,176,80)',
+                CheckRange: 10,
+                BackgroundColor: 'rgb(226,239,217)',
                 TurnColor: 'rgb(223, 224, 226)'
             },
-            SEMI_TABLE_Top10_CUST_NSB: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(222,236,246)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            SEMI_TABLE_IN_OUT_GOODS: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(226,239,217)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            Prober_Handler: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(214,220,228)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            SEMI_TESTER: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(214,220,228)',
+            PE_DSUAD: {
+                TitleColor: 'rgb(0,176,80)',
+                CheckRange: 5,
+                BackgroundColor: 'rgb(226,239,217)',
                 TurnColor: 'rgb(223, 224, 226)'
             },
         };
         if (TableInf[tPageName]) {
             let TableIdName = tPageName + '_Table';
             let t = $('#' + TableIdName + ' tbody tr');
+            if (TableInf[tPageName].TitleColor != null && TableInf[tPageName].TitleColor != '') {
+                $('.' + TableIdName + ' thead tr').css('background-color', TableInf[tPageName].TitleColor);
+            }
             for (let i = 0, k = 0; t.eq(i).html() != null; i++) {
                 let jump = false;
                 if (t.eq(i).html().toString().indexOf('</th>') > -1) {

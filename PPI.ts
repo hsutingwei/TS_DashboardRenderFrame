@@ -289,34 +289,26 @@ export class PPMake implements BlockReport {
     ColorMergeCell(tPageName: string): void {
         let TableInf: {
             [tPageName: string]: {
-                CheckRange: number,//合併儲存格的範圍，需與MergeTableValue定義的範圍一樣
-                BackgroundColor: string,//cell的背景顏色
-                TurnColor?: string,//是否需間格替換顏色，有則間格此顏色，無則不需替換
+                /**欄位標題的顏色 */
+                TitleColor: string,
+                /**合併儲存格的範圍，需與MergeTableValue定義的範圍一樣 */
+                CheckRange: number,
+                /**cell的背景顏色 */
+                BackgroundColor: string,
+                /**是否需間格替換顏色，有則間格此顏色，無則不需替換 */
+                TurnColor?: string,
             }
         } = {
-            SEMI_TABLE_MTD_YTM_NSB: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(222,236,246)',
+            PE_TTAD: {
+                TitleColor: 'rgb(0,176,80)',
+                CheckRange: 10,
+                BackgroundColor: 'rgb(226,239,217)',
                 TurnColor: 'rgb(223, 224, 226)'
             },
-            SEMI_TABLE_Top10_CUST_NSB: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(222,236,246)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            SEMI_TABLE_IN_OUT_GOODS: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(226,239,217)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            Prober_Handler: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(214,220,228)',
-                TurnColor: 'rgb(223, 224, 226)'
-            },
-            SEMI_TESTER: {
-                CheckRange: 1,
-                BackgroundColor: 'RGB(214,220,228)',
+            PE_DSUAD: {
+                TitleColor: 'rgb(0,176,80)',
+                CheckRange: 5,
+                BackgroundColor: 'rgb(226,239,217)',
                 TurnColor: 'rgb(223, 224, 226)'
             },
         };
@@ -324,6 +316,9 @@ export class PPMake implements BlockReport {
         if (TableInf[tPageName]) {
             let TableIdName = tPageName + '_Table';
             let t = $('#' + TableIdName + ' tbody tr');
+            if (TableInf[tPageName].TitleColor != null && TableInf[tPageName].TitleColor != '') {
+                $('.' + TableIdName + ' thead tr').css('background-color', TableInf[tPageName].TitleColor);
+            }
 
             for (let i = 0, k = 0; t.eq(i).html() != null; i++) {
                 let jump = false;
