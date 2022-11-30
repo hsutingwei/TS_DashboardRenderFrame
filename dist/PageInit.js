@@ -566,6 +566,8 @@ class SearchOperation {
             return;
         }
         let cr = new set.ColorRuleClass();
+        let so = new SearchOperation();
+        so.ResetSearchQuery(tmpPageName, fQueryArr);
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
         if (set.PageSetObj.NeedDataTableFreeze.indexOf(tmpPageName) > -1) {

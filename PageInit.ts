@@ -594,6 +594,8 @@ class SearchOperation implements Search, ClickSearch {
 
         let cr = new set.ColorRuleClass();
 
+        let so = new SearchOperation();
+        so.ResetSearchQuery(tmpPageName, fQueryArr);
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
 
