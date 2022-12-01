@@ -559,7 +559,10 @@ class SearchOperation implements Search, ClickSearch {
         if (ps.DefineMenuLength(tmpPageName).length > 0){
             TableObj.lengthMenu = [ps.DefineMenuLength(tmpPageName), ps.DefineMenuLength(tmpPageName)];
         }
-
+        if (TableObj.lengthMenu && TableObj.lengthMenu[0].length == 1) {
+            TableObj.bLengthChange = false;
+            TableObj.bInfo = false;
+        }
         if (set.PageSetObj.noInSearchingPage.indexOf(tmpPageName) > -1) {
             TableObj.searching = false;
         }
