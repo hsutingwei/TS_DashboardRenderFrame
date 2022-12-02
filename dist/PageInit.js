@@ -383,7 +383,11 @@ class SearchOperation {
             });
         }
         else {
-            doAjax('Search', true, Query, function (data) {
+            if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
+                gPageObj.PageNameObj[tPageName].AjaxStatus.abort();
+                gPageObj.PageNameObj[tPageName].AjaxStatus = null;
+            }
+            gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (data) {
                 document.getElementById('RowDataAreaText').innerHTML = '明細';
                 gPageObj.PageNameObj[tPageName].SetTableTitle(Query.QueryArr);
                 so.EditSearchResult(tPageName, data);
@@ -434,6 +438,7 @@ class SearchOperation {
                 pt.LoadingMask('none');
                 //sbtn.button('reset');
                 SetButtonDisable('SearchBtn', false, '搜尋');
+                gPageObj.PageNameObj[tPageName].AjaxStatus = null;
             });
         }
     }
@@ -905,7 +910,11 @@ class SearchOperation {
             });
         }
         else {
-            doAjax('Search', true, Query, function (data) {
+            if (gPageObj.PageNameObj[tmpPageName].AjaxStatus != null) {
+                gPageObj.PageNameObj[tmpPageName].AjaxStatus.abort();
+                gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
+            }
+            gPageObj.PageNameObj[tmpPageName].AjaxStatus = doAjax2('Search', true, Query, function (data) {
                 let pm = new PageMake();
                 let ps = new set.PageSet();
                 let pt = new PageTool();
@@ -1113,6 +1122,7 @@ class SearchOperation {
                 }
                 //sbtn.button('reset');
                 SetButtonDisable('SearchBtn', false, '搜尋');
+                gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
             });
         }
     }
