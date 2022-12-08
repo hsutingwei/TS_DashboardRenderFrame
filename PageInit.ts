@@ -330,7 +330,7 @@ class SearchOperation implements Search, ClickSearch {
                         "targets": 'nosort',  //列的樣式名
                         "orderable": false    //包含上樣式名‘nosort’的禁止排序
                     }],
-                    lengthMenu: [[10, 30, 50], [10, 30, 50]],
+                    lengthMenu: [ps.DefineMenuLength(tPageName), ps.DefineMenuLength(tPageName)],
                     //bLengthChange: false,
                     ajax: function (data: any, callback: any, settings: any) {
                         if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {

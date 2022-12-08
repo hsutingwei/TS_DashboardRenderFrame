@@ -321,7 +321,7 @@ class SearchOperation {
                             "targets": 'nosort',
                             "orderable": false //包含上樣式名‘nosort’的禁止排序
                         }],
-                    lengthMenu: [[10, 30, 50], [10, 30, 50]],
+                    lengthMenu: [ps.DefineMenuLength(tPageName), ps.DefineMenuLength(tPageName)],
                     //bLengthChange: false,
                     ajax: function (data, callback, settings) {
                         if (gPageObj.PageNameObj[tPageName].AjaxStatus != null) {
