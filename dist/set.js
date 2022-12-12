@@ -272,8 +272,6 @@ export var PageSetObj = {
     NeedCheckDecimalPoint: [],
     /**不需要DataTable渲染 */
     noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
-    /**需要百萬訊息標示的頁面 */
-    NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],
     /**需要匯出的頁面 */
     NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
     /**頁面載入時不預設搜尋 */
@@ -2400,6 +2398,26 @@ export class PageSet {
             }
         }
         return reTitleStr;
+    }
+    /**設定Datatable.js的標題訊息(如toolbar)
+     * @param {string} tPageName 頁面名稱
+     */
+    TableInfHtml(tPageName) {
+        let re = '';
+        switch (tPageName) {
+            case 'CP_WIP':
+                re = '<div class="toolbar"><span style="color:blue">(單位:Lot/Pcs)</span></div>';
+                break;
+            case 'FT_WIP':
+                re = '<div class="toolbar"><span style="color:blue">(單位:Lot/Qty)</span></div>';
+                break;
+            case '':
+                re = '<div class="toolbar"><span style="color:blue">(M.NT)</span></div>';
+                break;
+            default:
+                break;
+        }
+        return re;
     }
 }
 /**定義數值顯示呈現規則 */

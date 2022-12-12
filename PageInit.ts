@@ -991,7 +991,8 @@ class SearchOperation implements Search, ClickSearch {
                 tmpTitle = ps.MakeTableTitle(tdata, tmpPageName);
 
                 let TableHtml = pm.CreatReadWriteTable(tmpPageName, tdata, AttributeStr, tmpTitle);
-                if (set.PageSetObj.noDataTable.indexOf(tmpPageName) > -1 && set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) {
+                let preTableHtml = ps.TableInfHtml(tmpPageName);
+                if (set.PageSetObj.noDataTable.indexOf(tmpPageName) > -1 && preTableHtml != '') {
                     TableHtml = '<div class="toolbar"><span style="color:blue">(M.NT)</span></div>' + TableHtml;
                 }
 
@@ -1010,7 +1011,7 @@ class SearchOperation implements Search, ClickSearch {
                 let HaveMillion = false;
                 let UnitMode = GetSelectValue('單位');
                 for (let i = 0; i < gPageObj.PageNameObj[tmpPageName].TitleStrArr.length; i++) { if (vd.NeedMillionFormat(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName) && UnitMode != '數量') { HaveMillion = true; break; } }
-                if (HaveMillion || set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) { TableObj.dom = '<"toolbar">frtip'; }
+                if (HaveMillion || preTableHtml != '') { TableObj.dom = '<"toolbar">frtip'; }
 
                 let t: any = $('#' + TableIdName);
                 let t2: any = $('#' + HiddenTableIdName);
@@ -1122,7 +1123,7 @@ class SearchOperation implements Search, ClickSearch {
                     ps.FreezeField(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
                 });
-                if (HaveMillion || set.PageSetObj.NeedMillionInf.indexOf(tmpPageName) > -1) { $('div.toolbar').html('<span style="color:blue">(M.NT)</span>'); }
+                if (HaveMillion || preTableHtml != '') { $('div.toolbar').html('<span style="color:blue">(M.NT)</span>'); }
 
                 let te = new set.TableExtend();
                 te.SetExtendTable(tmpPageName, TableIdName);
