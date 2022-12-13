@@ -153,7 +153,7 @@ type NumberCheckRule = {
         /**百萬格式 */
         MillionFormat?: boolean,
         /**千分位格式 */
-        KilobitFormat?: boolean,
+        KilobitFormat?: boolean | function,
     }
 }
 

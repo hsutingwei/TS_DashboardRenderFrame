@@ -2424,533 +2424,91 @@ export class PageSet {
 export class ValueDisplay {
     constructor() {
         this.RuleObj = {
-            'RowTitle': {
-                'Target:': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+            'FieldName': {
+                'TOTAL_LOT': {
+                    KilobitFormat: function (tPageName) {
+                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') {
+                            return false;
+                        }
+                        return true;
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Actual:': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Growth:': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Spec數量': {
-                    KilobitFormat: true,
                     Digits: (tPageName, Value) => {
                         return Value.toString();
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
                 },
-                '>10%數量': {
-                    KilobitFormat: true,
+                'TOTAL_QTY': {
+                    KilobitFormat: function (tPageName) {
+                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') {
+                            return false;
+                        }
+                        return true;
+                    },
                     Digits: (tPageName, Value) => {
                         return Value.toString();
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
                 },
-                '<-30%數量': {
-                    KilobitFormat: true,
+                'TOTAL_PCS': {
+                    KilobitFormat: function (tPageName) {
+                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') {
+                            return false;
+                        }
+                        return true;
+                    },
                     Digits: (tPageName, Value) => {
                         return Value.toString();
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                '超規%': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    },
-                    EmptyRule: (tPageName, Value) => {
-                        return '';
-                    }
                 },
             },
-            'FieldName': {
-                'OEE': {
+            'PageName': {
+                'CP_WAREHOUSE': {
                     KilobitFormat: true,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'OEE Target': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'AE': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'QE': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'OE': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'RE': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'WORK(稼動率)': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'LOSS': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'LEND': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'CORR': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'SETUP_W': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'SETUP': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'ABNOR_W': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'ABNOR': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PM': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'DOWN': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'NS': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                '產出達成率(RE)': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PROCESS(稼動率)': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'LOSS-WIP': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'LOSS-MEN': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'ENG': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'SD-SETUP': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'SD-PM': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Rate': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                '占百分比': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'WORK_RT': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'First Yield': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Final Yield': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Recover Rate': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'Yield Gap': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PE_LEND_TAC': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PE_LOSS_TAC': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PE_DSLOSS_TAC': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PE_DSLOSS_TAE': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'QE_RTAC': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                '關Site率': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'WORK': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'PROCESS': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
-                    }
-                },
-                'MTBF': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
                         return Value.toString();
-                    }
+                    },
                 },
-                'MTTR': {
+                'FT_WAREHOUSE': {
                     KilobitFormat: true,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
                         return Value.toString();
-                    }
+                    },
                 },
-                'MTTRw': {
+                'DS_WAREHOUSE': {
                     KilobitFormat: true,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
                         return Value.toString();
-                    }
+                    },
                 },
-                'MTBS': {
+                'DS_WIP': {
                     KilobitFormat: true,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
                         return Value.toString();
-                    }
+                    },
                 },
-                'MTTS': {
-                    KilobitFormat: true,
+                'CP_WIP': {
+                    KilobitFormat: false,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        let tmpValue = Value.toString();
+                        if (tmpValue.indexOf('/') > -1) {
+                            let tArr = tmpValue.split('/');
+                            return MoneyFormat(tArr[0]) + '/' + MoneyFormat(tArr[1]);
+                        }
+                        else {
+                            return MoneyFormat(tmpValue);
+                        }
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
                 },
-                'MTTSw': {
-                    KilobitFormat: true,
+                'FT_WIP': {
+                    KilobitFormat: false,
                     Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        let tmpValue = Value.toString();
+                        if (tmpValue.indexOf('/') > -1) {
+                            let tArr = tmpValue.split('/');
+                            return MoneyFormat(tArr[0]) + '/' + MoneyFormat(tArr[1]);
+                        }
+                        else {
+                            return MoneyFormat(tmpValue);
+                        }
                     },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTBP': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTTP': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTTPw': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTBF-D': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTTR-D': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
-                },
-                'MTTRw-D': {
-                    KilobitFormat: true,
-                    Digits: (tPageName, Value) => {
-                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
-                    },
-                    TailString: (tPageName, Value) => {
-                        return Value.toString();
-                    }
                 },
             }
         };
@@ -2983,6 +2541,26 @@ export class ValueDisplay {
             || (tRowTitleName && (((_k = (_j = this.RuleObj['RowTitle']) === null || _j === void 0 ? void 0 : _j[tRowTitleName]) === null || _k === void 0 ? void 0 : _k.Digits) || ((_m = (_l = this.RuleObj['RowTitle']) === null || _l === void 0 ? void 0 : _l[tRowTitleName]) === null || _m === void 0 ? void 0 : _m.TailString)))
             ? true : false;
     }
+    /**特殊規則判斷，判斷此欄位雖然非數字但是否需數值呈現判斷
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} valueStr 欄位值
+     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
+     * @return 是否需執行數值呈現修改
+     */
+    ExRule(tFieldName, tPageName, valueStr, tRowTitleName) {
+        var tmpStr = valueStr.toString().replace('%', '');
+        if ((tPageName == 'CP_WIP' || tPageName == 'FT_WIP') && valueStr.indexOf('/') > -1) {
+            let tmpArr = valueStr.split('/');
+            if (isNaN(Number(tmpArr[0])) || isNaN(Number(tmpArr[1]))) {
+                return false;
+            }
+        }
+        else if (isNaN(Number(tmpStr))) {
+            return false;
+        }
+        return true;
+    }
     /**將顯示的值做修改(百萬、千分位、小數位數)。使用前不用先判斷使否需修改，可直接呼叫。
      * @param {string} tFieldName 欄位名稱
      * @param {string} valueStr 欄位值
@@ -2991,14 +2569,14 @@ export class ValueDisplay {
      * @return 回傳修改過後的字串
      */
     NeedModifyDisplay(tFieldName, valueStr, tPageName, tRowTitleName) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
         if (valueStr == null) {
             return '';
         }
-        var tmpStr = valueStr.toString().replace('%', '');
-        if (isNaN(Number(tmpStr))) {
+        if (!this.ExRule(tFieldName, tPageName, valueStr, tRowTitleName)) {
             return valueStr;
         }
+        var tmpStr = valueStr.toString().replace('%', '');
         //先跑Rule Function
         for (let Key in this.RuleObj) {
             let tmpName = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
@@ -3016,7 +2594,9 @@ export class ValueDisplay {
                 let hasPersent = tmpStr.lastIndexOf('%') > -1 ? true : false;
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
                 tmpStr = ((_q = (_p = this.RuleObj[Key]) === null || _p === void 0 ? void 0 : _p[tmpName]) === null || _q === void 0 ? void 0 : _q.MillionFormat) ? MillionFormat(tmpStr) : tmpStr;
-                tmpStr = ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.KilobitFormat) ? MoneyFormat(tmpStr) : tmpStr;
+                tmpStr = ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.KilobitFormat) === true
+                    || (typeof ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.KilobitFormat) === 'function' && ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat(tPageName)) === true)
+                    ? MoneyFormat(tmpStr) : tmpStr;
                 tmpStr = tmpStr + (hasPersent ? '%' : '');
                 break;
             }
