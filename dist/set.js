@@ -2406,13 +2406,13 @@ export class PageSet {
         let re = '';
         switch (tPageName) {
             case 'CP_WIP':
-                re = '<div class="toolbar"><span style="color:blue">(單位:Lot/Pcs)</span></div>';
+                re = '<span style="color:blue">(單位:Lot/Pcs)</span>';
                 break;
             case 'FT_WIP':
-                re = '<div class="toolbar"><span style="color:blue">(單位:Lot/Qty)</span></div>';
+                re = '<span style="color:blue">(單位:Lot/Qty)</span>';
                 break;
             case '':
-                re = '<div class="toolbar"><span style="color:blue">(M.NT)</span></div>';
+                re = '<span style="color:blue">(M.NT)</span>';
                 break;
             default:
                 break;

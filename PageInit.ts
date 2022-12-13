@@ -992,10 +992,6 @@ class SearchOperation implements Search, ClickSearch {
 
                 let TableHtml = pm.CreatReadWriteTable(tmpPageName, tdata, AttributeStr, tmpTitle);
                 let preTableHtml = ps.TableInfHtml(tmpPageName);
-                if (set.PageSetObj.noDataTable.indexOf(tmpPageName) > -1 && preTableHtml != '') {
-                    TableHtml = '<div class="toolbar"><span style="color:blue">(M.NT)</span></div>' + TableHtml;
-                }
-
                 let tDom = document.getElementById('TableArea');
                 if (tDom != null) { tDom.innerHTML = TableHtml; }
                 let HiddenTableIdName = tmpPageName + 'TableHidden';
@@ -1123,7 +1119,7 @@ class SearchOperation implements Search, ClickSearch {
                     ps.FreezeField(tmpPageName);
                     ps.MergeTableValue(tmpPageName);
                 });
-                if (HaveMillion || preTableHtml != '') { $('div.toolbar').html('<span style="color:blue">(M.NT)</span>'); }
+                if (HaveMillion || preTableHtml != '') { $('div.toolbar').html(preTableHtml); }
 
                 let te = new set.TableExtend();
                 te.SetExtendTable(tmpPageName, TableIdName);
