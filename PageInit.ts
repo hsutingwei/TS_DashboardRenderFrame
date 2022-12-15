@@ -2549,7 +2549,7 @@ export class PageMake implements PageRender {
                 }
                 else {
                     if (typeof Key === 'object' && dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![FieldName][FieldId].ValueByIdName && dc.DynamicInfObj[tPageName]?.InfluenceToFieldNames![FieldName][FieldId].ValueByIdName!.length > 0) {
-                        let tCheckFirstKey: string[] = Key[0].split('@').find(x => x == '') ? [''] : Key[0].split('@');//如果複選結果含有空白，則直接空白
+                        let tCheckFirstKey: string[] = Key[0].split('@').find(x => x == '') != null ? [''] : Key[0].split('@');//如果複選結果含有空白，則直接空白
                         let tOthersEmpty: boolean = true;//第一個之後的條件是否全空白
                         for (let k = 1; k < Key.length; k++) {
                             if (Key[k].split('@').find(x => x == '') == null) {//不可 != ''，因為複選可能同時有空白和非空白選項
@@ -2573,15 +2573,15 @@ export class PageMake implements PageRender {
                             for (let k = 0; k < tCheckFirstKey.length; k++) {
                                 let begin: boolean = false;
                                 let tKIdx: number = -1;
-                                let tStartIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') ? 0 : tKeyIdxRange[tCheckFirstKey[k]].begin;
-                                let tEndIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') ? tKeyArr.length : tKeyIdxRange[tCheckFirstKey[k]].end;
+                                let tStartIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') != null ? 0 : tKeyIdxRange[tCheckFirstKey[k]].begin;
+                                let tEndIdx: number = tCheckFirstKey[k].split('@').find(x => x == '') != null ? tKeyArr.length : tKeyIdxRange[tCheckFirstKey[k]].end;
                                 for (let i = tStartIdx; i < tEndIdx; i++) {
                                     let flag = false;
                                     let tArr: string[] = tKeyArr[i].replace(/－/g, '-').split('＊');
                                     for (let j = 0; j < Key.length; j++) {
-                                        if (Key[j] == '' || (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == ''))) {
+                                        if (Key[j] == '' || (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == '') != null)) {
                                         }
-                                        else if (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == tArr[j])) {
+                                        else if (Key[j].indexOf('@') > -1 && Key[j].split('@').find(x => x == tArr[j]) != null) {
                                         }
                                         else if (Key[j] == tArr[j]) {
                                             begin = true;
