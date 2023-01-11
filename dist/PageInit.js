@@ -1240,6 +1240,7 @@ export class TableAndSearchOperation extends SearchOperation {
                 AllEmpty = true;
             }
             if (haveError) { //欄位值有誤
+                SetButtonDisable('UpdateSubmit', false, '確定修改');
                 return;
             }
             let bu = GetSelectValue('BU') || '';

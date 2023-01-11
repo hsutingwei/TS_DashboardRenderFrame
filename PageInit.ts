@@ -1308,6 +1308,7 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
             }
 
             if (haveError) {//欄位值有誤
+                SetButtonDisable('UpdateSubmit', false, '確定修改');
                 return;
             }
 
