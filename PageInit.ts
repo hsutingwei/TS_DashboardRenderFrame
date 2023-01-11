@@ -561,7 +561,7 @@ class SearchOperation implements Search, ClickSearch {
             autoWidth: false
         }
 
-        if (ps.DefineMenuLength(tmpPageName).length > 0){
+        if (ps.DefineMenuLength(tmpPageName).length > 0) {
             TableObj.lengthMenu = [ps.DefineMenuLength(tmpPageName), ps.DefineMenuLength(tmpPageName)];
         }
         if (TableObj.lengthMenu && TableObj.lengthMenu[0].length == 1) {
@@ -1221,7 +1221,7 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
                         if (toType(getValue) == 'array') {
                             getValue = getValue.join('/');
                         }
-                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.selectpicker');
+                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.dropdown-toggle .selectpicker');
                     }
                     else if (tmpArr.eq(i).find('td').eq(j).find('input').val() || tmpArr.eq(i).find('td').eq(j).find('input').val() == '') {
                         getValue = tmpArr.eq(i).find('td').eq(j).find('input').val();

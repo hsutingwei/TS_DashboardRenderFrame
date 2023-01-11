@@ -1159,7 +1159,7 @@ export class TableAndSearchOperation extends SearchOperation {
                         if (toType(getValue) == 'array') {
                             getValue = getValue.join('/');
                         }
-                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.selectpicker');
+                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.dropdown-toggle .selectpicker');
                     }
                     else if (tmpArr.eq(i).find('td').eq(j).find('input').val() || tmpArr.eq(i).find('td').eq(j).find('input').val() == '') {
                         getValue = tmpArr.eq(i).find('td').eq(j).find('input').val();
