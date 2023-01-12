@@ -1319,7 +1319,7 @@ export class TableAndSearchOperation extends SearchOperation {
             let TableIdName = tmpPageName + 'Table';
             let t = $('#' + TableIdName).DataTable();
             let oriPage = t.page.info().page;
-            t.draw();
+            //t.draw();
             t.page(oriPage).draw('page');
             ps.FreezeField(tmpPageName);
         }
