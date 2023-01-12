@@ -1030,7 +1030,7 @@ class SearchOperation {
                             format: 'yyyy/mm/dd'
                         });
                     }
-                    t.draw();
+                    //t.draw();
                     t.page(0).draw('page');
                     ps.FreezeField(tmpPageName);
                 });

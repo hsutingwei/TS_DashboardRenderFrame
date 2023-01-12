@@ -1082,7 +1082,7 @@ class SearchOperation implements Search, ClickSearch {
                             format: 'yyyy/mm/dd'
                         } as DatepickerOptions);
                     }
-                    t.draw();
+                    //t.draw();
                     t.page(0).draw('page');
                     ps.FreezeField(tmpPageName);
                 });
