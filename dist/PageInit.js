@@ -364,7 +364,7 @@ class SearchOperation {
                                 tmpObj.push(tObj);
                             }
                             returnData.data = tmpObj;
-                            //$('.selectpicker').selectpicker();
+                            //$('select.selectpicker').selectpicker();
                             callback(returnData);
                             gPageObj.PageNameObj[tPageName].AjaxStatus = null;
                             if (document.getElementById('RowDataArea').style.display != 'block') {
@@ -690,7 +690,7 @@ class SearchOperation {
                             tmpObj.push(tObj);
                         }
                         returnData.data = tmpObj;
-                        $('.selectpicker').selectpicker();
+                        $('select.selectpicker').selectpicker();
                         callback(returnData);
                         //sbtn.button('reset');
                         gPageObj.PageNameObj[tmpPageName] = null;
@@ -1016,7 +1016,7 @@ class SearchOperation {
                             }
                         }
                     }
-                    $('.selectpicker').selectpicker(); //可搜尋下拉式初始化
+                    $('select.selectpicker').selectpicker(); //可搜尋下拉式初始化
                     let tDateDom = $('.form_date');
                     if (tDateDom != null) {
                         tDateDom.datetimepicker({
@@ -1044,7 +1044,7 @@ class SearchOperation {
                     ps.FreezeField(tmpPageName);
                 });
                 $('#' + TableIdName + '_info').bind('DOMNodeInserted', function (e) {
-                    $('.selectpicker').selectpicker();
+                    $('select.selectpicker').selectpicker();
                     let tDateDom = $('.form_date');
                     if (tDateDom != null) {
                         tDateDom.datetimepicker({
@@ -1104,7 +1104,7 @@ class SearchOperation {
                         }
                     }
                 });
-                $('.selectpicker').selectpicker('render'); //可搜尋下拉式初始化 
+                $('select.selectpicker').selectpicker('render'); //可搜尋下拉式初始化 
                 let tDateDom = $('.form_date');
                 if (tDateDom != null) {
                     tDateDom.datetimepicker({
@@ -1154,12 +1154,12 @@ export class TableAndSearchOperation extends SearchOperation {
                 for (let j = 0; j < ModifiableArr.length; j++) {
                     let getValue;
                     let tmpDom;
-                    if (tmpArr.eq(i).find('td').eq(j).find('.selectpicker').val() != null) { //一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
-                        getValue = tmpArr.eq(i).find('td').eq(j).find('.selectpicker').val();
+                    if (tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val() != null) { //一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
+                        getValue = tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val();
                         if (toType(getValue) == 'array') {
                             getValue = getValue.join('/');
                         }
-                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.dropdown-toggle .selectpicker');
+                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('.dropdown-toggle select.selectpicker');
                     }
                     else if (tmpArr.eq(i).find('td').eq(j).find('input').val() || tmpArr.eq(i).find('td').eq(j).find('input').val() == '') {
                         getValue = tmpArr.eq(i).find('td').eq(j).find('input').val();
@@ -1537,8 +1537,8 @@ export class PageOperation extends TableAndSearchOperation {
             for (let i = 0; tmpArr.eq(i).html(); i++) {
                 for (let j = 0; j < ModifiableArr.length; j++) {
                     let getValue = '';
-                    if (tmpArr.eq(i).find('td').eq(j).find('.selectpicker').val() != null) { //一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
-                        getValue = tmpArr.eq(i).find('td').eq(j).find('.selectpicker').val();
+                    if (tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val() != null) { //一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
+                        getValue = tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val();
                         if (toType(getValue) == 'array') {
                             getValue = getValue.join('/');
                         }
@@ -2389,7 +2389,7 @@ export class PageMake {
             }
         }
         let TableIdName = tPageName + 'Table';
-        $('.selectpicker').selectpicker(); //可搜尋下拉式初始化
+        $('select.selectpicker').selectpicker(); //可搜尋下拉式初始化
         let DatePickerObj = {
             weekStart: 1,
             todayBtn: true,
