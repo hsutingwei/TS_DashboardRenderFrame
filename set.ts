@@ -880,17 +880,12 @@ export class PageSet {
         }
 
         for (let i = 0; i < reArr.length; i++) {
-            if (reArr[i].indexOf(',') < 0) { reArr[i] = reArr[i] + ',' + reArr[i]; }
             if (tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart'
                 || (tPageName == 'RentCost' && fFieldName == '機台類別')
                 || ((tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') && fFieldName == '產品線')) {
                 let tt = reArr[i].split(',');
                 let tmpIdx = tt[1].indexOf('-');
                 reArr[i] = tt[0] + ',' + tt[1].substring(tmpIdx + 1);
-            }
-            let ttt = reArr[i].split(',');
-            if (ttt[0].indexOf('"') > -1) {
-                reArr[i] = ttt[0].replace(/"/g, '”') + ',' + ttt[1];
             }
         }
 
@@ -1273,7 +1268,7 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      * @param {string} TitleInfArr 可以是Search回傳的data; 也可以是搜尋Query。因有些PageName的欄位會由TitleInfArr來決定Title
      */
-     public ResetFieldArr(tPageName: string, TitleInfArr?: Array<string>): { FieldArr: string[], NecessaryArr: boolean[], ModifiableArr: boolean[] } {
+    public ResetFieldArr(tPageName: string, TitleInfArr?: Array<string>): { FieldArr: string[], NecessaryArr: boolean[], ModifiableArr: boolean[] } {
         //if (gPageObj.PageNameObj[tPageName] == null) { return { FieldArr: [], NecessaryArr: [], ModifiableArr: [] }; }
         let tFieldArr: Array<string> = [];
         let newNecessaryArr: boolean[] = [];
@@ -1844,7 +1839,7 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      * @param {string[] | { [key: string]: string }[]} data 數據
      */
-     public ChartsOption(tPageName: string, data: string[] | { [key: string]: string }[]): EChartOption {
+    public ChartsOption(tPageName: string, data: string[] | { [key: string]: string }[]): EChartOption {
         if (gPageObj.PageNameObj[tPageName] == null) { return {}; }
         let option: any = {};
         let tdata: number[][] = [];
@@ -2599,7 +2594,7 @@ export class PageSet {
     /**設定Datatable.js的標題訊息(如toolbar)
      * @param {string} tPageName 頁面名稱
      */
-     public TableInfHtml(tPageName: string): string {
+    public TableInfHtml(tPageName: string): string {
         let re = '';
         switch (tPageName) {
             case 'CP_WIP':
@@ -3063,7 +3058,7 @@ export class ColorRuleClass {
     /**從前端定義顏色規則(有些專案還沒支援由後端資料庫定義顏色功能，因此需要由前端定義)
      * @param {string} tPageName 頁面名稱
      */
-     SetColorRuleFromFront(tPageName: string) {
+    SetColorRuleFromFront(tPageName: string) {
         let ReportMode = GetSelectValue('報表類型');
 
         if (tPageName == 'CP_EQGA') {
@@ -3312,7 +3307,7 @@ export class ColorRuleClass {
      * @param {string} tPageName 頁面名稱
      * @param {string[][] | string[] | { [key: string]: string }[]} data 搜尋結果
      */
-     InitColorObj(tPageName: string, data: string[][] | string[] | { [key: string]: string }[]) {
+    InitColorObj(tPageName: string, data: string[][] | string[] | { [key: string]: string }[]) {
         let regexp = /\[[^\[&^\]]+\]/g;
         this.HighlightObj = {};
         let RowTitle: string[] = [];//左邊第一個值的Title

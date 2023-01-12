@@ -795,19 +795,12 @@ export class PageSet {
             reArr = MenuList[tListName].MenuArr;
         }
         for (let i = 0; i < reArr.length; i++) {
-            if (reArr[i].indexOf(',') < 0) {
-                reArr[i] = reArr[i] + ',' + reArr[i];
-            }
             if (tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart'
                 || (tPageName == 'RentCost' && fFieldName == '機台類別')
                 || ((tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') && fFieldName == '產品線')) {
                 let tt = reArr[i].split(',');
                 let tmpIdx = tt[1].indexOf('-');
                 reArr[i] = tt[0] + ',' + tt[1].substring(tmpIdx + 1);
-            }
-            let ttt = reArr[i].split(',');
-            if (ttt[0].indexOf('"') > -1) {
-                reArr[i] = ttt[0].replace(/"/g, '”') + ',' + ttt[1];
             }
         }
         reArr = reArr.filter(onlyUnique);

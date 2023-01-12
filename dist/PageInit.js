@@ -1617,7 +1617,6 @@ export class PageOperation extends TableAndSearchOperation {
         var _a;
         let ps = new set.PageSet();
         for (let key in set.MenuList) {
-            //if (set.MenuList[key].MenuArr.length == 0) {
             if (!set.MenuList[key].DataFromDB) {
                 set.MenuList[key].MenuArr = ps.GetList(tPageName, key);
             }
@@ -1625,8 +1624,15 @@ export class PageOperation extends TableAndSearchOperation {
                 let tmp = ((_a = document.getElementById(key)) === null || _a === void 0 ? void 0 : _a.innerHTML) || '';
                 tmp = htmlDecode(tmp);
                 set.MenuList[key].MenuArr = tmp.split(';');
+                for (let i = 0; i < set.MenuList[key].MenuArr.length; i++) {
+                    if (set.MenuList[key].MenuArr[i].indexOf(',') < 0) {
+                        set.MenuList[key].MenuArr[i] = set.MenuList[key].MenuArr[i] + ',' + set.MenuList[key].MenuArr[i];
+                    }
+                    let ttt = set.MenuList[key].MenuArr[i].split(',');
+                    set.MenuList[key].MenuArr[i] = ttt[0].replace(/"/g, '”') + ',' + ttt[1];
+                }
+                set.MenuList[key].MenuArr = set.MenuList[key].MenuArr.filter(onlyUnique);
             }
-            //}
         }
     }
     /**AP定版功能
