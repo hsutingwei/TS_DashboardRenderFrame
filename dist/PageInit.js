@@ -1016,7 +1016,7 @@ class SearchOperation {
                             }
                         }
                     }
-                    $('select.selectpicker').selectpicker(); //可搜尋下拉式初始化
+                    $('tr *:not([id]) select.selectpicker').selectpicker(); //可搜尋下拉式初始化
                     let tDateDom = $('.form_date');
                     if (tDateDom != null) {
                         tDateDom.datetimepicker({
