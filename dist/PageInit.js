@@ -1941,6 +1941,7 @@ export class PageMake {
         let vd = new set.ValueDisplay();
         let LineAllNotCanEdit = true;
         cr.InitColorObj(tPageName, data);
+        let tmpMenuObj = {};
         for (let i = 0; i < data.length; i++) {
             let tmpId = 'tmprow' + i;
             TableHtml += '<tr id="' + tmpId + '">';
@@ -2053,11 +2054,14 @@ export class PageMake {
                     }
                     else if (!ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                         tmpAttrStr2 += ' id="' + cellId + '_menu"';
-                        if (ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)) {
-                            MenuPart = this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                        if (tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
                         }
                         else {
-                            MenuPart = this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                            tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)
+                                ? this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j])
+                                : this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
                         }
                     }
                     aPart += tStr;

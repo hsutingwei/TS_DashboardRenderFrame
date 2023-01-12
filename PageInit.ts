@@ -2001,6 +2001,9 @@ export class PageMake implements PageRender {
         let vd = new set.ValueDisplay();
         let LineAllNotCanEdit = true;
         cr.InitColorObj(tPageName, data);
+        let tmpMenuObj: { [FieldName: string]: string } = {};
+        let tmpGetListObj: { [FieldName: string]: string[] } = {};
+        let tmpAttrStrObj: { [FieldName: string]: { 'Read'?: string, 'Write'?: string } } = {};
 
         for (let i = 0; i < data.length; i++) {
             let tmpId = 'tmprow' + i;
@@ -2041,9 +2044,13 @@ export class PageMake implements PageRender {
                     aPart += tStr;
                 }
                 if (ps.NeedCheckSimilarity(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) { CheckArr.push(tmpArr[j]); }
-                let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
-                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Read');
-                let tmpAttrStr2 = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Write');
+                if (!tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) { tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false); }
+                if (!tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) { tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = {}; }
+                if (tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]?.Read == null) { tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]].Read = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Read'); }
+                if (tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]?.Write == null) { tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]].Write = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Write'); }
+                let tmpSelectList = tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
+                let tmpAttrStr = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]?.Read || '';
+                let tmpAttrStr2 = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]?.Write || '';
                 if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], isSearch)) {
                     let tmpStr = ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false, cellId) + '"';
                     tmpAttrStr += tmpStr
@@ -2118,11 +2125,14 @@ export class PageMake implements PageRender {
                     }
                     else if (!ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                         tmpAttrStr2 += ' id="' + cellId + '_menu"';
-                        if (ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)) {
-                            MenuPart = this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                        if (tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
                         }
                         else {
-                            MenuPart = this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                            tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)
+                                ? this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j])
+                                : this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
                         }
                     }
                     aPart += tStr;
