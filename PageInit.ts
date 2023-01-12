@@ -502,9 +502,9 @@ class SearchOperation implements Search, ClickSearch {
 
         for (let i = 0; document.getElementById(domId + i.toString()); i++) {
             let tmpDom = $('#' + domId + i.toString());
-            let tmpNode = tmpDom.parent().find('label').html();
+            let tmpNode = tmpDom.parent().parent().find('label').html();
             let tmpValue: any = tmpDom.val();
-            let display: string = tmpDom.parent().find('label').css('display').toString();
+            let display: string = tmpDom.parent().parent().find('label').css('display').toString();
             if (display != 'none') {
                 if (tmpValue == null || tmpValue == undefined) {
                     tmpValue = '';

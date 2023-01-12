@@ -473,9 +473,9 @@ class SearchOperation {
         let fQueryArr = [];
         for (let i = 0; document.getElementById(domId + i.toString()); i++) {
             let tmpDom = $('#' + domId + i.toString());
-            let tmpNode = tmpDom.parent().find('label').html();
+            let tmpNode = tmpDom.parent().parent().find('label').html();
             let tmpValue = tmpDom.val();
-            let display = tmpDom.parent().find('label').css('display').toString();
+            let display = tmpDom.parent().parent().find('label').css('display').toString();
             if (display != 'none') {
                 if (tmpValue == null || tmpValue == undefined) {
                     tmpValue = '';
