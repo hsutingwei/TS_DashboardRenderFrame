@@ -2,198 +2,78 @@ import './PageInit.js';
 import { gPageObj, PageInf, PageMake, PageOperation, PageTool } from './PageInit.js';
 /**下拉式選單資訊物件 */
 export var MenuList = {
-    'Process': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '工時Flag': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '是否有效': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '查詢方式': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '產品類別': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '計算單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'FCST維護單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'FCST 維護單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'SA/PC': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '加總條件': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '報表類型': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '新/舊客戶': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '客戶區域定義': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '包機客戶': {
-        MenuArr: [],
-        DataFromDB: false
-    },
     '年度': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
     '月份': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
     '月': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
     'BU': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'Type': {
+    CUST: {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: true,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    '維護單位': {
+    FORMULA: {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: true,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'CustCombine2': {
+    STEP: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'CompDisplay': {
+    TESTER: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'Top10CustDisplay': {
+    溫度類別: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'CustCompine3AP': {
+    溫度: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'PerHer': {
+    PROBE_CARD: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'Tester': {
+    參數: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueHaveDash: false,
     },
-    'ProductType': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Ver': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'CustCompine3SA': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'CustCompine3PC': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'APSAName': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'FCSTSAName': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'CustCombineCN': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Top10CustDisplay2': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'ProdList': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'BUProdList': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    '營收日期': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'PH_MacType_Display': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'ProductName': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'CustCode2': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RC_PRODUCTTYPE': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RCT_PRODUCTTYPE': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RentCostCust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Runcard_W_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Runcard_C_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RC_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RCT_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    TEST_ALL_CUST: {
-        MenuArr: [],
-        DataFromDB: true
-    }
 };
 /**表單內部值需要Click Function的定義 */
 export var NeedClickObj = {
@@ -690,6 +570,27 @@ export class PageSet {
         }
         return mArr;
     }
+    /**取得欄位對應的Menu名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} fFieldName 欄位名稱
+     * @param {boolean} isSearch 是不是搜尋欄位的模式。false表示Table裡的下拉式選單
+     */
+    GetMenuName(tPageName, fFieldName, isSearch) {
+        let tListName = fFieldName;
+        if (fFieldName == '客戶' || fFieldName == '客戶代碼') {
+            tListName = 'CUST';
+        }
+        else if (fFieldName == '標準公式') {
+            tListName = 'FORMULA';
+        }
+        else if (isSearch && fFieldName == '站點') {
+            tListName = 'STEP';
+        }
+        else if (isSearch && fFieldName == 'Tester') {
+            tListName = 'TESTER';
+        }
+        return tListName;
+    }
     /**下拉式,input的篩選器
      * @param {string} tPageName 頁面名稱
      * @param {string} fFieldName 欄位名稱
@@ -698,99 +599,7 @@ export class PageSet {
     GetListArr(tPageName, fFieldName, isSearch) {
         //加入下拉式選單會影響其他選單的功能(純前端切換)
         let reArr = new Array();
-        let tListName = fFieldName;
-        //下拉式,input的篩選器
-        if (isSearch && tPageName == 'RentCost' && fFieldName == '客戶編號') {
-            tListName = 'RentCostCust';
-        }
-        else if (!isSearch && tPageName == 'RentCost' && fFieldName == '客戶編號') {
-            tListName = 'TEST_ALL_CUST';
-        }
-        else if (tPageName == 'RentCost' && fFieldName == '測試平台') {
-            tListName = 'Tester';
-        }
-        else if (tPageName == 'RentCost' && fFieldName == '機台類別') {
-            tListName = 'PH_MacType_Display';
-        }
-        else if (tPageName == 'RentCost' && fFieldName == '產品類別') {
-            tListName = 'ProductName';
-        }
-        else if (tPageName == 'RevenueMT_Comp' && fFieldName == '客戶') {
-            tListName = 'CompDisplay';
-        }
-        else if (tPageName == 'RevenueMT_Cust' && fFieldName == '客戶') {
-            tListName = 'Top10CustDisplay';
-        }
-        else if (tPageName == 'APMaintain' && fFieldName == '客戶編號') {
-            tListName = 'CustCompine3AP';
-        }
-        else if (tPageName == 'APMaintain' && fFieldName == 'Prober/Handler') {
-            tListName = 'PerHer';
-        }
-        else if (tPageName == 'APMaintain' && fFieldName == 'Tester') {
-            tListName = 'Tester';
-        }
-        else if ((tPageName == 'APMaintain') && (fFieldName == 'Product Type' || fFieldName == '產品類別')) {
-            tListName = 'ProductType';
-        }
-        else if (tPageName == 'APMaintain' && fFieldName == 'Ver') {
-            tListName = 'Ver';
-        }
-        else if ((tPageName == 'FCSTQuery' && fFieldName == '業務名稱')
-            || (tPageName == 'APvsFCSTvsAct' && fFieldName == 'FCST 維護名稱')) {
-            tListName = 'FCSTSAName';
-        }
-        else if ((tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart') && fFieldName == '客戶') {
-            tListName = 'CustCombineCN';
-        }
-        else if ((tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart') && fFieldName == '產品類別') {
-            tListName = 'BUProdList';
-        }
-        else if (tPageName == 'CustomerRevenueQuery' && fFieldName == '十大客戶') {
-            tListName = 'Top10CustDisplay2';
-        }
-        else if (tPageName == 'CPRUNCARDCOST' && fFieldName == '客戶代碼') {
-            tListName = 'Runcard_W_Cust';
-        }
-        else if (tPageName == 'FTRUNCARDCOST' && fFieldName == '客戶代碼') {
-            tListName = 'Runcard_C_Cust';
-        }
-        else if (tPageName == 'COST_SUMMARY' && fFieldName == '客戶代碼') {
-            tListName = 'RC_Cust';
-        }
-        else if (tPageName == 'TESTERCOST_SUMMARY' && fFieldName == '客戶代碼') {
-            tListName = 'RCT_Cust';
-        }
-        else if (tPageName == 'COST_SUMMARY' && fFieldName == '產品線') {
-            tListName = 'RC_PRODUCTTYPE';
-        }
-        else if (tPageName == 'TESTERCOST_SUMMARY' && fFieldName == '產品線') {
-            tListName = 'RCT_PRODUCTTYPE';
-        }
-        else if (fFieldName == 'Prober/Handler') {
-            tListName = 'PerHer';
-        }
-        else if (fFieldName == 'Product Type') {
-            tListName = 'ProductType';
-        }
-        else if (fFieldName == '客戶編號') {
-            let ttidx = gPageObj.PageNameObj[tPageName].FieldArr.indexOf('維護單位');
-            if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr == null) {
-                tListName = 'CustCompine3SA';
-            }
-            else {
-                let gValue = gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[ttidx];
-                if (gValue == 'SA') {
-                    tListName = 'CustCompine3SA';
-                }
-                else if (gValue == 'PC') {
-                    tListName = 'CustCompine3PC';
-                }
-            }
-        }
-        else if (fFieldName == 'SA') {
-            tListName = 'APSAName';
-        }
+        let tListName = this.GetMenuName(tPageName, fFieldName, isSearch);
         if (MenuList[tListName] != null) {
             reArr = MenuList[tListName].MenuArr;
         }
@@ -803,7 +612,6 @@ export class PageSet {
                 reArr[i] = tt[0] + ',' + tt[1].substring(tmpIdx + 1);
             }
         }
-        reArr = reArr.filter(onlyUnique);
         reArr = this.GetListTitle(tPageName, fFieldName, isSearch, reArr);
         return reArr;
     }
@@ -3002,8 +2810,7 @@ export class ColorRuleClass {
                 haveOtherRules = true;
                 let tFIdx = gPageObj.PageNameObj[tPageName].FieldArr.indexOf(x);
                 let GetValue = LastQuery.QueryArr.length > 0 ? (LastQuery.QueryArr[tFIdx].indexOf('@') > -1 ? LastQuery.QueryArr[tFIdx].split('@') : LastQuery.QueryArr[tFIdx]) : '';
-                let tmpMenuArr = ps.GetListArr(tPageName, x, true);
-                let tmpValue = pt.GetListValue(tmpMenuArr, Others[x].toString());
+                let tmpValue = pt.GetListValue(ps.GetMenuName(tPageName, x, true), Others[x].toString());
                 let tmpValueArr = tmpValue.indexOf('/') > -1 ? tmpValue.split('/') : [];
                 let tRowTitleArr = RowTitle.indexOf('/') > -1 ? RowTitle.split('/') : [];
                 let tmpCellValue = CellIdx > -1 && CellIdx < TitleArr.length ? TitleArr[CellIdx] : '';

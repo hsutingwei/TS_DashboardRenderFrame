@@ -421,7 +421,7 @@ class SearchOperation {
                         for (let i = 0; i < gPageObj.PageNameObj[tFPageName].FullData[tIndex].length; i++) {
                             let tmpSelectList = ps.GetListArr(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false);
                             if (set.PageSetObj.NoChangePage.indexOf(tFPageName) < 0 && tmpSelectList.length > 0) {
-                                let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
+                                let GetValue = pt.GetListValue(ps.GetMenuName(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false), gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
                                 if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
                                     return true;
                                 }
@@ -772,10 +772,10 @@ class SearchOperation {
                         else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
                             let tStr = '';
                             if (tmpReadHtml.length > 0) {
-                                tStr = '<span class="' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
+                                tStr = '<span class="' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + pt.GetListValue(ps.GetMenuName(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false), tmpArr[i]) + '</span>';
                             }
                             else {
-                                tStr = '<span>' + pt.GetListValue(tmpSelectList, tmpArr[i]) + '</span>';
+                                tStr = '<span>' + pt.GetListValue(ps.GetMenuName(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], false), tmpArr[i]) + '</span>';
                             }
                             aPart += tStr;
                         }
@@ -974,7 +974,7 @@ class SearchOperation {
                             for (let i = 0; i < gPageObj.PageNameObj[tFPageName].FullData[tIndex].length; i++) {
                                 let tmpSelectList = ps.GetListArr(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false);
                                 if (set.PageSetObj.NoChangePage.indexOf(tFPageName) < 0 && tmpSelectList.length > 0) {
-                                    let GetValue = pt.GetListValue(tmpSelectList, gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
+                                    let GetValue = pt.GetListValue(ps.GetMenuName(tFPageName, gPageObj.PageNameObj[tFPageName].TitleStrArr[i], false), gPageObj.PageNameObj[tFPageName].FullData[tIndex][i]);
                                     if (GetValue.toLowerCase().indexOf(SearchText) > -1) {
                                         return true;
                                     }
@@ -1104,7 +1104,7 @@ class SearchOperation {
                         }
                     }
                 });
-                $('select.selectpicker').selectpicker('render'); //可搜尋下拉式初始化 
+                $('select.selectpicker').selectpicker('render'); //可搜尋下拉式初始化(只對顯示的第一頁初始化)
                 let tDateDom = $('.form_date');
                 if (tDateDom != null) {
                     tDateDom.datetimepicker({
@@ -1633,6 +1633,16 @@ export class PageOperation extends TableAndSearchOperation {
                 }
                 set.MenuList[key].MenuArr = set.MenuList[key].MenuArr.filter(onlyUnique);
             }
+            set.MenuList[key].ValueHaveDash = true;
+            for (let i = set.MenuList[key].MenuArr.length > 0 && (set.MenuList[key].MenuArr[0] == ',' || set.MenuList[key].MenuArr[0] == ',All') ? 1 : 0; i < set.MenuList[key].MenuArr.length; i++) {
+                if (set.MenuList[key].MenuArr[i].split(',')[1].indexOf('-') < 0) {
+                    set.MenuList[key].ValueHaveDash = false;
+                    break;
+                }
+            }
+            for (let i = 0; i < set.MenuList[key].MenuArr.length; i++) {
+                set.MenuList[key].KeyValue[set.MenuList[key].MenuArr[i].split(',')[0]] = set.MenuList[key].MenuArr[i].split(',')[1];
+            }
         }
     }
     /**AP定版功能
@@ -1920,7 +1930,7 @@ export class PageMake {
      * @param {Array<Array<string>>} TitleArr Title呈現
      */
     CreatReadWriteTable(tPageName, data, AttributeStr, TitleArr) {
-        var _a;
+        var _a, _b, _c, _d, _e;
         if (gPageObj.PageNameObj[tPageName] == null) {
             return '';
         }
@@ -1942,6 +1952,8 @@ export class PageMake {
         let LineAllNotCanEdit = true;
         cr.InitColorObj(tPageName, data);
         let tmpMenuObj = {};
+        let tmpGetListObj = {};
+        let tmpAttrStrObj = {};
         for (let i = 0; i < data.length; i++) {
             let tmpId = 'tmprow' + i;
             TableHtml += '<tr id="' + tmpId + '">';
@@ -1979,14 +1991,26 @@ export class PageMake {
                 if (ps.NeedCheckSimilarity(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) {
                     CheckArr.push(tmpArr[j]);
                 }
-                let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
-                let tmpAttrStr = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Read');
-                let tmpAttrStr2 = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Write');
+                if (!tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
+                    tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
+                }
+                if (!tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
+                    tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = {};
+                }
+                if (((_a = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) === null || _a === void 0 ? void 0 : _a.Read) == null) {
+                    tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]].Read = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Read');
+                }
+                if (((_b = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) === null || _b === void 0 ? void 0 : _b.Write) == null) {
+                    tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]].Write = this.MakeWidthAttributeStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], '', 'Write');
+                }
+                let tmpSelectList = tmpGetListObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
+                let tmpAttrStr = ((_c = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) === null || _c === void 0 ? void 0 : _c.Read) || '';
+                let tmpAttrStr2 = ((_d = tmpAttrStrObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) === null || _d === void 0 ? void 0 : _d.Write) || '';
                 if (dc.NeedDynamicGetList(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], isSearch)) {
                     let tmpStr = ' onchange="' + dc.ReturnFunctionStr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false, cellId) + '"';
                     tmpAttrStr += tmpStr;
                     tmpAttrStr2 += tmpStr;
-                    for (let key in (_a = dc.DynamicInfObj[tPageName].InfluenceToFieldNames) === null || _a === void 0 ? void 0 : _a[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
+                    for (let key in (_e = dc.DynamicInfObj[tPageName].InfluenceToFieldNames) === null || _e === void 0 ? void 0 : _e[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
                         let tKeyValue = tmpArr[j];
                         tKeyValue = df.ResetDynamicQuery(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], key, tKeyValue).toString();
                         KeyValueArr.push(tKeyValue);
@@ -2015,10 +2039,10 @@ export class PageMake {
                 else if (tmpSelectList != null && tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                     let tStr = '';
                     if (tmpReadHtml.length > 0) {
-                        tStr = '<span class="' + tmpReadHtml + '">' + pt.GetListValue(tmpSelectList, tmpArr[j]) + '</span>';
+                        tStr = '<span class="' + tmpReadHtml + '">' + pt.GetListValue(ps.GetMenuName(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false), tmpArr[j]) + '</span>';
                     }
                     else {
-                        tStr = '<span>' + pt.GetListValue(tmpSelectList, tmpArr[j]) + '</span>';
+                        tStr = '<span>' + pt.GetListValue(ps.GetMenuName(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false), tmpArr[j]) + '</span>';
                     }
                     aPart += tStr;
                 }
@@ -2642,41 +2666,27 @@ export class PageMake {
 }
 export class PageTool {
     /**有下拉選單的欄位值，將Key值替換成Value值
-     * @param {string[]} tMenuArr 某一個Menu值串列
+     * @param {string} tMenuName MenuName
      * @param {string} keyValue 需要被替換的原字串
      * @return {string} 回傳根據Menu值替換後的結果
      */
-    GetListValue(tMenuArr, keyValue) {
-        if (keyValue == '') {
+    GetListValue(tMenuName, keyValue) {
+        if (keyValue == '' || set.MenuList[tMenuName] == null) {
             return keyValue;
-        }
-        let HaveDash = true; //Menu會有Dash來做前端動態改變Menu的功能
-        for (let i = tMenuArr.length > 0 && (tMenuArr[0] == ',' || tMenuArr[0] == ',All') ? 1 : 0; i < tMenuArr.length; i++) {
-            if (tMenuArr[i].split(',')[1].indexOf('-') < 0) {
-                HaveDash = false;
-                break;
-            }
         }
         if (keyValue.toString().indexOf('@') > -1) { //含有複選分隔符號
             let tValueArr = keyValue.toString().split('@');
             let reArr = new Array();
-            for (let i = 0; i < tMenuArr.length; i++) {
-                let tmp = tMenuArr[i].split(',');
-                if (tValueArr.indexOf(tmp[0]) > -1) {
-                    reArr.push(HaveDash ? tmp[1].split('-')[1] : tmp[1]);
+            for (let i = 0; i < tValueArr.length; i++) {
+                if (set.MenuList[tMenuName].KeyValue[tValueArr[i]] != null) {
+                    reArr.push(set.MenuList[tMenuName].ValueHaveDash ? set.MenuList[tMenuName].KeyValue[tValueArr[i]].split('-')[1] : set.MenuList[tMenuName].KeyValue[tValueArr[i]]);
                 }
             }
             return reArr.join('/');
         }
         else {
-            for (let i = 0; i < tMenuArr.length; i++) {
-                let tmp = tMenuArr[i].split(',');
-                if (tmp[0] == keyValue) {
-                    return HaveDash ? tmp[1].split('-')[1] : tmp[1];
-                }
-            }
+            return set.MenuList[tMenuName].ValueHaveDash ? set.MenuList[tMenuName].KeyValue[keyValue].split('-')[1] : set.MenuList[tMenuName].KeyValue[keyValue];
         }
-        return '';
     }
     /**將數據轉換成匯出格式的數據
      * @param {string} tPageName 頁面名稱
@@ -2706,7 +2716,7 @@ export class PageTool {
                 let tmpSelectList = ps.GetListArr(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false);
                 tmpArr[j] = tmpArr[j].replace(/;/g, '；');
                 if (tmpSelectList.length > 0 && !ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
-                    tReArr.push(this.GetListValue(tmpSelectList, tmpArr[j]));
+                    tReArr.push(this.GetListValue(ps.GetMenuName(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false), tmpArr[j]));
                 }
                 else {
                     tReArr.push(tmpArr[j]);
