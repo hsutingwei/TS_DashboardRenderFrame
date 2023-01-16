@@ -654,7 +654,7 @@ class SearchOperation {
                     Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    gPageObj.PageNameObj[tmpPageName] = doAjax2('Search', true, Query, function (result) {
+                    gPageObj.PageNameObj[tmpPageName].AjaxStatus = doAjax2('Search', true, Query, function (result) {
                         if (Query.PageNumber == 1 && result.length > 0) {
                             let tArr = result[0].split(';');
                             AllResultCount = parseInt(tArr[0]);
@@ -693,7 +693,7 @@ class SearchOperation {
                         $('select.selectpicker').selectpicker();
                         callback(returnData);
                         //sbtn.button('reset');
-                        gPageObj.PageNameObj[tmpPageName] = null;
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
                         SetButtonDisable('SearchBtn', false, '搜尋');
                     });
                 };

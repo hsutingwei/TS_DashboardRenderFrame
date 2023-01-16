@@ -685,7 +685,7 @@ class SearchOperation implements Search, ClickSearch {
                     Query.NumberPerAPage = data.length; //頁面顯示記錄條數，在頁面顯示每頁顯示多少項的時候
                     //console.log(param);
                     //ajax請求數據
-                    gPageObj.PageNameObj[tmpPageName] = doAjax2('Search', true, Query, function (result: string[]) {
+                    gPageObj.PageNameObj[tmpPageName].AjaxStatus = doAjax2('Search', true, Query, function (result: string[]) {
                         type tDataInf = {
                             draw: any,
                             recordsTotal: number,
@@ -730,7 +730,7 @@ class SearchOperation implements Search, ClickSearch {
                         $('select.selectpicker').selectpicker();
                         callback(returnData);
                         //sbtn.button('reset');
-                        gPageObj.PageNameObj[tmpPageName] = null;
+                        gPageObj.PageNameObj[tmpPageName].AjaxStatus = null;
                         SetButtonDisable('SearchBtn', false, '搜尋');
                     });
                 };
