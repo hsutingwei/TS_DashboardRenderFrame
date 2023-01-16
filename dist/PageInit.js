@@ -1038,13 +1038,15 @@ class SearchOperation {
                     $(this).parent().parent('tr').css('display', 'none');
                 });
                 $('.sorting_asc').on('click', function () {
+                    $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
                 });
                 $('.sorting_desc').on('click', function () {
+                    $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
                 });
                 $('#' + TableIdName + '_info').bind('DOMNodeInserted', function (e) {
-                    $('select.selectpicker').selectpicker();
+                    $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     let tDateDom = $('.form_date');
                     if (tDateDom != null) {
                         tDateDom.datetimepicker({
@@ -1104,7 +1106,7 @@ class SearchOperation {
                         }
                     }
                 });
-                $('select.selectpicker').selectpicker('render'); //可搜尋下拉式初始化(只對顯示的第一頁初始化)
+                $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker('render'); //可搜尋下拉式初始化(只對顯示的第一頁初始化)
                 let tDateDom = $('.form_date');
                 if (tDateDom != null) {
                     tDateDom.datetimepicker({
