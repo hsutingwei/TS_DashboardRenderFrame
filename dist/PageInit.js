@@ -1180,7 +1180,7 @@ export class TableAndSearchOperation extends SearchOperation {
                         getValue = tmpArr.eq(i).find('td').eq(j).html();
                         tmpDom = tmpArr.eq(i).find('td').eq(j);
                     }
-                    getValue = getValue.replace(/,/g, '，');
+                    getValue = getValue.replace(/,/g, '，').trim();
                     if (tmpArr.eq(i).css('display') != 'none') { //新增、修改
                         if (getValue != '') {
                             AllEmpty = false;
@@ -2687,7 +2687,7 @@ export class PageTool {
             return reArr.join('/');
         }
         else {
-            return set.MenuList[tMenuName].ValueHaveDash ? set.MenuList[tMenuName].KeyValue[keyValue].split('-')[1] : set.MenuList[tMenuName].KeyValue[keyValue];
+            return set.MenuList[tMenuName].ValueHaveDash ? set.MenuList[tMenuName].KeyValue[keyValue].split('-')[1] : set.MenuList[tMenuName].KeyValue[keyValue] || keyValue;
         }
     }
     /**將數據轉換成匯出格式的數據
