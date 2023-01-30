@@ -2137,14 +2137,14 @@ export class PageMake implements PageRender {
                     }
                     else if (!ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
                         tmpAttrStr2 += ' id="' + cellId + '_menu"';
-                        if (tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]]) {
-                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
+                        if (tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j] + '_' + tmpArr[j]]) {
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j] + '_' + tmpArr[j]];
                         }
                         else {
-                            tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]] = ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)
+                            tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j] + '_' + tmpArr[j]] = ps.IsMultiSelect(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j], false)
                                 ? this.MakeListHtml('Multi Select', tmpAttrStr2, tmpSelectList, tmpArr[j])
                                 : this.MakeListHtml('select', tmpAttrStr2, tmpSelectList, tmpArr[j]);
-                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j]];
+                            MenuPart = tmpMenuObj[gPageObj.PageNameObj[tPageName].TitleStrArr[j] + '_' + tmpArr[j]];
                         }
                     }
                     aPart += tStr;
