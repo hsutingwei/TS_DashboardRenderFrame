@@ -1133,6 +1133,7 @@ export class TableAndSearchOperation extends SearchOperation {
      * @param {boolean} isAsync AJAX是否異步請求(預設true)
      */
     static UpdateSubmit(tPageName, isAsync) {
+        var _a;
         let tmpPageName = tPageName == null ? gPageObj.PageNameArr[0] : tPageName;
         if (gPageObj.PageNameObj[tmpPageName] != null) {
             SetButtonDisable('UpdateSubmit', true, 'loading...');
@@ -1150,6 +1151,8 @@ export class TableAndSearchOperation extends SearchOperation {
             let haveError = false;
             let ModifiableArr = gPageObj.PageNameObj[tmpPageName].ModifiableArr;
             let NecessaryArr = gPageObj.PageNameObj[tmpPageName].NecessaryArr;
+            let ps = new set.PageSet();
+            let tmpModifiableArr = ps.InitModifiable(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr);
             for (let i = 0; tmpArr.eq(i).html(); i++) {
                 let tmpQueryStr = '';
                 let getId = '';
@@ -1211,7 +1214,7 @@ export class TableAndSearchOperation extends SearchOperation {
                             tmpDom.attr('title', '值有誤').tooltip('show');
                             haveError = true;
                         }
-                        else if (NecessaryArr[j] && getValue == '') {
+                        else if (NecessaryArr[j] && getValue == '' && tmpModifiableArr[j]) {
                             tmpArr.eq(i).find('td').eq(j).removeClass('has-error'); //避免重複增加
                             tmpArr.eq(i).find('td').eq(j).addClass('has-error');
                             tmpDom.attr('data-container', 'body');
@@ -1245,8 +1248,7 @@ export class TableAndSearchOperation extends SearchOperation {
                 SetButtonDisable('UpdateSubmit', false, '確定修改');
                 return;
             }
-            let bu = GetSelectValue('BU') || '';
-            let ps = new set.PageSet();
+            let bu = typeof GetSelectValue('BU') == 'object' ? (GetSelectValue('BU') || []).join('@') : ((_a = GetSelectValue('BU')) === null || _a === void 0 ? void 0 : _a.toString()) || '';
             UpdateArr = ps.ResetUpdateQuery(tmpPageName, UpdateArr, 'u');
             InsertArr = ps.ResetUpdateQuery(tmpPageName, InsertArr, 'i');
             let Query = {

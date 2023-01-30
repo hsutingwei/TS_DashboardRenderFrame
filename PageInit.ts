@@ -1211,6 +1211,8 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
             let haveError = false;
             let ModifiableArr = gPageObj.PageNameObj[tmpPageName].ModifiableArr;
             let NecessaryArr = gPageObj.PageNameObj[tmpPageName].NecessaryArr;
+            let ps = new set.PageSet();
+            let tmpModifiableArr = ps.InitModifiable(tmpPageName, gPageObj.PageNameObj[tmpPageName].TitleStrArr);
 
             for (let i = 0; tmpArr.eq(i).html(); i++) {
                 let tmpQueryStr = '';
@@ -1275,7 +1277,7 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
                             tmpDom.attr('title', '值有誤').tooltip('show');
                             haveError = true;
                         }
-                        else if (NecessaryArr[j] && getValue == '') {
+                        else if (NecessaryArr[j] && getValue == '' && tmpModifiableArr[j]) {
                             tmpArr.eq(i).find('td').eq(j).removeClass('has-error');//避免重複增加
                             tmpArr.eq(i).find('td').eq(j).addClass('has-error');
                             tmpDom.attr('data-container', 'body');
@@ -1314,8 +1316,7 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
                 return;
             }
 
-            let bu = GetSelectValue('BU') || '';
-            let ps = new set.PageSet();
+            let bu: string = typeof GetSelectValue('BU') == 'object' ? ((GetSelectValue('BU') || []) as string[]).join('@') : GetSelectValue('BU')?.toString() || '';
             UpdateArr = ps.ResetUpdateQuery(tmpPageName, UpdateArr, 'u');
             InsertArr = ps.ResetUpdateQuery(tmpPageName, InsertArr, 'i');
 
