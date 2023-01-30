@@ -1722,21 +1722,24 @@ export class PageSet {
     */
     FreezeField(tPageName) {
         var tmpArr = new Array();
-        var LeftCount = 0;
         var ShieldIdx = this.NeedShieldField(tPageName);
-        if (tPageName == 'CPCAP' && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
-            LeftCount = 10;
-        }
-        else if (tPageName == 'FTCAP' && gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
-            LeftCount = 10;
-        }
-        if (LeftCount > 0) {
+        /**儲存凍結欄位的資訊 */
+        let ColumnFixObj = {
+            PRICE_ANALYSIS: {
+                FixIndex: [7]
+            },
+            PRICE_QUOTATION: {
+                FixIndex: [9]
+            }
+        };
+        if (ColumnFixObj[tPageName]) {
             var tableDom = $('#' + tPageName + 'Table tbody tr');
             var titleDom = $('#' + tPageName + 'Table_wrapper thead tr');
             for (var i = 0; tableDom.eq(i).html(); i++) {
                 var LeftWidth = 0;
                 var ThLeftWidth = 0;
-                for (var j = 0; j < LeftCount; j++) {
+                for (var j = 0; (ColumnFixObj[tPageName].LeftCount != undefined && j < ColumnFixObj[tPageName].LeftCount)
+                    || (ColumnFixObj[tPageName].FixIndex != undefined && j <= Math.max(...ColumnFixObj[tPageName].FixIndex)); j++) {
                     if (tableDom.eq(i).find('td').eq(j).html() == '表中數據為空') {
                         break;
                     }
@@ -1757,7 +1760,9 @@ export class PageSet {
                         }
                     }
                     var widthCss = LeftWidth.toString() + 'px';
-                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none') {
+                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none'
+                        && (ColumnFixObj[tPageName].LeftCount != undefined
+                            || (ColumnFixObj[tPageName].FixIndex != undefined && ColumnFixObj[tPageName].FixIndex.indexOf(j) > -1))) {
                         tableDom.eq(i).find('td').eq(j).css('left', widthCss);
                         tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
                         tableDom.eq(i).find('td').eq(j).css('z-index', '1');
@@ -1766,7 +1771,9 @@ export class PageSet {
                         }
                     }
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
-                    if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null) {
+                    if (i < 1 && titleDom.eq(i).find('th').eq(j).html() != null
+                        && (ColumnFixObj[tPageName].LeftCount != undefined
+                            || (ColumnFixObj[tPageName].FixIndex != undefined && ColumnFixObj[tPageName].FixIndex.indexOf(j) > -1))) {
                         let thWidth = ThLeftWidth.toString() + 'px';
                         titleDom.eq(i).find('th').eq(j).css('left', thWidth);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
@@ -1781,7 +1788,8 @@ export class PageSet {
                     if (i < 1 && titleDom.eq(i).find('th').eq(j).css('display') != 'none') {
                         var thWidth = Number(titleDom.eq(i).find('th').eq(j).css('width').replace('px', ''));
                         var thPadding = Number(titleDom.eq(i).find('th').eq(j).css('padding-left').replace('px', ''));
-                        ThLeftWidth += thWidth + thPadding * 2;
+                        var thPadding2 = Number(titleDom.eq(i).find('th').eq(j).css('padding-right').replace('px', ''));
+                        ThLeftWidth += thWidth + thPadding + thPadding2;
                     }
                 }
             }
