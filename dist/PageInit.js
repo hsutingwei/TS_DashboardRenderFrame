@@ -1037,14 +1037,21 @@ class SearchOperation {
                 $('#' + TableIdName + ' tbody').on('click', 'tr td .DeleteFun', function () {
                     $(this).parent().parent('tr').css('display', 'none');
                 });
-                $('.sorting_asc').on('click', function () {
+                /**可能是新版datatable.js的用法 */
+                $('.sorting').on('click', function () {
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
                 });
-                $('.sorting_desc').on('click', function () {
+                /**可能是舊版datatable.js的用法 */
+                /*$('.sorting_asc').on('click', function () {//排序時觸發
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
                 });
+
+                $('.sorting_desc').on('click', function () {//排序時觸發
+                    $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
+                    ps.FreezeField(tmpPageName);
+                });*/
                 $('#' + TableIdName + '_info').bind('DOMNodeInserted', function (e) {
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     let tDateDom = $('.form_date');

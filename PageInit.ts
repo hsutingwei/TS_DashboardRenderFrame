@@ -1091,7 +1091,14 @@ class SearchOperation implements Search, ClickSearch {
                     $(this).parent().parent('tr').css('display', 'none');
                 });
 
-                $('.sorting_asc').on('click', function () {//排序時觸發
+                /**可能是新版datatable.js的用法 */
+                $('.sorting').on('click', function () {//排序時觸發
+                    $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
+                    ps.FreezeField(tmpPageName);
+                });
+
+                /**可能是舊版datatable.js的用法 */
+                /*$('.sorting_asc').on('click', function () {//排序時觸發
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
                 });
@@ -1099,7 +1106,7 @@ class SearchOperation implements Search, ClickSearch {
                 $('.sorting_desc').on('click', function () {//排序時觸發
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
                     ps.FreezeField(tmpPageName);
-                });
+                });*/
 
                 $('#' + TableIdName + '_info').bind('DOMNodeInserted', function (e) {//頁數改變時觸發
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
