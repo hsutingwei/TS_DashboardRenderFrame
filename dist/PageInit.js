@@ -579,8 +579,9 @@ class SearchOperation {
         so.ResetSearchQuery(tmpPageName, fQueryArr);
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
-        if (set.PageSetObj.NeedDataTableFreeze.indexOf(tmpPageName) > -1) {
-            TableObj.fixedColumns = ps.GetDataTableFreezeValue(tmpPageName);
+        let tfixedColumns = ps.GetDataTableFreezeValue(tmpPageName);
+        if (tfixedColumns != undefined) {
+            TableObj.fixedColumns = { leftColumns: tfixedColumns };
         }
         if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1) {
             let tmpTitle = ps.SetFormTitleFromQuery(tmpPageName, Query.QueryArr);

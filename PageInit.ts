@@ -607,8 +607,9 @@ class SearchOperation implements Search, ClickSearch {
         Query.QueryArr = fQueryArr;
         gPageObj.PageNameObj[tmpPageName].LastQuery = Query;
 
-        if (set.PageSetObj.NeedDataTableFreeze.indexOf(tmpPageName) > -1) {
-            TableObj.fixedColumns = ps.GetDataTableFreezeValue(tmpPageName);
+        let tfixedColumns: number | undefined = ps.GetDataTableFreezeValue(tmpPageName);
+        if (tfixedColumns != undefined) {
+            TableObj.fixedColumns = { leftColumns: tfixedColumns };
         }
 
         if (set.PageSetObj.NeedExport.indexOf(tmpPageName) > -1) {

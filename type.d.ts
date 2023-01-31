@@ -40,8 +40,6 @@ type PageSetObj = {
     NoChangePage: string[],
     /**需要Y軸滾輪的頁面 */
     NeedYScroll: string[],
-    /**合併儲存格，需要使用DataTable的凍結欄位渲染 */
-    NeedDataTableFreeze: string[],
     /**需要重新定義欄位名稱(一開始後端傳過來的欄位名稱是搜尋欄位) */
     NeedResetFieldArr: string[],
     /**需要檢查百分比小數幾位數 */

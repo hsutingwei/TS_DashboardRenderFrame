@@ -131,31 +131,29 @@ export var TableSetObj = {
 /**此物件屬性儲存都是頁面名稱 */
 export var PageSetObj = {
     /**不需要刪除功能的頁面 */
-    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noDeletePage: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST'],
     /**不需要排序的頁面 */
-    noSortPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noSortPage: ['PRICE_QUOTATION'],
     /**不需要表格內搜尋的頁面 */
-    noInSearchingPage: ['APMaintain', 'FCSTMaintain', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noInSearchingPage: ['PRICE_QUOTATION'],
     /**不需要分頁的頁面 */
-    noPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB'],
+    noPage: [],
     /**需要圖表的頁面 */
-    ChartPage: ['BillingFCSTChart', 'CompRevenueChart', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'APFCSTChart'],
+    ChartPage: [],
     /**不需要運行替換顯示欄位的機制的頁面 */
-    NoChangePage: [],
+    NoChangePage: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST'],
     /**需要Y軸滾輪的頁面 */
-    NeedYScroll: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct'],
-    /**需要使用DataTable的凍結欄位渲染 */
-    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct', 'FTRUNCARDCOST', 'CPRUNCARDCOST'],
+    NeedYScroll: ['PRICE_PAR', 'PRICE_PINCOUNT', 'PRICE_FORMULA', 'PRICE_SPECIAL'],
     /**需要重新定義欄位名稱(一開始後端傳過來的欄位名稱是搜尋欄位) */
-    NeedResetFieldArr: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'Top10ProdCustGPM', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    NeedResetFieldArr: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST', 'PRICE_QUOTATION'],
     /**需要檢查百分比小數幾位數 */
     NeedCheckDecimalPoint: [],
     /**不需要DataTable渲染 */
-    noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
+    noDataTable: [],
     /**需要匯出的頁面 */
-    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
+    NeedExport: [],
     /**頁面載入時不預設搜尋 */
-    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    NoDefaultSearch: [],
     TableNeedDefer: [],
 };
 /**月份對應的字串 */
@@ -1700,22 +1698,17 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      */
     GetDataTableFreezeValue(tPageName) {
-        let reObj = {};
+        let re;
         let ReportMode = GetSelectValue('報表類型');
         //var bu = document.getElementById('BuName').innerHTML;
-        if (tPageName == 'FCSTQuery' || tPageName == 'APQuery' || tPageName == 'APvsFCSTvsAct') {
-            reObj.leftColumns = 11;
+        switch (tPageName) {
+            case 'PRICE_ANALYSIS':
+                re = 8;
+                break;
+            default:
+                break;
         }
-        else if (tPageName == 'APMaintain') {
-            reObj.leftColumns = 8;
-        }
-        else if (tPageName == 'CPRUNCARDCOST') {
-            reObj.leftColumns = 10;
-        }
-        else if (tPageName == 'FTRUNCARDCOST') {
-            reObj.leftColumns = 11;
-        }
-        return reObj;
+        return re;
     }
     /**設定凍結欄位(不使用DataTable渲染)
      * @param {string} tPageName 頁面名稱
