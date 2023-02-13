@@ -407,7 +407,7 @@ class SearchOperation implements Search, ClickSearch {
             }
             gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (data: string[]) {
                 document.getElementById('RowDataAreaText')!.innerHTML = '明細';
-                gPageObj.PageNameObj[tPageName].SetTableTitle(Query.QueryArr);
+                gPageObj.PageNameObj[tPageName].SetTableTitle(data);
                 so.EditSearchResult(tPageName, data);
                 //ps.FieldColor(data, tPageName);
                 let pm = new PageMake();
