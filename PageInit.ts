@@ -418,16 +418,18 @@ class SearchOperation implements Search, ClickSearch {
 
                 let TableObj: any = {
                     language: set.lang,  //提示信息
-                    lengthMenu: [[10, 30, 50], [10, 30, 50]],
                     scrollY: '65vh',
                     paging: true,
                     scrollX: true,
                     searching: true,
                     scrollCollapse: true,
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel'
-                    ]
+                }
+                if (ps.DefineMenuLength(tPageName).length > 0) {
+                    TableObj.lengthMenu = [ps.DefineMenuLength(tPageName), ps.DefineMenuLength(tPageName)];
+                }
+                if (set.PageSetObj.NeedExport.indexOf(tPageName) > -1) {
+                    TableObj['dom'] = 'Bfrtip';
+                    TableObj['buttons'] = ['excel'];
                 }
                 let t2 = $('#' + TableIdName).DataTable(TableObj);
                 $.fn.dataTable.ext.search.push(
