@@ -419,9 +419,10 @@ class SearchOperation implements Search, ClickSearch {
                 let TableObj: any = {
                     language: set.lang,  //提示信息
                     scrollY: '65vh',
-                    paging: true,
+                    paging: set.PageSetObj.noPage.indexOf(tPageName) > -1 ? false : true,
                     scrollX: true,
-                    searching: true,
+                    searching: set.PageSetObj.noInSearchingPage.indexOf(tPageName) > -1 ? false : true,
+                    ordering: set.PageSetObj.noSortPage.indexOf(tPageName) > -1 ? false : true,
                     scrollCollapse: true,
                 }
                 if (ps.DefineMenuLength(tPageName).length > 0) {

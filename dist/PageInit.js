@@ -400,9 +400,10 @@ class SearchOperation {
                 let TableObj = {
                     language: set.lang,
                     scrollY: '65vh',
-                    paging: true,
+                    paging: set.PageSetObj.noPage.indexOf(tPageName) > -1 ? false : true,
                     scrollX: true,
-                    searching: true,
+                    searching: set.PageSetObj.noInSearchingPage.indexOf(tPageName) > -1 ? false : true,
+                    ordering: set.PageSetObj.noSortPage.indexOf(tPageName) > -1 ? false : true,
                     scrollCollapse: true,
                 };
                 if (ps.DefineMenuLength(tPageName).length > 0) {
