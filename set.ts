@@ -2592,10 +2592,10 @@ export class ValueDisplay {
         for (let Key in this.RuleObj) {
             let tmpName: string = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
             if (valueStr == '') {
-                return this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.EmptyRule?.(tPageName, valueStr) || '';
+                return this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.EmptyRule?.(tPageName, valueStr, tFieldName) || '';
             }
-            tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.Digits?.(tPageName, tmpStr) || tmpStr;
-            tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.TailString?.(tPageName, tmpStr) || tmpStr;
+            tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.Digits?.(tPageName, tmpStr, tFieldName) || tmpStr;
+            tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.TailString?.(tPageName, tmpStr, tFieldName) || tmpStr;
         }
 
         //再判斷是否需要轉換百萬格式或千分位格式
@@ -2607,7 +2607,7 @@ export class ValueDisplay {
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
                 tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat ? MillionFormat(tmpStr) : tmpStr;
                 tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === true
-                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat(tPageName) === true)
+                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat(tPageName, tmpStr, tFieldName) === true)
                     ? MoneyFormat(tmpStr) : tmpStr;
                 tmpStr = tmpStr + (hasPersent ? '%' : '');
                 break;

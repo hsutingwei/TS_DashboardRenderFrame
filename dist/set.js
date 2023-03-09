@@ -2383,10 +2383,10 @@ export class ValueDisplay {
         for (let Key in this.RuleObj) {
             let tmpName = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
             if (valueStr == '') {
-                return ((_c = (_b = (_a = this.RuleObj[Key]) === null || _a === void 0 ? void 0 : _a[tmpName]) === null || _b === void 0 ? void 0 : _b.EmptyRule) === null || _c === void 0 ? void 0 : _c.call(_b, tPageName, valueStr)) || '';
+                return ((_c = (_b = (_a = this.RuleObj[Key]) === null || _a === void 0 ? void 0 : _a[tmpName]) === null || _b === void 0 ? void 0 : _b.EmptyRule) === null || _c === void 0 ? void 0 : _c.call(_b, tPageName, valueStr, tFieldName)) || '';
             }
-            tmpStr = ((_f = (_e = (_d = this.RuleObj[Key]) === null || _d === void 0 ? void 0 : _d[tmpName]) === null || _e === void 0 ? void 0 : _e.Digits) === null || _f === void 0 ? void 0 : _f.call(_e, tPageName, tmpStr)) || tmpStr;
-            tmpStr = ((_j = (_h = (_g = this.RuleObj[Key]) === null || _g === void 0 ? void 0 : _g[tmpName]) === null || _h === void 0 ? void 0 : _h.TailString) === null || _j === void 0 ? void 0 : _j.call(_h, tPageName, tmpStr)) || tmpStr;
+            tmpStr = ((_f = (_e = (_d = this.RuleObj[Key]) === null || _d === void 0 ? void 0 : _d[tmpName]) === null || _e === void 0 ? void 0 : _e.Digits) === null || _f === void 0 ? void 0 : _f.call(_e, tPageName, tmpStr, tFieldName)) || tmpStr;
+            tmpStr = ((_j = (_h = (_g = this.RuleObj[Key]) === null || _g === void 0 ? void 0 : _g[tmpName]) === null || _h === void 0 ? void 0 : _h.TailString) === null || _j === void 0 ? void 0 : _j.call(_h, tPageName, tmpStr, tFieldName)) || tmpStr;
         }
         //再判斷是否需要轉換百萬格式或千分位格式
         for (let Key in this.RuleObj) {
@@ -2397,7 +2397,7 @@ export class ValueDisplay {
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
                 tmpStr = ((_q = (_p = this.RuleObj[Key]) === null || _p === void 0 ? void 0 : _p[tmpName]) === null || _q === void 0 ? void 0 : _q.MillionFormat) ? MillionFormat(tmpStr) : tmpStr;
                 tmpStr = ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.KilobitFormat) === true
-                    || (typeof ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.KilobitFormat) === 'function' && ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat(tPageName)) === true)
+                    || (typeof ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.KilobitFormat) === 'function' && ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat(tPageName, tmpStr, tFieldName)) === true)
                     ? MoneyFormat(tmpStr) : tmpStr;
                 tmpStr = tmpStr + (hasPersent ? '%' : '');
                 break;
