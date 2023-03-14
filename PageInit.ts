@@ -816,7 +816,7 @@ class SearchOperation implements Search, ClickSearch {
                             tmpReadHtml = 'read';
                         }
 
-                        if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[i])) {
+                        if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1) {
                             aPart += tmpArr[i];
                         }
                         else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[0])) {
@@ -2101,7 +2101,7 @@ export class PageMake implements PageRender {
                     LineAllNotCanEdit = true;
                 }*/
 
-                if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1 || ps.NoChangeField(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[j])) {
+                if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1) {
                     aPart += tmpArr[j];
                 }
                 else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpFirstTitle)) {
