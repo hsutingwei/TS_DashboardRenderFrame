@@ -1657,6 +1657,7 @@ export class PageOperation extends TableAndSearchOperation {
             }
             for (let i = 0; i < set.MenuList[key].MenuArr.length; i++) {
                 set.MenuList[key].KeyValue[set.MenuList[key].MenuArr[i].split(',')[0]] = set.MenuList[key].MenuArr[i].split(',')[1];
+                set.MenuList[key].ValueKey[set.MenuList[key].MenuArr[i].split(',')[1]] = set.MenuList[key].MenuArr[i].split(',')[0];
             }
         }
     }
