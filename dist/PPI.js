@@ -30,6 +30,8 @@ export class PPSearch {
             NumberPerAPage: -1,
             QueryArr: [bu]
         };
+        let ps = new PageSet();
+        Query.QueryArr = ps.ResetSearchQuery(tPageName, Query.QueryArr);
         gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('HomePageSearch', true, Query, function (data) {
             let pps = new PPSearch();
             pps.SubBlockRouter(tPageName, data);

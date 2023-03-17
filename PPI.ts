@@ -22,7 +22,7 @@ export class PPSearch implements PartPageSearch {
             gPageObj.PageNameObj[tPageName].AjaxStatus = null;
         }
 
-        let Query = {};
+        let Query: any = {};
         let Block = gPageObj.PageNameObj[tPageName].BlockId;
         let taIdx = NeedAjaxArr.indexOf(tPageName);
         document.getElementById(Block + '_Loader')!.style.display = 'block';
@@ -36,6 +36,9 @@ export class PPSearch implements PartPageSearch {
             QueryArr: [bu]
         }
 
+        let ps = new PageSet();
+        Query.QueryArr = ps.ResetSearchQuery(tPageName, Query.QueryArr);
+
         gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('HomePageSearch', true, Query, function (data: string[]) {
             let pps = new PPSearch();
             pps.SubBlockRouter(tPageName, data);
@@ -47,8 +50,8 @@ export class PPSearch implements PartPageSearch {
     SubBlockRouter(tPageName: string, data: string[]): void {
         let ppm = new PPMake();
         if (gPageObj.PageNameObj[tPageName]) {
-            let TableHtmlStr = 
-            ppm.TableReport(tPageName, gPageObj.PageNameObj[tPageName].BlockId, data);
+            let TableHtmlStr =
+                ppm.TableReport(tPageName, gPageObj.PageNameObj[tPageName].BlockId, data);
         }
     }
 }
@@ -373,7 +376,7 @@ export class PPMake implements BlockReport {
     /**初始化個區塊的搜尋Menu
      * @param {string} tPageName 頁面名稱
      */
-     static InitBlockMenu(tPageName: string) {
+    static InitBlockMenu(tPageName: string) {
         /**定義各PageName中的Search Area所需要的Menu */
         type MenuObj = {
             /**PageName */
@@ -385,7 +388,7 @@ export class PPMake implements BlockReport {
                     /**此Menu的預設值 */
                     DefaultValue: string[],
                     /**此Menu會觸法重新搜尋的PageName */
-                    EventPageName:string[]
+                    EventPageName: string[]
                 }
             }
         }
