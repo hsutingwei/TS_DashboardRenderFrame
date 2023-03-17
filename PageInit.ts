@@ -50,6 +50,7 @@ $(function () {
         }
 
         po.InitListArr(tPageName);
+        pm.InitSearchArea(tPageName);
 
         if (ps.isMainIndex(tPageName)) {
             (async function (tPageName: string) {
@@ -62,7 +63,6 @@ $(function () {
             })(tPageName);
         }
         else {
-            pm.InitSearchArea(tPageName);
             if (set.PageSetObj.NoDefaultSearch.indexOf(tPageName) < 0) {
                 PageOperation.Search(tPageName);
             }
