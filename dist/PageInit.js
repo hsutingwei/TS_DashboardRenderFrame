@@ -573,10 +573,6 @@ class SearchOperation {
                 }
             ];
         }
-        if (!ps.CheckSearchQuery(tmpPageName, fQueryArr)) {
-            SetButtonDisable('SearchBtn', false, '搜尋');
-            return;
-        }
         let cr = new set.ColorRuleClass();
         let so = new SearchOperation();
         so.ResetSearchQuery(tmpPageName, fQueryArr);
@@ -595,6 +591,10 @@ class SearchOperation {
             }
         }
         cr.SetColorRuleFromFront(tmpPageName);
+        if (!ps.CheckSearchQuery(tmpPageName, fQueryArr)) {
+            SetButtonDisable('SearchBtn', false, '搜尋');
+            return;
+        }
         if (PageNumber >= 1) {
             Query.PageNumber = 1;
             Query.NumberPerAPage = ps.DefineMenuLength(tmpPageName)[0];
