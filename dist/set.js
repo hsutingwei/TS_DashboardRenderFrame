@@ -3281,7 +3281,7 @@ export class DynamicFunction {
         if (!tPageName) {
             tPageName = gPageObj.PageNameArr[0];
         }
-        let bu = '';
+        let bu = $('#BuName').html() != null ? $('#BuName').html() : '';
         let Query = {
             PageName: tPageName,
             Year: (year === null || year === void 0 ? void 0 : year.toString()) || '',
