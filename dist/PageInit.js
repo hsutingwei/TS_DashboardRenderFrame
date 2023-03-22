@@ -1031,7 +1031,8 @@ class SearchOperation {
                             startView: 2,
                             minViewMode: 2,
                             forceParse: false,
-                            format: 'yyyy/mm/dd'
+                            format: 'yyyy/mm/dd',
+                            minView: 2,
                         });
                     }
                     //t.draw();
@@ -1068,7 +1069,8 @@ class SearchOperation {
                             startView: 2,
                             minViewMode: 2,
                             forceParse: false,
-                            format: 'yyyy/mm/dd'
+                            format: 'yyyy/mm/dd',
+                            minView: 2,
                         });
                     }
                     PageOperation.CheckReadWriteMode(false);
@@ -1128,7 +1130,8 @@ class SearchOperation {
                         startView: 2,
                         minViewMode: 2,
                         forceParse: false,
-                        format: 'yyyy/mm/dd'
+                        format: 'yyyy/mm/dd',
+                        minView: 2,
                     });
                 }
                 //sbtn.button('reset');

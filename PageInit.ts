@@ -1084,7 +1084,8 @@ class SearchOperation implements Search, ClickSearch {
                             startView: 2,
                             minViewMode: 2,
                             forceParse: false,
-                            format: 'yyyy/mm/dd'
+                            format: 'yyyy/mm/dd',
+                            minView: 2,
                         } as DatepickerOptions);
                     }
                     //t.draw();
@@ -1125,7 +1126,8 @@ class SearchOperation implements Search, ClickSearch {
                             startView: 2,
                             minViewMode: 2,
                             forceParse: false,
-                            format: 'yyyy/mm/dd'
+                            format: 'yyyy/mm/dd',
+                            minView: 2,
                         } as DatepickerOptions);
                     }
                     PageOperation.CheckReadWriteMode(false);
@@ -1188,7 +1190,8 @@ class SearchOperation implements Search, ClickSearch {
                         startView: 2,
                         minViewMode: 2,
                         forceParse: false,
-                        format: 'yyyy/mm/dd'
+                        format: 'yyyy/mm/dd',
+                        minView: 2,
                     } as DatepickerOptions);
                 }
                 //sbtn.button('reset');
