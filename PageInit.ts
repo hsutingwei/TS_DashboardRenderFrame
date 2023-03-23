@@ -1057,6 +1057,7 @@ class SearchOperation implements Search, ClickSearch {
                 }
 
                 $('#addRow').on('click', function () {//新增時觸發
+                    let ps = new set.PageSet();
                     let tmpArr: string[] = PageOperation.AddRowInitList(tmpPageName);
                     t.row.add(tmpArr).draw(false);
                     let tmpidName = tmpPageName + 'Table';
@@ -1074,19 +1075,12 @@ class SearchOperation implements Search, ClickSearch {
                     }
 
                     $('tr *:not([id]) select.selectpicker').selectpicker();//可搜尋下拉式初始化
-                    let tDateDom = $('.form_date');
-                    if (tDateDom != null) {
-                        tDateDom.datetimepicker({
-                            weekStart: 1,
-                            todayBtn: true,
-                            autoclose: true,
-                            todayHighlight: true,
-                            startView: 2,
-                            minViewMode: 2,
-                            forceParse: false,
-                            format: 'yyyy/mm/dd',
-                            minView: 2,
-                        } as DatepickerOptions);
+                    for (let i = 0; i < set.TableSetObj.DatePickerArr.length; i++) {
+                        let tIdx = gPageObj.PageNameObj[tmpPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
+                        if (tIdx > -1) {
+                            let tCName = 'cell_' + tIdx;
+                            $('.' + tCName + ' .form_date').datetimepicker(ps.SetDatePick(tmpPageName, set.TableSetObj.DatePickerArr[i]));
+                        }
                     }
                     //t.draw();
                     t.page(0).draw('page');
@@ -1115,20 +1109,14 @@ class SearchOperation implements Search, ClickSearch {
                 });*/
 
                 $('#' + TableIdName + '_info').bind('DOMNodeInserted', function (e) {//頁數改變時觸發
+                    let ps = new set.PageSet();
                     $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker();
-                    let tDateDom = $('.form_date');
-                    if (tDateDom != null) {
-                        tDateDom.datetimepicker({
-                            weekStart: 1,
-                            todayBtn: true,
-                            autoclose: true,
-                            todayHighlight: true,
-                            startView: 2,
-                            minViewMode: 2,
-                            forceParse: false,
-                            format: 'yyyy/mm/dd',
-                            minView: 2,
-                        } as DatepickerOptions);
+                    for (let i = 0; i < set.TableSetObj.DatePickerArr.length; i++) {
+                        let tIdx = gPageObj.PageNameObj[tmpPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
+                        if (tIdx > -1) {
+                            let tCName = 'cell_' + tIdx;
+                            $('.' + tCName + ' .form_date').datetimepicker(ps.SetDatePick(tmpPageName, set.TableSetObj.DatePickerArr[i]));
+                        }
                     }
                     PageOperation.CheckReadWriteMode(false);
 
@@ -1180,19 +1168,12 @@ class SearchOperation implements Search, ClickSearch {
                 });
 
                 $('#' + TableIdName + ' select.selectpicker:last-child').selectpicker('render');//可搜尋下拉式初始化(只對顯示的第一頁初始化)
-                let tDateDom = $('.form_date');
-                if (tDateDom != null) {
-                    tDateDom.datetimepicker({
-                        weekStart: 1,
-                        todayBtn: true,
-                        autoclose: true,
-                        todayHighlight: true,
-                        startView: 2,
-                        minViewMode: 2,
-                        forceParse: false,
-                        format: 'yyyy/mm/dd',
-                        minView: 2,
-                    } as DatepickerOptions);
+                for (let i = 0; i < set.TableSetObj.DatePickerArr.length; i++) {
+                    let tIdx = gPageObj.PageNameObj[tmpPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
+                    if (tIdx > -1) {
+                        let tCName = 'cell_' + tIdx;
+                        $('.' + tCName + ' .form_date').datetimepicker(ps.SetDatePick(tmpPageName, set.TableSetObj.DatePickerArr[i]));
+                    }
                 }
                 //sbtn.button('reset');
                 SetButtonDisable('SearchBtn', false, '搜尋');
@@ -2052,6 +2033,7 @@ export class PageMake implements PageRender {
             for (let j = 0; j < tmpArr.length; j++) {
                 let ColorHtml = '';
                 let cellId = 'cell_' + i.toString() + '_' + j.toString();
+                let tClassName: string = 'cell_' + j.toString();
                 let ClickHtml = '';
                 let aPart: string = '';
                 let MenuPart: string = '';
@@ -2065,11 +2047,11 @@ export class PageMake implements PageRender {
                 ColorHtml = cr.CheckColorRule(i, j);
 
                 if (set.TableSetObj.SetRight.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1) {
-                    let tStr = '<td id="' + cellId + '" class="' + (ClickHtml != 'onclick=""' && ClickHtml != '' ? 'ClickSearch' : '') + '"  style="text-align:right !important;' + ColorHtml + (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : '') + '" ' + ClickHtml + '>';
+                    let tStr = '<td id="' + cellId + '" class="' + tClassName + ' ' + (ClickHtml != 'onclick=""' && ClickHtml != '' ? 'ClickSearch' : '') + '"  style="text-align:right !important;' + ColorHtml + (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : '') + '" ' + ClickHtml + '>';
                     aPart += tStr;
                 }
                 else {
-                    let tStr = '<td id="' + cellId + '" class="' + (ClickHtml != 'onclick=""' && ClickHtml != '' ? 'ClickSearch' : '') + '" style="' + ColorHtml + (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : '') + '" ' + ClickHtml + '>';
+                    let tStr = '<td id="' + cellId + '" class="' + tClassName + ' ' + (ClickHtml != 'onclick=""' && ClickHtml != '' ? 'ClickSearch' : '') + '" style="' + ColorHtml + (ShieldIdxArr.indexOf(j) > -1 ? 'display:none;' : '') + '" ' + ClickHtml + '>';
                     aPart += tStr;
                 }
                 if (ps.NeedCheckSimilarity(tPageName, gPageObj.PageNameObj[tPageName].TitleStrArr[j])) { CheckArr.push(tmpArr[j]); }
@@ -2510,31 +2492,13 @@ export class PageMake implements PageRender {
 
         let TableIdName = tPageName + 'Table';
         $('select.selectpicker').selectpicker();//可搜尋下拉式初始化
-        let DatePickerObj: any = {
-            weekStart: 1,
-            todayBtn: true,
-            autoclose: true,
-            todayHighlight: true,
-            startView: 2,
-            minViewMode: 2,
-            minView: 2,
-            forceParse: false,
-            format: 'yyyy/mm/dd'
-        };
-        DatePickerObj.minViewMode = 2;
 
-        let HaveDatePick = false;
         for (let i = 0; i < set.TableSetObj.DatePickerArr.length; i++) {
             let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
             if (tIdx > -1) {
-                HaveDatePick = true;
                 let tSDId = 'field_' + tIdx;
-                $('#' + tSDId).datetimepicker(ps.SetDatePick(tPageName, DatePickerObj, tSDId));
+                $('#' + tSDId).datetimepicker(ps.SetDatePick(tPageName, tSDId));
             }
-        }
-
-        if (!HaveDatePick) {
-            $('.form_date').datetimepicker(DatePickerObj);
         }
     }
 

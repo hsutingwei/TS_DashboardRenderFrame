@@ -1162,33 +1162,31 @@ export class PageSet {
 
     /**DatePicker的option設定
      * @param {string} tPageName 頁面名稱
-     * @param {any} DateObj Datepicker的option物件
-     * @param {string} SearchBarIdName 日期選單的Dom ID名稱
-     * @return 回傳修改過後Datepicker的option
+     * @param {string} tFieldName 需判斷的欄位名稱
+     * @return 回傳客製化後Datepicker的option
      */
-    public SetDatePick(tPageName: string, DateObj: any, SearchBarIdName: string): any {
-        let CloneObj: any = JSON.parse(JSON.stringify(DateObj));
+    public SetDatePick(tPageName: string, tFieldName?: string): DatepickerOptions {
+        /**預設值 */
+        let DateObj: any = {
+            weekStart: 1,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: true,
+            startView: 2,
+            minViewMode: 2,
+            forceParse: false,
+            format: 'yyyy/mm/dd',
+            minView: 2,
+        };
 
-        if ((tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
-            || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
-            || tPageName == 'Prober_Handler_CPLCD' || tPageName == 'INK_Activation' || tPageName == 'AOI_Activation'
-            || tPageName == 'Prober_Handler_FT' || tPageName == 'Tester_Activation' || tPageName == 'Prober_Handler_LBI'
-            || tPageName == 'Prober_Handler_DS')
-            && SearchBarIdName == 'field_3') {
-            CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 3, 5, 6];
-        }
-        else if ((tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
-            || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
-            || tPageName == 'Prober_Handler_CPLCD' || tPageName == 'INK_Activation' || tPageName == 'AOI_Activation'
-            || tPageName == 'Prober_Handler_FT' || tPageName == 'Tester_Activation' || tPageName == 'Prober_Handler_LBI'
-            || tPageName == 'Prober_Handler_DS')
-            && SearchBarIdName == 'field_4') {
-            CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 4, 5, 6];
+        if (tPageName == 'EndCustomer' && tFieldName == '出機日') {
+            DateObj.format = 'yyyy-mm';
+            DateObj.startView = 3;
+            DateObj.minView = 3;
+            DateObj.minViewMode = 3;
         }
 
-        return CloneObj;
+        return DateObj;
     }
 
     //定義物件屬性⬆
