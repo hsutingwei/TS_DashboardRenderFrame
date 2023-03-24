@@ -2429,7 +2429,7 @@ export class PageMake {
             let tIdx = gPageObj.PageNameObj[tPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
             if (tIdx > -1) {
                 let tSDId = 'field_' + tIdx;
-                $('#' + tSDId).datetimepicker(ps.SetDatePick(tPageName, tSDId));
+                $('#' + tSDId).datetimepicker(ps.SetDatePick(tPageName, set.TableSetObj.DatePickerArr[i]));
             }
         }
     }
