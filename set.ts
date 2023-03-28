@@ -2561,86 +2561,893 @@ export class ValueDisplay {
     constructor() {
         this.RuleObj = {
             'FieldName': {
-                'TOTAL_LOT': {
-                    KilobitFormat: function (tPageName: string) {
-                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') { return false; }
-                        return true;
+                '銷貨毛利': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
                     },
+                    TailString: (tPageName: string, Value: string | number): string => {
+                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                    }
+                },
+                '數量': {
+                    KilobitFormat: true,
                     Digits: (tPageName: string, Value: string | number): string => {
                         return Value.toString();
                     },
                 },
-                'TOTAL_QTY': {
-                    KilobitFormat: function (tPageName: string) {
-                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') { return false; }
-                        return true;
-                    },
+                '銷貨淨額': {
+                    KilobitFormat: true,
                     Digits: (tPageName: string, Value: string | number): string => {
                         return Value.toString();
                     },
                 },
-                'TOTAL_PCS': {
-                    KilobitFormat: function (tPageName: string) {
-                        if (tPageName == 'CP_WIP' || tPageName == 'FT_WIP') { return false; }
-                        return true;
-                    },
+                '銷貨成本': {
+                    KilobitFormat: true,
                     Digits: (tPageName: string, Value: string | number): string => {
                         return Value.toString();
+                    },
+                },
+                '原料': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '加工費': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '製造費用': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '1月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '2月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '3月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '4月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '5月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '6月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '7月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '8月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '9月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '10月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '11月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '12月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '1月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '2月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '3月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '4月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '5月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '6月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '7月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '8月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '9月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '10月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '11月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                '12月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'Jan': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Feb': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Mar': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Apr': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'May': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Jun': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Jul': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Aug': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Sep': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Oct': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Nov': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Dec': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): boolean => {
+                        let re: boolean = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string, tRowTitleName?: string): string => {
+                        let re: string = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr: string = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' && (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'NSB(M.NT)': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'AP NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'ACT NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'NSBΔ($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'MNT$': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'Qty': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                },
+                'Ver.': {
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return Value.toString();
+                    },
+                    EmptyRule: (tPageName: string, Value: string | number): string => {
+                        return Value.toString() == '' ? '-' : Value.toString();
+                    }
+                },
+                '%': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                    },
+                },
+                '成長率': {
+                    KilobitFormat: true,
+                    Digits: (tPageName: string, Value: string | number): string => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
                     },
                 },
             },
             'PageName': {
-                'CP_WAREHOUSE': {
+                Product_GPM: {
                     KilobitFormat: true,
-                    Digits: (tPageName: string, Value: string | number): string => {
-                        return Value.toString();
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
                     },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
                 },
-                'FT_WAREHOUSE': {
+                TOP_10_Product_GPM: {
                     KilobitFormat: true,
-                    Digits: (tPageName: string, Value: string | number): string => {
-                        return Value.toString();
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
                     },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
                 },
-                'DS_WAREHOUSE': {
+                Customer_GPM: {
                     KilobitFormat: true,
-                    Digits: (tPageName: string, Value: string | number): string => {
-                        return Value.toString();
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
                     },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
                 },
-                'DS_WIP': {
+                TOP_10_Customer_GPM: {
                     KilobitFormat: true,
-                    Digits: (tPageName: string, Value: string | number): string => {
+                    Digits: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                    },
+                    TailString: (tPageName: string, Value: string | number, tFieldName: string): string => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
                         return Value.toString();
-                    },
+                    }
                 },
-                'CP_WIP': {
-                    KilobitFormat: false,
-                    Digits: (tPageName: string, Value: string | number): string => {
-                        let tmpValue: string = Value.toString();
-                        if (tmpValue.indexOf('/') > -1) {
-                            let tArr: string[] = tmpValue.split('/');
-                            return MoneyFormat(tArr[0]) + '/' + MoneyFormat(tArr[1]);
-                        }
-                        else {
-                            return MoneyFormat(tmpValue);
-                        }
-                    },
-                },
-                'FT_WIP': {
-                    KilobitFormat: false,
-                    Digits: (tPageName: string, Value: string | number): string => {
-                        let tmpValue: string = Value.toString();
-                        if (tmpValue.indexOf('/') > -1) {
-                            let tArr: string[] = tmpValue.split('/');
-                            return MoneyFormat(tArr[0]) + '/' + MoneyFormat(tArr[1]);
-                        }
-                        else {
-                            return MoneyFormat(tmpValue);
-                        }
-                    },
-                },
-            }
+            },
         };
     }
 
@@ -2710,10 +3517,10 @@ export class ValueDisplay {
         for (let Key in this.RuleObj) {
             let tmpName: string = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
             if (valueStr == '') {
-                return this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.EmptyRule?.(tPageName, valueStr, tFieldName) || '';
+                return this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.EmptyRule?.(tPageName, valueStr, tFieldName, tRowTitleName) || '';
             }
-            tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.Digits?.(tPageName, tmpStr, tFieldName) || tmpStr;
-            tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.TailString?.(tPageName, tmpStr, tFieldName) || tmpStr;
+            tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.Digits?.(tPageName, tmpStr, tFieldName, tRowTitleName) || tmpStr;
+            tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.TailString?.(tPageName, tmpStr, tFieldName, tRowTitleName) || tmpStr;
         }
 
         //再判斷是否需要轉換百萬格式或千分位格式
@@ -2724,10 +3531,10 @@ export class ValueDisplay {
                 let hasPersent: boolean = tmpStr.lastIndexOf('%') > -1 ? true : false;
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
                 tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat === true
-                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat(tPageName, tmpStr, tFieldName) === true)
+                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat(tPageName, tmpStr, tFieldName, tRowTitleName) === true)
                     ? MillionFormat(tmpStr) : tmpStr;
                 tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === true
-                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat(tPageName, tmpStr, tFieldName) === true)
+                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat(tPageName, tmpStr, tFieldName, tRowTitleName) === true)
                     ? MoneyFormat(tmpStr) : tmpStr;
                 tmpStr = tmpStr + (hasPersent ? '%' : '');
                 break;
