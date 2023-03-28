@@ -390,12 +390,14 @@ class SearchOperation {
             gPageObj.PageNameObj[tPageName].AjaxStatus = doAjax2('Search', true, Query, function (data) {
                 document.getElementById('RowDataAreaText').innerHTML = '明細';
                 gPageObj.PageNameObj[tPageName].SetTableTitle(data);
+                let tmpTitle = new Array();
+                tmpTitle = ps.MakeTableTitle(data, tPageName);
                 so.EditSearchResult(tPageName, data);
                 //ps.FieldColor(data, tPageName);
                 let pm = new PageMake();
                 let TableIdName = Query.PageName + 'Table';
                 let AttributeStr = 'id="' + TableIdName + '" class="hover row-border stripe order-column table table-striped whitespace-nowrap" style="width:100%"';
-                let tableHtml = pm.CreatReadWriteTable(tPageName, data, AttributeStr, []);
+                let tableHtml = pm.CreatReadWriteTable(tPageName, data, AttributeStr, tmpTitle);
                 document.getElementById('RowDataAreaText').innerHTML = tableHtml;
                 let TableObj = {
                     language: set.lang,
