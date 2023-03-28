@@ -2487,7 +2487,7 @@ export class ValueDisplay {
      * @return 回傳修改過後的字串
      */
     NeedModifyDisplay(tFieldName, valueStr, tPageName, tRowTitleName) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
         if (valueStr == null) {
             return '';
         }
@@ -2511,9 +2511,11 @@ export class ValueDisplay {
             if (((_l = (_k = this.RuleObj[Key]) === null || _k === void 0 ? void 0 : _k[tmpName]) === null || _l === void 0 ? void 0 : _l.MillionFormat) || ((_o = (_m = this.RuleObj[Key]) === null || _m === void 0 ? void 0 : _m[tmpName]) === null || _o === void 0 ? void 0 : _o.KilobitFormat)) {
                 let hasPersent = tmpStr.lastIndexOf('%') > -1 ? true : false;
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
-                tmpStr = ((_q = (_p = this.RuleObj[Key]) === null || _p === void 0 ? void 0 : _p[tmpName]) === null || _q === void 0 ? void 0 : _q.MillionFormat) ? MillionFormat(tmpStr) : tmpStr;
-                tmpStr = ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.KilobitFormat) === true
-                    || (typeof ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.KilobitFormat) === 'function' && ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat(tPageName, tmpStr, tFieldName)) === true)
+                tmpStr = ((_q = (_p = this.RuleObj[Key]) === null || _p === void 0 ? void 0 : _p[tmpName]) === null || _q === void 0 ? void 0 : _q.MillionFormat) === true
+                    || (typeof ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.MillionFormat) === 'function' && ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.MillionFormat(tPageName, tmpStr, tFieldName)) === true)
+                    ? MillionFormat(tmpStr) : tmpStr;
+                tmpStr = ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat) === true
+                    || (typeof ((_y = (_x = this.RuleObj[Key]) === null || _x === void 0 ? void 0 : _x[tmpName]) === null || _y === void 0 ? void 0 : _y.KilobitFormat) === 'function' && ((_0 = (_z = this.RuleObj[Key]) === null || _z === void 0 ? void 0 : _z[tmpName]) === null || _0 === void 0 ? void 0 : _0.KilobitFormat(tPageName, tmpStr, tFieldName)) === true)
                     ? MoneyFormat(tmpStr) : tmpStr;
                 tmpStr = tmpStr + (hasPersent ? '%' : '');
                 break;

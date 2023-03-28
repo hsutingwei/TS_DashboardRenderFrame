@@ -149,7 +149,7 @@ type NumberCheckRule = {
         /**若數值為空的規則 */
         EmptyRule?: (...args: any[]) => string,
         /**百萬格式 */
-        MillionFormat?: boolean,
+        MillionFormat?: boolean | function,
         /**千分位格式 */
         KilobitFormat?: boolean | function,
     }

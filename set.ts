@@ -2723,7 +2723,9 @@ export class ValueDisplay {
             if (this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat || this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat) {
                 let hasPersent: boolean = tmpStr.lastIndexOf('%') > -1 ? true : false;
                 tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
-                tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat ? MillionFormat(tmpStr) : tmpStr;
+                tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat === true
+                    || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.MillionFormat(tPageName, tmpStr, tFieldName) === true)
+                    ? MillionFormat(tmpStr) : tmpStr;
                 tmpStr = this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === true
                     || (typeof this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat === 'function' && this.RuleObj![Key as keyof NumberDisplayRule]?.[tmpName]?.KilobitFormat(tPageName, tmpStr, tFieldName) === true)
                     ? MoneyFormat(tmpStr) : tmpStr;
