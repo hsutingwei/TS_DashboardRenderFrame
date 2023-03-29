@@ -2222,9 +2222,15 @@ export class PageSet {
                 }
                 if (count > 0) {
                     t.eq(i).find('td').eq(j).attr('colspan', count + 1);
+                    if (count + 1 >= 10) {
+                        t.eq(i).find('td').eq(j).attr('title', t.eq(i).find('td').eq(j).html());
+                    }
                 }
                 if (rcount > 0) {
                     t.eq(i).find('td').eq(j).attr('rowspan', rcount + 1);
+                    if (rcount + 1 >= 7) {
+                        t.eq(i).find('td').eq(j).attr('title', t.eq(i).find('td').eq(j).html());
+                    }
                 }
             }
         }
