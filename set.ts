@@ -3477,11 +3477,12 @@ export class ValueDisplay {
     }
 
     /**是否需要修改數值呈現(僅判斷) */
-    public NeedChangeDisplay(tFieldName: string, tPageName: string, tRowTitleName?: string): boolean {
-        return this.NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) || this.NeedMillionFormat(tFieldName, tPageName, tRowTitleName)
+    public NeedChangeDisplay(tFieldName: string, tPageName: string, tRowTitleName: string, valueStr: string): boolean {
+        return (this.NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) || this.NeedMillionFormat(tFieldName, tPageName, tRowTitleName)
             || this.RuleObj['FieldName']?.[tFieldName]?.Digits || this.RuleObj['FieldName']?.[tFieldName]?.TailString
             || this.RuleObj['PageName']?.[tPageName]?.Digits || this.RuleObj['PageName']?.[tPageName]?.TailString
-            || (tRowTitleName && (this.RuleObj['RowTitle']?.[tRowTitleName]?.Digits || this.RuleObj['RowTitle']?.[tRowTitleName]?.TailString))
+            || this.RuleObj['RowTitle']?.[tRowTitleName]?.Digits || this.RuleObj['RowTitle']?.[tRowTitleName]?.TailString)
+            && !isNaN(Number(valueStr.replace('%', '')))
             ? true : false;
     }
 

@@ -3258,12 +3258,13 @@ export class ValueDisplay {
             || (tRowTitleName && ((_f = (_e = this.RuleObj['RowTitle']) === null || _e === void 0 ? void 0 : _e[tRowTitleName]) === null || _f === void 0 ? void 0 : _f.KilobitFormat)) ? true : false;
     }
     /**是否需要修改數值呈現(僅判斷) */
-    NeedChangeDisplay(tFieldName, tPageName, tRowTitleName) {
+    NeedChangeDisplay(tFieldName, tPageName, tRowTitleName, valueStr) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
-        return this.NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) || this.NeedMillionFormat(tFieldName, tPageName, tRowTitleName)
+        return (this.NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) || this.NeedMillionFormat(tFieldName, tPageName, tRowTitleName)
             || ((_b = (_a = this.RuleObj['FieldName']) === null || _a === void 0 ? void 0 : _a[tFieldName]) === null || _b === void 0 ? void 0 : _b.Digits) || ((_d = (_c = this.RuleObj['FieldName']) === null || _c === void 0 ? void 0 : _c[tFieldName]) === null || _d === void 0 ? void 0 : _d.TailString)
             || ((_f = (_e = this.RuleObj['PageName']) === null || _e === void 0 ? void 0 : _e[tPageName]) === null || _f === void 0 ? void 0 : _f.Digits) || ((_h = (_g = this.RuleObj['PageName']) === null || _g === void 0 ? void 0 : _g[tPageName]) === null || _h === void 0 ? void 0 : _h.TailString)
-            || (tRowTitleName && (((_k = (_j = this.RuleObj['RowTitle']) === null || _j === void 0 ? void 0 : _j[tRowTitleName]) === null || _k === void 0 ? void 0 : _k.Digits) || ((_m = (_l = this.RuleObj['RowTitle']) === null || _l === void 0 ? void 0 : _l[tRowTitleName]) === null || _m === void 0 ? void 0 : _m.TailString)))
+            || ((_k = (_j = this.RuleObj['RowTitle']) === null || _j === void 0 ? void 0 : _j[tRowTitleName]) === null || _k === void 0 ? void 0 : _k.Digits) || ((_m = (_l = this.RuleObj['RowTitle']) === null || _l === void 0 ? void 0 : _l[tRowTitleName]) === null || _m === void 0 ? void 0 : _m.TailString))
+            && !isNaN(Number(valueStr.replace('%', '')))
             ? true : false;
     }
     /**特殊規則判斷，判斷此欄位雖然非數字但是否需數值呈現判斷

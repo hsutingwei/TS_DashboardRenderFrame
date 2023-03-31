@@ -822,7 +822,7 @@ class SearchOperation implements Search, ClickSearch {
                         if (set.PageSetObj.NoChangePage.indexOf(tmpPageName) > -1) {
                             aPart += tmpArr[i];
                         }
-                        else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[0])) {
+                        else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpPageName, tmpArr[0], tmpArr[i])) {
                             let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '"' + (isWriteMode ? ' style="display:none"' : '') + '>' + vd.NeedModifyDisplay(gPageObj.PageNameObj[tmpPageName].TitleStrArr[i], tmpArr[i], tmpPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[i] + '</span>';
                             aPart += tStr;
                         }
@@ -2092,7 +2092,7 @@ export class PageMake implements PageRender {
                 if (set.PageSetObj.NoChangePage.indexOf(tPageName) > -1) {
                     aPart += tmpArr[j];
                 }
-                else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpFirstTitle)) {
+                else if (vd.NeedChangeDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpFirstTitle, tmpArr[j])) {
                     let tStr = '<span class="MoneyFormat ' + tmpReadHtml + '">' + vd.NeedModifyDisplay(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tmpArr[j], tPageName, tmpArr[0]) + '</span><span class="RealNumber" style="display:none">' + tmpArr[j] + '</span>';
                     aPart += tStr;
                 }
