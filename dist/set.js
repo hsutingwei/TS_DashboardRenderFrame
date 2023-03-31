@@ -3306,7 +3306,7 @@ export class ValueDisplay {
         //先跑Rule Function
         for (let Key in this.RuleObj) {
             let tmpName = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
-            if (valueStr == '') {
+            if (valueStr == '' || tmpStr == '') {
                 return ((_c = (_b = (_a = this.RuleObj[Key]) === null || _a === void 0 ? void 0 : _a[tmpName]) === null || _b === void 0 ? void 0 : _b.EmptyRule) === null || _c === void 0 ? void 0 : _c.call(_b, tPageName, valueStr, tFieldName, tRowTitleName)) || '';
             }
             tmpStr = ((_f = (_e = (_d = this.RuleObj[Key]) === null || _d === void 0 ? void 0 : _d[tmpName]) === null || _e === void 0 ? void 0 : _e.Digits) === null || _f === void 0 ? void 0 : _f.call(_e, tPageName, tmpStr, tFieldName, tRowTitleName)) || tmpStr;

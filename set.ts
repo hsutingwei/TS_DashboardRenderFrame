@@ -3523,7 +3523,7 @@ export class ValueDisplay {
         //先跑Rule Function
         for (let Key in this.RuleObj) {
             let tmpName: string = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' && tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
-            if (valueStr == '') {
+            if (valueStr == '' || tmpStr == '') {
                 return this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.EmptyRule?.(tPageName, valueStr, tFieldName, tRowTitleName) || '';
             }
             tmpStr = this.RuleObj[Key as keyof NumberDisplayRule]?.[tmpName]?.Digits?.(tPageName, tmpStr, tFieldName, tRowTitleName) || tmpStr;
