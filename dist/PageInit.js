@@ -2671,7 +2671,7 @@ export class PageTool {
             return reArr.join('/');
         }
         else {
-            return set.MenuList[tMenuName].ValueHaveDash ? set.MenuList[tMenuName].KeyValue[keyValue].split('-')[1] : set.MenuList[tMenuName].KeyValue[keyValue] || keyValue;
+            return set.MenuList[tMenuName].ValueHaveDash && set.MenuList[tMenuName].KeyValue[keyValue] ? set.MenuList[tMenuName].KeyValue[keyValue].split('-')[1] : (set.MenuList[tMenuName].KeyValue[keyValue] || keyValue);
         }
     }
     /**將數據轉換成匯出格式的數據
