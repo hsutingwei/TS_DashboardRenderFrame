@@ -204,7 +204,7 @@ export class PageInf extends FormInf {
             let tmpObj = ps.ResetFieldArr(this.PageName, data);
             if (tmpObj.FieldArr.length > 0) {
                 this.TitleStrArr = tmpObj.FieldArr;
-                this.ModifiableArr = tmpObj.ModifiableArr;
+                this.ModifiableArr = this.ModifiableArr.map(function (item, i) { return item || tmpObj.ModifiableArr[i]; });
                 this.NecessaryArr = tmpObj.NecessaryArr;
             }
         }
