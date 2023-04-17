@@ -1027,8 +1027,9 @@ class SearchOperation {
                     for (let i = 0; i < set.TableSetObj.DatePickerArr.length; i++) {
                         let tIdx = gPageObj.PageNameObj[tmpPageName].TitleStrArr.indexOf(set.TableSetObj.DatePickerArr[i]);
                         if (tIdx > -1) {
-                            let tCName = 'cell_' + tIdx;
-                            $('.' + tCName + ' .form_date').datetimepicker(ps.SetDatePick(tmpPageName, set.TableSetObj.DatePickerArr[i]));
+                            for (let i = -1; $('#cell_' + i.toString() + '_' + tIdx.toString()).html(); i--) {
+                                $('#cell_' + i.toString() + '_' + tIdx.toString()).datetimepicker(ps.SetDatePick(tmpPageName, set.TableSetObj.DatePickerArr[i]));
+                            }
                         }
                     }
                     //t.draw();
