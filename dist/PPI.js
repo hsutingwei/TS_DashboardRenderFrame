@@ -4,6 +4,7 @@ import { PageSet, TableSetObj, UrlQuery, ColorRuleClass, MenuList, ValueDisplay 
  * 每個專案的Part Page Search可依各需求重新定義。若有新流程需定義，需從PartPageSearch擴充接口
  */
 export class PPSearch {
+    /**主區塊搜尋的最外部接口 */
     static PageSearch() {
         let tPageName = document.getElementById('PageName').innerHTML || '';
         if (tPageName == 'OEEIndex') {
@@ -189,6 +190,7 @@ export class PPSearch {
                 break;
         }
     }
+    /**定義各區塊搜尋的接口 */
     BlockSearch(tPageName) {
         if (!gPageObj.PageNameObj[tPageName]) {
             return;
@@ -340,6 +342,7 @@ export class PPSearch {
             document.getElementById(Block + '_Loader').style.display = 'none';
         });
     }
+    /**各搜尋結果處理的router */
     SubBlockRouter(tPageName, data) {
         let ppm = new PPMake();
         let URLArr = ['OEE', 'AE', 'PE', 'QE'];

@@ -3741,6 +3741,7 @@ export class DynamicClass {
     }
 }
 
+/**此class定義表單內函有click event */
 export class OnclickPage {
     /**判定這個cell有沒有Click Function
      * @param {string} tPageName 頁面名稱
@@ -3795,6 +3796,7 @@ export class OnclickPage {
     }
 }
 
+/**此class定義表單、圖表顏色Highlight規則 */
 export class ColorRuleClass {
     /**經過規則判定，每行確定要Highlight的座標資訊 */
     HighlightObj: {
@@ -4974,6 +4976,7 @@ export class UrlQuery {
     }
 }
 
+/**此class定義表單內摺疊展開的功能 */
 export class TableExtend {
     TableExtendObj: {
         /**頁面名稱 */

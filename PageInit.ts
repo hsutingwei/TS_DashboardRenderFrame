@@ -1186,6 +1186,7 @@ class SearchOperation implements Search, ClickSearch {
     }
 }
 
+/**此class定義搜尋模組，繼承SearchOperation及TableOperation */
 export class TableAndSearchOperation extends SearchOperation implements TableOperation {
     /**Update Submit
      * @param {string} tPageName 頁面名稱
@@ -1987,6 +1988,7 @@ export class PageOperation extends TableAndSearchOperation {
     }
 }
 
+/**此class用於定義表單渲染相關的函式 */
 export class PageMake implements PageRender {
     /**產生Table Html。
      * 含各欄位的menu選單、檢視/編輯、預設值、動態觸發欄位...等
@@ -2718,6 +2720,7 @@ export class PageMake implements PageRender {
     }
 }
 
+/**此class用於定義表單圖表相關的簡易工具函式 */
 export class PageTool {
     /**有下拉選單的欄位值，將Key值替換成Value值
      * @param {string} tMenuName MenuName
