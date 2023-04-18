@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: PageOperation</title>
+    <title>JSDoc: Class: PageTool</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: PageOperation</h1>
+    <h1 class="page-title">Class: PageTool</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>PageOperation<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>PageTool<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">此class定義Page的操作功能PageName底下操作功能定義於此</div>
+            <div class="class-description">此class用於定義表單圖表相關的簡易工具函式</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="PageOperation"><span class="type-signature"></span>new PageOperation<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PageTool"><span class="type-signature"></span>new PageTool<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1526">line 1526</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2657">line 2657</a>
     </li></ul></dd>
     
 
@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id=".ExportExcel"><span class="type-signature">(static) </span>ExportExcel<span class="signature">(tPageName, ExportIdName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="GetListValue"><span class="type-signature"></span>GetListValue<span class="signature">(tMenuName, keyValue)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -157,7 +157,189 @@
 
 
 <div class="description">
-    匯出功能(由後端產生檔案再回傳路徑)
+    有下拉選單的欄位值，將Key值替換成Value值
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tMenuName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">MenuName</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">需要被替換的原字串</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2663">line 2663</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    回傳根據Menu值替換後的結果
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="MakeExportData"><span class="type-signature"></span>MakeExportData<span class="signature">(tPageName, tdata)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    將數據轉換成匯出格式的數據
 </div>
 
 
@@ -216,15 +398,10 @@
 
         <tr>
             
-                <td class="name"><code>ExportIdName</code></td>
+                <td class="name"><code>tdata</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
             
             </td>
 
@@ -232,7 +409,7 @@
 
             
 
-            <td class="description last">觸發此event的匯出button</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -273,7 +450,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1871">line 1871</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2686">line 2686</a>
     </li></ul></dd>
     
 
@@ -298,94 +475,28 @@
 
 
 
-
-
-
-
+<h5>Returns:</h5>
 
         
-            
-
-    
-
-    
-    <h4 class="name" id=".LinkToERP"><span class="type-signature">(static) </span>LinkToERP<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    LinkToERP功能。目前實作於自有產品
+<div class="param-desc">
+    回傳調整過後的數據
 </div>
 
 
 
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
 
 
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1906">line 1906</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
+    </dd>
 </dl>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -397,7 +508,7 @@
     
 
     
-    <h4 class="name" id=".UploadData"><span class="type-signature">(static) </span>UploadData<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ObjTitleToStrArr"><span class="type-signature"></span>ObjTitleToStrArr<span class="signature">(tPageName, TitleArr)</span><span class="type-signature"></span></h4>
     
 
     
@@ -405,7 +516,7 @@
 
 
 <div class="description">
-    AP、FCST匯入功能
+    將Title物件轉換為一維陣列。匯出的函式會用
 </div>
 
 
@@ -461,130 +572,16 @@
         </tr>
 
     
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1693">line 1693</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".UploadData2"><span class="type-signature">(static) </span>UploadData2<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    有拖拉功能的上傳功能(總經理報表的專案管理)
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
 
         <tr>
             
-                <td class="name"><code>tPageName</code></td>
+                <td class="name"><code>TitleArr</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;Array.&lt;string>></span>
 
 
             
@@ -594,7 +591,7 @@
 
             
 
-            <td class="description last">頁面名稱</td>
+            <td class="description last">Title的物件</td>
         </tr>
 
     
@@ -635,7 +632,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1775">line 1775</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2723">line 2723</a>
     </li></ul></dd>
     
 
@@ -671,7 +668,7 @@
     
 
     
-    <h4 class="name" id=".VersionSet"><span class="type-signature">(static) </span>VersionSet<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ReloadSelectOption"><span class="type-signature"></span>ReloadSelectOption<span class="signature">(ExceptforIdArr, tPageName)</span><span class="type-signature"></span></h4>
     
 
     
@@ -679,7 +676,7 @@
 
 
 <div class="description">
-    AP定版功能
+    除了指定的搜尋Bar物件ID以外，其餘Menu重新整理
 </div>
 
 
@@ -715,13 +712,13 @@
 
         <tr>
             
-                <td class="name"><code>tPageName</code></td>
+                <td class="name"><code>ExceptforIdArr</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
@@ -731,211 +728,9 @@
 
             
 
-            <td class="description last">頁面名稱</td>
+            <td class="description last">搜尋Bar物件ID</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1655">line 1655</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="InitListArr"><span class="type-signature"></span>InitListArr<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    初始化Menu內容
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1619">line 1619</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="UpdateClick"><span class="type-signature"></span>UpdateClick<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Update點擊觸發的功能。此函式還未將Query傳入後端
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
@@ -997,7 +792,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1531">line 1531</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2806">line 2806</a>
     </li></ul></dd>
     
 
@@ -1022,6 +817,348 @@
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SelectDisableChange"><span class="type-signature"></span>SelectDisableChange<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    修改下拉式選單可否使用
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2795">line 2795</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SetDefaultValue"><span class="type-signature"></span>SetDefaultValue<span class="signature">(DefaultObj, UrlObj)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    重新定義搜尋欄位初始值
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>DefaultObj</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">原來的搜尋Obj Inf.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>UrlObj</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">來自Get參數(from URL)的搜尋欄位初始值obj Inf.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2861">line 2861</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    回傳重新定義的搜尋預設值物件
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="UrlGetVariable"><span class="type-signature"></span>UrlGetVariable<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    get傳遞參數設置搜尋條件
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line2779">line 2779</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+    
 
 
 

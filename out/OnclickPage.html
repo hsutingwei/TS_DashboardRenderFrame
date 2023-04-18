@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: PPMake</title>
+    <title>JSDoc: Class: OnclickPage</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: PPMake</h1>
+    <h1 class="page-title">Class: OnclickPage</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>PPMake<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>OnclickPage<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">此class用於定義個專案的Part Page Search的區塊搜尋後的表單圖表渲染邏輯。以及定義Part Page Search需要額外的邏輯功能</div>
+            <div class="class-description">此class定義表單內函有click event</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="PPMake"><span class="type-signature"></span>new PPMake<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="OnclickPage"><span class="type-signature"></span>new OnclickPage<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PPI.js.html">PPI.js</a>, <a href="PPI.js.html#line767">line 767</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3496">line 3496</a>
     </li></ul></dd>
     
 
@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id=".InitBlockMenu"><span class="type-signature">(static) </span>InitBlockMenu<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="FieldIsOnclick"><span class="type-signature"></span>FieldIsOnclick<span class="signature">(tPageName, FieldName, RowTitle)</span><span class="type-signature"></span></h4>
     
 
     
@@ -157,392 +157,7 @@
 
 
 <div class="description">
-    初始化個區塊的搜尋Menu
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>tPageName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">頁面名稱</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PPI.js.html">PPI.js</a>, <a href="PPI.js.html#line1120">line 1120</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="CheckDataCount"><span class="type-signature"></span>CheckDataCount<span class="signature">(data, RowCount)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    檢查搜尋結果的數量，若不足則自動補齊
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;string></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">原完整搜尋結果陣列</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>RowCount</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">data應該的行數</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PPI.js.html">PPI.js</a>, <a href="PPI.js.html#line772">line 772</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="ColorMergeCell"><span class="type-signature"></span>ColorMergeCell<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    給合併儲存格後的表格上色(只針對有合併的範圍)
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PPI.js.html">PPI.js</a>, <a href="PPI.js.html#line1048">line 1048</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="OEEReport"><span class="type-signature"></span>OEEReport<span class="signature">(tPageName, idName, data)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    OEE渲染
+    判定這個cell有沒有Click Function
 </div>
 
 
@@ -601,7 +216,7 @@
 
         <tr>
             
-                <td class="name"><code>idName</code></td>
+                <td class="name"><code>FieldName</code></td>
             
 
             <td class="type">
@@ -617,20 +232,20 @@
 
             
 
-            <td class="description last">渲染DOM ID</td>
+            <td class="description last">欄位名稱</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>RowTitle</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">string</span>
 
 
             
@@ -640,7 +255,7 @@
 
             
 
-            <td class="description last">原完整搜尋結果陣列</td>
+            <td class="description last">該行行Title</td>
         </tr>
 
     
@@ -681,7 +296,255 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PPI.js.html">PPI.js</a>, <a href="PPI.js.html#line795">line 795</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3502">line 3502</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GetOnclickHtml"><span class="type-signature"></span>GetOnclickHtml<span class="signature">(tPageName, tTablePageName, FieldName, RowTitle, dataArr, p1)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tTablePageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">click search的table頁面名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>FieldName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">欄位名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>RowTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">該行行Title</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dataArr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">一行的data陣列</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>p1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">需額外加入的參數</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3516">line 3516</a>
     </li></ul></dd>
     
 

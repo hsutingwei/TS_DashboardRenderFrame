@@ -30,198 +30,202 @@
 import { gPageObj, PageInf, PageMake, PageOperation, PageTool } from './PageInit.js';
 /**下拉式選單資訊物件 */
 export var MenuList = {
-    'Process': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '工時Flag': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '是否有效': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '查詢方式': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '產品類別': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '計算單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'FCST維護單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'FCST 維護單位': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'SA/PC': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '加總條件': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '報表類型': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '新/舊客戶': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '客戶區域定義': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    '包機客戶': {
-        MenuArr: [],
-        DataFromDB: false
-    },
     '年度': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '年': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
     '月份': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
     '月': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'BU': {
+    'Win/Lost': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '查詢方式': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '新舊代理商': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '是否為代理商': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '新舊客戶': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    '新舊產品': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
     'Type': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    '維護單位': {
+    '單位': {
         MenuArr: [],
-        DataFromDB: false
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CustCombine2': {
+    'CP/FT': {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CompDisplay': {
+    'Status': {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'Top10CustDisplay': {
+    APMVer: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CustCompine3AP': {
+    Competitor: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'PerHer': {
+    TerminalClient: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'Tester': {
+    Agent: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'ProductType': {
+    TerminalClientType: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'Ver': {
+    Devno: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CustCompine3SA': {
+    ProductCategory: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CustCompine3PC': {
+    ProjectProduct: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'APSAName': {
+    AgentEng: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'FCSTSAName': {
+    TerminalClientEng: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'CustCombineCN': {
+    Country: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'Top10CustDisplay2': {
+    FullTerminalClient: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'ProdList': {
+    DevnoForAPFCST: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    'BUProdList': {
+    AREA: {
         MenuArr: [],
-        DataFromDB: true
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
     },
-    '營收日期': {
-        MenuArr: [],
-        DataFromDB: false
-    },
-    'PH_MacType_Display': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'ProductName': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'CustCode2': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RC_PRODUCTTYPE': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RCT_PRODUCTTYPE': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RentCostCust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Runcard_W_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'Runcard_C_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RC_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    'RCT_Cust': {
-        MenuArr: [],
-        DataFromDB: true
-    },
-    TEST_ALL_CUST: {
-        MenuArr: [],
-        DataFromDB: true
-    }
 };
 /**表單內部值需要Click Function的定義 */
 export var NeedClickObj = {
@@ -265,12 +269,6 @@ export var DCMenuIdNameList = [];
 export let ColorRuleArr = {};
 /**此物件屬性儲存都是欄位名稱 */
 export var TableSetObj = {
-    /**需要千分位表示數字的欄位名稱 */
-    MoneyFieldArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-    /**需要將顯示的值做特別修改 */
-    NeedModifyDisplayArr: ['出貨數', '成本', '毛利率', 'Jan營收', 'Feb營收', 'Mar營收', 'Apr營收', 'May營收', 'Jun營收', 'Jul營收', 'Aug營收', 'Sep營收', 'Oct營收', 'Nov營收', 'Dec營收', 'Jan單價', 'Feb單價', 'Mar單價', 'Apr單價', 'May單價', 'Jun單價', 'Jul單價', 'Aug單價', 'Sep單價', 'Oct單價', 'Nov單價', 'Dec單價', 'Jan數量', 'Feb數量', 'Mar數量', 'Apr數量', 'May數量', 'Jun數量', 'Jul數量', 'Aug數量', 'Sep數量', 'Oct數量', 'Nov數量', 'Dec數量', '1月數量', '1月單價', '1月營收', '2月數量', '2月單價', '2月營收', '3月數量', '3月單價', '3月營收', '4月數量', '4月單價', '4月營收', '5月數量', '5月單價', '5月營收', '6月數量', '6月單價', '6月營收', '7月數量', '7月單價', '7月營收', '8月數量', '8月單價', '8月營收', '9月數量', '9月單價', '9月營收', '10月數量', '10月單價', '10月營收', '11月數量', '11月單價', '11月營收', '12月數量', '12月單價', '12月營收', 'AP', 'FCST', 'Actual', 'Actual vs AP Hit Rate', 'Actual vs FCST Hit Rate', '單價', '營收', '數量', 'Taeget GP %', 'NSB', '%', 'GPM', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-    /**需要轉百萬的欄位 */
-    MillionFieldArr: [],
     /**若是0，可忽略的欄位 */
     IgnoreZero: [],
     /**欄位需要置右的欄位名稱 */
@@ -285,33 +283,29 @@ export var TableSetObj = {
 /**此物件屬性儲存都是頁面名稱 */
 export var PageSetObj = {
     /**不需要刪除功能的頁面 */
-    noDeletePage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noDeletePage: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST'],
     /**不需要排序的頁面 */
-    noSortPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noSortPage: ['PRICE_QUOTATION'],
     /**不需要表格內搜尋的頁面 */
-    noInSearchingPage: ['APMaintain', 'FCSTMaintain', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'CPRUNCARDCOST', 'FTRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    noInSearchingPage: ['PRICE_QUOTATION'],
     /**不需要分頁的頁面 */
-    noPage: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB'],
+    noPage: [],
     /**需要圖表的頁面 */
-    ChartPage: ['BillingFCSTChart', 'CompRevenueChart', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'APFCSTChart'],
+    ChartPage: [],
     /**不需要運行替換顯示欄位的機制的頁面 */
-    NoChangePage: [],
+    NoChangePage: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST'],
     /**需要Y軸滾輪的頁面 */
-    NeedYScroll: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct'],
-    /**需要使用DataTable的凍結欄位渲染 */
-    NeedDataTableFreeze: ['FCSTQuery', 'APQuery', 'APvsFCSTvsAct', 'FTRUNCARDCOST', 'CPRUNCARDCOST'],
+    NeedYScroll: ['PRICE_PAR', 'PRICE_PINCOUNT', 'PRICE_FORMULA', 'PRICE_SPECIAL'],
     /**需要重新定義欄位名稱(一開始後端傳過來的欄位名稱是搜尋欄位) */
-    NeedResetFieldArr: ['APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'ProdCustGPM', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'NewProductCustomerNSB', 'Top10ProdCustGPM', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    NeedResetFieldArr: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST', 'PRICE_QUOTATION'],
     /**需要檢查百分比小數幾位數 */
     NeedCheckDecimalPoint: [],
     /**不需要DataTable渲染 */
-    noDataTable: ['ProdCustGPM', 'Top10ProdCustGPM'],
-    /**需要百萬訊息標示的頁面 */
-    NeedMillionInf: ['BillingFCSTChart', 'APFCSTChart', 'CompRevenueChart', 'CustomerRevenueQuery', 'Top10CustomerRevenue', 'NewProductCustomerNSB', 'ProdCustGPM', 'Top10ProdCustGPM'],
+    noDataTable: [],
     /**需要匯出的頁面 */
-    NeedExport: ['FCSTMaintain', 'APMaintain', 'CompRevenueChart', 'Top10CustomerRevenue', 'CustomerRevenueQuery', 'APQuery', 'FCSTQuery', 'APvsFCSTvsAct', 'OVH', 'HMRATIO', 'VARIABLE'],
+    NeedExport: [],
     /**頁面載入時不預設搜尋 */
-    NoDefaultSearch: ['FTRUNCARDCOST', 'CPRUNCARDCOST', 'COST_SUMMARY', 'TESTERCOST_SUMMARY'],
+    NoDefaultSearch: [],
     TableNeedDefer: [],
 };
 /**月份對應的字串 */
@@ -651,22 +645,16 @@ export class PageSet {
         /**所有頁面中的欄位可否修改定義 */
         let FieldModifiableInf = {
             資料來源: {
-                ValueNotEmptyThenNoEdit: ['客戶代碼', '客戶名稱']
+                ValueNotEmptyThenNoEdit: ['BU', '年度', '代理商代碼', '代理商名稱']
             },
             Ver: {
-                ValueNotEmptyThenNoEdit: ['年度', 'BU', '客戶編號', '型號', 'Prober/Handler', 'Tester', 'Product Type', '1月數量', '1月單價', '1月GP(%)', '1月營收', '2月數量', '2月單價', '2月GP(%)', '2月營收', '3月數量', '3月單價', '3月GP(%)', '3月營收', '4月數量', '4月單價', '4月GP(%)', '4月營收', '5月數量', '5月單價', '5月GP(%)', '5月營收', '6月數量', '6月單價', '6月GP(%)', '6月營收', '7月數量', '7月單價', '7月GP(%)', '7月營收', '8月數量', '8月單價', '8月GP(%)', '8月營收', '9月數量', '9月單價', '9月GP(%)', '9月營收', '10月數量', '10月單價', '10月GP(%)', '10月營收', '11月數量', '11月單價', '11月GP(%)', '11月營收', '12月數量', '12月單價', '12月GP(%)']
+                ValueNotEmptyThenNoEdit: ['代理商名稱', '終端客戶', '產品類別', '1月數量', '1月NSB', '2月數量', '2月NSB', '3月數量', '3月NSB', '4月數量', '4月NSB', '5月數量', '5月NSB', '6月數量', '6月NSB', '7月數量', '7月NSB', '8月數量', '8月NSB', '9月數量', '9月NSB', '10月數量', '10月NSB', '11月數量', '11月NSB', '12月數量', '12月NSB']
             },
-            費用類別: {
-                ValueThenNoEdit: {
-                    Value: ['借機費用', '包機費用'],
-                    ThenNoEdit: ['年度', 'BU', '客戶編號', '費用類別']
-                }
-            }
         };
         /**部分頁面名稱的可否修改定義 */
         let PageNameModifiableInf = {
             FCSTMaintain: {
-                OnlyNowAndFutreEdit: ['1月數量', '1月單價', '2月數量', '2月單價', '3月數量', '3月單價', '4月數量', '4月單價', '5月數量', '5月單價', '6月數量', '6月單價', '7月數量', '7月單價', '8月數量', '8月單價', '9月數量', '9月單價', '10月數量', '10月單價', '11月數量', '11月單價', '12月數量', '12月單價']
+                OnlyNowAndFutreEdit: ['1月數量', '1月單價', '1月NSB', '2月數量', '2月單價', '2月NSB', '3月數量', '3月單價', '3月NSB', '4月數量', '4月單價', '4月NSB', '5月數量', '5月單價', '5月NSB', '6月數量', '6月單價', '6月NSB', '7月數量', '7月單價', '7月NSB', '8月數量', '8月單價', '8月NSB', '9月數量', '9月單價', '9月NSB', '10月數量', '10月單價', '10月NSB', '11月數量', '11月單價', '11月NSB', '12月數量', '12月單價', '12月NSB']
             }
         };
         let mArr = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].ModifiableArr));
@@ -726,6 +714,27 @@ export class PageSet {
         }
         return mArr;
     }
+    /**取得欄位對應的Menu名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} fFieldName 欄位名稱
+     * @param {boolean} isSearch 是不是搜尋欄位的模式。false表示Table裡的下拉式選單
+     */
+    GetMenuName(tPageName, fFieldName, isSearch) {
+        let tListName = fFieldName;
+        if (fFieldName == '客戶' || fFieldName == '客戶代碼') {
+            tListName = 'CUST';
+        }
+        else if (fFieldName == '標準公式') {
+            tListName = 'FORMULA';
+        }
+        else if (isSearch &amp;&amp; fFieldName == '站點') {
+            tListName = 'STEP';
+        }
+        else if (isSearch &amp;&amp; fFieldName == 'Tester') {
+            tListName = 'TESTER';
+        }
+        return tListName;
+    }
     /**下拉式,input的篩選器
      * @param {string} tPageName 頁面名稱
      * @param {string} fFieldName 欄位名稱
@@ -734,106 +743,11 @@ export class PageSet {
     GetListArr(tPageName, fFieldName, isSearch) {
         //加入下拉式選單會影響其他選單的功能(純前端切換)
         let reArr = new Array();
-        let tListName = fFieldName;
-        //下拉式,input的篩選器
-        if (isSearch &amp;&amp; tPageName == 'RentCost' &amp;&amp; fFieldName == '客戶編號') {
-            tListName = 'RentCostCust';
-        }
-        else if (!isSearch &amp;&amp; tPageName == 'RentCost' &amp;&amp; fFieldName == '客戶編號') {
-            tListName = 'TEST_ALL_CUST';
-        }
-        else if (tPageName == 'RentCost' &amp;&amp; fFieldName == '測試平台') {
-            tListName = 'Tester';
-        }
-        else if (tPageName == 'RentCost' &amp;&amp; fFieldName == '機台類別') {
-            tListName = 'PH_MacType_Display';
-        }
-        else if (tPageName == 'RentCost' &amp;&amp; fFieldName == '產品類別') {
-            tListName = 'ProductName';
-        }
-        else if (tPageName == 'RevenueMT_Comp' &amp;&amp; fFieldName == '客戶') {
-            tListName = 'CompDisplay';
-        }
-        else if (tPageName == 'RevenueMT_Cust' &amp;&amp; fFieldName == '客戶') {
-            tListName = 'Top10CustDisplay';
-        }
-        else if (tPageName == 'APMaintain' &amp;&amp; fFieldName == '客戶編號') {
-            tListName = 'CustCompine3AP';
-        }
-        else if (tPageName == 'APMaintain' &amp;&amp; fFieldName == 'Prober/Handler') {
-            tListName = 'PerHer';
-        }
-        else if (tPageName == 'APMaintain' &amp;&amp; fFieldName == 'Tester') {
-            tListName = 'Tester';
-        }
-        else if ((tPageName == 'APMaintain') &amp;&amp; (fFieldName == 'Product Type' || fFieldName == '產品類別')) {
-            tListName = 'ProductType';
-        }
-        else if (tPageName == 'APMaintain' &amp;&amp; fFieldName == 'Ver') {
-            tListName = 'Ver';
-        }
-        else if ((tPageName == 'FCSTQuery' &amp;&amp; fFieldName == '業務名稱')
-            || (tPageName == 'APvsFCSTvsAct' &amp;&amp; fFieldName == 'FCST 維護名稱')) {
-            tListName = 'FCSTSAName';
-        }
-        else if ((tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart') &amp;&amp; fFieldName == '客戶') {
-            tListName = 'CustCombineCN';
-        }
-        else if ((tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart') &amp;&amp; fFieldName == '產品類別') {
-            tListName = 'BUProdList';
-        }
-        else if (tPageName == 'CustomerRevenueQuery' &amp;&amp; fFieldName == '十大客戶') {
-            tListName = 'Top10CustDisplay2';
-        }
-        else if (tPageName == 'CPRUNCARDCOST' &amp;&amp; fFieldName == '客戶代碼') {
-            tListName = 'Runcard_W_Cust';
-        }
-        else if (tPageName == 'FTRUNCARDCOST' &amp;&amp; fFieldName == '客戶代碼') {
-            tListName = 'Runcard_C_Cust';
-        }
-        else if (tPageName == 'COST_SUMMARY' &amp;&amp; fFieldName == '客戶代碼') {
-            tListName = 'RC_Cust';
-        }
-        else if (tPageName == 'TESTERCOST_SUMMARY' &amp;&amp; fFieldName == '客戶代碼') {
-            tListName = 'RCT_Cust';
-        }
-        else if (tPageName == 'COST_SUMMARY' &amp;&amp; fFieldName == '產品線') {
-            tListName = 'RC_PRODUCTTYPE';
-        }
-        else if (tPageName == 'TESTERCOST_SUMMARY' &amp;&amp; fFieldName == '產品線') {
-            tListName = 'RCT_PRODUCTTYPE';
-        }
-        else if (fFieldName == 'Prober/Handler') {
-            tListName = 'PerHer';
-        }
-        else if (fFieldName == 'Product Type') {
-            tListName = 'ProductType';
-        }
-        else if (fFieldName == '客戶編號') {
-            let ttidx = gPageObj.PageNameObj[tPageName].FieldArr.indexOf('維護單位');
-            if (gPageObj.PageNameObj[tPageName].LastQuery.QueryArr == null) {
-                tListName = 'CustCompine3SA';
-            }
-            else {
-                let gValue = gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[ttidx];
-                if (gValue == 'SA') {
-                    tListName = 'CustCompine3SA';
-                }
-                else if (gValue == 'PC') {
-                    tListName = 'CustCompine3PC';
-                }
-            }
-        }
-        else if (fFieldName == 'SA') {
-            tListName = 'APSAName';
-        }
+        let tListName = this.GetMenuName(tPageName, fFieldName, isSearch);
         if (MenuList[tListName] != null) {
             reArr = MenuList[tListName].MenuArr;
         }
         for (let i = 0; i &lt; reArr.length; i++) {
-            if (reArr[i].indexOf(',') &lt; 0) {
-                reArr[i] = reArr[i] + ',' + reArr[i];
-            }
             if (tPageName == 'BillingFCSTChart' || tPageName == 'APFCSTChart'
                 || (tPageName == 'RentCost' &amp;&amp; fFieldName == '機台類別')
                 || ((tPageName == 'COST_SUMMARY' || tPageName == 'TESTERCOST_SUMMARY') &amp;&amp; fFieldName == '產品線')) {
@@ -841,12 +755,7 @@ export class PageSet {
                 let tmpIdx = tt[1].indexOf('-');
                 reArr[i] = tt[0] + ',' + tt[1].substring(tmpIdx + 1);
             }
-            let ttt = reArr[i].split(',');
-            if (ttt[0].indexOf('"') > -1) {
-                reArr[i] = ttt[0].replace(/"/g, '”') + ',' + ttt[1];
-            }
         }
-        reArr = reArr.filter(onlyUnique);
         reArr = this.GetListTitle(tPageName, fFieldName, isSearch, reArr);
         return reArr;
     }
@@ -1176,31 +1085,29 @@ export class PageSet {
     }
     /**DatePicker的option設定
      * @param {string} tPageName 頁面名稱
-     * @param {any} DateObj Datepicker的option物件
-     * @param {string} SearchBarIdName 日期選單的Dom ID名稱
-     * @return 回傳修改過後Datepicker的option
+     * @param {string} tFieldName 需判斷的欄位名稱
+     * @return 回傳客製化後Datepicker的option
      */
-    SetDatePick(tPageName, DateObj, SearchBarIdName) {
-        let CloneObj = JSON.parse(JSON.stringify(DateObj));
-        if ((tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
-            || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
-            || tPageName == 'Prober_Handler_CPLCD' || tPageName == 'INK_Activation' || tPageName == 'AOI_Activation'
-            || tPageName == 'Prober_Handler_FT' || tPageName == 'Tester_Activation' || tPageName == 'Prober_Handler_LBI'
-            || tPageName == 'Prober_Handler_DS')
-            &amp;&amp; SearchBarIdName == 'field_3') {
-            CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 3, 5, 6];
+    SetDatePick(tPageName, tFieldName) {
+        /**預設值 */
+        let DateObj = {
+            weekStart: 1,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: true,
+            startView: 2,
+            minViewMode: 2,
+            forceParse: false,
+            format: 'yyyy/mm/dd',
+            minView: 2,
+        };
+        if (tPageName == 'EndCustomer' &amp;&amp; tFieldName == '出機日') {
+            DateObj.format = 'yyyy-mm';
+            DateObj.startView = 3;
+            DateObj.minView = 3;
+            DateObj.minViewMode = 3;
         }
-        else if ((tPageName == 'TEST_IN_GOODS' || tPageName == 'TEST_OUT_GOODS' || tPageName == 'TEST_RECEIVE'
-            || tPageName == 'TEST_LOTSIZE' || tPageName == 'DS_IN_GOODS' || tPageName == 'DS_OUT_GOODS'
-            || tPageName == 'Prober_Handler_CPLCD' || tPageName == 'INK_Activation' || tPageName == 'AOI_Activation'
-            || tPageName == 'Prober_Handler_FT' || tPageName == 'Tester_Activation' || tPageName == 'Prober_Handler_LBI'
-            || tPageName == 'Prober_Handler_DS')
-            &amp;&amp; SearchBarIdName == 'field_4') {
-            CloneObj.todayBtn = false;
-            CloneObj['daysOfWeekDisabled'] = [0, 1, 2, 4, 5, 6];
-        }
-        return CloneObj;
+        return DateObj;
     }
     //定義物件屬性⬆
     //重新定義物件屬性⬇
@@ -1213,137 +1120,160 @@ export class PageSet {
         let tFieldArr = [];
         let newNecessaryArr = [];
         let newModifiableArr = [];
-        let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
+        let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery.QueryArr;
         //需要定義顯示欄位的頁面都是視圖可編輯的表單(目前)，故預設不可修改
-        if (tPageName == 'FCSTQuery') {
-            tFieldArr = ['SA/PC', 'BU', '區域', '新/舊客戶', '新/舊產品', '客戶代碼', '客戶', '型號', 'Prober/Handler', 'Tester', 'Product Type'];
-            let tNum = 0;
-            if (LastQuery.QueryArr[2] == 'semi') {
-                tNum = 2;
-            }
-            else if (LastQuery.QueryArr[2] == '季') {
-                tNum = 4;
-            }
-            else if (LastQuery.QueryArr[2] == '月') {
-                tNum = 12;
-            }
-            for (let i = 0; i &lt; tNum; i++) {
-                tFieldArr.push('數量');
-                tFieldArr.push('營收');
-            }
-            tFieldArr.push('數量');
-            tFieldArr.push('營收');
-        }
-        else if (tPageName == 'APQuery') {
-            tFieldArr = ['業務', 'BU', '區域', '新/舊客戶', '新/舊產品', '客戶代碼', '客戶', '型號', 'Prober/Handler', 'Tester', 'Product Type'];
-            let tNum = 0;
-            if (LastQuery.QueryArr[3] == 'semi') {
-                tNum = 2;
-            }
-            else if (LastQuery.QueryArr[3] == '季') {
-                tNum = 4;
-            }
-            else if (LastQuery.QueryArr[3] == '月') {
-                tNum = 12;
-            }
-            for (let i = 0; i &lt; tNum; i++) {
-                tFieldArr.push('數量');
-                tFieldArr.push('單價');
-                tFieldArr.push('營收');
-                tFieldArr.push('Taeget GP %');
-            }
-            tFieldArr.push('數量');
-            tFieldArr.push('營收');
-        }
-        else if (tPageName == 'APvsFCSTvsAct') {
-            tFieldArr = ['SA/PC', 'BU', '區域', '新/舊客戶', '新/舊產品', '客戶代碼', '客戶', '型號', 'Prober/Handler', 'Tester', 'Product Type'];
-            let tNum = 0;
-            if (LastQuery.QueryArr[2] == 'semi') {
-                tNum = 2;
-            }
-            else if (LastQuery.QueryArr[2] == '季') {
-                tNum = 4;
-            }
-            else if (LastQuery.QueryArr[2] == '月') {
-                tNum = 12;
-            }
-            for (let i = 0; i &lt; tNum; i++) {
-                tFieldArr.push('AP');
-                tFieldArr.push('FCST');
-                tFieldArr.push('FCST vs AP Hit Rate');
-                tFieldArr.push('Actual');
-                tFieldArr.push('Actual vs AP Hit Rate');
-                tFieldArr.push('Actual vs FCST Hit Rate');
-            }
-            tFieldArr.push('AP');
-            tFieldArr.push('FCST');
-            tFieldArr.push('FCST vs AP Hit Rate');
-            tFieldArr.push('Actual');
-            tFieldArr.push('Actual vs AP Hit Rate');
-            tFieldArr.push('Actual vs FCST Hit Rate');
-        }
-        else if (tPageName == 'BillingFCSTChart') {
-            tFieldArr = ['Item'];
-            for (let i = 1; i &lt;= 31; i++) {
-                tFieldArr.push(i.toString());
+        if ((tPageName == 'OEE_CP' || tPageName == 'OEE_LCD' || tPageName == 'OEE_FT' || tPageName == 'OEE_DS') &amp;&amp; LastQuery) {
+            let Year = Number(LastQuery[1]);
+            let Month = Number(LastQuery[2]);
+            switch (LastQuery[0]) {
+                case 'Year':
+                    for (let i = 6; i >= 0; i--) {
+                        tFieldArr.push((Year - i).toString());
+                    }
+                    break;
+                case 'Month':
+                    for (let i = 6; i >= 0; i--) {
+                        let tM = Month - i;
+                        tFieldArr.push((tM &lt; 1 ? (Year - 1) : Year).toString() + '/' + (tM &lt; 1 ? 12 + tM : tM).toString());
+                    }
+                    break;
+                case 'Week':
+                    let tS = new Date(LastQuery[3]);
+                    for (let i = 0; i &lt; 7; i++, tS = new Date(tS.setDate(tS.getDate() - 7))) {
+                        let tmpStr = (tS.getMonth() + 1).toString() + '/' + tS.getDate().toString();
+                        tFieldArr.push(tmpStr);
+                    }
+                    tFieldArr = tFieldArr.reverse();
+                    break;
+                case 'Daily':
+                    let ttS = new Date(LastQuery[4]);
+                    for (let i = 0; i &lt; 7; i++, ttS = new Date(ttS.setDate(ttS.getDate() - 1))) {
+                        tFieldArr.push(/*ttS.getFullYear() + '/' + */ (ttS.getMonth() + 1).toString() + '/' + ttS.getDate().toString());
+                    }
+                    tFieldArr = tFieldArr.reverse();
+                    break;
+                default:
+                    break;
             }
         }
-        else if (tPageName == 'APFCSTChart') {
-            tFieldArr = ['Item'];
-            for (let i = 1; i &lt;= 12; i++) {
-                tFieldArr.push(MonthFormat[i]);
+        else if ((tPageName == 'AE_EQP' || tPageName == 'AE_RAM' || tPageName == 'AE_DSRAM' || tPageName == 'AE_DSEQP'
+            || tPageName == 'PE_OE' || tPageName == 'PE_DSOE' || tPageName == 'PE_RE' || tPageName == 'PE_DSRE'
+            || tPageName == 'QE_YR' || tPageName == 'QE_WORK' || tPageName == 'AE_CTA' || tPageName == 'AE_DSCTA') &amp;&amp; LastQuery) {
+            let Year = Number(LastQuery[3]);
+            let Month = Number(LastQuery[4]);
+            switch (LastQuery[2]) {
+                case 'Year':
+                    for (let i = 6; i >= 0; i--) {
+                        tFieldArr.push((Year - i).toString());
+                    }
+                    break;
+                case 'Month':
+                    for (let i = 6; i >= 0; i--) {
+                        let tM = Month - i;
+                        tFieldArr.push((tM &lt; 1 ? (Year - 1) : Year).toString() + '/' + (tM &lt; 1 ? 12 + tM : tM).toString());
+                    }
+                    break;
+                case 'Week':
+                    let tS = new Date(LastQuery[5]);
+                    for (let i = 0; i &lt; 7; i++, tS = new Date(tS.setDate(tS.getDate() - 7))) {
+                        let tmpStr = (tS.getMonth() + 1).toString() + '/' + tS.getDate().toString();
+                        tFieldArr.push(tmpStr);
+                    }
+                    tFieldArr = tFieldArr.reverse();
+                    break;
+                case 'Daily':
+                    let ttS = new Date(LastQuery[6]);
+                    for (let i = 0; i &lt; 7; i++, ttS = new Date(ttS.setDate(ttS.getDate() - 1))) {
+                        tFieldArr.push(/*ttS.getFullYear() + '/' + */ (ttS.getMonth() + 1).toString() + '/' + ttS.getDate().toString());
+                    }
+                    tFieldArr = tFieldArr.reverse();
+                    break;
+                default:
+                    break;
             }
         }
-        else if (tPageName == 'CompRevenueChart') {
-            tFieldArr = TitleInfArr ? TitleInfArr[0].split(',') : [];
-            for (let i = 1; i &lt; tFieldArr.length; i++) {
-                if (TableSetObj.MoneyFieldArr.indexOf(tFieldArr[i]) &lt; 0) {
-                    TableSetObj.MoneyFieldArr.push(tFieldArr[i]);
+        else if (tPageName == 'PE_TTAD') {
+            tFieldArr = ['BU', 'Cust', 'Device', 'Step', 'Type', 'Tester', 'Target_T_time', 'T_time', 'I_time', 'Diff'];
+        }
+        else if (tPageName == 'PE_DSUAD') {
+            tFieldArr = ['Cust', 'Device', 'Target_UPH', 'Act_UPH', 'Diff'];
+        }
+        else if (tPageName == 'QE_YRC' &amp;&amp; TitleInfArr) {
+            TitleInfArr.forEach(function (item) {
+                tFieldArr.push(item.split(',')[0]);
+            });
+        }
+        else if (tPageName == 'TTA' &amp;&amp; LastQuery) {
+            let mode = LastQuery[0];
+            let timeMode = LastQuery[1];
+            let year = LastQuery[2];
+            let month = LastQuery[3];
+            let days = new Date(year, month, 0).getDate();
+            if (mode != '總表') {
+                tFieldArr = ['BU', '客戶代碼', '客戶名稱', '型號', '站點', '機型', 'Tester', 'Dut', 'Target_Test_time', 'Test_time', 'Index_time', 'Diff', '工程師', 'SEPC_NO', 'SPEC_DATE', '生產日期'];
+                $('#ChartArea').css('display', 'none');
+                $('#TableArea').css('height', 'calc(100vh-70px)');
+            }
+            else {
+                if (timeMode == '年') {
+                    tFieldArr = ['Item', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
                 }
-                if (TableSetObj.NeedModifyDisplayArr.indexOf(tFieldArr[i]) &lt; 0) {
-                    TableSetObj.NeedModifyDisplayArr.push(tFieldArr[i]);
+                else if (timeMode == '月') {
+                    tFieldArr = ['Item'];
+                    for (let i = 1; i &lt;= days; i++) {
+                        let tmpStr = month + '/' + i;
+                        tFieldArr.push(tmpStr);
+                    }
                 }
-            }
-        }
-        else if (tPageName == 'Top10CustomerRevenue') {
-            tFieldArr = TitleInfArr ? TitleInfArr[0].split(',') : [];
-            for (let i = 1; i &lt; tFieldArr.length; i++) {
-                if (TableSetObj.MoneyFieldArr.indexOf(tFieldArr[i]) &lt; 0) {
-                    TableSetObj.MoneyFieldArr.push(tFieldArr[i]);
+                else if (timeMode == '週') {
+                    tFieldArr = ['Item'];
+                    let tS = new Date(LastQuery[4]);
+                    let tS2 = new Date(LastQuery[4]);
+                    let tE = new Date(LastQuery[5]);
+                    for (tS = new Date(tS.setDate(tS.getDate() + 6)); tE.getTime() - tS.getTime() >= 0; tS = new Date(tS.setDate(tS.getDate() + 7)), tS2 = new Date(tS2.setDate(tS2.getDate() + 7))) {
+                        let tmpStr = (tS.getMonth() + 1).toString() + '/' + tS.getDate().toString();
+                        tFieldArr.push(tmpStr);
+                    }
                 }
-                if (TableSetObj.NeedModifyDisplayArr.indexOf(tFieldArr[i]) &lt; 0) {
-                    TableSetObj.NeedModifyDisplayArr.push(tFieldArr[i]);
+                $('#ChartArea').css('display', 'block');
+                $('#TableArea').css('height', '60vh');
+            }
+        }
+        else if (tPageName == 'UPHA' &amp;&amp; LastQuery) {
+            let mode = LastQuery[0];
+            let timeMode = LastQuery[1];
+            let year = LastQuery[2];
+            let month = LastQuery[3];
+            let days = new Date(year, month, 0).getDate();
+            if (mode != '總表') {
+                tFieldArr = ['客戶代碼', '型號', '機型', '機群', '機台', 'Target_UPH', 'UPH', 'Diff', '生產日期'];
+                $('#ChartArea').css('display', 'none');
+                $('#TableArea').css('height', 'calc(100vh-70px)');
+            }
+            else {
+                if (timeMode == '年') {
+                    tFieldArr = ['Item', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
                 }
+                else if (timeMode == '月') {
+                    tFieldArr = ['Item'];
+                    for (let i = 1; i &lt;= days; i++) {
+                        let tmpStr = month + '/' + i;
+                        tFieldArr.push(tmpStr);
+                    }
+                }
+                else if (timeMode == '週') {
+                    tFieldArr = ['Item'];
+                    let tS = new Date(LastQuery[4]);
+                    let tS2 = new Date(LastQuery[4]);
+                    let tE = new Date(LastQuery[5]);
+                    for (tS = new Date(tS.setDate(tS.getDate() + 6)); tE.getTime() - tS.getTime() >= 0; tS = new Date(tS.setDate(tS.getDate() + 7)), tS2 = new Date(tS2.setDate(tS2.getDate() + 7))) {
+                        let tmpStr = (tS.getMonth() + 1).toString() + '/' + tS.getDate().toString();
+                        tFieldArr.push(tmpStr);
+                    }
+                }
+                $('#ChartArea').css('display', 'block');
+                $('#TableArea').css('height', '60vh');
             }
-        }
-        else if (tPageName == 'CustomerRevenueQuery') {
-            tFieldArr = ['Month'];
-            for (let i = 1; i &lt;= 12; i++) {
-                tFieldArr.push(MonthFormat[i]);
-            }
-            tFieldArr.push('Total');
-        }
-        else if (tPageName == 'NewProductCustomerNSB') {
-            tFieldArr = ['Month'];
-            for (let i = 1; i &lt;= 12; i++) {
-                tFieldArr.push(MonthFormat[i]);
-            }
-        }
-        else if (tPageName == 'ProdCustGPM') {
-            tFieldArr = [LastQuery.QueryArr[3], LastQuery.QueryArr[3], 'NSB', '%', 'GPM', 'NSB', '%', 'GPM', 'NSB', '%', 'GPM'];
-        }
-        else if (tPageName == 'Top10ProdCustGPM') {
-            tFieldArr = [LastQuery.QueryArr[3], 'NSB', '%', 'GPM', 'NSB', '%', 'GPM', 'NSB', '%', 'GPM'];
-        }
-        else if (tPageName == 'COST_SUMMARY') {
-            tFieldArr = ['識別碼', '年度', '月份', 'BU', '客戶群組', '客戶代碼', '客戶名稱', '產品線', '流程卡', '型號', '出貨數', '營收', '成本', '毛利率'];
-            newNecessaryArr = gPageObj.PageNameObj[tPageName].NecessaryArr;
-            newModifiableArr = this.InitModifiable(tPageName, tFieldArr);
-        }
-        else if (tPageName == 'TESTERCOST_SUMMARY') {
-            tFieldArr = ['識別碼', '年度', '月份', 'BU', '客戶群組', '客戶代碼', '客戶名稱', '產品線', '流程卡', '型號', '測試機', '站點', 'DUT', '溫度', '配件', '機台類別', '出貨數', '營收', '成本', '毛利率', '包機機台'];
-            newNecessaryArr = gPageObj.PageNameObj[tPageName].NecessaryArr;
-            newModifiableArr = this.InitModifiable(tPageName, tFieldArr);
         }
         if (newNecessaryArr.length == 0) {
             for (let i = 0; i &lt; tFieldArr.length; i++) {
@@ -1743,6 +1673,7 @@ export class PageSet {
         if (AllEmpty) {
             haveTitleAtFirst = false;
         }
+        let vd = new ValueDisplay();
         for (let i = 0; i &lt; data.length; i++) {
             tHavePersent.push(false);
             let tmpArr = typeof data[i] == 'string' ? data[i].split(',') : gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
@@ -1752,7 +1683,7 @@ export class PageSet {
             }
             for (let j = haveTitleAtFirst ? 1 : 0; j &lt; tmpArr.length; j++) { //跳過一開始的Title
                 let tnStr = '';
-                if (tmpArr[j].length > 0 &amp;&amp; !isNaN(Number(tmpArr[j])) &amp;&amp; TableSetObj.MillionFieldArr.indexOf(gPageObj.PageNameObj[tPageName].TitleStrArr[j]) > -1 &amp;&amp; UnitMode != '數量') {
+                if (tmpArr[j].length > 0 &amp;&amp; !isNaN(Number(tmpArr[j])) &amp;&amp; vd.NeedMillionFormat(gPageObj.PageNameObj[tPageName].TitleStrArr[j], tPageName, tmpArr[0]) &amp;&amp; UnitMode != '數量') {
                     tnStr = MillionFormat(tmpArr[j]);
                 }
                 else {
@@ -1768,27 +1699,60 @@ export class PageSet {
             }
             tdata.push(newtdata);
         }
-        if (tPageName == 'BillingFCSTChart') {
-            let year = gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[0];
-            let month = gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1];
-            let curMonthDays = new Date(year, month, 0).getDate();
-            for (let i = 0; i &lt; tdata.length; i++) {
-                tdata[i].splice(curMonthDays, tdata[i].length - curMonthDays);
+        if ((tPageName == 'TTA' || tPageName == 'UPHA') &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[0] == '總表') {
+            let tItemInf = [
+                {
+                    Name: '>10%數量',
+                    Color: 'rgb(217,150,148)',
+                    Item: [],
+                    isLine: false
+                },
+                {
+                    Name: '&lt;-30%數量',
+                    Color: 'rgb(142,180,227)',
+                    Item: [],
+                    isLine: false
+                },
+                {
+                    Name: '超規%',
+                    Color: 'rgb(102,0,204)',
+                    Item: [],
+                    isLine: true
+                }
+            ];
+            let xTitle = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].TitleStrArr));
+            let tSeries = [];
+            let tmpTotal = [];
+            for (let i = 1; i &lt; tdata.length; i++) {
+                for (let j = 0; j &lt; tdata[i].length; j++) {
+                    tItemInf[i - 1].Item.push(tdata[i][j]);
+                    if (i == 1) {
+                        tmpTotal.push(tdata[i][j] + tdata[i + 1][j]);
+                    }
+                }
             }
-            let UnitMode = GetSelectValue('計算單位');
-            let max1 = tdata.length > 5 ? GetDataUpLimit(Math.max(Math.max(...tdata[3]), Math.max(...tdata[4]))) : 0;
-            let max2 = tdata.length > 2 ? GetDataUpLimit(Math.max(Math.max(...tdata[0]), Math.max(...tdata[1]))) : 0;
+            for (let i = 0; i &lt; tItemInf.length; i++) {
+                let tmpObj = {
+                    name: tItemInf[i].Name,
+                    type: tItemInf[i].isLine ? 'line' : 'bar',
+                    yAxisIndex: tItemInf[i].isLine ? 1 : 0,
+                    barGap: '0%',
+                    itemStyle: {
+                        color: tItemInf[i].Color
+                    },
+                    z: 2,
+                    data: tItemInf[i].Item
+                };
+                if (!tItemInf[i].isLine) {
+                    tmpObj['stack'] = '總數';
+                }
+                tSeries.push(tmpObj);
+            }
+            let max1 = GetDataUpLimit(Math.max(...tmpTotal));
+            let max2 = GetDataUpLimit(Math.max(...tItemInf[2].Item));
             let range1 = max1 / 10;
             let range2 = max2 / 10;
             option = {
-                title: {
-                    text: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[2].replace(/@/g, '、') + ' ' + gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[0] + '/' + gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' Billing VS FCST Analysis Trend Chart',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'DFKai-sb',
-                    },
-                    left: 'center'
-                },
                 tooltip: {
                     trigger: 'axis',
                     textStyle: {
@@ -1800,6 +1764,16 @@ export class PageSet {
                         crossStyle: {
                             color: '#999'
                         }
+                    },
+                    formatter: function (params) {
+                        let res = '' + params[0].name;
+                        let vd = new ValueDisplay();
+                        for (let i = 0; i &lt; params.length; i++) {
+                            let tmpValue = params[i].value;
+                            tmpValue = vd.NeedModifyDisplay(params[i].seriesName, tmpValue, tPageName, params[i].name);
+                            res += '&lt;br>' + params[i].marker + params[i].seriesName + ' : ' + tmpValue;
+                        }
+                        return res;
                     }
                 },
                 toolbox: {
@@ -1809,12 +1783,12 @@ export class PageSet {
                 },
                 legend: {
                     top: '25px',
-                    data: ['FCST', 'Billing', 'FCST ACC.', 'Billing ACC.']
+                    data: ['>10%數量', '&lt;-30%數量', '超規%']
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+                        data: xTitle,
                         nameTextStyle: {
                             fontFamily: 'Arial',
                         },
@@ -1826,20 +1800,6 @@ export class PageSet {
                 yAxis: [
                     {
                         type: 'value',
-                        name: UnitMode == '金額' ? 'M.NT' : 'M.QTY',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max2,
-                        interval: range2,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    },
-                    {
-                        type: 'value',
-                        name: UnitMode == '金額' ? 'M.NT' : 'M.QTY',
                         nameTextStyle: {
                             fontFamily: 'DFKai-sb',
                         },
@@ -1848,598 +1808,32 @@ export class PageSet {
                         interval: range1,
                         axisLabel: {
                             formatter: '{value}'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name: 'FCST',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(142,180,227)'
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: ['#898989']
                             }
                         },
-                        data: tdata.length > 1 ? tdata[0] : []
                     },
-                    {
-                        name: 'Billing',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(217,150,148)'
-                            }
-                        },
-                        data: tdata.length > 1 ? tdata[1] : []
-                    },
-                    {
-                        name: 'FCST ACC.',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(0,0,255)'
-                            }
-                        },
-                        data: tdata.length > 1 ? tdata[3] : []
-                    },
-                    {
-                        name: 'Billing ACC.',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(255,0,0)'
-                            }
-                        },
-                        data: tdata.length > 1 ? tdata[4] : []
-                    }
-                ]
-            };
-        }
-        else if (tPageName == 'CompRevenueChart') {
-            let max1 = GetDataUpLimit(Math.max(...tdata[2]));
-            let max2 = GetDataUpLimit(Math.max(Math.max(...tdata[0]), Math.max(...tdata[1])));
-            let min = GetDataUpLimit(Math.min(...tdata[2]));
-            let min2 = 0;
-            if (min > 0) {
-                min = 0;
-            }
-            if (min2 > 0) {
-                min2 = 0;
-            }
-            if (min &lt; 0 &amp;&amp; min2 >= 0) {
-                min2 = Math.round(max2 * min / max1);
-            }
-            else if (min >= 0 &amp;&amp; min2 &lt; 0) {
-                min = Math.round(max1 * min2 / max2);
-            }
-            else if (max1 > 0 &amp;&amp; max2 > 0 &amp;&amp; min &lt; 0 &amp;&amp; min2 &lt; 0) {
-                if (max1 / min * -1 > max2 / min2 * -1) {
-                    min = Math.round(max1 * min2 / max2);
-                }
-                else {
-                    min2 = Math.round(max2 * min / max1);
-                }
-            }
-            let range1 = (max1 - min) / 10;
-            let range2 = (max2 - min2) / 10;
-            let tmpTitleData = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].TitleStrArr));
-            tmpTitleData.splice(0, 1);
-            option = {
-                title: {
-                    text: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' Competitor Revenue Analysis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'DFKai-sb',
-                    },
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'Arial'
-                    },
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: { show: true, title: '保存為圖片' }
-                    }
-                },
-                legend: {
-                    top: '25px',
-                    data: [(parseInt(gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1]) - 1) + '營業額', gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + '營業額', 'YOY']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: tmpTitleData,
-                        nameTextStyle: {
-                            fontFamily: 'Arial',
-                        },
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    }
-                ],
-                yAxis: [
                     {
                         type: 'value',
-                        name: 'M.NT',
                         nameTextStyle: {
                             fontFamily: 'DFKai-sb',
                         },
-                        min: min2,
+                        min: 0,
                         max: max2,
                         interval: range2,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    },
-                    {
-                        type: 'value',
-                        name: 'YOY%',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: min,
-                        max: max1,
-                        interval: range1,
                         axisLabel: {
                             formatter: '{value}%'
-                        }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: ['#898989']
+                            }
+                        },
                     }
                 ],
-                series: [
-                    {
-                        name: (parseInt(gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1]) - 1) + '營業額',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(142,180,227)'
-                            }
-                        },
-                        data: tdata[0]
-                    },
-                    {
-                        name: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + '營業額',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(217,150,148)'
-                            }
-                        },
-                        data: tdata[1]
-                    },
-                    {
-                        name: 'YOY',
-                        type: 'scatter',
-                        yAxisIndex: 1,
-                        itemStyle: {
-                            normal: {
-                                color: 'green',
-                                label: {
-                                    show: true,
-                                    position: 'top',
-                                    formatter: function (a, b, c) {
-                                        return a.value + '%';
-                                    }
-                                },
-                                lineStyle: {
-                                    width: '30'
-                                }
-                            }
-                        },
-                        data: tdata[2]
-                    }
-                ]
-            };
-        }
-        else if (tPageName == 'Top10CustomerRevenue') {
-            let max1 = tdata.length > 7 ? GetDataUpLimit(Math.max(...tdata[7])) : 0;
-            let max2 = tdata.length > 7 ? GetDataUpLimit(Math.max(Math.max(...tdata[6]), Math.max(...tdata[4]))) : 0;
-            let range1 = (max1) / 10;
-            let range2 = (max2) / 10;
-            let tmpTitleData = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].TitleStrArr));
-            tmpTitleData.splice(0, 1);
-            option = {
-                title: {
-                    text: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + paddingLeft(gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[2], 2) + ' Top10 Customer Revenue Analysis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'DFKai-sb',
-                    },
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'Arial'
-                    },
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: { show: true, title: '保存為圖片' }
-                    }
-                },
-                legend: {
-                    top: '25px',
-                    data: [gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' AP', gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' 久元營收', gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' AP 達成率']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: tmpTitleData,
-                        nameTextStyle: {
-                            fontFamily: 'Arial',
-                        },
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: 'M.NT',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max2,
-                        interval: range2,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    },
-                    {
-                        type: 'value',
-                        name: '%',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max1,
-                        interval: range1,
-                        axisLabel: {
-                            formatter: '{value}%'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' AP',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(142,180,227)'
-                            }
-                        },
-                        data: tdata.length > 7 ? tdata[6] : []
-                    },
-                    {
-                        name: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' 久元營收',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(217,150,148)'
-                            }
-                        },
-                        data: tdata.length > 5 ? tdata[4] : []
-                    },
-                    {
-                        name: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' AP 達成率',
-                        type: 'scatter',
-                        yAxisIndex: 1,
-                        itemStyle: {
-                            normal: {
-                                color: 'green',
-                                label: {
-                                    show: true,
-                                    position: 'top',
-                                    formatter: function (a, b, c) {
-                                        return a.value + '%';
-                                    }
-                                },
-                                lineStyle: {
-                                    width: '30'
-                                }
-                            }
-                        },
-                        data: tdata[7]
-                    }
-                ]
-            };
-        }
-        else if (tPageName == 'NewProductCustomerNSB') {
-            let Today = new Date();
-            let month = Today.getMonth();
-            let max = GetDataUpLimit(Math.max(Math.max(...tdata[2]), Math.max(...tdata[3])));
-            let range = (max) / 10;
-            let tmpTitleData = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].TitleStrArr));
-            tmpTitleData.splice(0, 1);
-            option = {
-                title: {
-                    text: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' ' + gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[0] + ' New ' + gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[2] + ' NSB Analysis Trend Chart',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'DFKai-sb',
-                    },
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'Arial'
-                    },
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: { show: true, title: '保存為圖片' }
-                    }
-                },
-                legend: {
-                    top: '25px',
-                    data: ['AP', 'Actual', 'AP 累計', 'Actual 累計']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: tmpTitleData,
-                        nameTextStyle: {
-                            fontFamily: 'Arial',
-                        },
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: 'M.NT',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max,
-                        interval: range,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name: 'AP',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(142,180,227)'
-                            }
-                        },
-                        data: tdata[0]
-                    },
-                    {
-                        name: 'Actual',
-                        type: 'bar',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(217,150,148)'
-                            }
-                        },
-                        data: tdata[1]
-                    },
-                    {
-                        name: 'AP 累計',
-                        type: 'line',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'blue'
-                            }
-                        },
-                        data: tdata[2]
-                    },
-                    {
-                        name: 'Actual 累計',
-                        type: 'line',
-                        yAxisIndex: 0,
-                        itemStyle: {
-                            normal: {
-                                color: 'red'
-                            }
-                        },
-                        data: tdata[3]
-                    }
-                ]
-            };
-        }
-        else if (tPageName == 'APFCSTChart') {
-            let UnitMode = GetSelectValue('計算單位');
-            let YearIdx = 0;
-            let NowYear = parseInt(gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[YearIdx]);
-            let LastYear = NowYear - 1;
-            let max1 = tdata.length > 10 ? GetDataUpLimit(Math.max(Math.max(...tdata[6]), Math.max(...tdata[7]), Math.max(...tdata[9]))) : 0;
-            let max2 = tdata.length > 4 ? GetDataUpLimit(Math.max(Math.max(...tdata[0]), Math.max(...tdata[1]), Math.max(...tdata[3]))) : 0;
-            let range1 = (max1) / 10;
-            let range2 = (max2) / 10;
-            let tmpTitleData = JSON.parse(JSON.stringify(gPageObj.PageNameObj[tPageName].TitleStrArr));
-            tmpTitleData.splice(0, 1);
-            option = {
-                title: {
-                    text: gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] + ' ' + gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[0] + ' AP VS FCST Analysis Trend Chart',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'DFKai-sb',
-                    },
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    textStyle: {
-                        fontWeight: 'bolder',
-                        fontFamily: 'Arial'
-                    },
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: { show: true, title: '保存為圖片' }
-                    }
-                },
-                legend: {
-                    top: '25px',
-                    data: [LastYear + ' Actual', NowYear + ' AP', NowYear + ' Billing + FCST', LastYear + ' Actual ACC.', NowYear + ' AP ACC.', NowYear + ' Billing + FCST ACC.']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: tmpTitleData,
-                        nameTextStyle: {
-                            fontFamily: 'Arial',
-                        },
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: UnitMode == '金額' ? 'M.NT' : 'M.QTY',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max1,
-                        interval: range1,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    },
-                    {
-                        type: 'value',
-                        name: UnitMode == '金額' ? 'M.NT' : 'M.QTY',
-                        nameTextStyle: {
-                            fontFamily: 'DFKai-sb',
-                        },
-                        min: 0,
-                        max: max2,
-                        interval: range2,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name: LastYear + ' Actual',
-                        type: 'bar',
-                        yAxisIndex: 1,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: '#38AC26'
-                            }
-                        },
-                        data: tdata.length > 4 ? tdata[3] : []
-                    },
-                    {
-                        name: NowYear + ' AP',
-                        type: 'bar',
-                        yAxisIndex: 1,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(142,180,227)'
-                            }
-                        },
-                        data: tdata.length > 1 ? tdata[0] : []
-                    },
-                    {
-                        name: NowYear + ' Billing + FCST',
-                        type: 'bar',
-                        yAxisIndex: 1,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(217,150,148)'
-                            }
-                        },
-                        data: tdata.length > 2 ? tdata[1] : []
-                    },
-                    {
-                        name: LastYear + ' Actual ACC.',
-                        type: 'line',
-                        yAxisIndex: 0,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: '#38AC26'
-                            }
-                        },
-                        data: tdata.length > 10 ? tdata[9] : []
-                    },
-                    {
-                        name: NowYear + ' AP ACC.',
-                        type: 'line',
-                        yAxisIndex: 0,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(0,0,255)'
-                            }
-                        },
-                        data: tdata.length > 7 ? tdata[6] : []
-                    },
-                    {
-                        name: NowYear + ' Billing + FCST ACC.',
-                        type: 'line',
-                        yAxisIndex: 0,
-                        barGap: '0%',
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(255,0,0)'
-                            }
-                        },
-                        data: tdata.length > 8 ? tdata[7] : []
-                    }
-                ]
+                series: tSeries
             };
         }
         return option;
@@ -2448,67 +1842,92 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      */
     GetDataTableFreezeValue(tPageName) {
-        let reObj = {};
+        let re;
         let ReportMode = GetSelectValue('報表類型');
         //var bu = document.getElementById('BuName').innerHTML;
-        if (tPageName == 'FCSTQuery' || tPageName == 'APQuery' || tPageName == 'APvsFCSTvsAct') {
-            reObj.leftColumns = 11;
+        switch (tPageName) {
+            case 'PRICE_ANALYSIS':
+                re = 8;
+                break;
+            default:
+                break;
         }
-        else if (tPageName == 'APMaintain') {
-            reObj.leftColumns = 8;
-        }
-        else if (tPageName == 'CPRUNCARDCOST') {
-            reObj.leftColumns = 10;
-        }
-        else if (tPageName == 'FTRUNCARDCOST') {
-            reObj.leftColumns = 11;
-        }
-        return reObj;
+        return re;
     }
     /**設定凍結欄位(不使用DataTable渲染)
      * @param {string} tPageName 頁面名稱
     */
     FreezeField(tPageName) {
         var tmpArr = new Array();
-        var LeftCount = 0;
         var ShieldIdx = this.NeedShieldField(tPageName);
-        if (tPageName == 'CPCAP' &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
-            LeftCount = 10;
-        }
-        else if (tPageName == 'FTCAP' &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
-            LeftCount = 10;
-        }
-        if (LeftCount > 0) {
+        /**儲存凍結欄位的資訊 */
+        let ColumnFixObj = {
+            PRICE_ANALYSIS: {
+                FixIndex: [7]
+            },
+            PRICE_QUOTATION: {
+                FixIndex: [9]
+            }
+        };
+        if (ColumnFixObj[tPageName]) {
             var tableDom = $('#' + tPageName + 'Table tbody tr');
             var titleDom = $('#' + tPageName + 'Table_wrapper thead tr');
             for (var i = 0; tableDom.eq(i).html(); i++) {
                 var LeftWidth = 0;
-                for (var j = 0; j &lt; LeftCount; j++) {
+                var ThLeftWidth = 0;
+                for (var j = 0; (ColumnFixObj[tPageName].LeftCount != undefined &amp;&amp; j &lt; ColumnFixObj[tPageName].LeftCount)
+                    || (ColumnFixObj[tPageName].FixIndex != undefined &amp;&amp; j &lt;= Math.max(...ColumnFixObj[tPageName].FixIndex)); j++) {
                     if (tableDom.eq(i).find('td').eq(j).html() == '表中數據為空') {
                         break;
                     }
                     else if (ShieldIdx.indexOf(j) > -1) {
                         continue;
                     }
+                    var tmpWidth = Number(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
+                    var tmpPadding = Number(tableDom.eq(i).find('td').eq(j).css('padding-left').replace('px', ''));
+                    //若前一個含有直行的合併儲存格需額外再加上寬度
+                    if (j == 1 &amp;&amp; tableDom.eq(i).find('td').eq(0).css('display') == 'none') {
+                        for (let m = j - 1; m >= 0 &amp;&amp; tableDom.eq(i).find('td').eq(m).css('display') == 'none'; m--) {
+                            let k = 0;
+                            for (k = i - 1; k >= 0 &amp;&amp; tableDom.eq(k).find('td').eq(m).css('display') == 'none'; k--) { }
+                            if (k >= 0 &amp;&amp; k != i &amp;&amp; tableDom.eq(k).find('td').eq(m).attr('rowspan') != null &amp;&amp; Number(tableDom.eq(k).find('td').eq(m).attr('rowspan')) >= i - k + 1) {
+                                let tmpWidth2 = Number(tableDom.eq(k).find('td').eq(m).css('width').replace('px', ''));
+                                LeftWidth += tmpWidth2 + tmpPadding * 2;
+                            }
+                        }
+                    }
                     var widthCss = LeftWidth.toString() + 'px';
-                    tableDom.eq(i).find('td').eq(j).css('left', widthCss);
-                    tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
-                    tableDom.eq(i).find('td').eq(j).css('z-index', '1');
-                    if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
-                        tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none'
+                        &amp;&amp; (ColumnFixObj[tPageName].LeftCount != undefined
+                            || (ColumnFixObj[tPageName].FixIndex != undefined &amp;&amp; ColumnFixObj[tPageName].FixIndex.indexOf(j) > -1))) {
+                        tableDom.eq(i).find('td').eq(j).css('left', widthCss);
+                        tableDom.eq(i).find('td').eq(j).css('position', 'sticky');
+                        tableDom.eq(i).find('td').eq(j).css('z-index', '1');
+                        if (tableDom.eq(i).find('td').eq(j).css('background-color') == '' || tableDom.eq(i).find('td').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
+                            tableDom.eq(i).find('td').eq(j).css('background-color', 'white');
+                        }
                     }
                     //合併儲存格後，只需判斷第一行(不確定會不會出錯)
-                    if (i &lt; 1 &amp;&amp; titleDom.eq(i).find('th').eq(j).html() != null) {
-                        titleDom.eq(i).find('th').eq(j).css('left', widthCss);
+                    if (i &lt; 1 &amp;&amp; titleDom.eq(i).find('th').eq(j).html() != null
+                        &amp;&amp; (ColumnFixObj[tPageName].LeftCount != undefined
+                            || (ColumnFixObj[tPageName].FixIndex != undefined &amp;&amp; ColumnFixObj[tPageName].FixIndex.indexOf(j) > -1))) {
+                        let thWidth = ThLeftWidth.toString() + 'px';
+                        titleDom.eq(i).find('th').eq(j).css('left', thWidth);
                         titleDom.eq(i).find('th').eq(j).css('position', 'sticky');
                         titleDom.eq(i).find('th').eq(j).css('z-index', '1');
                         if (titleDom.eq(i).find('th').eq(j).css('background-color') == '' || titleDom.eq(i).find('th').eq(j).css('background-color') == 'rgba(0, 0, 0, 0)') {
                             titleDom.eq(i).find('th').eq(j).css('background-color', 'white');
                         }
                     }
-                    var tmpWidth = parseInt(tableDom.eq(i).find('td').eq(j).css('width').replace('px', ''));
-                    var tmpPadding = parseInt(tableDom.eq(i).find('td').eq(j).css('padding').replace('px', ''));
-                    LeftWidth += tmpWidth + tmpPadding * 2;
+                    if (tableDom.eq(i).find('td').eq(j).css('display') != 'none') {
+                        LeftWidth += tmpWidth + tmpPadding * 2;
+                    }
+                    if (i &lt; 1 &amp;&amp; titleDom.eq(i).find('th').eq(j).css('display') != 'none') {
+                        var thWidth = Number(titleDom.eq(i).find('th').eq(j).css('width').replace('px', ''));
+                        var thPadding = Number(titleDom.eq(i).find('th').eq(j).css('padding-left').replace('px', ''));
+                        var thPadding2 = Number(titleDom.eq(i).find('th').eq(j).css('padding-right').replace('px', ''));
+                        ThLeftWidth += thWidth + thPadding + thPadding2;
+                    }
                 }
             }
         }
@@ -2517,17 +1936,18 @@ export class PageSet {
     AlignedHeader(tPageName) {
         var tableDom = $('#' + tPageName + 'Table tbody tr');
         var titleDom = $('#' + tPageName + 'Table_wrapper thead tr');
+        /**目前測試只有Ajax 分頁模式下在drawCallback需要額外讓Table重繪 */
         if ((tPageName == 'CPCAP' || tPageName == 'FTCAP') &amp;&amp; gPageObj.PageNameObj[tPageName].LastQuery.QueryArr[1] == '總表') {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
         }
-        else {
+        /*else {
             for (let i = 0; titleDom.eq(i).html() != null &amp;&amp; tableDom.eq(0).html() != null; i++) {
                 for (let j = 0; titleDom.eq(i).find('th').eq(j).html() != null; j++) {
-                    let tdw = tableDom.eq(i).find('td').eq(j).width() || 0;
+                    let tdw: number = tableDom.eq(i).find('td').eq(j).width() || 0;
                     titleDom.eq(i).find('th').eq(j).width(tdw);
                 }
             }
-        }
+        }*/
     }
     /**將PageName對應的Table做合併儲存格，於此定義各PageName的合併儲存格範圍
      * @param {string} tPageName 頁面名稱
@@ -2578,7 +1998,7 @@ export class PageSet {
                             k = j + 1;
                             continue;
                         }
-                        if (!isNaN(Number(tStr)) || tStr == '-' || tStr.indexOf('&lt;/') > -1) { //數字欄位以及不是純值(有編輯/檢視、百萬表示等)不檢查
+                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' || tStr.indexOf('&lt;/') > -1) {
                             k = j + 1;
                             continue;
                         }
@@ -2600,7 +2020,9 @@ export class PageSet {
                 else {
                     if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
                         if (rcount == 0) { //直檢查
-                            for (let m = i + 1; t.eq(m).html() != null &amp;&amp; tmpNowStr == t.eq(m).find('td').eq(j).html() &amp;&amp; (j == 0 || m &lt;= RowCountArr[j - 1]); m++, rcount++) {
+                            let tLastRowIndex = 0; //前一個縱座標
+                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0 &amp;&amp; MergeInf[tPageName].IgnoreXIdx != null &amp;&amp; MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1; tLastRowIndex--) { }
+                            for (let m = i + 1; t.eq(m).html() != null &amp;&amp; tmpNowStr == t.eq(m).find('td').eq(j).html() &amp;&amp; (j == 0 || m &lt;= RowCountArr[tLastRowIndex]); m++, rcount++) {
                                 t.eq(m).find('td').eq(j).css('display', 'none');
                             }
                         }
@@ -2635,9 +2057,15 @@ export class PageSet {
                 }
                 if (count > 0) {
                     t.eq(i).find('td').eq(j).attr('colspan', count + 1);
+                    if (count + 1 >= 10) {
+                        t.eq(i).find('td').eq(j).attr('title', t.eq(i).find('td').eq(j).html());
+                    }
                 }
                 if (rcount > 0) {
                     t.eq(i).find('td').eq(j).attr('rowspan', rcount + 1);
+                    if (rcount + 1 >= 7) {
+                        t.eq(i).find('td').eq(j).attr('title', t.eq(i).find('td').eq(j).html());
+                    }
                 }
             }
         }
@@ -2674,71 +2102,6 @@ export class PageSet {
             return true;
         }
         return false;
-    }
-    /**需要將顯示的值做修改(百萬、千分位、小數點)
-     * @param {string} tFieldName 欄位名稱
-     * @param {string} valueStr 欄位值
-     * @param {string} tPageName 頁面名稱
-     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
-     * @return 回傳修改過後的字串
-     */
-    NeedModifyDisplay(tFieldName, valueStr, tPageName, tRowTitleName) {
-        var ReStr = valueStr;
-        var ReportMode = GetSelectValue('報表類型');
-        if (valueStr == null) {
-            return '';
-        }
-        var tmpStr = valueStr.toString().replace('%', '');
-        if (isNaN(Number(tmpStr))) {
-            return valueStr;
-        }
-        if (valueStr == '' || tFieldName == 'Ver.' || tmpStr == '') {
-            if (tPageName.indexOf('GPM') > -1 &amp;&amp; (tFieldName == 'NSB' || tFieldName == '%' || tFieldName == 'GPM')) {
-                return '-';
-            }
-            return valueStr;
-        }
-        if (tFieldName == '%' || tRowTitleName == '成長率') {
-            ReStr = CheckDecimalPointFn((formatFloat(parseFloat(valueStr), 1)).toString() + '%', 1);
-        }
-        else if (tFieldName[tFieldName.length - 1] == '數' || tFieldName.indexOf('數量') > -1 || tFieldName.indexOf('營收') > -1 || tFieldName == 'AP' || tFieldName == 'FCST' || tFieldName == 'Actual'
-            || (tPageName == 'RentCost')) {
-            ReStr = formatFloat(parseFloat(valueStr), 0).toString().replace('.', '');
-        }
-        else if (tFieldName.indexOf('單價') > -1) {
-            if (valueStr.indexOf('.') > -1) {
-                ReStr = CheckDecimalPointFn(formatFloat(parseFloat(valueStr), 3), 3);
-            }
-            else {
-                ReStr = valueStr;
-            }
-        }
-        else if (valueStr.toString().indexOf('%') > -1) { //有百分比的數值
-            if (tmpStr != '') {
-                ReStr = CheckDecimalPointFn(formatFloat(parseFloat(tmpStr), 1), 1) + '%';
-            }
-            else {
-                return '';
-            }
-        }
-        else { //無百分比的數值
-            ReStr = CheckDecimalPointFn(formatFloat(parseFloat(valueStr), 2), 2);
-        }
-        if (TableSetObj.MillionFieldArr.indexOf(tFieldName) > -1) { //百萬表示
-            var UnitMode = GetSelectValue('單位');
-            if (UnitMode != '數量') {
-                ReStr = MillionFormat(tmpStr);
-            }
-        }
-        if (TableSetObj.MoneyFieldArr.indexOf(tFieldName) > -1) { //千分位
-            if (valueStr.toString().indexOf('%') > -1) {
-                ReStr = MoneyFormat(ReStr.replace('%', '')) + '%';
-            }
-            else {
-                ReStr = MoneyFormat(ReStr);
-            }
-        }
-        return ReStr;
     }
     /**檢查是否為複選下拉式
      * @param {string} tPageName 頁面名稱
@@ -2988,6 +2351,1014 @@ export class PageSet {
         }
         return reTitleStr;
     }
+    /**設定Datatable.js的標題訊息(如toolbar)
+     * @param {string} tPageName 頁面名稱
+     */
+    TableInfHtml(tPageName) {
+        let re = '';
+        switch (tPageName) {
+            case 'CP_WIP':
+                re = '&lt;span style="color:blue">(單位:Lot/Pcs)&lt;/span>';
+                break;
+            case 'FT_WIP':
+                re = '&lt;span style="color:blue">(單位:Lot/Qty)&lt;/span>';
+                break;
+            case '':
+                re = '&lt;span style="color:blue">(M.NT)&lt;/span>';
+                break;
+            default:
+                break;
+        }
+        return re;
+    }
+}
+/**定義數值顯示呈現規則 */
+export class ValueDisplay {
+    constructor() {
+        this.RuleObj = {
+            'FieldName': {
+                '銷貨毛利': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                    },
+                    TailString: (tPageName, Value) => {
+                        return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                    }
+                },
+                '數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '銷貨淨額': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '銷貨成本': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '原料': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '加工費': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '製造費用': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '1月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '2月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '3月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '4月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '5月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '6月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '7月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '8月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '9月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '10月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '11月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '12月數量': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '1月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '2月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '3月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '4月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '5月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '6月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '7月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '8月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '9月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '10月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '11月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                '12月NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'Jan': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Feb': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Mar': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Apr': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'May': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Jun': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Jul': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Aug': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Sep': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Oct': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Nov': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'Dec': {
+                    KilobitFormat: true,
+                    MillionFormat: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = true;
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1 ? false : true;
+                                break;
+                            default:
+                                re = true;
+                                break;
+                        }
+                        return re;
+                    },
+                    Digits: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1
+                                    ? CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1)
+                                    : CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    },
+                    TailString: (tPageName, Value, tFieldName, tRowTitleName) => {
+                        let re = '';
+                        switch (tPageName) {
+                            case 'AP_VS_FCST':
+                                let tStr = (tRowTitleName ? tRowTitleName : '').toLocaleLowerCase();
+                                re = Value.toString() != '' &amp;&amp; (tStr.indexOf('hit rate') > -1 || tStr.indexOf('(%)') > -1)
+                                    ? Value.toString() + '%'
+                                    : Value.toString();
+                                break;
+                            default:
+                                re = Value.toString();
+                                break;
+                        }
+                        return re;
+                    }
+                },
+                'NSB': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'NSB(M.NT)': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'AP NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'ACT NSB($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'NSBΔ($NT)': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'MNT$': {
+                    KilobitFormat: true,
+                    MillionFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'Qty': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                },
+                'Ver.': {
+                    Digits: (tPageName, Value) => {
+                        return Value.toString();
+                    },
+                    EmptyRule: (tPageName, Value) => {
+                        return Value.toString() == '' ? '-' : Value.toString();
+                    }
+                },
+                '%': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                    },
+                },
+                '成長率': {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value) => {
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                    },
+                },
+            },
+            'PageName': {
+                Product_GPM: {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                    },
+                    TailString: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
+                },
+                TOP_10_Product_GPM: {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                    },
+                    TailString: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
+                },
+                Customer_GPM: {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                    },
+                    TailString: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
+                },
+                TOP_10_Customer_GPM: {
+                    KilobitFormat: true,
+                    Digits: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 1), 1);
+                        }
+                        return CheckDecimalPointFn(formatFloat(parseFloat(Value.toString()), 2), 2);
+                    },
+                    TailString: (tPageName, Value, tFieldName) => {
+                        if (tFieldName.indexOf('%') > -1) {
+                            return Value.toString() != '' ? Value.toString() + '%' : Value.toString();
+                        }
+                        return Value.toString();
+                    }
+                },
+            },
+        };
+    }
+    /**是否需要百萬格式(僅判斷)
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
+     * @return 是/否
+     */
+    NeedMillionFormat(tFieldName, tPageName, tRowTitleName) {
+        var _a, _b, _c, _d, _e, _f;
+        return ((_b = (_a = this.RuleObj['FieldName']) === null || _a === void 0 ? void 0 : _a[tFieldName]) === null || _b === void 0 ? void 0 : _b.MillionFormat)
+            || ((_d = (_c = this.RuleObj['PageName']) === null || _c === void 0 ? void 0 : _c[tPageName]) === null || _d === void 0 ? void 0 : _d.MillionFormat)
+            || (tRowTitleName &amp;&amp; ((_f = (_e = this.RuleObj['RowTitle']) === null || _e === void 0 ? void 0 : _e[tRowTitleName]) === null || _f === void 0 ? void 0 : _f.MillionFormat)) ? true : false;
+    }
+    /**是否需要千分位格式(僅判斷) */
+    NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) {
+        var _a, _b, _c, _d, _e, _f;
+        return ((_b = (_a = this.RuleObj['FieldName']) === null || _a === void 0 ? void 0 : _a[tFieldName]) === null || _b === void 0 ? void 0 : _b.KilobitFormat)
+            || ((_d = (_c = this.RuleObj['PageName']) === null || _c === void 0 ? void 0 : _c[tPageName]) === null || _d === void 0 ? void 0 : _d.KilobitFormat)
+            || (tRowTitleName &amp;&amp; ((_f = (_e = this.RuleObj['RowTitle']) === null || _e === void 0 ? void 0 : _e[tRowTitleName]) === null || _f === void 0 ? void 0 : _f.KilobitFormat)) ? true : false;
+    }
+    /**是否需要修改數值呈現(僅判斷) */
+    NeedChangeDisplay(tFieldName, tPageName, tRowTitleName, valueStr) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        return (this.NeedKilobitFormat(tFieldName, tPageName, tRowTitleName) || this.NeedMillionFormat(tFieldName, tPageName, tRowTitleName)
+            || ((_b = (_a = this.RuleObj['FieldName']) === null || _a === void 0 ? void 0 : _a[tFieldName]) === null || _b === void 0 ? void 0 : _b.Digits) || ((_d = (_c = this.RuleObj['FieldName']) === null || _c === void 0 ? void 0 : _c[tFieldName]) === null || _d === void 0 ? void 0 : _d.TailString)
+            || ((_f = (_e = this.RuleObj['PageName']) === null || _e === void 0 ? void 0 : _e[tPageName]) === null || _f === void 0 ? void 0 : _f.Digits) || ((_h = (_g = this.RuleObj['PageName']) === null || _g === void 0 ? void 0 : _g[tPageName]) === null || _h === void 0 ? void 0 : _h.TailString)
+            || ((_k = (_j = this.RuleObj['RowTitle']) === null || _j === void 0 ? void 0 : _j[tRowTitleName]) === null || _k === void 0 ? void 0 : _k.Digits) || ((_m = (_l = this.RuleObj['RowTitle']) === null || _l === void 0 ? void 0 : _l[tRowTitleName]) === null || _m === void 0 ? void 0 : _m.TailString))
+            &amp;&amp; !isNaN(Number(valueStr.replace('%', '')))
+            ? true : false;
+    }
+    /**特殊規則判斷，判斷此欄位雖然非數字但是否需數值呈現判斷
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} tPageName 頁面名稱
+     * @param {string} valueStr 欄位值
+     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
+     * @return 是否需執行數值呈現修改
+     */
+    ExRule(tFieldName, tPageName, valueStr, tRowTitleName) {
+        var tmpStr = valueStr.toString().replace('%', '');
+        if ((tPageName == 'CP_WIP' || tPageName == 'FT_WIP') &amp;&amp; valueStr.indexOf('/') > -1) {
+            let tmpArr = valueStr.split('/');
+            if (isNaN(Number(tmpArr[0])) || isNaN(Number(tmpArr[1]))) {
+                return false;
+            }
+        }
+        else if (isNaN(Number(tmpStr))) {
+            return false;
+        }
+        return true;
+    }
+    /**將顯示的值做修改(百萬、千分位、小數位數)。使用前不用先判斷使否需修改，可直接呼叫。
+     * @param {string} tFieldName 欄位名稱
+     * @param {string} valueStr 欄位值
+     * @param {string} tPageName 頁面名稱
+     * @param {string} tRowTitleName 行Title(每一行最左邊的值)
+     * @return 回傳修改過後的字串
+     */
+    NeedModifyDisplay(tFieldName, valueStr, tPageName, tRowTitleName) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
+        if (valueStr == null) {
+            return '';
+        }
+        if (!this.ExRule(tFieldName, tPageName, valueStr, tRowTitleName)) {
+            return valueStr;
+        }
+        var tmpStr = valueStr.toString().replace('%', '');
+        //先跑Rule Function
+        for (let Key in this.RuleObj) {
+            let tmpName = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' &amp;&amp; tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
+            if (valueStr == '' || tmpStr == '') {
+                return ((_c = (_b = (_a = this.RuleObj[Key]) === null || _a === void 0 ? void 0 : _a[tmpName]) === null || _b === void 0 ? void 0 : _b.EmptyRule) === null || _c === void 0 ? void 0 : _c.call(_b, tPageName, valueStr, tFieldName, tRowTitleName)) || '';
+            }
+            tmpStr = ((_f = (_e = (_d = this.RuleObj[Key]) === null || _d === void 0 ? void 0 : _d[tmpName]) === null || _e === void 0 ? void 0 : _e.Digits) === null || _f === void 0 ? void 0 : _f.call(_e, tPageName, tmpStr, tFieldName, tRowTitleName)) || tmpStr;
+            tmpStr = ((_j = (_h = (_g = this.RuleObj[Key]) === null || _g === void 0 ? void 0 : _g[tmpName]) === null || _h === void 0 ? void 0 : _h.TailString) === null || _j === void 0 ? void 0 : _j.call(_h, tPageName, tmpStr, tFieldName, tRowTitleName)) || tmpStr;
+        }
+        //再判斷是否需要轉換百萬格式或千分位格式
+        for (let Key in this.RuleObj) {
+            let tmpName = Key == 'FieldName' ? tFieldName : Key == 'RowTitle' &amp;&amp; tRowTitleName ? tRowTitleName : Key == 'PageName' ? tPageName : '';
+            //百萬格式或千分位格式 不行重複判斷。只要其中一個true，就不會再檢查下一個(跳出迴圈)
+            if (((_l = (_k = this.RuleObj[Key]) === null || _k === void 0 ? void 0 : _k[tmpName]) === null || _l === void 0 ? void 0 : _l.MillionFormat) || ((_o = (_m = this.RuleObj[Key]) === null || _m === void 0 ? void 0 : _m[tmpName]) === null || _o === void 0 ? void 0 : _o.KilobitFormat)) {
+                let hasPersent = tmpStr.lastIndexOf('%') > -1 ? true : false;
+                tmpStr = hasPersent ? tmpStr.replace('%', '') : tmpStr;
+                tmpStr = ((_q = (_p = this.RuleObj[Key]) === null || _p === void 0 ? void 0 : _p[tmpName]) === null || _q === void 0 ? void 0 : _q.MillionFormat) === true
+                    || (typeof ((_s = (_r = this.RuleObj[Key]) === null || _r === void 0 ? void 0 : _r[tmpName]) === null || _s === void 0 ? void 0 : _s.MillionFormat) === 'function' &amp;&amp; ((_u = (_t = this.RuleObj[Key]) === null || _t === void 0 ? void 0 : _t[tmpName]) === null || _u === void 0 ? void 0 : _u.MillionFormat(tPageName, tmpStr, tFieldName, tRowTitleName)) === true)
+                    ? MillionFormat(tmpStr) : tmpStr;
+                tmpStr = ((_w = (_v = this.RuleObj[Key]) === null || _v === void 0 ? void 0 : _v[tmpName]) === null || _w === void 0 ? void 0 : _w.KilobitFormat) === true
+                    || (typeof ((_y = (_x = this.RuleObj[Key]) === null || _x === void 0 ? void 0 : _x[tmpName]) === null || _y === void 0 ? void 0 : _y.KilobitFormat) === 'function' &amp;&amp; ((_0 = (_z = this.RuleObj[Key]) === null || _z === void 0 ? void 0 : _z[tmpName]) === null || _0 === void 0 ? void 0 : _0.KilobitFormat(tPageName, tmpStr, tFieldName, tRowTitleName)) === true)
+                    ? MoneyFormat(tmpStr) : tmpStr;
+                tmpStr = tmpStr + (hasPersent ? '%' : '');
+                break;
+            }
+        }
+        return tmpStr + (tmpStr.toString().lastIndexOf('%') &lt; 0 &amp;&amp; valueStr.toString().lastIndexOf('%') > -1 ? '%' : '');
+    }
 }
 /**此class定義某欄位值改變時影響其他欄位 */
 export class DynamicClass {
@@ -3094,15 +3465,18 @@ export class DynamicClass {
         };
     }
     NeedDynamicGetList(tPageName, tFiledName, isSearchArea) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e, _f, _g;
         if (isSearchArea != null) {
             if (isSearchArea) { //搜尋Bar
                 if (((_a = this.DynamicInfObj[tPageName]) === null || _a === void 0 ? void 0 : _a.InfluenceByThisFieldName) == tFiledName) {
                     return true;
                 }
             }
+            else if (((_c = (_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames) === null || _c === void 0 ? void 0 : _c[tFiledName]) &amp;&amp; ((_e = (_d = this.DynamicInfObj[tPageName]) === null || _d === void 0 ? void 0 : _d.InfluenceToFieldNames) === null || _e === void 0 ? void 0 : _e[tFiledName]['']) != null) {
+                return false;
+            }
         }
-        if ((_c = (_b = this.DynamicInfObj[tPageName]) === null || _b === void 0 ? void 0 : _b.InfluenceToFieldNames) === null || _c === void 0 ? void 0 : _c[tFiledName]) {
+        if ((_g = (_f = this.DynamicInfObj[tPageName]) === null || _f === void 0 ? void 0 : _f.InfluenceToFieldNames) === null || _g === void 0 ? void 0 : _g[tFiledName]) {
             return true;
         }
         return false;
@@ -3146,6 +3520,7 @@ export class DynamicClass {
         return reStr;
     }
 }
+/**此class定義表單內函有click event */
 export class OnclickPage {
     /**判定這個cell有沒有Click Function
      * @param {string} tPageName 頁面名稱
@@ -3199,6 +3574,7 @@ export class OnclickPage {
         return '';
     }
 }
+/**此class定義表單、圖表顏色Highlight規則 */
 export class ColorRuleClass {
     constructor() {
         /**經過規則判定，每行確定要Highlight的座標資訊 */
@@ -3391,8 +3767,7 @@ export class ColorRuleClass {
                 haveOtherRules = true;
                 let tFIdx = gPageObj.PageNameObj[tPageName].FieldArr.indexOf(x);
                 let GetValue = LastQuery.QueryArr.length > 0 ? (LastQuery.QueryArr[tFIdx].indexOf('@') > -1 ? LastQuery.QueryArr[tFIdx].split('@') : LastQuery.QueryArr[tFIdx]) : '';
-                let tmpMenuArr = ps.GetListArr(tPageName, x, true);
-                let tmpValue = pt.GetListValue(tmpMenuArr, Others[x].toString());
+                let tmpValue = pt.GetListValue(ps.GetMenuName(tPageName, x, true), Others[x].toString());
                 let tmpValueArr = tmpValue.indexOf('/') > -1 ? tmpValue.split('/') : [];
                 let tRowTitleArr = RowTitle.indexOf('/') > -1 ? RowTitle.split('/') : [];
                 let tmpCellValue = CellIdx > -1 &amp;&amp; CellIdx &lt; TitleArr.length ? TitleArr[CellIdx] : '';
@@ -3744,7 +4119,7 @@ export class DynamicFunction {
         if (!tPageName) {
             tPageName = gPageObj.PageNameArr[0];
         }
-        let bu = '';
+        let bu = $('#BuName').html() != null ? $('#BuName').html() : '';
         let Query = {
             PageName: tPageName,
             Year: (year === null || year === void 0 ? void 0 : year.toString()) || '',
@@ -4261,6 +4636,7 @@ export class UrlQuery {
         return reUrlStr;
     }
 }
+/**此class定義表單內摺疊展開的功能 */
 export class TableExtend {
     constructor() {
         this.TableExtendObj = {};
@@ -4342,13 +4718,13 @@ window.DynamicFunction = DynamicFunction;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DynamicClass.html">DynamicClass</a></li><li><a href="DynamicFunction.html">DynamicFunction</a></li><li><a href="DynamicFunctionInTable.html">DynamicFunctionInTable</a></li><li><a href="FormInf.html">FormInf</a></li><li><a href="PageInf.html">PageInf</a></li><li><a href="PageOperation.html">PageOperation</a></li><li><a href="PageSet.html">PageSet</a></li><li><a href="PPMake.html">PPMake</a></li><li><a href="PPSearch.html">PPSearch</a></li><li><a href="SearchOperation.html">SearchOperation</a></li><li><a href="UrlQuery.html">UrlQuery</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddLineCount">AddLineCount</a></li><li><a href="global.html#CheckArr">CheckArr</a></li><li><a href="global.html#ColorRuleArr">ColorRuleArr</a></li><li><a href="global.html#DCMenuIdNameList">DCMenuIdNameList</a></li><li><a href="global.html#MenuList">MenuList</a></li><li><a href="global.html#MonthFormat">MonthFormat</a></li><li><a href="global.html#NeedAjaxArr">NeedAjaxArr</a></li><li><a href="global.html#NeedClickObj">NeedClickObj</a></li><li><a href="global.html#PageSetObj">PageSetObj</a></li><li><a href="global.html#SeasonFormat">SeasonFormat</a></li><li><a href="global.html#TableSetObj">TableSetObj</a></li><li><a href="global.html#YearFormat">YearFormat</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ColorRuleClass.html">ColorRuleClass</a></li><li><a href="DynamicClass.html">DynamicClass</a></li><li><a href="DynamicFunction.html">DynamicFunction</a></li><li><a href="DynamicFunctionInTable.html">DynamicFunctionInTable</a></li><li><a href="FormInf.html">FormInf</a></li><li><a href="OnclickPage.html">OnclickPage</a></li><li><a href="PageInf.html">PageInf</a></li><li><a href="PageMake.html">PageMake</a></li><li><a href="PageOperation.html">PageOperation</a></li><li><a href="PageSet.html">PageSet</a></li><li><a href="PageTool.html">PageTool</a></li><li><a href="PPMake.html">PPMake</a></li><li><a href="PPSearch.html">PPSearch</a></li><li><a href="SearchOperation.html">SearchOperation</a></li><li><a href="TableAndSearchOperation.html">TableAndSearchOperation</a></li><li><a href="TableExtend.html">TableExtend</a></li><li><a href="UrlQuery.html">UrlQuery</a></li><li><a href="ValueDisplay.html">ValueDisplay</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddLineCount">AddLineCount</a></li><li><a href="global.html#CheckArr">CheckArr</a></li><li><a href="global.html#ColorRuleArr">ColorRuleArr</a></li><li><a href="global.html#DCMenuIdNameList">DCMenuIdNameList</a></li><li><a href="global.html#MenuList">MenuList</a></li><li><a href="global.html#MonthFormat">MonthFormat</a></li><li><a href="global.html#NeedAjaxArr">NeedAjaxArr</a></li><li><a href="global.html#NeedClickObj">NeedClickObj</a></li><li><a href="global.html#PageSetObj">PageSetObj</a></li><li><a href="global.html#SeasonFormat">SeasonFormat</a></li><li><a href="global.html#TableSetObj">TableSetObj</a></li><li><a href="global.html#YearFormat">YearFormat</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Aug 29 2022 13:53:53 GMT+0800 (台北標準時間)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue Apr 18 2023 15:13:22 GMT+0800 (台北標準時間)
 </footer>
 
 <script> prettyPrint(); </script>

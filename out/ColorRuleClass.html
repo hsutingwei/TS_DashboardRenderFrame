@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: UrlQuery</title>
+    <title>JSDoc: Class: ColorRuleClass</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: UrlQuery</h1>
+    <h1 class="page-title">Class: ColorRuleClass</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>UrlQuery<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>ColorRuleClass<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">此class用於定義欄位含有超連結時，需額外帶的get參數</div>
+            <div class="class-description">此class定義表單、圖表顏色Highlight規則</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="UrlQuery"><span class="type-signature"></span>new UrlQuery<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ColorRuleClass"><span class="type-signature"></span>new ColorRuleClass<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="set.js.html">set.js</a>, <a href="set.js.html#line4191">line 4191</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3550">line 3550</a>
     </li></ul></dd>
     
 
@@ -134,7 +134,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="UrlQuery.html">UrlQuery</a></dt>
+            <dt><a href="ColorRuleClass.html">ColorRuleClass</a></dt>
             <dd></dd>
         </dl>
     
@@ -150,13 +150,13 @@
 
         
             
-<h4 class="name" id="UrlInfObj"><span class="type-signature"></span>UrlInfObj<span class="type-signature"></span></h4>
+<h4 class="name" id="HighlightObj"><span class="type-signature"></span>HighlightObj<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    定義各頁面各欄位含有超連結且需有需額外帶的get參數的物件
+    經過規則判定，每行確定要Highlight的座標資訊
 </div>
 
 
@@ -194,7 +194,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="set.js.html">set.js</a>, <a href="set.js.html#line4194">line 4194</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3553">line 3553</a>
     </li></ul></dd>
     
 
@@ -222,7 +222,7 @@
     
 
     
-    <h4 class="name" id="GetUrl"><span class="type-signature"></span>GetUrl<span class="signature">(Url, tPageName, tFieldName, tRowTitle, LineData)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="CheckColorRule"><span class="type-signature"></span>CheckColorRule<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -230,7 +230,7 @@
 
 
 <div class="description">
-    根據定義回傳此cell的含get參數的Url字串
+    檢查行座標是否需要Highlight。回傳style格式的字串
 </div>
 
 
@@ -239,147 +239,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">超連結網址</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tPageName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">頁面名稱</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tFieldName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">此cell的欄位名稱</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tRowTitle</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">此cell的行標題(line data的第一個值)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>LineData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">此cell所在的line data全部值</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -415,7 +274,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="set.js.html">set.js</a>, <a href="set.js.html#line4510">line 4510</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3993">line 3993</a>
     </li></ul></dd>
     
 
@@ -451,7 +310,7 @@
     
 
     
-    <h4 class="name" id="NeedSetKeyValue"><span class="type-signature"></span>NeedSetKeyValue<span class="signature">(tPageName, tFieldName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="InitColorObj"><span class="type-signature"></span>InitColorObj<span class="signature">(tPageName, data)</span><span class="type-signature"></span></h4>
     
 
     
@@ -459,7 +318,7 @@
 
 
 <div class="description">
-    判斷此cell是否需要設定url get value參數
+    將搜尋結果與顏色規則初始化Hightlight座標資訊物件
 </div>
 
 
@@ -518,15 +377,10 @@
 
         <tr>
             
-                <td class="name"><code>tFieldName</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
             
             </td>
 
@@ -534,7 +388,7 @@
 
             
 
-            <td class="description last">此cell的欄位名稱</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -575,7 +429,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="set.js.html">set.js</a>, <a href="set.js.html#line4500">line 4500</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3774">line 3774</a>
     </li></ul></dd>
     
 
@@ -611,7 +465,7 @@
     
 
     
-    <h4 class="name" id="TransFromValue"><span class="type-signature"></span>TransFromValue<span class="signature">(tPageName, tFieldName, tKeyName, tValue)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="InitColorRule"><span class="type-signature"></span>InitColorRule<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -619,7 +473,95 @@
 
 
 <div class="description">
-    取得的Value需要經過額外運算
+    根據後端傳至前端的顏色規則，初始化顏色規則物件
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3684">line 3684</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="isConformRule"><span class="type-signature"></span>isConformRule<span class="signature">(tPageName, Others, CellIdx, RowTitle)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    判斷此欄位值是否符合特殊規則。若沒定義特殊規則則回傳true
 </div>
 
 
@@ -678,15 +620,10 @@
 
         <tr>
             
-                <td class="name"><code>tFieldName</code></td>
+                <td class="name"><code>Others</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
             
             </td>
 
@@ -694,20 +631,20 @@
 
             
 
-            <td class="description last">含有超連結的欄位名稱</td>
+            <td class="description last"></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>tKeyName</code></td>
+                <td class="name"><code>CellIdx</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
             
@@ -717,14 +654,14 @@
 
             
 
-            <td class="description last">參數名稱</td>
+            <td class="description last">行座標</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>tValue</code></td>
+                <td class="name"><code>RowTitle</code></td>
             
 
             <td class="type">
@@ -740,7 +677,7 @@
 
             
 
-            <td class="description last">value值</td>
+            <td class="description last">左邊第一值</td>
         </tr>
 
     
@@ -781,7 +718,369 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="set.js.html">set.js</a>, <a href="set.js.html#line4478">line 4478</a>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3730">line 3730</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="NotSearchBar"><span class="type-signature"></span>NotSearchBar<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    判斷是否為特殊規則時，是否不看搜尋Bar。一般先判斷RowTitle，判斷欄位名稱，再判斷搜尋Bar
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3656">line 3656</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SetColorRuleFromFront"><span class="type-signature"></span>SetColorRuleFromFront<span class="signature">(tPageName)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    從前端定義顏色規則(有些專案還沒支援由後端資料庫定義顏色功能，因此需要由前端定義)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3558">line 3558</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SetOtherRules"><span class="type-signature"></span>SetOtherRules<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    定義特殊規則
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="set.js.html">set.js</a>, <a href="set.js.html#line3666">line 3666</a>
     </li></ul></dd>
     
 
