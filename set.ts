@@ -269,7 +269,29 @@ export var lang = {
 };
 /**紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID */
 export var DCMenuIdNameList: Array<string> = [];
-/**存放顏色Highlight規則 */
+/**存放顏色Highlight規則
+ * @example 
+ * let a: ColorTuleArr = {
+ *      Actual: {
+ *          '8': {
+                1: {
+                    "[3]>120": {
+                        Color: 'blue',
+                        BackgroundColor: '',
+                        Others: {
+                            'Score': 1
+                        }
+                    },
+                }
+            },
+            -1: { //-1表示全部
+                [1]:{},//表該行符合Rule，則該行所有座標Highlight
+                [0]:{}//表該列符合Rule，則該列整行Highlight
+                //兩個目前效果相同
+            }
+ *      }
+    } 
+*/
 export let ColorRuleArr: ColorRuleArr = {};
 
 /**此物件屬性儲存都是欄位名稱 */
