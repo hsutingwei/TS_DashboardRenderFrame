@@ -1220,7 +1220,11 @@ export class TableAndSearchOperation extends SearchOperation implements TableOpe
                 for (let j = 0; j < ModifiableArr.length; j++) {
                     let getValue: any;
                     let tmpDom: any;
-                    if (tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val() != null) {//一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
+                    if (tmpArr.eq(i).find('td').eq(j).css('display') == 'none') {
+                        getValue = tmpArr.eq(i).find('td').eq(j).find('span').html();
+                        tmpDom = tmpArr.eq(i).find('td').eq(j).find('span');
+                    }
+                    else if (tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val() != null) {//一定要加 != null的判斷，不可用本身布林值來判斷，因為0會回傳false
                         getValue = tmpArr.eq(i).find('td').eq(j).find('select.selectpicker').val();
                         if (toType(getValue) == 'array') {
                             getValue = getValue.join('/');
