@@ -1947,32 +1947,39 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      */
     MergeTableValue(tPageName) {
+        var _a, _b, _c;
         let TableIdName = tPageName + 'Table';
         let t = $('#' + TableIdName + ' tbody tr');
         let ShieldArr = this.NeedShieldField(tPageName);
+        var bu = document.getElementById('BuName').innerHTML;
         let MergeInf = {
-            MainInv: {
-                CheckXRange: 4,
-                IgnoreXIdx: [1, 2, 3],
-                XWayRange: {
-                    12: {
-                        2: 2
-                    }
-                },
+            BP_Query: {
+                CheckXRange: bu == 'RFE' || bu == 'WAF' || bu == 'PKG' ? 2 : bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC' ? gPageObj.PageNameObj[tPageName].TitleStrArr.length - (((_b = (_a = gPageObj.PageNameObj[tPageName]) === null || _a === void 0 ? void 0 : _a.LastQuery) === null || _b === void 0 ? void 0 : _b.QueryArr[1]) == '月' ? 13 : 5) * 2 - 1 : 0,
+                XWayRange: {},
+                IgnoreXIdx: [],
             },
-            FocusInv: {
-                CheckXRange: 4,
-                IgnoreXIdx: [1, 2, 3],
-                XWayRange: {
-                    12: {
-                        2: 2
-                    }
-                },
+            Area_Query: {
+                CheckXRange: 1
             },
-            NSBInv: {
-                CheckXRange: 1,
+            AP_Act_Analysis: {
+                CheckXRange: 4
             },
+            Product_GPM: {
+                CheckXRange: 2
+            },
+            Customer_GPM: {
+                CheckXRange: 2
+            },
+            ProjectionAP: {
+                CheckXRange: 19,
+                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
+            }
         };
+        if ((bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC') && tPageName == 'BP_Query') {
+            for (let i = 3; i < MergeInf[tPageName].CheckXRange; i++) {
+                (_c = MergeInf[tPageName].IgnoreXIdx) === null || _c === void 0 ? void 0 : _c.push(i);
+            }
+        }
         if (MergeInf[tPageName] == null) {
             return;
         }
@@ -1992,7 +1999,7 @@ export class PageSet {
                             k = j + 1;
                             continue;
                         }
-                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' || tStr.indexOf('</') > -1) {
+                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' /* || tStr.indexOf('</') > -1*/) {
                             k = j + 1;
                             continue;
                         }
@@ -2015,7 +2022,14 @@ export class PageSet {
                     if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
                         if (rcount == 0) { //直檢查
                             let tLastRowIndex = 0; //前一個縱座標
-                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0 && MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1; tLastRowIndex--) { }
+                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0; tLastRowIndex--) {
+                                if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1) {
+                                    continue;
+                                }
+                                else {
+                                    break;
+                                }
+                            }
                             for (let m = i + 1; t.eq(m).html() != null && tmpNowStr == t.eq(m).find('td').eq(j).html() && (j == 0 || m <= RowCountArr[tLastRowIndex]); m++, rcount++) {
                                 t.eq(m).find('td').eq(j).css('display', 'none');
                             }
@@ -2025,6 +2039,7 @@ export class PageSet {
                     if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) { //第一欄位值為這些值時，不考慮過濾條件
                         for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
                             t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
                         }
                     }
                     else {
@@ -2046,6 +2061,7 @@ export class PageSet {
                                 continue;
                             }
                             t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
                         }
                     }
                 }
