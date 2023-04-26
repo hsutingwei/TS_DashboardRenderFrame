@@ -1947,7 +1947,7 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      */
     MergeTableValue(tPageName) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
         let TableIdName = tPageName + 'Table';
         let t = $('#' + TableIdName + ' tbody tr');
         let ShieldArr = this.NeedShieldField(tPageName);
@@ -1972,8 +1972,11 @@ export class PageSet {
             },
             ProjectionAP: {
                 CheckXRange: 19,
-                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
-            }
+                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17],
+                total: {
+                    IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
+                }
+            },
         };
         if ((bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC') && tPageName == 'BP_Query') {
             for (let i = 3; i < MergeInf[tPageName].CheckXRange; i++) {
@@ -1992,6 +1995,7 @@ export class PageSet {
             for (let j = 0, k = 1; t.eq(i).find('td').eq(j).html() != null && j < MergeInf[tPageName].CheckXRange; j = k) {
                 let tmpNowStr = t.eq(i).find('td').eq(j).html();
                 let tStr = tmpNowStr.replace('%', '');
+                //跳過已檢查過的索引欄位
                 if (firstValue.indexOf('total') < 0 && firstValue.indexOf('sub-total') < 0) {
                     if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange[i] && MergeInf[tPageName].XWayRange[i][j]) { }
                     else {
@@ -2009,6 +2013,10 @@ export class PageSet {
                         }
                     }
                 }
+                else if (((_e = (_d = MergeInf[tPageName]) === null || _d === void 0 ? void 0 : _d.total) === null || _e === void 0 ? void 0 : _e.IgnoreXIdx) !== undefined && MergeInf[tPageName].total.IgnoreXIdx.indexOf(k) > -1) {
+                    k = j + 1;
+                    continue;
+                }
                 let count = 0;
                 let rcount = 0;
                 if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange[i] && MergeInf[tPageName].XWayRange[i][j]) {
@@ -2023,7 +2031,8 @@ export class PageSet {
                         if (rcount == 0) { //直檢查
                             let tLastRowIndex = 0; //前一個縱座標
                             for (tLastRowIndex = j - 1; tLastRowIndex >= 0; tLastRowIndex--) {
-                                if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1) {
+                                if ((MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1)
+                                    || ((firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) && ((_g = (_f = MergeInf[tPageName]) === null || _f === void 0 ? void 0 : _f.total) === null || _g === void 0 ? void 0 : _g.IgnoreXIdx) !== undefined && MergeInf[tPageName].total.IgnoreXIdx.indexOf(tLastRowIndex) > -1)) {
                                     continue;
                                 }
                                 else {
@@ -2036,8 +2045,18 @@ export class PageSet {
                         }
                         RowCountArr[j] = i + rcount;
                     }
-                    if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) { //第一欄位值為這些值時，不考慮過濾條件
+                    if (MergeInf[tPageName].total === undefined && (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) { //第一欄位值為這些值時，不考慮過濾條件
                         for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                            t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
+                        }
+                    }
+                    else if (MergeInf[tPageName].total !== undefined && (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) { //total特殊規則的橫檢查
+                        for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                            if (((_j = (_h = MergeInf[tPageName]) === null || _h === void 0 ? void 0 : _h.total) === null || _j === void 0 ? void 0 : _j.IgnoreXIdx) !== undefined && MergeInf[tPageName].total.IgnoreXIdx.indexOf(k) > -1) {
+                                count--;
+                                continue;
+                            }
                             t.eq(i).find('td').eq(k).css('display', 'none');
                             RowCountArr[k] = RowCountArr[j];
                         }

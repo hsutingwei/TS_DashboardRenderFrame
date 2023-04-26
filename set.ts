@@ -2136,6 +2136,11 @@ export class PageSet {
                         /**value(number): 合併儲存格欄位數 */
                         [xIndex: number]: number
                     }
+                },
+                /**total/sub-total的特殊規則 */
+                total?: {
+                    /**要被忽略檢查的列座標。座標範圍須小於CheckXRange才有效 */
+                    IgnoreXIdx: number[],
                 }
             }
         }
@@ -2160,8 +2165,11 @@ export class PageSet {
             },
             ProjectionAP: {
                 CheckXRange: 19,
-                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
-            }
+                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17],
+                total: {
+                    IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
+                }
+            },
         }
 
         if ((bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC') && tPageName == 'BP_Query') {
@@ -2182,6 +2190,7 @@ export class PageSet {
             for (let j = 0, k = 1; t.eq(i).find('td').eq(j).html() != null && j < MergeInf[tPageName].CheckXRange; j = k) {
                 let tmpNowStr = t.eq(i).find('td').eq(j).html();
                 let tStr = tmpNowStr.replace('%', '');
+                //跳過已檢查過的索引欄位
                 if (firstValue.indexOf('total') < 0 && firstValue.indexOf('sub-total') < 0) {
                     if (MergeInf[tPageName].XWayRange && MergeInf[tPageName].XWayRange![i] && MergeInf[tPageName].XWayRange![i][j]) { }
                     else {
@@ -2199,6 +2208,10 @@ export class PageSet {
                         }
                     }
                 }
+                else if (MergeInf[tPageName]?.total?.IgnoreXIdx !== undefined && MergeInf[tPageName]!.total!.IgnoreXIdx.indexOf(k) > -1) {
+                    k = j + 1;
+                    continue;
+                }
                 let count = 0;
                 let rcount = 0;
 
@@ -2214,7 +2227,8 @@ export class PageSet {
                         if (rcount == 0) {//直檢查
                             let tLastRowIndex: number = 0;//前一個縱座標
                             for (tLastRowIndex = j - 1; tLastRowIndex >= 0; tLastRowIndex--) {
-                                if (MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx!.indexOf(tLastRowIndex) > -1) {
+                                if ((MergeInf[tPageName].IgnoreXIdx != null && MergeInf[tPageName].IgnoreXIdx!.indexOf(tLastRowIndex) > -1)
+                                    || ((firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) && MergeInf[tPageName]?.total?.IgnoreXIdx !== undefined && MergeInf[tPageName]!.total!.IgnoreXIdx.indexOf(tLastRowIndex) > -1)) {
                                     continue;
                                 }
                                 else {
@@ -2229,8 +2243,18 @@ export class PageSet {
                         RowCountArr[j] = i + rcount;
                     }
 
-                    if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) {//第一欄位值為這些值時，不考慮過濾條件
+                    if (MergeInf[tPageName].total === undefined && (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) {//第一欄位值為這些值時，不考慮過濾條件
                         for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) {//橫檢查
+                            t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
+                        }
+                    }
+                    else if (MergeInf[tPageName].total !== undefined && (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) {//total特殊規則的橫檢查
+                        for (k = j + 1; t.eq(i).find('td').eq(k).html() != null && tmpNowStr == t.eq(i).find('td').eq(k).html() && k < MergeInf[tPageName].CheckXRange; k++, count++) {//橫檢查
+                            if (MergeInf[tPageName]?.total?.IgnoreXIdx !== undefined && MergeInf[tPageName]!.total!.IgnoreXIdx!.indexOf(k) > -1) {
+                                count--;
+                                continue;
+                            }
                             t.eq(i).find('td').eq(k).css('display', 'none');
                             RowCountArr[k] = RowCountArr[j];
                         }
