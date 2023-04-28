@@ -2387,41 +2387,19 @@ export class PageSet {
         let tmpQueryResult = pg.MakeExportData(tPageName, data);
         let tmpFieldArr = gPageObj.PageNameObj[tPageName].TitleStrArr;
         tmpFieldArr = pg.ObjTitleToStrArr(tPageName, tmpTitle);
+        let ps = new PageSet();
+        let ShieldIdxArr = ps.NeedShieldField(tPageName);
 
-        if (tPageName == 'APMaintain' || tPageName == 'FCSTMaintain') {
-            tmpFieldArr.splice(3, 1, '客戶代碼', '客戶名稱', '業務');
+        if (ShieldIdxArr.length > 0) {
+            for (let j = ShieldIdxArr.length - 1; j >= 0; j--) {
+                tmpFieldArr.splice(ShieldIdxArr[j], 1);
+            }
             for (let i = 0; i < tmpQueryResult.length; i++) {
                 let tList = tmpQueryResult[i].split(';');
-                let tmpValue = tList[3];
-                let tValueArr = tmpValue.split('/');
-                let tmpProductType = tList[7].split('-');
-                tList[7] = tmpProductType[1];
-                tList.splice(3, 1, tValueArr[0], tValueArr[1], tValueArr[2]);
-                tmpQueryResult[i] = tList.join(';');
-            }
-        }
-        else if (tPageName == 'APQuery' || tPageName == 'FCSTQuery' || tPageName == 'APvsFCSTvsAct') {
-            for (let i = tmpQueryResult.length - 1; i >= 0; i--) {
-                let tList = tmpQueryResult[i].split(';');
-                if (tList[0].toLowerCase().indexOf('total') > -1) {
-                    if (tList[0].toLowerCase().indexOf('total') == 0) {
-                        for (let j = 1; j < tList.length; j++) {
-                            if (tList[j].toLowerCase().indexOf('total') == 0) {
-                                tList[j] = '';
-                            }
-                        }
-                    }
-                    else {
-                        tList[1] = '';
-                        let tmpSame = tList[2];
-                        for (let j = 3; j < tList.length; j++) {
-                            if (tList[j] == tmpSame) {
-                                tList[j] = '';
-                            }
-                        }
-                    }
-                    tmpQueryResult[i] = tList.join(';');
+                for (let j = ShieldIdxArr.length - 1; j >= 0; j--) {
+                    tList.splice(ShieldIdxArr[j], 1);
                 }
+                tmpQueryResult[i] = tList.join(';');
             }
         }
 
