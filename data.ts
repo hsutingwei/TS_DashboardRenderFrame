@@ -177,7 +177,7 @@ function gcd(m: number, n: number): number {//得最大公因數
     return m;
 }
 
-function formatFloat(num: number, pos: number): number {//4捨5入至小數第幾位
+function formatFloat(num: number, pos: number): string {//4捨5入至小數第幾位
     var size = Math.pow(10, pos);
     var re = Math.round(num * size) / size;
     var reStr = '';
@@ -187,7 +187,7 @@ function formatFloat(num: number, pos: number): number {//4捨5入至小數第�
         reStr = tmpArr[0] + '.';
         for (var i = 0; i < pos; i++) { reStr += '0'; }
     }
-    return parseFloat(reStr);
+    return reStr;
 }
 
 function toType(obj: any): string {//取得物件的型別
