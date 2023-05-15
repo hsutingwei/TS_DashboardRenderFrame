@@ -187,7 +187,7 @@ function formatFloat(num: number, pos: number): string {//4捨5入至小數第�
         reStr = tmpArr[0] + '.';
         for (var i = 0; i < pos; i++) { reStr += '0'; }
     }
-    return reStr;
+    return reStr[reStr.length - 1] == '.' ? reStr.substring(0, reStr.length - 1) : reStr;
 }
 
 function toType(obj: any): string {//取得物件的型別

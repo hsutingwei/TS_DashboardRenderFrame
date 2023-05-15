@@ -178,7 +178,7 @@ function formatFloat(num, pos) {
             reStr += '0';
         }
     }
-    return reStr;
+    return reStr[reStr.length - 1] == '.' ? reStr.substring(0, reStr.length - 1) : reStr;
 }
 function toType(obj) {
     var type = typeof (obj);
