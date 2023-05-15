@@ -2424,7 +2424,7 @@ export class PageMake {
                 });
             }
             else {
-                tmpKeyValue = ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? [KeyValueArr[i]] : KeyValueArr[i];
+                tmpKeyValue = ps.IsMultiSelect(tPageName, tFieldNameArr[i], true) ? KeyValueArr[i].split('@') : KeyValueArr[i];
             }
             if (DefaultIdx > -1 && tmpKeyValue.length > 0 && tmpKeyValue[0] != '') { //預設值若為空白不需重新動態變動
                 let tmpSelectList = this.FrontDynamicMenuRequest(tPageName, tFieldNameArr[i], ValueIdArr[i], true, tmpKeyValue);
