@@ -25,13 +25,14 @@ export var CheckArr = [];
 export let NeedAjaxArr = [];
 /**用來記錄新增的筆數(負值是用來與Table的行數做區分) */
 var AddLineCount = -1;
+/**頁面初始化 */
 $(function () {
     var _a, _b, _c, _d;
     let po = new PageOperation();
     let pm = new PageMake();
     let ps = new set.PageSet();
-    pm.IniteMenuBar(false, 'MenuBarLink2');
-    pm.IniteMenuBar(true, 'MenuBarLink');
+    pm.IniteMenuBar(false, 'MenuBarLink2'); //渲染Menu Link
+    pm.IniteMenuBar(true, 'MenuBarLink'); //渲染Menu Link並帶權限
     $('[data-toggle="tooltip"]').tooltip();
     let cr = new set.ColorRuleClass();
     cr.InitColorRule();
@@ -72,16 +73,19 @@ $(function () {
             }
         }
     }
+    //確認更新按鈕的觸發函式
     $('#UpdateSubmit').on('click', (event) => {
         if (tPageName != null) {
             po.UpdateClick(tPageName);
         }
     });
+    //監聽shown.bs.modal的隱藏顯示切換，用於顯示區塊後造成datatable.js跑版
     $('#BigAlertArea').on('shown.bs.modal', function () {
-        $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust(); //重新渲染datatable.js以解決顯示區塊後造成跑版
     });
+    //監聽shown.bs.modal的隱藏顯示切換，用於顯示區塊後造成datatable.js跑版
     $('#RowDataArea').on('shown.bs.modal', function () {
-        $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust(); //重新渲染datatable.js以解決顯示區塊後造成跑版
     });
 });
 /**定義Table表單屬性
@@ -212,6 +216,7 @@ export class PageInf extends FormInf {
     }
 }
 /**此class定義搜尋模組，因搜尋其中的邏輯流程有些會有客製化設定，固定義於獨立的class，再由PageOperation繼承
+ * @implements Search, ClickSearch
  */
 class SearchOperation {
     /**重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，
@@ -1125,7 +1130,10 @@ class SearchOperation {
         }
     }
 }
-/**此class定義搜尋模組，繼承SearchOperation及TableOperation */
+/**此class定義表單Table操作模組，繼承SearchOperation及TableOperation
+ * @extends SearchOperation
+ * @implements TableOperation
+ */
 export class TableAndSearchOperation extends SearchOperation {
     /**Update Submit
      * @param {string} tPageName 頁面名稱
@@ -1532,6 +1540,7 @@ export class TableAndSearchOperation extends SearchOperation {
 }
 /**此class定義Page的操作功能
  * PageName底下操作功能定義於此
+ * @extends TableAndSearchOperation
  */
 export class PageOperation extends TableAndSearchOperation {
     /**Update點擊觸發的功能。
@@ -1935,7 +1944,9 @@ export class PageOperation extends TableAndSearchOperation {
         });
     }
 }
-/**此class用於定義表單渲染相關的函式 */
+/**此class用於定義表單渲染相關的函式
+ * @implements PageRender
+ */
 export class PageMake {
     /**產生Table Html。
      * 含各欄位的menu選單、檢視/編輯、預設值、動態觸發欄位...等

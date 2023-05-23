@@ -30,7 +30,7 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>TableAndSearchOperation<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">此class定義搜尋模組，繼承SearchOperation及TableOperation</div>
+            <div class="class-description">此class定義表單Table操作模組，繼承SearchOperation及TableOperation</div>
         
     
 </header>
@@ -77,6 +77,13 @@
     
 
     
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>TableOperation</li>
+        
+    </ul></dd>
+    
 
     
 
@@ -93,7 +100,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1129">line 1129</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1137">line 1137</a>
     </li></ul></dd>
     
 
@@ -125,6 +132,17 @@
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="SearchOperation.html">SearchOperation</a></li>
+    </ul>
+
 
     
 
@@ -250,7 +268,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1348">line 1348</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1356">line 1356</a>
     </li></ul></dd>
     
 
@@ -409,7 +427,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1449">line 1449</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1457">line 1457</a>
     </li></ul></dd>
     
 
@@ -591,7 +609,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1315">line 1315</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1323">line 1323</a>
     </li></ul></dd>
     
 
@@ -728,7 +746,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1515">line 1515</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1523">line 1523</a>
     </li></ul></dd>
     
 
@@ -865,7 +883,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1500">line 1500</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1508">line 1508</a>
     </li></ul></dd>
     
 
@@ -1025,7 +1043,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1134">line 1134</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1142">line 1142</a>
     </li></ul></dd>
     
 
@@ -1162,7 +1180,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1494">line 1494</a>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line1502">line 1502</a>
     </li></ul></dd>
     
 
@@ -1193,6 +1211,574 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="EditSearchResult"><span class="type-signature"></span>EditSearchResult<span class="signature">(tPageName, data)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    修改搜尋結果(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，因此程式結構這樣寫，設定的部分統一寫在PageSet)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">搜尋結果陣列</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="SearchOperation.html#EditSearchResult">SearchOperation#EditSearchResult</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line249">line 249</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="ResetSearchQuery"><span class="type-signature"></span>ResetSearchQuery<span class="signature">(tPageName, sQuery)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，因此程式結構這樣寫，設定的部分統一寫在PageSet)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sQuery</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">搜尋Query</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="SearchOperation.html#ResetSearchQuery">SearchOperation#ResetSearchQuery</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line228">line 228</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    回傳重新定義的搜尋陣列
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SetFormTitleFromQuery"><span class="type-signature"></span>SetFormTitleFromQuery<span class="signature">(tPageName, Query, data)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    重設搜尋Query的值(由於ResetSearchQuery屬於Search功能系列其中的函式，但因有需要客製化的設定，因此程式結構這樣寫，設定的部分統一寫在PageSet)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tPageName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">頁面名稱</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">搜尋Query</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array.&lt;string>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">搜尋結果陣列(二維)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="SearchOperation.html#SetFormTitleFromQuery">SearchOperation#SetFormTitleFromQuery</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PageInit.js.html">PageInit.js</a>, <a href="PageInit.js.html#line239">line 239</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    回傳重新定義的Title
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1214,7 +1800,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue May 23 2023 14:33:42 GMT+0800 (台北標準時間)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue May 23 2023 16:44:40 GMT+0800 (台北標準時間)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -2,8 +2,27 @@ import { EChartOption } from 'echarts';
 import { extend } from 'jquery';
 import './PageInit.js'
 import { gPageObj, PageInf, PageMake, PageOperation, PageTool } from './PageInit.js';
+/**@typedef {import('./type.d')} */
 
-/**下拉式選單資訊物件 */
+/**下拉式選單資訊物件
+ * @example 
+ * Field Name就是Menu Name
+ * '年度': {
+        MenuArr: [],
+        DataFromDB: false,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+    Menu Name來自後端
+    Competitor: {
+        MenuArr: [],
+        DataFromDB: true,
+        KeyValue: {},
+        ValueKey: {},
+        ValueHaveDash: false,
+    },
+ */
 export var MenuList: {
     /**Menu名稱 */
     [key: string]: {
@@ -216,7 +235,18 @@ export var MenuList: {
         ValueHaveDash: false,
     },
 };
-/**表單內部值需要Click Function的定義 */
+/**表單內部值需要Click Function的定義
+ * 大部分因Field Name是變動的，所以需要從ResetFieldArr()定義
+ * 否則Field Name若是固定的可以直接從這裡定義
+ * @example
+ * CP_CT:{
+ *  '05/01':{
+ *      Function: 'PageOperation.ClickSearch',
+ *      ValueQuery: ['2023/05/01', '2023/05/01', 'CP@LCD', '', '', '', '', '', '下線~完工', ''],
+        NotShowInRowTitle: []
+ *  }
+ * }
+ */
 export var NeedClickObj: {
     /**頁面名稱 */
     [PageName: string]: {
@@ -241,7 +271,6 @@ export var NeedClickObj: {
         }
     }
 };
-export var DedaultListArr: Array<string> = [];
 export var lang = {
     "sProcessing": "處理中...",
     "sLengthMenu": "每頁 _MENU_ 項",
@@ -270,6 +299,7 @@ export var lang = {
 /**紀錄會動態影響其他搜尋欄位的搜尋欄位物件ID */
 export var DCMenuIdNameList: Array<string> = [];
 /**存放顏色Highlight規則
+ * @type {ColorRuleArr}
  * @example 
  * let a: ColorTuleArr = {
  *      Actual: {
@@ -294,7 +324,9 @@ export var DCMenuIdNameList: Array<string> = [];
 */
 export let ColorRuleArr: ColorRuleArr = {};
 
-/**此物件屬性儲存都是欄位名稱 */
+/**此物件屬性儲存都是欄位名稱
+ * @type {TableSetObj}
+ */
 export var TableSetObj: TableSetObj = {
     /**若是0，可忽略的欄位 */
     IgnoreZero: [],
@@ -308,7 +340,9 @@ export var TableSetObj: TableSetObj = {
     CheckboxArr: ['成本為0或空值'],
 }
 
-/**此物件屬性儲存都是頁面名稱 */
+/**此物件屬性儲存都是頁面名稱
+ * @type {PageSetObj}
+ */
 export var PageSetObj: PageSetObj = {
     /**不需要刪除功能的頁面 */
     noDeletePage: ['PRICE_ANALYSIS', 'PRICE_ANALYSIS_LIST'],

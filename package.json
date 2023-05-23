@@ -3,19 +3,21 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.1.2",
-    "@types/datatables.net": "^1.10.20",
-    "@types/jquery": "^3.5.6",
-    "ts-loader": "^9.2.6",
-    "typescript": "^4.4.3"
+    "@types/bootstrap": "^5.2.6",
+    "@types/datatables.net": "^1.10.24",
+    "@types/jquery": "^3.5.16",
+    "jsdoc": "^4.0.2",
+    "ts-loader": "^9.4.2",
+    "tsd-jsdoc": "^2.5.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@types/bootstrap-datepicker": "^0.0.15",
-    "@types/echarts": "^4.9.10",
-    "bootstrap": "^5.1.0",
-    "bootstrap-fileinput": "^5.2.3",
-    "datatables.net": "^1.10.25",
-    "datatables.net-dt": "^1.1.0",
-    "jquery": "^3.6.0"
+    "@types/echarts": "^4.9.17",
+    "bootstrap": "^5.2.3",
+    "bootstrap-fileinput": "^5.5.2",
+    "datatables.net": "^1.13.4",
+    "datatables.net-dt": "^1.13.4",
+    "jquery": "^3.7.0"
   }
 }
