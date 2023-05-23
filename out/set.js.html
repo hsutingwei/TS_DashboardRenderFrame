@@ -1975,32 +1975,42 @@ export class PageSet {
      * @param {string} tPageName 頁面名稱
      */
     MergeTableValue(tPageName) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
         let TableIdName = tPageName + 'Table';
         let t = $('#' + TableIdName + ' tbody tr');
         let ShieldArr = this.NeedShieldField(tPageName);
+        var bu = document.getElementById('BuName').innerHTML;
         let MergeInf = {
-            MainInv: {
-                CheckXRange: 4,
-                IgnoreXIdx: [1, 2, 3],
-                XWayRange: {
-                    12: {
-                        2: 2
-                    }
-                },
+            BP_Query: {
+                CheckXRange: bu == 'RFE' || bu == 'WAF' || bu == 'PKG' ? 2 : bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC' ? gPageObj.PageNameObj[tPageName].TitleStrArr.length - (((_b = (_a = gPageObj.PageNameObj[tPageName]) === null || _a === void 0 ? void 0 : _a.LastQuery) === null || _b === void 0 ? void 0 : _b.QueryArr[1]) == '月' ? 13 : 5) * 2 - 1 : 0,
+                XWayRange: {},
+                IgnoreXIdx: [],
             },
-            FocusInv: {
-                CheckXRange: 4,
-                IgnoreXIdx: [1, 2, 3],
-                XWayRange: {
-                    12: {
-                        2: 2
-                    }
-                },
+            Area_Query: {
+                CheckXRange: 1
             },
-            NSBInv: {
-                CheckXRange: 1,
+            AP_Act_Analysis: {
+                CheckXRange: 4
+            },
+            Product_GPM: {
+                CheckXRange: 2
+            },
+            Customer_GPM: {
+                CheckXRange: 2
+            },
+            ProjectionAP: {
+                CheckXRange: 19,
+                IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17],
+                total: {
+                    IgnoreXIdx: [2, 3, 5, 7, 9, 11, 13, 15, 17]
+                }
             },
         };
+        if ((bu == 'ATE' || bu == 'YSZA' || bu == 'CRT' || bu == 'CSYC') &amp;&amp; tPageName == 'BP_Query') {
+            for (let i = 3; i &lt; MergeInf[tPageName].CheckXRange; i++) {
+                (_c = MergeInf[tPageName].IgnoreXIdx) === null || _c === void 0 ? void 0 : _c.push(i);
+            }
+        }
         if (MergeInf[tPageName] == null) {
             return;
         }
@@ -2013,6 +2023,7 @@ export class PageSet {
             for (let j = 0, k = 1; t.eq(i).find('td').eq(j).html() != null &amp;&amp; j &lt; MergeInf[tPageName].CheckXRange; j = k) {
                 let tmpNowStr = t.eq(i).find('td').eq(j).html();
                 let tStr = tmpNowStr.replace('%', '');
+                //跳過已檢查過的索引欄位
                 if (firstValue.indexOf('total') &lt; 0 &amp;&amp; firstValue.indexOf('sub-total') &lt; 0) {
                     if (MergeInf[tPageName].XWayRange &amp;&amp; MergeInf[tPageName].XWayRange[i] &amp;&amp; MergeInf[tPageName].XWayRange[i][j]) { }
                     else {
@@ -2020,7 +2031,7 @@ export class PageSet {
                             k = j + 1;
                             continue;
                         }
-                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' || tStr.indexOf('&lt;/') > -1) {
+                        if ( /*!isNaN(Number(tStr)) || */tStr == '-' /* || tStr.indexOf('&lt;/') > -1*/) {
                             k = j + 1;
                             continue;
                         }
@@ -2029,6 +2040,10 @@ export class PageSet {
                             continue;
                         }
                     }
+                }
+                else if (((_e = (_d = MergeInf[tPageName]) === null || _d === void 0 ? void 0 : _d.total) === null || _e === void 0 ? void 0 : _e.IgnoreXIdx) !== undefined &amp;&amp; MergeInf[tPageName].total.IgnoreXIdx.indexOf(k) > -1) {
+                    k = j + 1;
+                    continue;
                 }
                 let count = 0;
                 let rcount = 0;
@@ -2043,16 +2058,35 @@ export class PageSet {
                     if (t.eq(i).find('td').eq(j).css('display') != 'none') { //已被合併使欄位為display none的就跳過不檢查
                         if (rcount == 0) { //直檢查
                             let tLastRowIndex = 0; //前一個縱座標
-                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0 &amp;&amp; MergeInf[tPageName].IgnoreXIdx != null &amp;&amp; MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1; tLastRowIndex--) { }
+                            for (tLastRowIndex = j - 1; tLastRowIndex >= 0; tLastRowIndex--) {
+                                if ((MergeInf[tPageName].IgnoreXIdx != null &amp;&amp; MergeInf[tPageName].IgnoreXIdx.indexOf(tLastRowIndex) > -1)
+                                    || ((firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) &amp;&amp; ((_g = (_f = MergeInf[tPageName]) === null || _f === void 0 ? void 0 : _f.total) === null || _g === void 0 ? void 0 : _g.IgnoreXIdx) !== undefined &amp;&amp; MergeInf[tPageName].total.IgnoreXIdx.indexOf(tLastRowIndex) > -1)) {
+                                    continue;
+                                }
+                                else {
+                                    break;
+                                }
+                            }
                             for (let m = i + 1; t.eq(m).html() != null &amp;&amp; tmpNowStr == t.eq(m).find('td').eq(j).html() &amp;&amp; (j == 0 || m &lt;= RowCountArr[tLastRowIndex]); m++, rcount++) {
                                 t.eq(m).find('td').eq(j).css('display', 'none');
                             }
                         }
                         RowCountArr[j] = i + rcount;
                     }
-                    if (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0) { //第一欄位值為這些值時，不考慮過濾條件
+                    if (MergeInf[tPageName].total === undefined &amp;&amp; (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) { //第一欄位值為這些值時，不考慮過濾條件
                         for (k = j + 1; t.eq(i).find('td').eq(k).html() != null &amp;&amp; tmpNowStr == t.eq(i).find('td').eq(k).html() &amp;&amp; k &lt; MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
                             t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
+                        }
+                    }
+                    else if (MergeInf[tPageName].total !== undefined &amp;&amp; (firstValue.indexOf('sub-total') == 0 || firstValue.indexOf('total') == 0)) { //total特殊規則的橫檢查
+                        for (k = j + 1; t.eq(i).find('td').eq(k).html() != null &amp;&amp; tmpNowStr == t.eq(i).find('td').eq(k).html() &amp;&amp; k &lt; MergeInf[tPageName].CheckXRange; k++, count++) { //橫檢查
+                            if (((_j = (_h = MergeInf[tPageName]) === null || _h === void 0 ? void 0 : _h.total) === null || _j === void 0 ? void 0 : _j.IgnoreXIdx) !== undefined &amp;&amp; MergeInf[tPageName].total.IgnoreXIdx.indexOf(k) > -1) {
+                                count--;
+                                continue;
+                            }
+                            t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
                         }
                     }
                     else {
@@ -2074,6 +2108,7 @@ export class PageSet {
                                 continue;
                             }
                             t.eq(i).find('td').eq(k).css('display', 'none');
+                            RowCountArr[k] = RowCountArr[j];
                         }
                     }
                 }
@@ -2173,40 +2208,18 @@ export class PageSet {
         let tmpQueryResult = pg.MakeExportData(tPageName, data);
         let tmpFieldArr = gPageObj.PageNameObj[tPageName].TitleStrArr;
         tmpFieldArr = pg.ObjTitleToStrArr(tPageName, tmpTitle);
-        if (tPageName == 'APMaintain' || tPageName == 'FCSTMaintain') {
-            tmpFieldArr.splice(3, 1, '客戶代碼', '客戶名稱', '業務');
+        let ps = new PageSet();
+        let ShieldIdxArr = ps.NeedShieldField(tPageName);
+        if (ShieldIdxArr.length > 0) {
+            for (let j = ShieldIdxArr.length - 1; j >= 0; j--) {
+                tmpFieldArr.splice(ShieldIdxArr[j], 1);
+            }
             for (let i = 0; i &lt; tmpQueryResult.length; i++) {
                 let tList = tmpQueryResult[i].split(';');
-                let tmpValue = tList[3];
-                let tValueArr = tmpValue.split('/');
-                let tmpProductType = tList[7].split('-');
-                tList[7] = tmpProductType[1];
-                tList.splice(3, 1, tValueArr[0], tValueArr[1], tValueArr[2]);
-                tmpQueryResult[i] = tList.join(';');
-            }
-        }
-        else if (tPageName == 'APQuery' || tPageName == 'FCSTQuery' || tPageName == 'APvsFCSTvsAct') {
-            for (let i = tmpQueryResult.length - 1; i >= 0; i--) {
-                let tList = tmpQueryResult[i].split(';');
-                if (tList[0].toLowerCase().indexOf('total') > -1) {
-                    if (tList[0].toLowerCase().indexOf('total') == 0) {
-                        for (let j = 1; j &lt; tList.length; j++) {
-                            if (tList[j].toLowerCase().indexOf('total') == 0) {
-                                tList[j] = '';
-                            }
-                        }
-                    }
-                    else {
-                        tList[1] = '';
-                        let tmpSame = tList[2];
-                        for (let j = 3; j &lt; tList.length; j++) {
-                            if (tList[j] == tmpSame) {
-                                tList[j] = '';
-                            }
-                        }
-                    }
-                    tmpQueryResult[i] = tList.join(';');
+                for (let j = ShieldIdxArr.length - 1; j >= 0; j--) {
+                    tList.splice(ShieldIdxArr[j], 1);
                 }
+                tmpQueryResult[i] = tList.join(';');
             }
         }
         qy.FieldName = tmpFieldArr;
@@ -3784,6 +3797,7 @@ export class ColorRuleClass {
         let ps = new PageSet();
         let pt = new PageTool();
         let haveOtherRules = false;
+        // 遍歷 Others 物件的屬性
         for (let x in Others) {
             if (x != 'Score') {
                 haveOtherRules = true;
@@ -3815,6 +3829,7 @@ export class ColorRuleClass {
                 }
             }
         }
+        // 若沒有其他規則，則返回 true；否則返回 false
         return !haveOtherRules ? true : false;
     }
     /**將搜尋結果與顏色規則初始化Hightlight座標資訊物件
@@ -3828,6 +3843,7 @@ export class ColorRuleClass {
         let TitleArr = gPageObj.PageNameObj[tPageName].TitleStrArr; //欄位名稱陣列
         let tData = [];
         Object.assign(tData, data);
+        // 將傳入的data進行處理和轉換
         for (let i = 0; i &lt; data.length; i++) {
             if (typeof data[i] == 'string') {
                 tData[i] = data[i].split(',');
@@ -3837,6 +3853,7 @@ export class ColorRuleClass {
                 tData[i] = gPageObj.PageNameObj[tPageName].LineDataObjToArray(data[i]);
             }
             RowTitle.push(tData[i][0]);
+            // 處理tData中的特殊字符和陣列元素
             for (let j = 0; j &lt; tData[i].length; j++) {
                 tData[i][j] = tData[i][j].replace('%', '');
                 //if (tData[i][j] == '' || tData[i][j] == '-') { tData[i][j] = '0'; }
@@ -3847,6 +3864,7 @@ export class ColorRuleClass {
                 }
             }
         }
+        // 進行顏色判定和設定
         for (let i = 0; i &lt; tData.length; i++) {
             let tLineData = tData[i];
             /**縱坐標判定 */
@@ -4044,9 +4062,11 @@ export class ColorRuleClass {
         let c = this.HighlightObj[RowIdx] &amp;&amp; this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].Color : '';
         let b = this.HighlightObj[RowIdx] &amp;&amp; this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].BackgroundColor : '';
         let reStr = '';
+        // 檢查是否有文字顏色設定，若有則將顏色設定加入返回字串
         if (c != '') {
             reStr += 'color:' + c + ';';
         }
+        // 檢查是否有背景顏色設定，若有則將背景顏色設定加入返回字串
         if (b != '') {
             reStr += 'background-color:' + b + ';';
         }
@@ -4746,7 +4766,7 @@ window.DynamicFunction = DynamicFunction;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue Apr 25 2023 15:10:43 GMT+0800 (台北標準時間)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue May 23 2023 14:33:42 GMT+0800 (台北標準時間)
 </footer>
 
 <script> prettyPrint(); </script>
