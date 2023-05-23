@@ -4064,6 +4064,7 @@ export class ColorRuleClass {
         let pt = new PageTool();
         let haveOtherRules: boolean = false;
 
+        // 遍歷 Others 物件的屬性
         for (let x in Others) {
             if (x != 'Score') {
                 haveOtherRules = true;
@@ -4097,6 +4098,7 @@ export class ColorRuleClass {
             }
         }
 
+        // 若沒有其他規則，則返回 true；否則返回 false
         return !haveOtherRules ? true : false;
     }
 
@@ -4112,6 +4114,7 @@ export class ColorRuleClass {
         let tData: string[][] = [];
         Object.assign(tData, data);
 
+        // 將傳入的data進行處理和轉換
         for (let i = 0; i < data.length; i++) {
             if (typeof data[i] == 'string') {
                 tData[i] = (data[i] as string).split(',');
@@ -4122,6 +4125,7 @@ export class ColorRuleClass {
             }
             RowTitle.push(tData[i][0]);
 
+            // 處理tData中的特殊字符和陣列元素
             for (let j = 0; j < tData[i].length; j++) {
                 tData[i][j] = tData[i][j].replace('%', '');
                 //if (tData[i][j] == '' || tData[i][j] == '-') { tData[i][j] = '0'; }
@@ -4131,6 +4135,7 @@ export class ColorRuleClass {
             }
         }
 
+        // 進行顏色判定和設定
         for (let i = 0; i < tData.length; i++) {
             let tLineData: string[] = tData[i];
             /**縱坐標判定 */
@@ -4326,9 +4331,11 @@ export class ColorRuleClass {
         let c: string = this.HighlightObj[RowIdx] && this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].Color : '';
         let b: string = this.HighlightObj[RowIdx] && this.HighlightObj[RowIdx][CellIdx] ? this.HighlightObj[RowIdx][CellIdx].BackgroundColor : '';
         let reStr = '';
+        // 檢查是否有文字顏色設定，若有則將顏色設定加入返回字串
         if (c != '') {
             reStr += 'color:' + c + ';';
         }
+        // 檢查是否有背景顏色設定，若有則將背景顏色設定加入返回字串
         if (b != '') {
             reStr += 'background-color:' + b + ';';
         }
