@@ -148,7 +148,7 @@ class FormInf {
     }
 
     /**將Object型別的回傳結果(一行)，轉回string陣列
-     * @param {{ [key: string]: string }} LineData key:欄位名稱; value:欄位值
+     * @param LineData key:欄位名稱; value:欄位值
      * @return {string[]} 回傳欄位值組成的陣列
     */
     LineDataObjToArray(LineData: { [key: string]: string }): string[] {
@@ -2014,7 +2014,7 @@ export class PageMake implements PageRender {
     /**產生Table Html。
      * 含各欄位的menu選單、檢視/編輯、預設值、動態觸發欄位...等
      * @param {string} tPageName 頁面名稱
-     * @param {Array<string> | { [key: string]: string }[]} data 搜尋結果
+     * @param data 搜尋結果
      * @param {string} AttributeStr Table 需額外附帶的屬性(需完整字串，如 'class="abc" style="display:none"')
      * @param {Array<Array<string>>} TitleArr Title呈現
      */
@@ -2361,7 +2361,7 @@ export class PageMake implements PageRender {
 
     /**產生圖表
      * @param {string} tPageName 頁面名稱
-     * @param {string[] | { [key: string]: string }[]} data 搜尋結果
+     * @param data 搜尋結果
      */
     public MakeChart(tPageName: string, data: string[] | { [key: string]: string }[]): void {
         let dom = document.getElementById('ChartArea') as HTMLDivElement;
@@ -2769,7 +2769,7 @@ export class PageTool {
 
     /**將數據轉換成匯出格式的數據
      * @param {string} tPageName 頁面名稱
-     * @param {string[] | string[][] | { [key: string]: string }[]} tdata 數據(不含Title)
+     * @param tdata 數據(不含Title)
      * @return {string[]} 回傳調整過後的數據
      */
     public MakeExportData(tPageName: string, tdata: string[] | string[][] | { [key: string]: string }[]): string[] {

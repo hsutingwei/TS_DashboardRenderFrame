@@ -1427,7 +1427,7 @@ export class PageSet {
     //重新定義物件屬性⬆
     //Table、Chart相關定義⬇
     /**建立需要客製化Title的頁面(合併儲存格格式，例:['BU', 'BU']表BU左右兩格合併為一格)
-     * @param {Array<string> | { [key: string]: string }[]} TitleInfArr Search回傳的data陣列
+     * @param TitleInfArr Search回傳的data陣列
      * @param {string} tPageName 頁面名稱
      * @return 回傳重新定義的客製化Title
      */
@@ -1672,7 +1672,7 @@ export class PageSet {
     }
     /**定義圖表的option
      * @param {string} tPageName 頁面名稱
-     * @param {string[] | { [key: string]: string }[]} data 數據
+     * @param data 數據
      */
     ChartsOption(tPageName, data) {
         if (gPageObj.PageNameObj[tPageName] == null) {
@@ -2199,7 +2199,7 @@ export class PageSet {
     } //檢查是否為多選下拉式
     /**產生匯出的資訊Query，標題/內容
      * @param {string} tPageName 頁面名稱
-     * @param {string[] | string[][] | { [key: string]: string }[]} data 搜尋結果
+     * @param data 搜尋結果
      * @param {string[][]} tmpTitle 標題串列
     */
     GetExportQuery(tPageName, data, tmpTitle) {
@@ -2234,8 +2234,8 @@ export class PageSet {
     }
     /**客製化Datatable.js excel參數
      * @param {string} tPageName 頁面名稱
-     * @param {string[] | string[][] | { [key: string]: string }[]} data 搜尋結果
-     * @param {{ [index: string]: any }} dtObj 原Datatable.js參數
+     * @param data 搜尋結果
+     * @param dtObj 原Datatable.js參數
      */
     DataTableExportCustomize(tPageName, data, dtObj) {
         let LastQuery = gPageObj.PageNameObj[tPageName].LastQuery;
@@ -3792,7 +3792,7 @@ export class ColorRuleClass {
     }
     /**判斷此欄位值是否符合特殊規則。若沒定義特殊規則則回傳true
      * @param {string} tPageName 頁面名稱
-     * @param {{ 'Score': number, [TitleOrFieldName: string]: string | number }} Others 判定規則
+     * @param Others 判定規則
      * @param {number} CellIdx 行座標
      * @param {string} RowTitle 左邊第一值
      */
@@ -3840,7 +3840,7 @@ export class ColorRuleClass {
     }
     /**將搜尋結果與顏色規則初始化Hightlight座標資訊物件
      * @param {string} tPageName 頁面名稱
-     * @param {string[][] | string[] | { [key: string]: string }[]} data 搜尋結果
+     * @param data 搜尋結果
      */
     InitColorObj(tPageName, data) {
         let regexp = /\[[^\[&^\]]+\]/g;
@@ -4686,7 +4686,9 @@ export class UrlQuery {
 }
 /**此class定義表單內摺疊展開的功能 */
 export class TableExtend {
+    /**TableExtendObj初始化 */
     constructor() {
+        /**定義PageName的表單摺疊資訊 */
         this.TableExtendObj = {};
         this.TableExtendObj = {
             Prober_Handler_CPLCD: {
@@ -4725,6 +4727,7 @@ export class TableExtend {
             }
         };
     }
+    /**根據TableExtendObj修改表單的HTML，渲染折疊的樣子 */
     SetExtendTable(tPageName, TableId) {
         let tTable = $('#' + TableId + ' tbody');
         if (this.TableExtendObj[tPageName] != null) {
