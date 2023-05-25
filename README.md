@@ -149,6 +149,13 @@ OPAS引用js、css完整範例
 #### 頁面初始化
 開始使用渲染框架前，HTML頁面必須要有以下物件
 ```html
+<!--圖表-->
+<div id="ChartArea" style="height: 40vh"></div>
+<!--表單-->
+<div id="TableArea" style="height: 30vh"></div>
+<!--匯出用-->
+<div id="HiddenTableArea" style="display:none"></div>
+
 <span style="display:none" id="PageName">{頁面名稱}</span>
 <span style="display:none" id="DefaultPage">{頁面預設顯示第幾頁}</span>
 <span style="display:none" id="BuName">{BU名稱}</span>
