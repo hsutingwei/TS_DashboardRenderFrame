@@ -1,7 +1,12 @@
 # OPAS Typescript
 ## 營運績效系統表單圖表搜尋渲染框架
 
-這是一個使用 Typescript 語言開發的渲染框架，旨在為 OPAS 表單和圖表搜尋提供方便和高校的渲染功能。
+這是一個使用 Typescript 語言開發的渲染框架，旨在為 OPAS 表單和圖表搜尋提供方便和高效的開發框架。
+
+## 原始碼
+```
+git clone http://192.168.5.141:83/GitServer/20211013_TypescripteCode.git
+```
 
 ## 技術
 - [TypeScript] - 前端開發的使用語言
